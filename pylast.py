@@ -100,11 +100,12 @@ def _status2str(lastfm_status):
 class ServiceException(Exception):
 	"""Exception related to the Last.fm web service"""
 	
-	def __init__(self, lastfm_status):
-		self.lastfm_status = lastfm_status
+	def __init__(self, lastfm_status, details):
+		self._lastfm_status = lastfm_status
+		self._details = details
 	
 	def __str__(self):
-		return "Last.fm Service Error: %s" % _status2str(self.lastfm_status)
+		return "%s: %s." %(_status2str(self._lastfm_status), self._details)
 
 class Asynchronizer(threading.Thread):
 	"""Hopingly, this class would help perform asynchronous operations less painfully.
@@ -156,6 +157,10 @@ class Exceptionable(object):
 			return None
 	
 	def _report_error(self, exception):
+		
+		if self.get_raising_exceptions():
+			raise exception
+		
 		self.__errors.append(exception)
 		
 		if self._parent:
@@ -263,7 +268,8 @@ class Request(Exceptionable):
 		else:
 			e = doc.getElementsByTagName('error')[0]
 			status = e.getAttribute('code')
-			self._report_error(ServiceException(status))
+			details = e.firstChild.data.strip()
+			self._report_error(ServiceException(status, details))
 
 class SessionGenerator(Asynchronizer, Exceptionable):
 	"""Steps of authorization:
@@ -573,7 +579,7 @@ class Album(BaseObject, Cacheable):
 		
 		uri = 'lastfm://playlist/album/%s' %self._getCachedInfo()['id']
 		
-		return Playlist(uri, self.api_key).fetch()
+		return Playlist(uri, *self.auth_data).fetch()
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the album page on Last.fm. 
@@ -687,7 +693,7 @@ class Track(BaseObject, Cacheable):
 			
 			title = self._extract(track, 'name', 0)
 			artist = self._extract(track, 'name', 1)
-			t['images'] = self._extract_all(track, 'image')
+			extra_info['images'] = self._extract_all(track, 'image')
 			
 			data.append(Track(artist, title, self.api_key, self.secret, self.session_key, extra_info))
 		
@@ -702,7 +708,12 @@ class Track(BaseObject, Cacheable):
 		if not doc:
 			return None
 		
-		return self._extract_all(doc, 'name')
+		names = self._extract_all(doc, 'name')
+		list = []
+		for name in names:
+			list.append(Tag(name, *self.auth_data))
+		
+		return list
 	
 	def getTopFans(self):
 		"""Returns the top fans for this track on Last.fm. """
@@ -730,8 +741,7 @@ class Track(BaseObject, Cacheable):
 			return None
 		
 		list = []
-		tags = doc.getElementsByTagName('tag')
-		names = self._extract_all(tags, 'name')
+		names = self._extract_all(doc, 'name')
 
 		for name in names:
 			list.append(Tag(name, *self.auth_data))
@@ -956,10 +966,10 @@ class Artist(BaseObject, Cacheable):
 		return artists
 	
 	def getTags(self):
-		"""Get the tags applied by an individual user to an artist"""
+		"""Returns a list of the user-set tags to this artist. """
 		
 		params = self._getParams()
-		doc = Request(self, 'album.getTags', self.api_key, params, True, self.secret).execute()
+		doc = Request(self, 'artist.getTags', self.api_key, params, True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -984,7 +994,7 @@ class Artist(BaseObject, Cacheable):
 		
 		albums = []
 		for name in names:
-			albums.append(Album(name, *self.auth_data))
+			albums.append(Album(self.getName(), name, *self.auth_data))
 		
 		return albums
 	
@@ -1243,12 +1253,13 @@ class Event(BaseObject, Cacheable):
 	def getGeoPoint(self):
 		"""Returns a tuple of latitude and longitude values of where the event is held. """
 		
-		return (self._getCachedInfo()['geo']['lat'], self._getCachedInfo()['geo']['long'])
+		i = self._getCachedInfo()
+		return (i['venue']['geo']['lat'], i['venue']['geo']['long'])
 	
 	def getTimeZone(self):
 		"""Returns the timezone of where the event is held. """
 		
-		return self._getCachedInfo()['time_zone']
+		return self._getCachedInfo()['venue']['time_zone']
 	
 	def getDescription(self):
 		"""Returns the description of the event. """
@@ -1313,7 +1324,7 @@ class Event(BaseObject, Cacheable):
 				sa += ' and '
 				sa += artists[i].getName()
 		
-		return sa + ' at ' + self.getVenueName()
+		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle(), 'artists': sa, 'place': self.getVenueName()}
 
 class Country(BaseObject):
 	
@@ -1323,7 +1334,7 @@ class Country(BaseObject):
 		self._country_name = country_name
 	
 	def _getParams(self):
-		return {'country': self.country_name}
+		return {'country': self._country_name}
 	
 	def getName(self):
 		"""Returns the country name. """
@@ -1348,9 +1359,14 @@ class Country(BaseObject):
 		return artists
 	
 	def getTopTracks(self, location = None):
-		"""Returns a tuple of the most popular Tracks in the country, ordered by popularity. """
+		"""Returns a tuple of the most popular Tracks in the country, ordered by popularity. 
+		  * location: A metro name, to fetch the charts for (must be within the country specified).
+		"""
 		
 		params = self._getParams()
+		if location:
+			params['location'] = location
+			
 		doc = Request(self, 'geo.getTopTracks', self.api_key, params).execute()
 		
 		list = []
@@ -1364,7 +1380,7 @@ class Country(BaseObject):
 			info['play_count'] = self._extract(n, 'playcount')
 			info['images'] = self._extract_all(n, 'image')
 			
-			list.append(Track(artist, title, *self.auth_data))
+			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
 		
 		return list
 	
@@ -1971,13 +1987,11 @@ class Tag(BaseObject):
 		  * free_tracks_only: Set to True to include only free tracks. 
 		"""
 		
-		uri = 'lastfm://playlist/tag/%s' %self.tag
+		uri = 'lastfm://playlist/tag/%s' %self.getName()
 		if free_tracks_only:
 			uri += '/freetracks'
 		
-		print uri
-		
-		return Playlist(uri, self.api_key).fetch()
+		return Playlist(uri, *self.auth_data).fetch()
 
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the tag page on Last.fm. 
