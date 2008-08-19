@@ -130,9 +130,9 @@ class Asynchronizer(threading.Thread):
 	
 	def async_call(self, callback, call, *call_args):
 		"""This is the function for setting up an asynchronous operation.
-		callback: the function to callback afterwards, accepting two argument, one being the sender and the other is the return of the target call.
-		call: the target call.
-		*call_args: any number of arguments to pass to the target call function.
+		* callback: the function to callback afterwards, accepting two argument, one being the sender and the other is the return of the target call.
+		* call: the target call.
+		* *call_args: any number of arguments to pass to the target call function.
 		"""
 		
 		self._calls[call] = call_args
@@ -1082,7 +1082,7 @@ class Artist(BaseObject, Cacheable):
 	def share(self, users, message = None):
 		"""Shares this artist (sends out recommendations). 
 		* users: A list that can contain usernames, emails, User objects, or all of them.
-    		* message: A message to include in the recommendation message. 
+		* message: A message to include in the recommendation message. 
 		"""
 		
 		#last.fm currently accepts a max of 10 recipient at a time
@@ -1671,7 +1671,7 @@ class Library(BaseObject):
 	def getAlbums(self, limit = None, page = None):
 		"""Returns a paginated list of all the albums in a user's library. 
 		* limit: The number of albums to retrieve.
-    		* page: The page to retrieve (default is the first one). 
+		* page: The page to retrieve (default is the first one). 
 		"""
 		
 		params = self._getParams()
@@ -1704,7 +1704,7 @@ class Library(BaseObject):
 	def getArtists(self, limit = None, page = None):
 		"""Returns a paginated list of all the artists in a user's library. 
 		* limit: The number of artists to retrieve.
-    		* page: The page to retrieve (default is the first one). 
+		* page: The page to retrieve (default is the first one). 
 		"""
 		
 		params = self._getParams()
