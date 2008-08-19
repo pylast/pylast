@@ -474,10 +474,10 @@ class Album(BaseObject, Cacheable):
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL.
-    	  * size: The image size. Possible values:
-            o IMAGE_LARGE
-            o IMAGE_MEDIUM
-            o IMAGE_SMALL 
+		* size: The image size. Possible values:
+		  o IMAGE_LARGE
+		  o IMAGE_MEDIUM
+		  o IMAGE_SMALL 
 		"""
 		
 		return self._getCachedInfo()['images'][size]
@@ -563,7 +563,7 @@ class Album(BaseObject, Cacheable):
 	
 	def removeTags(self, *tags):
 		"""Removes one or several tags from this album.
-		    * *tags: Any number of tag names or Tag objects. 
+		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
 		for tag in tags:
@@ -583,19 +583,19 @@ class Album(BaseObject, Cacheable):
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the album page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/music/%(artist)s/%(album)s'
@@ -635,7 +635,7 @@ class Track(BaseObject, Cacheable):
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
-		  * *tags: Any number of tag names or Tag objects. 
+		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
 		#last.fm currently accepts a max of 10 tags at a time
@@ -656,7 +656,7 @@ class Track(BaseObject, Cacheable):
 	
 	def addToPlaylist(self, playlist_id):
 		"""Adds this track to a user playlist. 
-		  * playlist_id: The unique playlist ID. 
+		* playlist_id: The unique playlist ID. 
 		"""
 		
 		params = self._getParams()
@@ -761,7 +761,7 @@ class Track(BaseObject, Cacheable):
 
 	def removeTags(self, *tags):
 		"""Removes one or several tags from this track. 
-		  * *tags: Any number of tag names or Tag objects. 
+		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
 		for tag in tags:
@@ -774,8 +774,8 @@ class Track(BaseObject, Cacheable):
 	
 	def share(self, users, message = None):
 		"""Shares this track (sends out recommendations). 
-  		  * users: A list that can contain usernames, emails, User objects, or all of them.
-  		  * message: A message to include in the recommendation message. 
+  		* users: A list that can contain usernames, emails, User objects, or all of them.
+  		* message: A message to include in the recommendation message. 
 		"""
 		
 		#last.fm currently accepts a max of 10 recipient at a time
@@ -800,19 +800,19 @@ class Track(BaseObject, Cacheable):
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the track page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		url = 'http://%(domain)s/music/%(artist)s/_/%(title)s'
 		
@@ -868,10 +868,10 @@ class Artist(BaseObject, Cacheable):
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL. 
-    	  * size: The image size. Possible values:
-            o IMAGE_LARGE
-            o IMAGE_MEDIUM
-            o IMAGE_SMALL 
+		* size: The image size. Possible values:
+		  o IMAGE_LARGE
+		  o IMAGE_MEDIUM
+		  o IMAGE_SMALL 
 		"""
 		
 		return self._getCachedInfo()['images'][size]
@@ -903,7 +903,7 @@ class Artist(BaseObject, Cacheable):
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
-		  * *tags: Any number of tag names or Tag objects. 
+		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
 		#last.fm currently accepts a max of 10 tags at a time
@@ -945,7 +945,7 @@ class Artist(BaseObject, Cacheable):
 	
 	def getSimilar(self, limit = None):
 		"""Returns the similar artists on Last.fm. 
-		  * limit: The limit of similar artists to retrieve. 
+		* limit: The limit of similar artists to retrieve. 
 		"""
 		
 		params = self._getParams()
@@ -1068,7 +1068,7 @@ class Artist(BaseObject, Cacheable):
 
 	def removeTags(self, *tags):
 		"""Removes one or several tags from this artist. 
-		  * *tags: Any number of tag names or Tag objects. 
+		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
 		for tag in tags:
@@ -1081,7 +1081,7 @@ class Artist(BaseObject, Cacheable):
 
 	def share(self, users, message = None):
 		"""Shares this artist (sends out recommendations). 
-		    * users: A list that can contain usernames, emails, User objects, or all of them.
+		* users: A list that can contain usernames, emails, User objects, or all of them.
     		* message: A message to include in the recommendation message. 
 		"""
 		
@@ -1107,19 +1107,19 @@ class Artist(BaseObject, Cacheable):
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the artist page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/music/%(artist)s'
@@ -1147,10 +1147,10 @@ class Event(BaseObject, Cacheable):
 	
 	def attend(self, attending_status):
 		"""Sets the attending status.
-		  * attending_status: The attending status. Possible values:
-            o EVENT_ATTENDING
-            o EVENT_MAYBE_ATTENDING
-            o EVENT_NOT_ATTENDING 
+		* attending_status: The attending status. Possible values:
+		  o EVENT_ATTENDING
+		  o EVENT_MAYBE_ATTENDING
+		  o EVENT_NOT_ATTENDING 
 		"""
 		
 		params = self._getParams()
@@ -1268,10 +1268,10 @@ class Event(BaseObject, Cacheable):
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL. 
-    	  * size: The image size. Possible values:
-            o IMAGE_LARGE
-            o IMAGE_MEDIUM
-            o IMAGE_SMALL 
+		* size: The image size. Possible values:
+		  o IMAGE_LARGE
+		  o IMAGE_MEDIUM
+		  o IMAGE_SMALL 
 		"""
 		
 		return self._getCachedInfo()['images'][size]
@@ -1288,19 +1288,19 @@ class Event(BaseObject, Cacheable):
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the event page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/event/%(id)s'
@@ -1360,7 +1360,7 @@ class Country(BaseObject):
 	
 	def getTopTracks(self, location = None):
 		"""Returns a tuple of the most popular Tracks in the country, ordered by popularity. 
-		  * location: A metro name, to fetch the charts for (must be within the country specified).
+		* location: A metro name, to fetch the charts for (must be within the country specified).
 		"""
 		
 		params = self._getParams()
@@ -1386,19 +1386,19 @@ class Country(BaseObject):
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the event page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/place/%(country_name)s'
@@ -1428,8 +1428,8 @@ class Group(BaseObject):
 	
 	def getTopWeeklyAlbums(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Albums in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList. 
-  		  * from_value: The value marking the beginning of a week.
-  		  * to_value: The value marking the end of a week. 
+  		* from_value: The value marking the beginning of a week.
+  		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -1451,8 +1451,8 @@ class Group(BaseObject):
 	
 	def getTopWeeklyArtists(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Artists in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList. 
-  		  * from_value: The value marking the beginning of a week.
-  		  * to_value: The value marking the end of a week. 
+  		* from_value: The value marking the beginning of a week.
+  		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -1472,8 +1472,8 @@ class Group(BaseObject):
 
 	def getTopWeeklyTracks(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Tracks in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList. 
-    	  * from_value: The value marking the beginning of a week.
-    	  * to_value: The value marking the end of a week. 
+		* from_value: The value marking the beginning of a week.
+		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -1519,19 +1519,19 @@ class Group(BaseObject):
 
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the group page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/group/%(name)s'
@@ -1670,7 +1670,7 @@ class Library(BaseObject):
 	
 	def getAlbums(self, limit = None, page = None):
 		"""Returns a paginated list of all the albums in a user's library. 
-		    * limit: The number of albums to retrieve.
+		* limit: The number of albums to retrieve.
     		* page: The page to retrieve (default is the first one). 
 		"""
 		
@@ -1703,7 +1703,7 @@ class Library(BaseObject):
 
 	def getArtists(self, limit = None, page = None):
 		"""Returns a paginated list of all the artists in a user's library. 
-		    * limit: The number of artists to retrieve.
+		* limit: The number of artists to retrieve.
     		* page: The page to retrieve (default is the first one). 
 		"""
 		
@@ -1766,7 +1766,7 @@ class Library(BaseObject):
 	
 	def getAlbumPlaycount(self, album_object):
 		"""Goes through the library until it finds the playcount of this album and returns it (could take a relatively long time). 
-		  * album_object : The Album to find. 
+		* album_object : The Album to find. 
 		"""
 		
 		key = album_object._hash()
@@ -1782,7 +1782,7 @@ class Library(BaseObject):
 
 	def getAlbumTagcount(self, album_object):
 		"""Goes through the library until it finds the tagcount of this album and returns it (could take a relatively long time). 
-		  * album_object : The Album to find. 
+		* album_object : The Album to find. 
 		"""
 		
 		key = album_object._hash()
@@ -1798,7 +1798,7 @@ class Library(BaseObject):
 
 	def getArtistPlaycount(self, artist_object):
 		"""Goes through the library until it finds the playcount of this artist and returns it (could take a relatively long time). 
-		  * artist_object : The Artist to find. 
+		* artist_object : The Artist to find. 
 		"""
 		
 		key = artist_object._hash()
@@ -1814,7 +1814,7 @@ class Library(BaseObject):
 
 	def getArtistTagcount(self, artist_object):
 		"""Goes through the library until it finds the tagcount of this artist and returns it (could take a relatively long time). 
-		  * artist_object : The Artist to find. 
+		* artist_object : The Artist to find. 
 		"""
 		
 		key = artist_object._hash()
@@ -1830,7 +1830,7 @@ class Library(BaseObject):
 
 	def getTrackPlaycount(self, track_object):
 		"""Goes through the library until it finds the playcount of this track and returns it (could take a relatively long time). 
-		  * track_object : The Track to find. 
+		* track_object : The Track to find. 
 		"""
 		
 		key = track_object._hash()
@@ -1846,7 +1846,7 @@ class Library(BaseObject):
 
 	def getTrackTagcount(self, track_object):
 		"""Goes through the library until it finds the tagcount of this track and returns it (could take a relatively long time). 
-		  * track_object : The Track to find. 
+		* track_object : The Track to find. 
 		"""
 		
 		key = track_object._hash()
@@ -1984,7 +1984,7 @@ class Tag(BaseObject):
 	
 	def fetchPlaylist(self, free_tracks_only = False):
 		"""Returns lit of the tracks tagged by this tag. 
-		  * free_tracks_only: Set to True to include only free tracks. 
+		* free_tracks_only: Set to True to include only free tracks. 
 		"""
 		
 		uri = 'lastfm://playlist/tag/%s' %self.getName()
@@ -1995,19 +1995,19 @@ class Tag(BaseObject):
 
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the tag page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		
 		url = 'http://%(domain)s/tag/%(name)s'
@@ -2096,7 +2096,7 @@ class User(BaseObject):
 	
 	def getNeighbours(self, limit = None):
 		"""Returns a list of the user's friends. 
-		  * limit: A limit for how many neighbours to show. 
+		* limit: A limit for how many neighbours to show. 
 		"""
 		
 		params = self._getParams()
@@ -2158,7 +2158,7 @@ class User(BaseObject):
 	
 	def fetchPlaylist(self, playlist_id):
 		"""Returns a list of the tracks on a playlist. 
-		  * playlist_id: A unique last.fm playlist ID, can be retrieved from getPlaylistIDs(). 
+		* playlist_id: A unique last.fm playlist ID, can be retrieved from getPlaylistIDs(). 
 		"""
 		
 		uri = u'lastfm://playlist/%s' %unicode(playlist_id)
@@ -2216,11 +2216,11 @@ class User(BaseObject):
 	
 	def getTopAlbums(self, period = PERIOD_OVERALL):
 		"""Returns the top albums listened to by a user. 
-		  * period: The period of time. Possible values:
-            o PERIOD_OVERALL
-            o PERIOD_3MONTHS
-            o PERIOD_6MONTHS
-            o PERIOD_12MONTHS 
+		* period: The period of time. Possible values:
+		  o PERIOD_OVERALL
+		  o PERIOD_3MONTHS
+		  o PERIOD_6MONTHS
+		  o PERIOD_12MONTHS 
 		"""
 		
 		params = self._getParams()
@@ -2242,11 +2242,11 @@ class User(BaseObject):
 	
 	def getTopArtists(self, period = PERIOD_OVERALL):
 		"""Returns the top artists listened to by a user. 
-		  * period: The period of time. Possible values:
-            o PERIOD_OVERALL
-            o PERIOD_3MONTHS
-            o PERIOD_6MONTHS
-            o PERIOD_12MONTHS 
+		* period: The period of time. Possible values:
+		  o PERIOD_OVERALL
+		  o PERIOD_3MONTHS
+		  o PERIOD_6MONTHS
+		  o PERIOD_12MONTHS 
 		"""
 		
 		params = self._getParams()
@@ -2267,7 +2267,7 @@ class User(BaseObject):
 		
 	def getTopTags(self, limit = None):
 		"""Returns the top tags used by this user. 
-		  * limit: The limit of how many tags to return. 
+		* limit: The limit of how many tags to return. 
 		"""
 		
 		params = self._getParams()
@@ -2289,10 +2289,11 @@ class User(BaseObject):
 	
 	def getTopTracks(self, period = PERIOD_OVERALL):
 		"""Returns the top tracks listened to by a user. 
-            o PERIOD_OVERALL
-            o PERIOD_3MONTHS
-            o PERIOD_6MONTHS
-            o PERIOD_12MONTHS 
+		* period: The period of time. Possible values:
+		  o PERIOD_OVERALL
+		  o PERIOD_3MONTHS
+		  o PERIOD_6MONTHS
+		  o PERIOD_12MONTHS 
 		"""
 		
 		params = self._getParams()
@@ -2318,8 +2319,8 @@ class User(BaseObject):
 	
 	def getTopWeeklyAlbums(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Albums in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList(). 
-		  * from_value: The value marking the beginning of a week.
-    	  * to_value: The value marking the end of a week. 
+		* from_value: The value marking the beginning of a week.
+		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -2344,8 +2345,8 @@ class User(BaseObject):
 	
 	def getTopWeeklyArtists(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Artists in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList(). 
-		  * from_value: The value marking the beginning of a week.
-    	  * to_value: The value marking the end of a week. 
+		* from_value: The value marking the beginning of a week.
+		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -2368,8 +2369,8 @@ class User(BaseObject):
 	
 	def getTopWeeklyTracks(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Tracks in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList(). 
-		  * from_value: The value marking the beginning of a week.
-    	  * to_value: The value marking the end of a week. 
+		* from_value: The value marking the beginning of a week.
+		* to_value: The value marking the end of a week. 
 		"""
 		
 		params = self._getParams()
@@ -2415,19 +2416,19 @@ class User(BaseObject):
 
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the user page on Last.fm. 
-		  * domain_name: Last.fm's language domain. Possible values:
-            o DOMAIN_ENGLISH
-            o DOMAIN_GERMAN
-            o DOMAIN_SPANISH
-            o DOMAIN_FRENCH
-            o DOMAIN_ITALIAN
-            o DOMAIN_POLISH
-            o DOMAIN_PORTUGUESE
-            o DOMAIN_SWEDISH
-            o DOMAIN_TURKISH
-            o DOMAIN_RUSSIAN
-            o DOMAIN_JAPANESE
-            o DOMAIN_CHINESE 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
 		"""
 		url = 'http://%(domain)s/user/%(name)s'
 		
@@ -2498,8 +2499,8 @@ class ArtistSearch(Search):
 
 	def getResults(self, limit = 30, page = 1):
 		"""Returns the matches sorted by relevance.
-		  * limit: Limit the number of artists returned at one time. Default (maximum) is 30.
-		  * page: Scan into the results by specifying a page number. Defaults to first page.
+		* limit: Limit the number of artists returned at one time. Default (maximum) is 30.
+		* page: Scan into the results by specifying a page number. Defaults to first page.
 		"""
 		
 		params = self._getParams()
@@ -2543,8 +2544,8 @@ class TagSearch(Search):
 
 	def getResults(self, limit = 30, page = 1):
 		"""Returns the matches sorted by relevance.
-		  * limit: Limit the number of artists returned at one time. Default (maximum) is 30.
-		  * page: Scan into the results by specifying a page number. Defaults to first page.
+		* limit: Limit the number of artists returned at one time. Default (maximum) is 30.
+		* page: Scan into the results by specifying a page number. Defaults to first page.
 		"""
 		
 		params = self._getParams()
@@ -2599,8 +2600,8 @@ class TrackSearch(Search):
 
 	def getResults(self, limit = 30, page = 1):
 		"""Returns the matches sorted by relevance.
-		  * limit: Limit the number of artists returned at one time. Default (maximum) is 30.
-		  * page: Scan into the results by specifying a page number. Defaults to first page.
+		* limit: Limit the number of artists returned at one time. Default (maximum) is 30.
+		* page: Scan into the results by specifying a page number. Defaults to first page.
 		"""
 		
 		params = self._getParams()
