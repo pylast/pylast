@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b'
+LIB_VERSION = '0.2b1'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -32,6 +32,8 @@ import httplib
 import urllib
 import threading
 from xml.dom import minidom
+
+USE_SILENT_EXCEPTIONS = True
 
 STATUS_OK = 'ok'
 STATUS_FAILED = 'failed'
@@ -81,18 +83,18 @@ def _status2str(lastfm_status):
 		STATUS_OK: 'OK',
 		STATUS_FAILED: 'Failed',
 		STATUS_INVALID_METHOD: 'Invalid Method - No method with that name in this package',
-		STATUS_TOKEN_ERROR: 'There was an error granting the request token.',
-		STATUS_INVALID_SERVICE: 'Invalid service - This service does not exist',
+		STATUS_TOKEN_ERROR: 'Token Error - There was an error granting the request token',
+		STATUS_INVALID_SERVICE: 'Invalid Service - This service does not exist',
 		STATUS_AUTH_FAILED: 'Authentication Failed - You do not have permissions to access the service',
-		STATUS_INVALID_FORMAT: "Invalid format - This service doesn't exist in that format",
-		STATUS_INVALID_PARAMS: 'Invalid parameters - Your request is missing a required parameter',
-		STATUS_INVALID_RESOURCE: 'Invalid resource specified',
-		STATUS_INVALID_SK: 'Invalid session key - Please re-authenticate',
-		STATUS_INVALID_API_KEY: 'Invalid API key - You must be granted a valid key by last.fm',
+		STATUS_INVALID_FORMAT: "Invalid Format - This service doesn't exist in that format",
+		STATUS_INVALID_PARAMS: 'Invalid Parameters - Your request is missing a required parameter',
+		STATUS_INVALID_RESOURCE: 'Invalid Resource Specified',
+		STATUS_INVALID_SK: 'Invalid Session Key - Please re-authenticate',
+		STATUS_INVALID_API_KEY: 'Invalid API Key - You must be granted a valid key by last.fm',
 		STATUS_OFFLINE: 'Service Offline - This service is temporarily offline. Try again later.',
 		STATUS_SUBSCRIBERS_ONLY: 'Subscribers Only - This service is only available to paid last.fm subscribers',
-		STATUS_TOKEN_UNAUTHORIZED: 'This token has not been authorized',
-		STATUS_TOKEN_EXPIRED: 'This token has expired'
+		STATUS_TOKEN_UNAUTHORIZED: 'Unauthorized Token - This token has not been authorized',
+		STATUS_TOKEN_EXPIRED: 'Token Expired -This token has expired'
 	}
 	
 	return statuses[int(lastfm_status)]
@@ -141,9 +143,9 @@ class Asynchronizer(threading.Thread):
 class Exceptionable(object):
 	"""An abstract class that adds support for error reporting."""
 	
-	def __init__(self, parent = None, raising_exceptions = False):
+	def __init__(self, parent = None):
 		self.__errors = []
-		self.__raising_exceptions = raising_exceptions
+		self.__raising_exceptions = not USE_SILENT_EXCEPTIONS
 		
 		#An Exceptionable parent to mirror all the errors to automatically.
 		self._parent = parent
@@ -390,8 +392,9 @@ class Cacheable(object):
 	
 	def __init__(self, user_set_data = False):
 		
-		# user_set_data identifies objects like Track that doesn't have
-		# a getInfo function, so the user sets the extra data from other feeds
+		# user_set_data (a temporary workaround, should be deprecated soon) identifies objects like
+		# Track that doesn't have a getInfo function,
+		# so the user sets the extra data from other feeds for now.
 		
 		self._cached_info = None
 		self._user_set_data = user_set_data
@@ -399,9 +402,9 @@ class Cacheable(object):
 	def _getInfo(self):
 		"""Abstract function, should be inherited"""
 	
-	def _getCachedInfo(self):
+	def _getCachedInfo(self, *key_names):
 		"""Returns the cached collection of info regarding this object
-		If not available in cache, it will be downloaded first
+		If not available in cache, it will be downloaded first.
 		"""
 		
 		if self._user_set_data:
@@ -410,10 +413,17 @@ class Cacheable(object):
 		if not self._cached_info:
 			self._cached_info = self._getInfo()
 		
-		return self._cached_info
+		if not self._cached_info:
+			return None
+		
+		value_or_container = self._cached_info
+		for key in key_names:
+			value_or_container = value_or_container[key]
+		
+		return value_or_container
 	
 	def _setCachedInfo(self, info):
-		"""Set the info for objects that does not have a getInfo function"""
+		"""Set the info for objects that does not have a getInfo function (Temporary workaround, should be deprecated soon)"""
 		
 		self._cached_info = info
 
@@ -470,7 +480,7 @@ class Album(BaseObject, Cacheable):
 	def getReleaseDate(self):
 		"""Retruns the release date of the album."""
 		
-		return self._getCachedInfo()['release_date']
+		return self._getCachedInfo('release_date')
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL.
@@ -480,28 +490,28 @@ class Album(BaseObject, Cacheable):
 		  o IMAGE_SMALL 
 		"""
 		
-		return self._getCachedInfo()['images'][size]
+		return self._getCachedInfo('images', size)
 	
 	def getID(self):
 		"""Returns the Last.fm ID. """
 		
-		return self._getCachedInfo()['id']
+		return self._getCachedInfo('id')
 	
 	def getPlayCount(self):
 		"""Returns the number of plays on Last.fm."""
 		
-		return self._getCachedInfo()['play_count']
+		return self._getCachedInfo('play_count')
 	
 	def getListenerCount(self):
 		"""Returns the number of liteners on Last.fm."""
 		
-		return self._getCachedInfo()['listeners']
+		return self._getCachedInfo('listeners')
 	
 	def getTopTags(self):
 		"""Returns a list of the most-applied tags to this album. """
 		
 		l = []
-		for tag in self._getCachedInfo()['top_tags']:
+		for tag in self._getCachedInfo('top_tags'):
 			l.append(Tag(tag, *self.auth_data))
 		
 		return l
@@ -577,7 +587,7 @@ class Album(BaseObject, Cacheable):
 	def fetchPlaylist(self):
 		"""Returns the list of Tracks on this album. """
 		
-		uri = 'lastfm://playlist/album/%s' %self._getCachedInfo()['id']
+		uri = 'lastfm://playlist/album/%s' %self._getCachedInfo('id')
 		
 		return Playlist(uri, *self.auth_data).fetch()
 	
@@ -874,32 +884,32 @@ class Artist(BaseObject, Cacheable):
 		  o IMAGE_SMALL 
 		"""
 		
-		return self._getCachedInfo()['images'][size]
+		return self._getCachedInfo('images', size)
 	
 	def getPlayCount(self):
 		"""Returns the number of plays on Last.fm. """
 		
-		return self._getCachedInfo()['play_count']
+		return self._getCachedInfo('play_count')
 	
 	def getListenerCount(self):
 		"""Returns the number of liteners on Last.fm. """
 		
-		return self._getCachedInfo()['listeners']
+		return self._getCachedInfo('listeners')
 	
 	def getBioPublishedDate(self):
 		"""Returns the date on which the artist's biography was published. """
 		
-		return self._getCachedInfo()['bio']['published']
+		return self._getCachedInfo('bio', 'published')
 	
 	def getBioSummary(self):
 		"""Returns the summary of the artist's biography. """
 		
-		return self._getCachedInfo()['bio']['summary']
+		return self._getCachedInfo('bio', 'summary')
 	
 	def getBioContent(self):
 		"""Returns the content of the artist's biography. """
 		
-		return self._getCachedInfo()['bio']['content']
+		return self._getCachedInfo('bio', 'content')
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
@@ -1207,17 +1217,17 @@ class Event(BaseObject, Cacheable):
 	def getTitle(self):
 		"""Returns the title of the event. """
 		
-		return self._getCachedInfo()['title']
+		return self._getCachedInfo('title')
 	
 	def getHeadliner(self):
 		"""Returns the headliner of the event. """
 		
-		return self._getCachedInfo()['headliner']
+		return self._getCachedInfo('headliner')
 	
 	def getArtists(self):
 		"""Returns a list of the participating Artists. """
 		
-		names = self._getCachedInfo()['artists']
+		names = self._getCachedInfo('artists')
 		
 		artists = []
 		for name in names:
@@ -1228,43 +1238,43 @@ class Event(BaseObject, Cacheable):
 	def getVenueName(self):
 		"""Returns the name of the venue where the event is held. """
 		
-		return self._getCachedInfo()['venue']['name']
+		return self._getCachedInfo('venue', 'name')
 	
 	def getCityName(self):
 		"""Returns the name of the city where the event is held. """
 		
-		return self._getCachedInfo()['venue']['city']
+		return self._getCachedInfo('venue', 'city')
 	
 	def getCountryName(self):
 		"""Returns the name of the country where the event is held. """
 		
-		return self._getCachedInfo()['venue']['country']
+		return self._getCachedInfo('venue', 'country')
 
 	def getPostalCode(self):
 		"""Returns the postal code of where the event is held. """
 		
-		return self._getCachedInfo()['venue']['postal_code']
+		return self._getCachedInfo('venue', 'postal_code')
 
 	def getStreetName(self):
 		"""Returns the name of the street where the event is held. """
 		
-		return self._getCachedInfo()['venue']['street']
+		return self._getCachedInfo('venue', 'street')
 	
 	def getGeoPoint(self):
 		"""Returns a tuple of latitude and longitude values of where the event is held. """
 		
-		i = self._getCachedInfo()
-		return (i['venue']['geo']['lat'], i['venue']['geo']['long'])
+		i = (self._getCachedInfo('venue', 'geo', 'lat'), self._getCachedInfo('venue', 'geo', 'long'))
+		return i
 	
 	def getTimeZone(self):
 		"""Returns the timezone of where the event is held. """
 		
-		return self._getCachedInfo()['venue']['time_zone']
+		return self._getCachedInfo('venue', 'time_zone')
 	
 	def getDescription(self):
 		"""Returns the description of the event. """
 		
-		return self._getCachedInfo()['description']
+		return self._getCachedInfo('description')
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL. 
@@ -1274,17 +1284,18 @@ class Event(BaseObject, Cacheable):
 		  o IMAGE_SMALL 
 		"""
 		
-		return self._getCachedInfo()['images'][size]
+		
+		return self._getCachedInfo('images', size)
 	
 	def getAttendanceCount(self):
 		"""Returns the number of attending people. """
 		
-		return self._getCachedInfo()['attendance']
+		return self._getCachedInfo('attendance')
 	
 	def getReviewCount(self):
 		"""Returns the number of available reviews for this event. """
 		
-		return self._getCachedInfo()['reviews']
+		return self._getCachedInfo('reviews')
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the event page on Last.fm. 
@@ -1327,6 +1338,8 @@ class Event(BaseObject, Cacheable):
 		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle(), 'artists': sa, 'place': self.getVenueName()}
 
 class Country(BaseObject):
+	
+	# TODO geo.getEvents
 	
 	def __init__(self, country_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -2027,6 +2040,8 @@ class User(BaseObject):
 		BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self._user_name = user_name
+		
+		#TODO user.getInfo is available now
 	
 	def _getParams(self):
 		return {'sk': self.session_key, 'user': self._user_name}
@@ -2118,6 +2133,10 @@ class User(BaseObject):
 	
 	def getPastEvents(self, limit = None):
 		"""Retruns the past events of this user. """
+		
+		# TODO
+		# http://www.last.fm/api/show?service=343
+		# use the page value
 		
 		params = self._getParams()
 		if limit:
