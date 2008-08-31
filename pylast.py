@@ -22,7 +22,27 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b3'
+LIB_VERSION = '0.2b4'
+
+"""
+Changes
+	0.2b4
+		* Added Track.getArtistName.
+		* Added Album.getArtistName.
+		* Added numerous functions to User, Making use of the new User.getInfo webservice.
+		* Every object now retrieves all the metadata from the webservices even the trivial ones
+		 like the album name or artist for proper casing. Use the object's attributes (like Album.artist_name and
+		 Album.title instead of Album.getArtistName() and Album.getTitle() if you can't afford the delay 
+		 caused by retrieving the data from a remote server.
+		
+	0.2b3
+		* Added a little work-around on python's threading.Thread to make Asynchronizer objects 
+		 able to restart more than once. 
+		
+	0.2b2
+		* All http values are now url-encoded. illegal characters (like '&') will no longer cause a crash. 
+		
+"""
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -76,6 +96,9 @@ DOMAIN_TURKISH = 'www.lastfm.com.tr'
 DOMAIN_RUSSIAN = 'www.lastfm.ru'
 DOMAIN_JAPANESE = 'www.lastfm.jp'
 DOMAIN_CHINESE = 'cn.last.fm'
+
+USER_MALE = 'Male'
+USER_FEMALE = 'Female'
 
 def _status2str(lastfm_status):
 	
@@ -440,16 +463,16 @@ class Album(BaseObject, Cacheable):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
 		
-		self._artist_name = artist_name
-		self._album_title = album_title
+		self.artist_name = artist_name
+		self.title = album_title
 		
 		self._cached_info = None
 	
 	def _getParams(self):
-		return {'artist': self._artist_name, 'album': self._album_title, 'sk': self.session_key}
+		return {'artist': self.artist_name, 'album': self.title, 'sk': self.session_key}
 
 	def _getInfo(self):
-		"""Get the metadata for an album"""	
+		"""Returns a dictionary with various metadata values."""	
 		
 		params = self._getParams()
 		
@@ -476,12 +499,17 @@ class Album(BaseObject, Cacheable):
 	def getArtist(self):
 		"""Returns the associated Artist object. """
 		
-		return Artist(self._artist_name, *self.auth_data)
+		return Artist(self.getArtistName(), *self.auth_data)
+	
+	def getArtistName(self):
+		"""Returns the artist name. """
+		
+		return self._getCachedInfo('artist')
 	
 	def getTitle(self):
 		"""Returns the album title."""
 		
-		return self._album_title
+		return self._getCachedInfo('name')
 	
 	def getReleaseDate(self):
 		"""Retruns the release date of the album."""
@@ -631,23 +659,28 @@ class Track(BaseObject, Cacheable):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self, True)
 		
-		self._artist_name = artist_name
-		self._title = title
+		self.artist_name = artist_name
+		self.title = title
 		
 		self._setCachedInfo(extra_info)
 	
 	def _getParams(self):
-		return {'sk': self.session_key, 'artist': self._artist_name, 'track': self._title}
+		return {'sk': self.session_key, 'artist': self.artist_name, 'track': self.title}
 	
 	def getArtist(self):
 		"""Returns the associated Artist object. """
 		
-		return Artist(self._artist_name, *self.auth_data)
+		return Artist(self.artist_name, *self.auth_data)
+	
+	def getArtistName(self):
+		"""Returns the name of the artist."""
+		
+		return self.artist_name
 	
 	def getTitle(self):
 		"""Returns the track title. """
 		
-		return self._title
+		return self.title
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
@@ -848,10 +881,10 @@ class Artist(BaseObject, Cacheable):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
 		
-		self._artist_name = artist_name
+		self.name = artist_name
 	
 	def _getParams(self):
-		return {'sk': self.session_key, 'artist': self._artist_name}
+		return {'sk': self.session_key, 'artist': self.name}
 
 	def _getInfo(self):
 		"""Get the metadata for an artist on Last.fm, Includes biography"""
@@ -880,7 +913,7 @@ class Artist(BaseObject, Cacheable):
 	def getName(self):
 		"""Returns the name of the artist. """
 		
-		return self._artist_name
+		return self._getCachedInfo('name')
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL. 
@@ -1156,7 +1189,7 @@ class Event(BaseObject, Cacheable):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
 		
-		self._event_id = unicode(event_id)
+		self.id = unicode(event_id)
 	
 	def _getParams(self):
 		return {'sk': self.session_key, 'event': self.getID()}
@@ -1218,7 +1251,7 @@ class Event(BaseObject, Cacheable):
 	
 	def getID(self):
 		"""Returns the id of the event on Last.fm. """
-		return self._event_id
+		return self.id
 	
 	def getTitle(self):
 		"""Returns the title of the event. """
@@ -1350,15 +1383,18 @@ class Country(BaseObject):
 	def __init__(self, country_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		
-		self._country_name = country_name
+		self.name = country_name
 	
 	def _getParams(self):
-		return {'country': self._country_name}
+		return {'country': self.name}
+	
+	def __str__(self):
+		return self.toStr()
 	
 	def getName(self):
 		"""Returns the country name. """
 		
-		return self._country_name
+		return self.name
 	
 	def getTopArtists(self):
 		"""Returns a tuple of the most popular Artists in the country, ordered by popularity. """
@@ -1436,14 +1472,14 @@ class Group(BaseObject):
 	def __init__(self, group_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		
-		self._group_name = group_name
+		self.name = group_name
 	
 	def _getParams(self):
-		return {'group': self._group_name}
+		return {'group': self.name}
 	
 	def getName(self):
 		"""Returns the group name. """
-		return self._group_name
+		return self.name
 	
 	def getTopWeeklyAlbums(self, from_value = None, to_value = None):
 		"""Returns a tuple of the most frequently listened to Albums in a week range. If no date range is supplied, it will return the most recent week's data. You can obtain the available ranges from getWeeklyChartList. 
@@ -1925,15 +1961,15 @@ class Tag(BaseObject):
 	def __init__(self, tag_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		
-		self._tag_name = tag_name
+		self.name = tag_name
 	
 	def _getParams(self):
-		return {'tag': self._tag_name}
+		return {'tag': self.name}
 	
 	def getName(self):
 		"""Returns the name of the tag. """
 		
-		return self._tag_name
+		return self.name
 
 	def getSimilar(self):
 		"""Returns the tags similar to this one, ordered by similarity. """
@@ -2040,22 +2076,93 @@ class Tag(BaseObject):
 		
 		return self.getName()
 
-class User(BaseObject):
+class User(BaseObject, Cacheable):
 	
 	def __init__(self, user_name, api_key, api_secret, session_key):
 		BaseObject.__init__(self, api_key, api_secret, session_key)
+		Cacheable.__init__(self)
 		
-		self._user_name = user_name
+		self.name = user_name
 		
-		#TODO user.getInfo is available now
+		self._cached_info = None
 	
 	def _getParams(self):
-		return {'sk': self.session_key, 'user': self._user_name}
+		return {'sk': self.session_key, 'user': self.name}
+	
+	def _getInfo(self):
+		"""Returns a dictionary with various metadata values."""
+		
+		params = self._getParams()
+		doc = Request(self, 'user.getInfo', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return None
+		
+		data = {}
+		
+		data['name'] = self._extract(doc, 'name')
+		data['image'] = self._extract(doc, 'image')
+		data['language'] = self._extract(doc, 'lang')
+		data['country'] = self._extract(doc, 'country')
+		data['age'] = self._extract(doc, 'age')
+		data['gender'] = self._extract(doc, 'gender')
+		data['subscriber'] = self._extract(doc, 'subscriber')
+		data['play_count'] = self._extract(doc, 'playcount')
+		
+		return data
 	
 	def getName(self):
 		"""Returns the user name. """
 		
-		return self._user_name
+		return self._getCachedInfo('name')
+	
+	def getImage(self):
+		"""Returns the user's avatar."""
+		
+		return self._getCachedInfo('image')
+	
+	def getLanguage(self):
+		"""Returns the language code of the language used by the user."""
+		
+		return self._getCachedInfo('language')
+	
+	def getCountryName(self):
+		"""Returns the name of the country of the user."""
+		
+		return self._getCachedInfo('country')
+	
+	def getAge(self):
+		"""Returns the user's age."""
+		
+		return self._getCachedInfo('age')
+	
+	def getGender(self):
+		"""Returns the user's gender. Either USER_MALE or USER_FEMALE."""
+		
+		value = self._getCachedInfo('gender')
+		if value == 'm':
+			return USER_MALE
+		elif value == 'f':
+			return USER_FEMALE
+		
+		return None
+	
+	def isSubscriber(self):
+		"""Returns whether the user is a subscriber or not. True or False."""
+		
+		value = self._getCachedInfo('subscriber')
+		
+		if value == '1':
+			return True
+		elif value == '0':
+			return False
+		
+		return None
+	
+	def getPlayCount(self):
+		"""Returns the user's playcount so far."""
+		
+		return self._getCachedInfo('play_count')
 	
 	def getEvents(self):
 		"""Returns all the upcoming events for this user. """
