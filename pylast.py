@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b2'
+LIB_VERSION = '0.2b3'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -139,6 +139,12 @@ class Asynchronizer(threading.Thread):
 		
 		self._calls[call] = call_args
 		self._callbacks[call] = callback
+	
+	def start(self):
+		"""Since that Python thread objects can only be started once. This is my little work-around."""
+		
+		threading.Thread.__init__(self)
+		super(Asynchronizer, self).start()
 
 class Exceptionable(object):
 	"""An abstract class that adds support for error reporting."""
