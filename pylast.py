@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b1'
+LIB_VERSION = '0.2b2'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -237,7 +237,7 @@ class Request(Exceptionable):
 		
 		data = []
 		for name in self.params.keys():
-			data.append('='.join((name, self.params[name])))
+			data.append('='.join((name, urllib.quote_plus(self.params[name]))))
 		
 		try:
 			conn = httplib.HTTPConnection(API_SERVER)
