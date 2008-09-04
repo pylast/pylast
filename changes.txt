@@ -1,3 +1,6 @@
+0.2b6
+ * fixes
+ 
 0.2b5
  * Moved changes to an external file "changes.txt".
  * Added new webservices as: Track.getId, Track.getDuration, Track.getListenerCount, Track.getPlayCount, 

@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b5'
+LIB_VERSION = '0.2b6'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -399,14 +399,13 @@ class BaseObject(Asynchronizer, Exceptionable):
 class Cacheable(object):
 	"""Common functions for objects that can have cached metadata"""
 	
-	def __init__(self, user_set_data = False):
+	def __init__(self):
 		
 		# user_set_data (a temporary workaround, should be deprecated soon) identifies objects like
 		# Track that doesn't have a getInfo function,
 		# so the user sets the extra data from other feeds for now.
 		
 		self._cached_info = None
-		self._user_set_data = user_set_data
 	
 	def _getInfo(self):
 		"""Abstract function, should be inherited"""
@@ -430,11 +429,6 @@ class Cacheable(object):
 			value_or_container = value_or_container[key]
 		
 		return value_or_container
-	
-	def _setCachedInfo(self, info):
-		"""Set the info for objects that does not have a getInfo function (Temporary workaround, should be deprecated soon)"""
-		
-		self._cached_info = info
 
 
 class Album(BaseObject, Cacheable):
@@ -827,9 +821,8 @@ class Track(BaseObject, Cacheable):
 			
 			title = self._extract(track, 'name', 0)
 			artist = self._extract(track, 'name', 1)
-			extra_info['images'] = self._extract_all(track, 'image')
 			
-			data.append(Track(artist, title, self.api_key, self.secret, self.session_key, extra_info))
+			data.append(Track(artist, title, *self.auth_data))
 		
 		return data
 	
@@ -1186,11 +1179,7 @@ class Artist(BaseObject, Cacheable):
 			title = self._extract(track, 'name')
 			artist = self.getName()
 			
-			data = {}
-			data['play_count'] = self._extract(track, 'playcount')
-			data['images'] = self._extract_all(track, 'image')
-			
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, data))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 	
@@ -1547,11 +1536,7 @@ class Country(BaseObject):
 			title = self._extract(n, 'name')
 			artist = self._extract(n, 'name', 1)
 			
-			info = {}
-			info['play_count'] = self._extract(n, 'playcount')
-			info['images'] = self._extract_all(n, 'image')
-			
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 	
@@ -1662,10 +1647,7 @@ class Group(BaseObject):
 			artist = self._extract(track, 'artist')
 			title = self._extract(track, 'name')
 			
-			info = {}
-			info['play_count'] = self._extract(track, 'playcount')
-			
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 
@@ -2146,10 +2128,7 @@ class Tag(BaseObject):
 			title = self._extract(n, 'name')
 			artist = self._extract(n, 'name', 1)
 			
-			info = {}
-			info['images'] = self._extract_all(n, 'image')
-			
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 	
@@ -2562,11 +2541,7 @@ class User(BaseObject, Cacheable):
 			title = self._extract(track, 'name')
 			artist = self._extract(track, 'name', 1)
 			
-			info = {}
-			info['play_count'] = self._extract(track, 'playcount')
-			info['images'] = self._extract_all(track, 'image')
-		
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 	
@@ -2641,10 +2616,8 @@ class User(BaseObject, Cacheable):
 			artist = self._extract(track, 'artist')
 			title = self._extract(track, 'name')
 			
-			info = {}
-			info['play_count'] = self._extract(track, 'playcount')
 			
-			list.append(Track(artist, title, self.api_key, self.secret, self.session_key, info))
+			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
 	
