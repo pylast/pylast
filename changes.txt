@@ -1,3 +1,7 @@
+0.2b7
+ * Added Track.getWikiPublishedDate, Track.getSummary, Track.getContent.
+ * fixes
+
 0.2b6
  * fixes
  

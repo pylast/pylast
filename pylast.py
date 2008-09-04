@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b6'
+LIB_VERSION = '0.2b7'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -401,10 +401,6 @@ class Cacheable(object):
 	
 	def __init__(self):
 		
-		# user_set_data (a temporary workaround, should be deprecated soon) identifies objects like
-		# Track that doesn't have a getInfo function,
-		# so the user sets the extra data from other feeds for now.
-		
 		self._cached_info = None
 	
 	def _getInfo(self):
@@ -415,9 +411,6 @@ class Cacheable(object):
 		If not available in cache, it will be downloaded first.
 		"""
 		
-		if self._user_set_data:
-			return None
-		
 		if not self._cached_info:
 			self._cached_info = self._getInfo()
 		
@@ -426,6 +419,10 @@ class Cacheable(object):
 		
 		value_or_container = self._cached_info
 		for key in key_names:
+			
+			if not len(value_or_container):
+				return None
+			
 			value_or_container = value_or_container[key]
 		
 		return value_or_container
@@ -680,7 +677,7 @@ class Track(BaseObject, Cacheable):
 			data['top_tags'].append(Tag(tag, *self.auth_data))
 		
 		if len(doc.getElementsByTagName('wiki')) > 0:
-			wiki_element = [0]
+			wiki_element = doc.getElementsByTagName('wiki')[0]
 			data['wiki'] = {}
 			data['wiki']['published_date'] = self._extract(wiki_element, 'published')
 			data['wiki']['summary'] = self._extract(wiki_element, 'summary')
@@ -756,10 +753,11 @@ class Track(BaseObject, Cacheable):
 		
 		url = self._getCachedInfo('images', size)
 		
-		if url.startswith('http://cdn.last.fm/depth/catalogue'):
-			return self.getArtist().getImage(size)
-		else:
-			return url
+		if if_na_get_artist_image:
+			if not url or url.startswith('http://cdn.last.fm/depth/catalogue'):
+				url = self.getArtist().getImage(size)
+		
+		return url
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
@@ -947,7 +945,22 @@ class Track(BaseObject, Cacheable):
 		title = self._get_url_safe(self.getTitle())
 		
 		return url %{'domain': domain_name, 'artist': artist, 'title': title}
-
+	
+	def getWikiPublishedDate(self):
+		"""Returns the date of publishing the wiki content."""
+		
+		return self._getCachedInfo('wiki', 'published_date')
+	
+	def getWikiContent(self):
+		"""Returns the full wiki content."""
+		
+		return self._getCachedInfo('wiki', 'content')
+	
+	def getWikiSummary(self):
+		"""Returns the wiki summary."""
+		
+		return self._getCachedInfo('wiki', 'summary')
+	
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
