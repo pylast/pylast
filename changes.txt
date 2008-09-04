@@ -1,0 +1,21 @@
+0.2b5
+ * Moved changes to an external file "changes.txt".
+ * Added new webservices as: Track.getId, Track.getDuration, Track.getListenerCount, Track.getPlayCount, 
+   Track.getAlbumName, Track.getAlbum, Track.getImage, Event.share.
+ * Reverted where all objects retrieve all available metadata on the server from the server, now optional.
+ 
+
+0.2b4
+ * Added Track.getArtistName.
+ * Added numerous functions to User, Making use of the new User.getInfo webservice.
+ * Every object now retrieves all the metadata from the webservices even the trivial ones
+  like the album name or artist for proper casing. Use the object's attributes (like Album.artist_name and
+  Album.title instead of Album.getArtistName() and Album.getTitle() if you can't afford the delay 
+  caused by retrieving the data from a remote server.
+	
+0.2b3
+ * Added a little work-around on python's threading.Thread to make Asynchronizer objects 
+  able to restart more than once. 
+	
+0.2b2
+ * All http values are now url-encoded. illegal characters (like '&') will no longer cause a crash.

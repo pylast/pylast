@@ -22,27 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b4'
-
-"""
-Changes
-	0.2b4
-		* Added Track.getArtistName.
-		* Added Album.getArtistName.
-		* Added numerous functions to User, Making use of the new User.getInfo webservice.
-		* Every object now retrieves all the metadata from the webservices even the trivial ones
-		 like the album name or artist for proper casing. Use the object's attributes (like Album.artist_name and
-		 Album.title instead of Album.getArtistName() and Album.getTitle() if you can't afford the delay 
-		 caused by retrieving the data from a remote server.
-		
-	0.2b3
-		* Added a little work-around on python's threading.Thread to make Asynchronizer objects 
-		 able to restart more than once. 
-		
-	0.2b2
-		* All http values are now url-encoded. illegal characters (like '&') will no longer cause a crash. 
-		
-"""
+LIB_VERSION = '0.2b5'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -501,15 +481,25 @@ class Album(BaseObject, Cacheable):
 		
 		return Artist(self.getArtistName(), *self.auth_data)
 	
-	def getArtistName(self):
-		"""Returns the artist name. """
+	def getArtistName(self, from_server = False):
+		"""Returns the artist name.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self._getCachedInfo('artist')
+		if from_server:
+			return self._getCachedInfo('artist')
+		else:
+			return self.artist_name
 	
-	def getTitle(self):
-		"""Returns the album title."""
+	def getTitle(self, from_server = False):
+		"""Returns the album title.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self._getCachedInfo('name')
+		if from_server:
+			return self._getCachedInfo('name')
+		else:
+			return self.title
 	
 	def getReleaseDate(self):
 		"""Retruns the release date of the album."""
@@ -655,32 +645,127 @@ class Album(BaseObject, Cacheable):
 		return self.getArtist().getName() + u' - ' + self.getTitle()
 
 class Track(BaseObject, Cacheable):
-	def __init__(self, artist_name, title, api_key, secret, session_key, extra_info = None):
+	def __init__(self, artist_name, title, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
-		Cacheable.__init__(self, True)
+		Cacheable.__init__(self)
 		
 		self.artist_name = artist_name
 		self.title = title
 		
-		self._setCachedInfo(extra_info)
+		self._cached_info = None
 	
 	def _getParams(self):
 		return {'sk': self.session_key, 'artist': self.artist_name, 'track': self.title}
 	
-	def getArtist(self):
-		"""Returns the associated Artist object. """
+	def _getInfo(self):
+		"""Returns a dictionary with vairous metadata values about this track."""
 		
-		return Artist(self.artist_name, *self.auth_data)
+		params = self._getParams()
+		doc = Request(self, 'track.getInfo', self.api_key, params).execute()
+		
+		if not doc:
+			return None
+		
+		data = {}
+		
+		data['id'] = self._extract(doc, 'id')
+		data['title'] = self._extract(doc, 'name')
+		data['duration'] = self._extract(doc, 'duration')
+		data['listener_count'] = self._extract(doc, 'listeners')
+		data['play_count'] = self._extract(doc, 'playcount')
+		data['artist_name'] = self._extract(doc, 'name', 1)
+		data['album_name'] = self._extract(doc, 'title')
+		data['images'] = self._extract_all(doc, 'image')
+		
+		tags_element = doc.getElementsByTagName('toptags')[0]
+		top_tags = self._extract_all(tags_element, 'name')
+		
+		data['top_tags'] = []
+		
+		for tag in top_tags:
+			data['top_tags'].append(Tag(tag, *self.auth_data))
+		
+		if len(doc.getElementsByTagName('wiki')) > 0:
+			wiki_element = [0]
+			data['wiki'] = {}
+			data['wiki']['published_date'] = self._extract(wiki_element, 'published')
+			data['wiki']['summary'] = self._extract(wiki_element, 'summary')
+			data['wiki']['content'] = self._extract(wiki_element, 'content')
+		
+		return data
+		
+	def getArtist(self, from_server = False):
+		"""Returns the associated Artist object.
+		  * from_server: If set to True, the artist name will be retrieved from the server.
+		"""
+		
+		return Artist(self.getArtistName(from_server), *self.auth_data)
 	
-	def getArtistName(self):
-		"""Returns the name of the artist."""
+	def getArtistName(self, from_server = False):
+		"""Returns the name of the artist.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self.artist_name
+		if from_server:
+			return self._getCachedInfo('artist_name')
+		else:
+			return self.artist_name
 	
-	def getTitle(self):
-		"""Returns the track title. """
+	def getTitle(self, from_server = False):
+		"""Returns the track title.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self.title
+		if from_server:
+			return self._getCachedInfo('title')
+		else:
+			return self.title
+	
+	def getID(self):
+		"""Returns the track id on Last.fm."""
+		
+		return self._getCachedInfo('id')
+	
+	def getDuration(self):
+		"""Returns the track duration."""
+		
+		return self._getCachedInfo('duration')
+	
+	def getListenerCount(self):
+		"""Returns the listener count."""
+		
+		return self._getCachedInfo('listener_count')
+	
+	def getPlayCount(self):
+		"""Returns the play count."""
+		
+		return self._getCachedInfo('play_count')
+	
+	def getAlbumName(self):
+		"""Returns the name of the album."""
+		
+		return this._getCachedInfo('album_name')
+	
+	def getAlbum(self):
+		"""Returns the album object of this track."""
+		
+		return Album(self.getArtistName(), self.getAlbumName(), *self.auth_data)
+	
+	def getImage(self, size = IMAGE_LARGE, if_na_get_artist_image = False):
+		"""Returns the associated image URL.
+		* size: The image size. Possible values:
+		  o IMAGE_LARGE
+		  o IMAGE_MEDIUM
+		  o IMAGE_SMALL 
+		* if_na_get_artist_image: If set to True, it will return the artist's image if the track has none.
+		"""
+		
+		url = self._getCachedInfo('images', size)
+		
+		if url.startswith('http://cdn.last.fm/depth/catalogue'):
+			return self.getArtist().getImage(size)
+		else:
+			return url
 	
 	def addTags(self, *tags):
 		"""Adds one or several tags. 
@@ -910,10 +995,15 @@ class Artist(BaseObject, Cacheable):
 		
 		return data
 	
-	def getName(self):
-		"""Returns the name of the artist. """
+	def getName(self, from_server = False):
+		"""Returns the name of the artist.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self._getCachedInfo('name')
+		if from_server:
+			return self._getCachedInfo('name')
+		else:
+			return self.name
 	
 	def getImage(self, size = IMAGE_LARGE):
 		"""Returns the associated image URL. 
@@ -1357,6 +1447,32 @@ class Event(BaseObject, Cacheable):
 		
 		return url %{'domain': domain_name, 'id': self.getID()}
 
+	def share(self, users, message = None):
+		"""Shares this event (sends out recommendations). 
+  		* users: A list that can contain usernames, emails, User objects, or all of them.
+  		* message: A message to include in the recommendation message. 
+		"""
+		
+		#last.fm currently accepts a max of 10 recipient at a time
+		while(len(users) > 10):
+			section = users[0:9]
+			users = users[9:]
+			self.share(section, message)
+		
+		nusers = []
+		for user in users:
+			if isinstance(user, User):
+				nusers.append(user.getName())
+			else:
+				nusers.append(user)
+		
+		params = self._getParams()
+		recipients = ','.join(nusers)
+		params['recipient'] = recipients
+		if message: params['message'] = message
+		
+		Request(self, 'event.share', self.api_key, params, True, self.secret).execute()
+	
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
@@ -2111,10 +2227,15 @@ class User(BaseObject, Cacheable):
 		
 		return data
 	
-	def getName(self):
-		"""Returns the user name. """
+	def getName(self, from_server = False):
+		"""Returns the user name.
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
 		
-		return self._getCachedInfo('name')
+		if from_server:
+			return self._getCachedInfo('name')
+		else:
+			return self.name
 	
 	def getImage(self):
 		"""Returns the user's avatar."""
