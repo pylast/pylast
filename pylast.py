@@ -780,7 +780,7 @@ class Track(BaseObject, Cacheable, Taggable):
 	def getAlbumName(self):
 		"""Returns the name of the album."""
 		
-		return this._getCachedInfo('album_name')
+		return self._getCachedInfo('album_name')
 	
 	def getAlbum(self):
 		"""Returns the album object of this track."""
