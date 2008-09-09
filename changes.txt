@@ -1,3 +1,8 @@
+0.2b8
+ * Asynchronizer.async_call now accepts None as callback.
+ * moved all the tag related functions to a separate Taggable class.
+ * added Taggable.setTags
+ 
 0.2b7
  * Added Track.getWikiPublishedDate, Track.getSummary, Track.getContent.
  * fixes

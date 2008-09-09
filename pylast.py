@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b7'
+LIB_VERSION = '0.2b8'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -125,10 +125,14 @@ class Asynchronizer(threading.Thread):
 	
 	def run(self):
 		"""Avoid running this function. Use start() to begin the thread's work."""
+		
 		for call in self._calls.keys():
+			
 			output = call(*(self._calls[call]))
 			callback = self._callbacks[call]
-			callback(self, output)
+			
+			if callback:	#callback can be None if not wanted
+				callback(self, output)
 			
 			del self._calls[call]
 			del self._callbacks[call]
@@ -428,11 +432,118 @@ class Cacheable(object):
 		return value_or_container
 
 
-class Album(BaseObject, Cacheable):
+class Taggable(object):
+	"""Common functions for classes with tags."""
+	
+	def __init__(self, ws_prefix):
+		self.ws_prefix = ws_prefix
+	
+	def addTags(self, *tags):
+		"""Adds one or several tags.
+		* *tags: Any number of tag names or Tag objects. 
+		"""
+		
+		#last.fm currently accepts a max of 10 tags at a time
+		while(len(tags) > 10):
+			section = tags[0:9]
+			tags = tags[9:]
+			self.addTags(section)
+		
+		if len(tags) == 0:
+			return None
+		
+		ntags = []
+		for tag in tags:
+			if isinstance(tag, Tag):
+				ntags.append(tag.getName())
+			else:
+				ntags.append(tag)
+		
+		tagstr = ','.join(ntags)
+		
+		params = self._getParams()
+		params['tags'] = tagstr
+		
+		Request(self, self.ws_prefix + '.addTags', self.api_key, params, True, self.secret).execute()
+	
+	def _removeTag(self, single_tag):
+		"""Remove a user's tag from this object."""
+		
+		if isinstance(single_tag, Tag):
+			single_tag = single_tag.getName()
+		
+		params = self._getParams()
+		params['tag'] = single_tag
+		
+		Request(self, self.ws_prefix + '.removeTag', self.api_key, params, True, self.secret).execute()
+
+	def getTags(self):
+		"""Returns a list of the user-set tags to this object."""
+		
+		params = self._getParams()
+		doc = Request(self, self.ws_prefix + '.getTags', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return None
+		
+		tag_names = self._extract_all(doc, 'name')
+		tags = []
+		for tag in tag_names:
+			tags.append(Tag(tag, *self.auth_data))
+		
+		return tags
+	
+	def removeTags(self, *tags):
+		"""Removes one or several tags from this object.
+		* *tags: Any number of tag names or Tag objects. 
+		"""
+		
+		for tag in tags:
+			self._removeTag(tag)
+	
+	def clearTags(self):
+		"""Clears all the user-set tags. """
+		
+		self.removeTags(*(self.getTags()))
+	
+	def setTags(self, *tags):
+		"""Sets this object's tags to only those tags.
+		* *tags: any number of tag names.
+		"""
+		
+		c_old_tags = []
+		old_tags = []
+		c_new_tags = []
+		new_tags = []
+		
+		to_remove = []
+		to_add = []
+		
+		for tag in self.getTags():
+			c_old_tags.append(tag.getName().lower())
+			old_tags.append(tag.getName())
+		
+		for tag in tags:
+			c_new_tags.append(tag.lower())
+			new_tags.append(tag)
+		
+		for i in range(0, len(old_tags)):
+			if not c_old_tags[i] in c_new_tags:
+				to_remove.append(old_tags[i])
+		
+		for i in range(0, len(new_tags)):
+			if not c_new_tags[i] in c_old_tags:
+				to_add.append(new_tags[i])
+		
+		self.removeTags(*to_remove)
+		self.addTags(*to_add)
+
+class Album(BaseObject, Cacheable, Taggable):
 	
 	def __init__(self, artist_name, album_title, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
+		Taggable.__init__(self, 'album')
 		
 		self.artist_name = artist_name
 		self.title = album_title
@@ -530,74 +641,7 @@ class Album(BaseObject, Cacheable):
 			l.append(Tag(tag, *self.auth_data))
 		
 		return l
-	
-	def addTags(self, *tags):
-		"""Adds one or several tags.
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		#last.fm currently accepts a max of 10 tags at a time
-		while(len(tags) > 10):
-			section = tags[0:9]
-			tags = tags[9:]
-			self.addTags(section)
-		
-		if len(tags) == 0:
-			return None
-		
-		ntags = []
-		for tag in tags:
-			if isinstance(tag, Tag):
-				ntags.append(tag.getName())
-			else:
-				ntags.append(tag)
-		
-		tagstr = ','.join(ntags)
-		
-		params = self._getParams()
-		params['tags'] = tagstr
-		
-		Request(self, 'album.addTags', self.api_key, params, True, self.secret).execute()
-	
-	def getTags(self):
-		"""Returns a list of the user-set tags to this album."""
-		
-		params = self._getParams()
-		doc = Request(self, 'album.getTags', self.api_key, params, True, self.secret).execute()
-		
-		if not doc:
-			return None
-		
-		tag_names = self._extract_all(doc, 'name')
-		tags = []
-		for tag in tag_names:
-			tags.append(Tag(tag, *self.auth_data))
-		
-		return tags
-	
-	def _removeTag(self, single_tag):
-		"""Remove a user's tag from an album"""
-		
-		if isinstance(single_tag, Tag):
-			single_tag = single_tag.getName()
-		
-		params = self._getParams()
-		params['tag'] = single_tag
-		
-		Request(self, 'album.removeTag', self.api_key, params, True, self.secret).execute()
-	
-	def removeTags(self, *tags):
-		"""Removes one or several tags from this album.
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		for tag in tags:
-			self._removeTag(tag)
-	
-	def clearTags(self):
-		"""Clears all the user-set tags. """
-		
-		self.removeTags(*(self.getTags()))
+
 	
 	def fetchPlaylist(self):
 		"""Returns the list of Tracks on this album. """
@@ -635,10 +679,11 @@ class Album(BaseObject, Cacheable):
 		
 		return self.getArtist().getName() + u' - ' + self.getTitle()
 
-class Track(BaseObject, Cacheable):
+class Track(BaseObject, Cacheable, Taggable):
 	def __init__(self, artist_name, title, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
+		Taggable.__init__(self, 'track')
 		
 		self.artist_name = artist_name
 		self.title = title
@@ -759,27 +804,6 @@ class Track(BaseObject, Cacheable):
 		
 		return url
 	
-	def addTags(self, *tags):
-		"""Adds one or several tags. 
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		#last.fm currently accepts a max of 10 tags at a time
-		while(len(tags) > 10):
-			section = tags[0:9]
-			tags = tags[9:]
-			self.addTags(section)
-		
-		if len(tags) == 0:
-			return None
-		
-		tagstr = ','.join(tags)
-		
-		params = self._getParams()
-		params['tags'] = tagstr
-		
-		Request(self, 'track.addTags', self.api_key, params, True, self.secret).execute()
-	
 	def addToPlaylist(self, playlist_id):
 		"""Adds this track to a user playlist. 
 		* playlist_id: The unique playlist ID. 
@@ -824,22 +848,6 @@ class Track(BaseObject, Cacheable):
 		
 		return data
 	
-	def getTags(self):
-		"""Returns tags applied by the user to this track. """
-		
-		params = self._getParams()
-		doc = Request(self, 'track.getTags', self.api_key, params, True, self.secret).execute()
-		
-		if not doc:
-			return None
-		
-		names = self._extract_all(doc, 'name')
-		list = []
-		for name in names:
-			list.append(Tag(name, *self.auth_data))
-		
-		return list
-	
 	def getTopFans(self):
 		"""Returns the top fans for this track on Last.fm. """
 		
@@ -867,35 +875,11 @@ class Track(BaseObject, Cacheable):
 		
 		list = []
 		names = self._extract_all(doc, 'name')
-
+		
 		for name in names:
 			list.append(Tag(name, *self.auth_data))
 		
 		return list
-	
-	def _removeTag(self, single_tag):
-		"""Remove a user's tag from a track"""
-		
-		if isinstance(single_tag, Tag):
-			single_tag = single_tag.getName()
-		
-		params = self._getParams()
-		params['tag'] = single_tag
-		
-		Request(self, 'track.removeTag', self.api_key, params, True, self.secret).execute()
-
-	def removeTags(self, *tags):
-		"""Removes one or several tags from this track. 
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		for tag in tags:
-			self._removeTag(tag)
-	
-	def clearTags(self):
-		"""Clears all the user-set tags. """
-		
-		self.removeTags(*(self.getTags()))
 	
 	def share(self, users, message = None):
 		"""Shares this track (sends out recommendations). 
@@ -966,11 +950,12 @@ class Track(BaseObject, Cacheable):
 		
 		return self.getArtist().getName() + u' - ' + self.getTitle()
 		
-class Artist(BaseObject, Cacheable):
+class Artist(BaseObject, Cacheable, Taggable):
 	
 	def __init__(self, artist_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
+		Taggable.__init__(self, 'artist')
 		
 		self.name = artist_name
 	
@@ -1046,34 +1031,6 @@ class Artist(BaseObject, Cacheable):
 		
 		return self._getCachedInfo('bio', 'content')
 	
-	def addTags(self, *tags):
-		"""Adds one or several tags. 
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		#last.fm currently accepts a max of 10 tags at a time
-		while(len(tags) > 10):
-			section = tags[0:9]
-			tags = tags[9:]
-			self.addTags(section)
-		
-		if len(tags) == 0:
-			return None
-		
-		ntags = []
-		for tag in tags:
-			if isinstance(tag, Tag):
-				ntags.append(tag.getName())
-			else:
-				ntags.append(tag)
-		
-		tagstr = ','.join(ntags)
-		
-		params = self._getParams()
-		params['tags'] = tagstr
-		
-		Request(self, 'artist.addTags', self.api_key, params, True, self.secret).execute()
-	
 	def getEvents(self):
 		"""Returns a list of the upcoming Events for this artist. """
 		
@@ -1109,22 +1066,6 @@ class Artist(BaseObject, Cacheable):
 			artists.append(Artist(name, *self.auth_data))
 		
 		return artists
-	
-	def getTags(self):
-		"""Returns a list of the user-set tags to this artist. """
-		
-		params = self._getParams()
-		doc = Request(self, 'artist.getTags', self.api_key, params, True, self.secret).execute()
-		
-		if not doc:
-			return None
-		
-		tag_names = self._extract_all(doc, 'name')
-		tags = []
-		for tag in tag_names:
-			tags.append(Tag(tag, *self.auth_data))
-		
-		return tags
 	
 	def getTopAlbums(self):
 		"""Returns a list of the top Albums by this artist on Last.fm. """
@@ -1195,30 +1136,6 @@ class Artist(BaseObject, Cacheable):
 			list.append(Track(artist, title, *self.auth_data))
 		
 		return list
-	
-	def _removeTag(self, single_tag):
-		"""Remove a user's tag from an artist"""
-		
-		if isinstance(single_tag, Tag):
-			single_tag = single_tag.getName()
-		
-		params = self._getParams()
-		params['tag'] = single_tag
-		
-		Request(self, 'artist.removeTag', self.api_key, params, True, self.secret).execute()
-
-	def removeTags(self, *tags):
-		"""Removes one or several tags from this artist. 
-		* *tags: Any number of tag names or Tag objects. 
-		"""
-		
-		for tag in tags:
-			self._removeTag(tag)
-
-	def clearTags(self):
-		"""Clears all the user-set tags. """
-		
-		self.removeTags(*(self.getTags()))
 
 	def share(self, users, message = None):
 		"""Shares this artist (sends out recommendations). 
