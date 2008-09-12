@@ -22,7 +22,7 @@
 # documentation at http://code.google.com/p/pylast/wiki/Documentation
 
 LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b8'
+LIB_VERSION = '0.2b9'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -122,20 +122,32 @@ class Asynchronizer(threading.Thread):
 		
 		self._calls = {}		#calls is structured like this: {call_pointer: (arg1, arg2, ...)}
 		self._callbacks = {} 	#callbacks is structred like this: {call_pointer: callback_pointer}
+		
+		self.is_running = False
+	
+	def isRunning(self):
+		"""Returns if the thread is already running, for usage instead of isAlive which doesn't believe in thread restarting."""
+		
+		return self.is_running
 	
 	def run(self):
 		"""Avoid running this function. Use start() to begin the thread's work."""
 		
-		for call in self._calls.keys():
-			
-			output = call(*(self._calls[call]))
-			callback = self._callbacks[call]
-			
-			if callback:	#callback can be None if not wanted
-				callback(self, output)
-			
-			del self._calls[call]
-			del self._callbacks[call]
+		self.is_running = True
+		
+		while len(self._calls):
+			for call in self._calls.keys():
+				
+				output = call(*(self._calls[call]))
+				callback = self._callbacks[call]
+				
+				if callback:	#callback can be None if not wanted
+					callback(self, output)
+				
+				del self._calls[call]
+				del self._callbacks[call]
+		
+		self.is_running = False
 	
 	def async_call(self, callback, call, *call_args):
 		"""This is the function for setting up an asynchronous operation.
@@ -149,6 +161,9 @@ class Asynchronizer(threading.Thread):
 	
 	def start(self):
 		"""Since that Python thread objects can only be started once. This is my little work-around."""
+		
+		if self.isRunning():
+			return
 		
 		threading.Thread.__init__(self)
 		super(Asynchronizer, self).start()
