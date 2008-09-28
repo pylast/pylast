@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pylast - Python bindings for the Last.fm webservices.
+# pylast - A Python interface to the Last.fm API.
 # Copyright (C) 2008-2009  Amr Hassan
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,12 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA
 #
-# For help regarding using this library, please visit the official
-# documentation at http://code.google.com/p/pylast/wiki/Documentation
+# http://code.google.com/p/pylast/
 
-LIB_NAME = 'pyLast'
-LIB_VERSION = '0.2b9'
+__name__ = 'pyLast'
+__version__ = '0.2b10'
+__author__ = 'Amr Hassan'
+__mail__ = 'amr.hassan@gmail.com'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -111,6 +112,25 @@ class ServiceException(Exception):
 	
 	def __str__(self):
 		return "%s: %s." %(_status2str(self._lastfm_status), self._details)
+	
+	def getID(self):
+		"""Returns the exception ID, from one of the following:
+			STATUS_INVALID_SERVICE = 2
+			STATUS_INVALID_METHOD = 3
+			STATUS_AUTH_FAILED = 4
+			STATUS_INVALID_FORMAT = 5
+			STATUS_INVALID_PARAMS = 6
+			STATUS_INVALID_RESOURCE = 7
+			STATUS_TOKEN_ERROR = 8
+			STATUS_INVALID_SK = 9
+			STATUS_INVALID_API_KEY = 10
+			STATUS_OFFLINE = 11
+			STATUS_SUBSCRIBERS_ONLY = 12
+			STATUS_TOKEN_UNAUTHORIZED = 14
+			STATUS_TOKEN_EXPIRED = 15
+		"""
+		
+		return self._lastfm_status
 
 class Asynchronizer(threading.Thread):
 	"""Hopingly, this class would help perform asynchronous operations less painfully.
@@ -272,7 +292,7 @@ class Request(Exceptionable):
 			headers = {
 				"Content-type": "application/x-www-form-urlencoded",
 				'Accept-Charset': 'utf-8',
-				'User-Agent': LIB_NAME + '/' + LIB_VERSION
+				'User-Agent': __name__ + '/' + __version__
 				}
 			conn.request('POST', API_SUBDIR, '&'.join(data), headers)
 			response = conn.getresponse()
@@ -404,7 +424,7 @@ class BaseObject(Asynchronizer, Exceptionable):
 		if type(text) == type(unicode()):
 			text = text.encode('utf-8')
 		
-		return urllib.quote_plus(text)
+		return urllib.quote_plus(urllib.quote_plus(text))
 
 	def toStr():
 		return ""
@@ -458,26 +478,20 @@ class Taggable(object):
 		* *tags: Any number of tag names or Tag objects. 
 		"""
 		
-		#last.fm currently accepts a max of 10 tags at a time
-		while(len(tags) > 10):
-			section = tags[0:9]
-			tags = tags[9:]
-			self.addTags(section)
-		
-		if len(tags) == 0:
-			return None
-		
-		ntags = []
 		for tag in tags:
-			if isinstance(tag, Tag):
-				ntags.append(tag.getName())
-			else:
-				ntags.append(tag)
+			self._addTag(tag)
 		
-		tagstr = ','.join(ntags)
+	
+	def _addTag(self, tag):
+		"""Adds one or several tags.
+		* tag: one tag name or a Tag object.
+		"""
+		
+		if isinstance(tag, Tag):
+			tag = tag.getName()
 		
 		params = self._getParams()
-		params['tags'] = tagstr
+		params['tags'] = tag
 		
 		Request(self, self.ws_prefix + '.addTags', self.api_key, params, True, self.secret).execute()
 	
@@ -534,7 +548,11 @@ class Taggable(object):
 		to_remove = []
 		to_add = []
 		
-		for tag in self.getTags():
+		tags_on_server = self.getTags()
+		if tags_on_server == None:
+			return
+		
+		for tag in tags_on_server:
 			c_old_tags.append(tag.getName().lower())
 			old_tags.append(tag.getName())
 		
@@ -648,11 +666,17 @@ class Album(BaseObject, Cacheable, Taggable):
 		
 		return self._getCachedInfo('listeners')
 	
-	def getTopTags(self):
+	def getTopTags(self, limit = None):
 		"""Returns a list of the most-applied tags to this album. """
+		
+		#Web services currently broken.
+		#TODO: add getDetailedTopTags
 		
 		l = []
 		for tag in self._getCachedInfo('top_tags'):
+			if limit and len(l) >= limit:
+				break
+			
 			l.append(Tag(tag, *self.auth_data))
 		
 		return l
@@ -661,7 +685,7 @@ class Album(BaseObject, Cacheable, Taggable):
 	def fetchPlaylist(self):
 		"""Returns the list of Tracks on this album. """
 		
-		uri = 'lastfm://playlist/album/%s' %self._getCachedInfo('id')
+		uri = 'lastfm://playlist/album/%s' %self.getID()
 		
 		return Playlist(uri, *self.auth_data).fetch()
 	
@@ -879,7 +903,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		
 		return list
 	
-	def getTopTags(self):
+	def getTopTags(self, limit = None):
 		"""Returns the top tags for this track on Last.fm, ordered by tag count. """
 		
 		params = self._getParams()
@@ -892,6 +916,9 @@ class Track(BaseObject, Cacheable, Taggable):
 		names = self._extract_all(doc, 'name')
 		
 		for name in names:
+			if limit and len(list) >= limit:
+				break
+			
 			list.append(Tag(name, *self.auth_data))
 		
 		return list
@@ -1116,7 +1143,9 @@ class Artist(BaseObject, Cacheable, Taggable):
 		
 		return list
 	
-	def getTopTags(self):
+	#TODO: add getTopTagsWithCount
+	
+	def getTopTags(self, limit = None):
 		"""Returns a list of the most frequently used Tags on this artist. """
 		
 		params = self._getParams()
@@ -1128,6 +1157,8 @@ class Artist(BaseObject, Cacheable, Taggable):
 		names = self._extract_all(doc, 'name')
 		tags = []
 		for name in names:
+			if limit and len(tags) >= limit:
+				break
 			tags.append(Tag(name, *self.auth_data))
 		
 		return tags
@@ -1969,10 +2000,12 @@ class Playlist(BaseObject):
 		return {'playlistURL': self._playlist_uri}
 	
 	def getPlaylistURI(self):
+		"""Returns the Last.fm playlist URI. """
+		
 		return self._playlist_uri
 	
 	def fetch(self):
-		"""Returns the Last.fm playlist URI. """
+		"""Returns the tracks on this playlist."""
 		
 		params = self._getParams()
 		
@@ -2327,7 +2360,7 @@ class User(BaseObject, Cacheable):
 			p['id'] = self._extract(playlist, 'id')
 			p['title'] = self._extract(playlist, 'title')
 			p['date'] = self._extract(playlist, 'date')
-			p['size'] = self._extract(playlist, 'size')
+			p['size'] = int(self._extract(playlist, 'size'))
 			
 			list.append(p)
 		
@@ -2441,7 +2474,9 @@ class User(BaseObject, Cacheable):
 			list.append(Artist(name, *self.auth_data))
 		
 		return list
-		
+	
+	#TODO: add getTopTagsWithCount
+	
 	def getTopTags(self, limit = None):
 		"""Returns the top tags used by this user. 
 		* limit: The limit of how many tags to return. 
