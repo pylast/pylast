@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2b10'
+__version__ = '0.2b11'
 __author__ = 'Amr Hassan'
 __mail__ = 'amr.hassan@gmail.com'
 
@@ -285,7 +285,7 @@ class Request(Exceptionable):
 		
 		data = []
 		for name in self.params.keys():
-			data.append('='.join((name, urllib.quote_plus(self.params[name]))))
+			data.append('='.join((name, urllib.quote_plus(self.params[name].encode('utf-8')))))
 		
 		try:
 			conn = httplib.HTTPConnection(API_SERVER)
@@ -1804,8 +1804,8 @@ class Library(BaseObject):
 		"""
 		
 		params = self._getParams()
-		if limit: params['limit'] = str(limit)
-		if page: params['page'] = str(page)
+		if limit: params['limit'] = unicode(limit)
+		if page: params['page'] = unicode(page)
 		
 		doc = Request(self, 'library.getAlbums', self.api_key, params).execute()
 		
@@ -1837,8 +1837,8 @@ class Library(BaseObject):
 		"""
 		
 		params = self._getParams()
-		if limit: params['limit'] = str(limit)
-		if page: params['page'] = str(page)
+		if limit: params['limit'] = unicode(limit)
+		if page: params['page'] = unicode(page)
 		
 		doc = Request(self, 'library.getArtists', self.api_key, params).execute()
 		
@@ -1866,8 +1866,8 @@ class Library(BaseObject):
 		"""Returns a paginated list of all the tracks in a user's library. """
 		
 		params = self._getParams()
-		if limit: params['limit'] = str(limit)
-		if page: params['page'] = str(page)
+		if limit: params['limit'] = unicode(limit)
+		if page: params['page'] = unicode(page)
 		
 		doc = Request(self, 'library.getTracks', self.api_key, params).execute()
 		

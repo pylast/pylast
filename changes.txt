@@ -1,3 +1,6 @@
+0.2b11
+ * fixed: some unicode problems.
+
 0.2b10
  * fixed: getURL now returns the link with it's parameters double quoted as it should.
  * Artist.getTopTags, Track.getTopTags, Album.getTopTags all now have a limit argument.
