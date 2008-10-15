@@ -222,7 +222,7 @@ class Exceptionable(object):
 		for e in exceptional.get_all_errors():
 			self._report_error(e)
 	
-	def clear_erros(self):
+	def clear_errors(self):
 		"""Clear the error log for this object."""
 		self.__errors = []
 	
