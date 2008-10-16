@@ -21,9 +21,10 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2b11'
+__version__ = '0.2b12'
+__doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
-__mail__ = 'amr.hassan@gmail.com'
+__email__ = 'amr.hassan@gmail.com'
 
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
@@ -2345,8 +2346,8 @@ class User(BaseObject, Cacheable):
 		
 		return list
 	
-	def getPlaylistIDs(self):
-		"""Returns a list the playlists IDs this user has created. """
+	def getPlaylistsData(self):
+		"""Returns a list of dictionaries for each playlist. """
 		
 		params = self._getParams()
 		doc = Request(self, 'user.getPlaylists', self.api_key, params).execute()
@@ -2366,6 +2367,15 @@ class User(BaseObject, Cacheable):
 		
 		return list
 	
+	def getPlaylistIDs(self):
+		"""Returns a list the playlists IDs this user has created. """
+		
+		ids = []
+		for i in self.getPlaylistsData():
+			ids.append(i['id'])
+		
+		return ids
+	
 	def fetchPlaylist(self, playlist_id):
 		"""Returns a list of the tracks on a playlist. 
 		* playlist_id: A unique last.fm playlist ID, can be retrieved from getPlaylistIDs(). 
@@ -2373,7 +2383,7 @@ class User(BaseObject, Cacheable):
 		
 		uri = u'lastfm://playlist/%s' %unicode(playlist_id)
 		
-		return Playlist(uri, self.api_key).fetch()
+		return Playlist(uri, *self.auth_data).fetch()
 	
 	def getNowPlaying(self):
 		"""Returns the currently playing track, or None if nothing is playing. """

@@ -1,5 +1,8 @@
-0.2b11
+0.2b12
  * fixed: some unicode problems.
+ * fix: a typo in the function name Exceptionable.clear_errors()
+ * fixed: User.fetchPlaylist (#3)
+ * api change: User.getPlaylistsIDs is now User.getPlaylistsData, and User.getPlaylistsIDs returns a list of IDs now.
 
 0.2b10
  * fixed: getURL now returns the link with it's parameters double quoted as it should.

@@ -1,10 +1,12 @@
 from distutils.core import setup
 
-setup(name='pylast',
-      version='0.2b10',
-      author='Amr Hassan',
-      long_description = 'A Python interface to the Last.fm API',
-      author_email='amr.hassan@gmail.com',
+import pylast
+
+setup(name = pylast.__name__,
+      version = pylast.__version__,
+      author = pylast.__author__,
+      long_description = pylast.__doc__,
+      author_email = pylast.__email__,
       url='http://code.google.com/p/pylast/',
       py_modules= ("pylast",)
 )
