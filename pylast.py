@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2b12'
+__version__ = '0.2b13'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -29,7 +29,7 @@ __email__ = 'amr.hassan@gmail.com'
 API_SERVER = 'ws.audioscrobbler.com'
 API_SUBDIR = '/2.0/'
 
-import md5
+import hashlib
 import httplib
 import urllib
 import threading
@@ -271,7 +271,7 @@ class Request(Exceptionable):
 		
 		string += self.secret
 		
-		hash = md5.new()
+		hash = hashlib.md5()
 		hash.update(string)
 		
 		return hash.hexdigest()
@@ -2265,7 +2265,7 @@ class User(BaseObject, Cacheable):
 		
 		params = self._getParams()
 		if limit:
-			params['limit'] = limit
+			params['limit'] = unicode(limit)
 		
 		doc = Request(self, 'user.getFriends', self.api_key, params).execute()
 		
@@ -2308,7 +2308,7 @@ class User(BaseObject, Cacheable):
 		
 		params = self._getParams()
 		if limit:
-			params['limit'] = limit
+			params['limit'] = unicode(limit)
 		
 		doc = Request(self, 'user.getNeighbours', self.api_key, params).execute()
 		
@@ -2332,7 +2332,7 @@ class User(BaseObject, Cacheable):
 		
 		params = self._getParams()
 		if limit:
-			params['limit'] = limit
+			params['limit'] = unicode(limit)
 		
 		doc = Request(self, 'user.getPastEvents', self.api_key, params).execute()
 		
@@ -2494,7 +2494,7 @@ class User(BaseObject, Cacheable):
 		
 		params = self._getParams()
 		if limit:
-			params['limit'] = limit
+			params['limit'] = unicode(limit)
 		
 		doc = Request(self, 'user.getTopTags', self.api_key, params).execute()
 		

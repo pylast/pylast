@@ -1,3 +1,7 @@
+0.2b13:
+ * fixed: User.get_friends limit parameter (issue #5)
+ * changed: using hashlib module instead of deprecated md5 module.
+
 0.2b12
  * fixed: some unicode problems.
  * fix: a typo in the function name Exceptionable.clear_errors()
