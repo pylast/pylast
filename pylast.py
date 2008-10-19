@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2b13'
+__version__ = '0.2.14'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -81,6 +81,12 @@ DOMAIN_CHINESE = 'cn.last.fm'
 
 USER_MALE = 'Male'
 USER_FEMALE = 'Female'
+
+def warn(message):
+	print "Warning:", message
+
+def warn_deprecated(old, new):
+	warn('%s is now deprecated. Use %s instead.' %(old, new))
 
 def _status2str(lastfm_status):
 	
@@ -272,7 +278,7 @@ class Request(Exceptionable):
 		string += self.secret
 		
 		hash = hashlib.md5()
-		hash.update(string)
+		hash.update(string.encode('utf-8'))
 		
 		return hash.hexdigest()
 	
@@ -847,7 +853,12 @@ class Track(BaseObject, Cacheable, Taggable):
 	def addToPlaylist(self, playlist_id):
 		"""Adds this track to a user playlist. 
 		* playlist_id: The unique playlist ID. 
+		
+		[DEPRECATED]
+		Use UserPlaylist.addTrack instead.
 		"""
+		
+		warn_deprecated('Track.addToPlaylist', 'UserPlaylist.addTrack')
 		
 		params = self._getParams()
 		params['playlistID'] = unicode(playlist_id)
@@ -2346,6 +2357,25 @@ class User(BaseObject, Cacheable):
 		
 		return list
 	
+	def getPlaylists(self):
+		"""Returns a list of UserPlaylists that this user owns."""
+		
+		data = self.getPlaylistsData()
+		
+		if not data:
+			return data
+		
+		ids = []
+		for p in data:
+			ids.append(p['id'])
+		
+		playlists = []
+		
+		for id in ids:
+			playlists.append(UserPlaylist(self.getName(), id, *self.auth_data))
+		
+		return playlists
+	
 	def getPlaylistsData(self):
 		"""Returns a list of dictionaries for each playlist. """
 		
@@ -2362,13 +2392,24 @@ class User(BaseObject, Cacheable):
 			p['title'] = self._extract(playlist, 'title')
 			p['date'] = self._extract(playlist, 'date')
 			p['size'] = int(self._extract(playlist, 'size'))
+			p['description'] = self._extract(playlist, 'description')
+			p['duration'] = self._extract(playlist, 'duration')
+			p['streamable'] = self._extract(playlist, 'streamable')
+			p['images'] = self._extract_all(playlist, 'image')
+			p['url_appendix'] = self._extract(playlist, 'url')[19:]
 			
 			list.append(p)
 		
 		return list
 	
 	def getPlaylistIDs(self):
-		"""Returns a list the playlists IDs this user has created. """
+		"""Returns a list the playlists IDs this user has created.
+		
+		[DEPRECATED]
+		Use User.getPlaylists() instead.
+		"""
+		
+		warn_deprecated('User.getPlaylistIDs', 'User.getPlaylists')
 		
 		ids = []
 		for i in self.getPlaylistsData():
@@ -2378,8 +2419,13 @@ class User(BaseObject, Cacheable):
 	
 	def fetchPlaylist(self, playlist_id):
 		"""Returns a list of the tracks on a playlist. 
-		* playlist_id: A unique last.fm playlist ID, can be retrieved from getPlaylistIDs(). 
+		* playlist_id: A unique last.fm playlist ID, can be retrieved from getPlaylistIDs().
+		
+		[DEPRECATED]
+		Use UserPlaylist.getTracks() instead.
 		"""
+		
+		warn_deprecated('User.fetchPlaylist', 'UserPlaylist.getTracks')
 		
 		uri = u'lastfm://playlist/%s' %unicode(playlist_id)
 		
@@ -2741,6 +2787,140 @@ class ArtistSearch(Search):
 			list.append(Artist(name, *self.auth_data))
 		
 		return list
+
+class UserPlaylist(BaseObject, Cacheable):
+	def __init__(self, username, playlist_id, api_key, api_secret, session_key):
+		BaseObject.__init__(self, api_key, api_secret, session_key)
+		Cacheable.__init__(self)
+		
+		self._username = username
+		self._playlist_id = unicode(playlist_id)
+		
+		self._cached_info = None
+
+	def _getInfo(self):
+		
+		playlists = self.getUser().getPlaylistsData()
+		data = None
+		
+		for p in playlists:
+			if p['id'] == self.getPlaylistID():
+				data = p
+		
+		return data
+	
+	def _getParams(self):
+		return {'sk': self.session_key, 'user': self._username, 'playlistID': self._playlist_id}
+	
+	def getPlaylistID(self):
+		"""Returns the playlist id."""
+		
+		return self._playlist_id
+	
+	def getUser(self):
+		"""Returns the owner user of this playlist."""
+		
+		return User(self._username, *self.auth_data)
+	
+	def getTracks(self):
+		"""Returns a list of the tracks on this user playlist."""
+		
+		uri = u'lastfm://playlist/%s' %unicode(self.getPlaylistID())
+		
+		return Playlist(uri, *self.auth_data).fetch()
+	
+	def addTrack(self, track):
+		"""Adds a Track to this UserPlaylist.
+		* track: Any Track object.
+		"""
+		
+		params = self._getParams()
+		params['artist'] = track.getArtist().getName()
+		params['track'] = track.getTitle()
+		
+		Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
+	
+	def getTitle(self):
+		"""Returns the title of this playlist."""
+		
+		return self._getCachedInfo('title')
+	
+	def getCreationDate(self):
+		"""Returns the creation date of this playlist."""
+		
+		return self._getCachedInfo('date')
+	
+	def getSize(self):
+		"""Returns the size of this playlist."""
+		
+		return self._getCachedInfo('size')
+	
+	def getDescription(self):
+		"""Returns the description of this playlist."""
+		
+		return self._getCachedInfo('description')
+	
+	def getDuration(self):
+		"""Returns the duration of this playlist."""
+		
+		return self._getCachedInfo('duration')
+	
+	def isStreamable(self):
+		"""Returns True if the playlist is streamable.
+		For a playlist to be streamable, it needs at least 45 tracks by 15 different artists."""
+		
+		if self._getCachedInfo('streamable') == '1':
+			return True
+		else:
+			return False
+	
+	def hasTrack(self, track):
+		"""Checks to see if track is already in the playlist.
+		* track: Any Track object.
+		"""
+		
+		tracks = self.getTracks()
+		
+		if not tracks:
+			return False
+		
+		has_it = False
+		for t in tracks:
+			if track._hash() == t._hash():
+				has_it = True
+				break
+		
+		return has_it
+
+	def getImage(self, size = IMAGE_LARGE):
+		"""Returns the associated image URL.
+		* size: The image size. Possible values:
+		  o IMAGE_LARGE
+		  o IMAGE_MEDIUM
+		  o IMAGE_SMALL 
+		"""
+		
+		return self._getCachedInfo('images', size)
+	
+	def getURL(self, domain_name = DOMAIN_ENGLISH):
+		"""Returns the url of the playlist on Last.fm. 
+		* domain_name: Last.fm's language domain. Possible values:
+		  o DOMAIN_ENGLISH
+		  o DOMAIN_GERMAN
+		  o DOMAIN_SPANISH
+		  o DOMAIN_FRENCH
+		  o DOMAIN_ITALIAN
+		  o DOMAIN_POLISH
+		  o DOMAIN_PORTUGUESE
+		  o DOMAIN_SWEDISH
+		  o DOMAIN_TURKISH
+		  o DOMAIN_RUSSIAN
+		  o DOMAIN_JAPANESE
+		  o DOMAIN_CHINESE 
+		"""
+		url = 'http://%(domain)s/%(appendix)s'
+		
+		return url %{'domain': domain_name, 'appendix': self._getCachedInfo('url_appendix')}
 
 class TagSearch(Search):
 	"""Search for a tag by tag name."""

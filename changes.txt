@@ -1,3 +1,11 @@
+0.2.14:
+ * changed the version numbering system.
+ * fixed Authentication and MD5 with non-ASCII characters (issue #7)
+ * Created UserPlaylist class.
+ * User.getPlaylistIDs is now deprecated.
+ * track.addToPlaylist is now deprecated.
+ * User.fetchPlaylist is now deprecated.
+
 0.2b13:
  * fixed: User.get_friends limit parameter (issue #5)
  * changed: using hashlib module instead of deprecated md5 module.
