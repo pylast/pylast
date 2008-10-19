@@ -2363,7 +2363,7 @@ class User(BaseObject, Cacheable):
 		data = self.getPlaylistsData()
 		
 		if not data:
-			return data
+			return []
 		
 		ids = []
 		for p in data:
