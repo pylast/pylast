@@ -579,6 +579,7 @@ class Taggable(object):
 		self.addTags(*to_add)
 
 class Album(BaseObject, Cacheable, Taggable):
+	"""A Last.fm album."""
 	
 	def __init__(self, artist_name, album_title, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -726,6 +727,8 @@ class Album(BaseObject, Cacheable, Taggable):
 		return self.getArtist().getName() + u' - ' + self.getTitle()
 
 class Track(BaseObject, Cacheable, Taggable):
+	"""A Last.fm track."""
+	
 	def __init__(self, artist_name, title, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
 		Cacheable.__init__(self)
@@ -1005,6 +1008,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		return self.getArtist().getName() + u' - ' + self.getTitle()
 		
 class Artist(BaseObject, Cacheable, Taggable):
+	"""A Last.fm artist."""
 	
 	def __init__(self, artist_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -1250,7 +1254,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		return self.getName()
 
 class Event(BaseObject, Cacheable):
-	"""Represents an event"""
+	"""A Last.fm event."""
 	
 	def __init__(self, event_id, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -1470,6 +1474,7 @@ class Event(BaseObject, Cacheable):
 		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle(), 'artists': sa, 'place': self.getVenueName()}
 
 class Country(BaseObject):
+	"""A country at Last.fm."""
 	
 	# TODO geo.getEvents
 	
@@ -1557,6 +1562,7 @@ class Country(BaseObject):
 		return self.getName()
 	
 class Group(BaseObject):
+	"""A Last.fm group."""
 	
 	def __init__(self, group_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -1687,7 +1693,7 @@ class Group(BaseObject):
 		return self.getName()
 
 class Library(BaseObject):
-	"""Represents a user's library."""
+	"""A user's Last.fm library."""
 	
 	def __init__(self, username, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -2002,6 +2008,7 @@ class Library(BaseObject):
 					return self._tracks_tagcounts[track._hash()]
 
 class Playlist(BaseObject):
+	"An abstract Last.fm playlist."""
 	
 	def __init__(self, playlist_uri, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -2045,6 +2052,7 @@ class Playlist(BaseObject):
 		return self.getPlaylistURI()
 
 class Tag(BaseObject):
+	"""A Last.fm object tag."""
 	
 	def __init__(self, tag_name, api_key, secret, session_key):
 		BaseObject.__init__(self, api_key, secret, session_key)
@@ -2162,6 +2170,7 @@ class Tag(BaseObject):
 		return self.getName()
 
 class User(BaseObject, Cacheable):
+	"""A Last.fm user."""
 	
 	def __init__(self, user_name, api_key, api_secret, session_key):
 		BaseObject.__init__(self, api_key, api_secret, session_key)
@@ -2789,6 +2798,8 @@ class ArtistSearch(Search):
 		return list
 
 class UserPlaylist(BaseObject, Cacheable):
+	"""A Last.fm user playlist."""
+	
 	def __init__(self, username, playlist_id, api_key, api_secret, session_key):
 		BaseObject.__init__(self, api_key, api_secret, session_key)
 		Cacheable.__init__(self)
