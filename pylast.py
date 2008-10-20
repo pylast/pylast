@@ -667,12 +667,12 @@ class Album(BaseObject, Cacheable, Taggable):
 	def getPlayCount(self):
 		"""Returns the number of plays on Last.fm."""
 		
-		return self._getCachedInfo('play_count')
+		return int(self._getCachedInfo('play_count'))
 	
 	def getListenerCount(self):
 		"""Returns the number of liteners on Last.fm."""
 		
-		return self._getCachedInfo('listeners')
+		return int(self._getCachedInfo('listeners'))
 	
 	def getTopTags(self, limit = None):
 		"""Returns a list of the most-applied tags to this album. """
@@ -814,17 +814,17 @@ class Track(BaseObject, Cacheable, Taggable):
 	def getDuration(self):
 		"""Returns the track duration."""
 		
-		return self._getCachedInfo('duration')
+		return int(self._getCachedInfo('duration'))
 	
 	def getListenerCount(self):
 		"""Returns the listener count."""
 		
-		return self._getCachedInfo('listener_count')
+		return int(self._getCachedInfo('listener_count'))
 	
 	def getPlayCount(self):
 		"""Returns the play count."""
 		
-		return self._getCachedInfo('play_count')
+		return int(self._getCachedInfo('play_count'))
 	
 	def getAlbumName(self):
 		"""Returns the name of the album."""
@@ -1067,12 +1067,12 @@ class Artist(BaseObject, Cacheable, Taggable):
 	def getPlayCount(self):
 		"""Returns the number of plays on Last.fm. """
 		
-		return self._getCachedInfo('play_count')
+		return int(self._getCachedInfo('play_count'))
 	
 	def getListenerCount(self):
 		"""Returns the number of liteners on Last.fm. """
 		
-		return self._getCachedInfo('listeners')
+		return int(self._getCachedInfo('listeners'))
 	
 	def getBioPublishedDate(self):
 		"""Returns the date on which the artist's biography was published. """
@@ -2261,7 +2261,7 @@ class User(BaseObject, Cacheable):
 	def getPlayCount(self):
 		"""Returns the user's playcount so far."""
 		
-		return self._getCachedInfo('play_count')
+		return int(self._getCachedInfo('play_count'))
 	
 	def getEvents(self):
 		"""Returns all the upcoming events for this user. """
@@ -2864,7 +2864,7 @@ class UserPlaylist(BaseObject, Cacheable):
 	def getSize(self):
 		"""Returns the size of this playlist."""
 		
-		return self._getCachedInfo('size')
+		return int(self._getCachedInfo('size'))
 	
 	def getDescription(self):
 		"""Returns the description of this playlist."""
@@ -2874,7 +2874,7 @@ class UserPlaylist(BaseObject, Cacheable):
 	def getDuration(self):
 		"""Returns the duration of this playlist."""
 		
-		return self._getCachedInfo('duration')
+		return int(self._getCachedInfo('duration'))
 	
 	def isStreamable(self):
 		"""Returns True if the playlist is streamable.
