@@ -1,3 +1,6 @@
+0.2.15:
+ * API Breakage, changed the design of Asynchronizer.async_call.
+ 
 0.2.14:
  * Changed the version numbering system.
  * Fixed Authentication and MD5 with non-ASCII characters (issue #7)

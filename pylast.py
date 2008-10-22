@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2.14'
+__version__ = '0.2.15'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -139,61 +139,45 @@ class ServiceException(Exception):
 		
 		return self._lastfm_status
 
-class Asynchronizer(threading.Thread):
-	"""Hopingly, this class would help perform asynchronous operations less painfully.
-	For inherited use only. And you must call Asynchronizer.__init__(descendant) before usage.
-	"""
+class _ThreadedFunct(threading.Thread):
+	"""A class used by Asynchronizer."""
 	
-	def __init__(self):
+	def __init__(self, sender, funct, funct_args, callback, callback_args):
 		threading.Thread.__init__(self)
 		
-		self._calls = {}		#calls is structured like this: {call_pointer: (arg1, arg2, ...)}
-		self._callbacks = {} 	#callbacks is structred like this: {call_pointer: callback_pointer}
+		self.funct = funct
+		self.funct_args = funct_args
+		self.callback = callback
+		self.callback_args = callback_args
 		
-		self.is_running = False
-	
-	def isRunning(self):
-		"""Returns if the thread is already running, for usage instead of isAlive which doesn't believe in thread restarting."""
-		
-		return self.is_running
+		self.sender = sender
 	
 	def run(self):
-		"""Avoid running this function. Use start() to begin the thread's work."""
-		
-		self.is_running = True
-		
-		while len(self._calls):
-			for call in self._calls.keys():
+		if self.funct:
+			if self.funct_args:
+				output = self.funct(*self.funct_args)
+			else:
+				output = self.funct()
 				
-				output = call(*(self._calls[call]))
-				callback = self._callbacks[call]
-				
-				if callback:	#callback can be None if not wanted
-					callback(self, output)
-				
-				del self._calls[call]
-				del self._callbacks[call]
-		
-		self.is_running = False
+		if self.callback:
+			if self.callback_args:
+				self.callback(self.sender, output, *self.callback_args)
+			else:
+				self.callback(self.sender, output)
+
+class Asynchronizer(object):
+	"""This class helps performing asynchronous operations less painfully."""
 	
-	def async_call(self, callback, call, *call_args):
+	def async_call(self, call, callback = None, call_args = None, callback_args = None):
 		"""This is the function for setting up an asynchronous operation.
-		* callback: the function to callback afterwards, accepting two argument, one being the sender and the other is the return of the target call.
-		* call: the target call.
-		* *call_args: any number of arguments to pass to the target call function.
+		* call: The function to call asynchronously.
+		* callback: The function to call after the operation is complete.
+		* call_args: A sequence of args to be passed to call.
+		* callback_args: A sequence of args to be passed to callback.
 		"""
 		
-		self._calls[call] = call_args
-		self._callbacks[call] = callback
-	
-	def start(self):
-		"""Since that Python thread objects can only be started once. This is my little work-around."""
-		
-		if self.isRunning():
-			return
-		
-		threading.Thread.__init__(self)
-		super(Asynchronizer, self).start()
+		thread = _ThreadedFunct(self, call, call_args, callback, callback_args)
+		thread.start()
 
 class Exceptionable(object):
 	"""An abstract class that adds support for error reporting."""
