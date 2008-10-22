@@ -1,5 +1,7 @@
 0.2.15:
  * API Breakage, changed the design of Asynchronizer.async_call.
+ * Added: Artist.getTopTagsWithCounts, Track.getTopTagsWithCounts and User.getTopTagsWithCounts.
+ * Added: Artist.getTopFansWithWeights, Track.getTopFansWithWeights.
  
 0.2.14:
  * Changed the version numbering system.

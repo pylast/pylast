@@ -662,7 +662,7 @@ class Album(BaseObject, Cacheable, Taggable):
 		"""Returns a list of the most-applied tags to this album. """
 		
 		#Web services currently broken.
-		#TODO: add getDetailedTopTags
+		#TODO: add getTopTagsWithCounts
 		
 		l = []
 		for tag in self._getCachedInfo('top_tags'):
@@ -886,8 +886,22 @@ class Track(BaseObject, Cacheable, Taggable):
 		
 		return data
 	
-	def getTopFans(self):
+	def getTopFans(self, limit = None):
 		"""Returns the top fans for this track on Last.fm. """
+		
+		pairs = self.getTopFansWithWeights(limit)
+		
+		if not pairs:
+			return None
+		
+		list = []
+		for p in pairs:
+			list.append(pairs[0])
+		
+		return list
+
+	def getTopFansWithWeights(self, limit = None):
+		"""Returns the top fans for this track as a sequence of (User, weight). """
 		
 		params = self._getParams()
 		doc = Request(self, 'track.getTopFans', self.api_key, params).execute()
@@ -896,14 +910,36 @@ class Track(BaseObject, Cacheable, Taggable):
 			return None
 		
 		list = []
-		names = self._extract_all(doc, 'name')
-		for name in names:
-			list.append(User(name, *self.auth_data))
+		
+		elements = doc.getElementsByTagName('user')
+		
+		for element in elements:
+			if limit and len(list) >= limit:
+				break
+				
+			name = self._extract(element, 'name')
+			weight = self._extract(element, 'weight')
+			
+			list.append((User(name, *self.auth_data), weight))
 		
 		return list
-	
+
 	def getTopTags(self, limit = None):
-		"""Returns the top tags for this track on Last.fm, ordered by tag count. """
+		"""Returns the top tags for this track on Last.fm, ordered by tag count."""
+		
+		pairs = self.getTopTagsWithCounts(limit)
+		
+		if not pairs:
+			return None
+		
+		list = []
+		for pair in pairs:
+			list.append(pair[0])
+		
+		return list
+
+	def getTopTagsWithCounts(self, limit = None):
+		"""Returns the top tags for this track on Last.fm, ordered by tag count as a sequence of (Tag, tag_count) tuples. """
 		
 		params = self._getParams()
 		doc = Request(self, 'track.getTopTags', self.api_key, params).execute()
@@ -912,13 +948,16 @@ class Track(BaseObject, Cacheable, Taggable):
 			return None
 		
 		list = []
-		names = self._extract_all(doc, 'name')
+		elements = doc.getElementsByTagName('tag')
 		
-		for name in names:
+		for element in elements:
 			if limit and len(list) >= limit:
 				break
 			
-			list.append(Tag(name, *self.auth_data))
+			tag_name = self._extract(element, 'name')
+			tag_count = self._extract(element, 'count')
+			
+			list.append((Tag(tag_name, *self.auth_data), tag_count))
 		
 		return list
 	
@@ -1126,8 +1165,22 @@ class Artist(BaseObject, Cacheable, Taggable):
 		
 		return albums
 	
-	def getTopFans(self):
+	def getTopFans(self, limit = None):
 		"""Returns a list of the Users who listened to this artist the most. """
+		
+		pairs = self.getTopFansWithWeights(limit)
+		
+		if not pairs:
+			return None
+		
+		list = []
+		for p in pairs:
+			list.append(pairs[0])
+		
+		return list
+	
+	def getTopFansWithWeights(self, limit = None):
+		"""Returns a list of the Users who listened to this artist the most as a sequence of (User, weight)."""
 		
 		params = self._getParams()
 		doc = Request(self, 'artist.getTopFans', self.api_key, params).execute()
@@ -1137,16 +1190,35 @@ class Artist(BaseObject, Cacheable, Taggable):
 		
 		list = []
 		
-		names = self._extract_all(doc, 'name')
-		for name in names:
-			list.append(User(name, *self.auth_data))
+		elements = doc.getElementsByTagName('user')
+		
+		for element in elements:
+			if limit and len(list) >= limit:
+				break
+				
+			name = self._extract(element, 'name')
+			weight = self._extract(element, 'weight')
+			
+			list.append((User(name, *self.auth_data), weight))
 		
 		return list
 	
-	#TODO: add getTopTagsWithCount
-	
 	def getTopTags(self, limit = None):
 		"""Returns a list of the most frequently used Tags on this artist. """
+		
+		pairs = self.getTopTagsWithCounts(limit)
+		
+		if not pairs:
+			return None
+		
+		list = []
+		for pair in pairs:
+			list.append(pair[0])
+		
+		return list
+	
+	def getTopTagsWithCounts(self, limit = None):
+		"""Returns a list of tuples (Tag, tag_count) of the most frequently used Tags on this artist. """
 		
 		params = self._getParams()
 		doc = Request(self, 'artist.getTopTags', self.api_key, params).execute()
@@ -1154,14 +1226,18 @@ class Artist(BaseObject, Cacheable, Taggable):
 		if not doc:
 			return None
 		
-		names = self._extract_all(doc, 'name')
-		tags = []
-		for name in names:
-			if limit and len(tags) >= limit:
-				break
-			tags.append(Tag(name, *self.auth_data))
+		elements = doc.getElementsByTagName('tag')
+		list = []
 		
-		return tags
+		for element in elements:
+			if limit and len(list) >= limit:
+				break
+			tag_name = self._extract(element, 'name')
+			tag_count = self._extract(element, 'count')
+			
+			list.append((Tag(tag_name, *self.auth_data), tag_count))
+		
+		return list
 	
 	def getTopTracks(self):
 		"""Returns a list of the most listened to Tracks by this artist. """
@@ -2524,9 +2600,22 @@ class User(BaseObject, Cacheable):
 		
 		return list
 	
-	#TODO: add getTopTagsWithCount
-	
 	def getTopTags(self, limit = None):
+		"""Returns a sequence of the top tags used by this user with their counts as (Tag, tag_count). 
+		* limit: The limit of how many tags to return. 
+		"""
+		
+		pairs = self.getTopTagsWithCounts(limit)
+		if not pairs:
+			return None
+		
+		list = []
+		for pair in pairs:
+			list.append(pair[0])
+		
+		return list
+	
+	def getTopTagsWithCounts(self, limit = None):
 		"""Returns the top tags used by this user. 
 		* limit: The limit of how many tags to return. 
 		"""
@@ -2541,10 +2630,13 @@ class User(BaseObject, Cacheable):
 			return None
 		
 		list = []
-		names = self._extract_all(doc, 'name')
+		elements = doc.getElementsByTagName('tag')
 		
-		for name in names:
-			list.append(Tag(name, *self.auth_data))
+		for element in elements:
+			tag_name = self._extract(element, 'name')
+			tag_count = self._extract(element, 'count')
+			
+			list.append((Tag(tag_name, *self.auth_data), tag_count))
 		
 		return list
 	
