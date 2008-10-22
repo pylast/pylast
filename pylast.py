@@ -498,7 +498,7 @@ class Taggable(object):
 			tag = tag.getName()
 		
 		params = self._getParams()
-		params['tags'] = tag
+		params['tags'] = unicode(tag)
 		
 		Request(self, self.ws_prefix + '.addTags', self.api_key, params, True, self.secret).execute()
 	
@@ -509,7 +509,7 @@ class Taggable(object):
 			single_tag = single_tag.getName()
 		
 		params = self._getParams()
-		params['tag'] = single_tag
+		params['tag'] = unicode(single_tag)
 		
 		Request(self, self.ws_prefix + '.removeTag', self.api_key, params, True, self.secret).execute()
 
@@ -960,7 +960,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		params = self._getParams()
 		recipients = ','.join(nusers)
 		params['recipient'] = recipients
-		if message: params['message'] = message
+		if message: params['message'] = unicode(message)
 		
 		Request(self, 'track.share', self.api_key, params, True, self.secret).execute()
 	
@@ -1221,7 +1221,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		params = self._getParams()
 		recipients = ','.join(nusers)
 		params['recipient'] = recipients
-		if message: params['message'] = message
+		if message: params['message'] = unicode(message)
 		
 		Request(self, 'artist.share', self.api_key, params, True, self.secret).execute()
 	
@@ -1274,7 +1274,7 @@ class Event(BaseObject, Cacheable):
 		"""
 		
 		params = self._getParams()
-		params['status'] = attending_status
+		params['status'] = unicode(attending_status)
 		
 		doc = Request(self, 'event.attend', self.api_key, params, True, self.secret).execute()
 	
@@ -1450,7 +1450,7 @@ class Event(BaseObject, Cacheable):
 		params = self._getParams()
 		recipients = ','.join(nusers)
 		params['recipient'] = recipients
-		if message: params['message'] = message
+		if message: params['message'] = unicode(message)
 		
 		Request(self, 'event.share', self.api_key, params, True, self.secret).execute()
 	
@@ -1518,7 +1518,7 @@ class Country(BaseObject):
 		
 		params = self._getParams()
 		if location:
-			params['location'] = location
+			params['location'] = unicode(location)
 			
 		doc = Request(self, 'geo.getTopTracks', self.api_key, params).execute()
 		
@@ -2850,6 +2850,8 @@ class UserPlaylist(BaseObject, Cacheable):
 		params['track'] = track.getTitle()
 		
 		Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
+		
+		print self.last_error()
 	
 	def getTitle(self):
 		"""Returns the title of this playlist."""
@@ -2933,6 +2935,38 @@ class UserPlaylist(BaseObject, Cacheable):
 		
 		return url %{'domain': domain_name, 'appendix': self._getCachedInfo('url_appendix')}
 
+
+class UserPlaylistCreator(BaseObject):
+	"""Used to create playlists for the authenticated user."""
+	
+	def __init__(self, api_key, api_secret, session_key):
+		BaseObject.__init__(self, api_key, api_secret, session_key)
+	
+	def _getParams(self):
+		return {'sk': self.session_key}
+	
+	def create(self, title, description):
+		"""Creates a playlist for the authenticated user and returns it.
+		* title: The title of the new playlist.
+		* description: The description of the new playlist.
+		"""
+		
+		params = self._getParams()
+		
+		params['title'] = unicode(title)
+		params['description'] = unicode(description)
+		
+		doc = Request(self, 'playlist.create', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return None
+		
+		id = self._extract(doc, 'id')
+		user = doc.getElementsByTagName('playlists')[0].getAttribute('user')
+		
+		return UserPlaylist(user, id, *self.auth_data)
+	
+	
 class TagSearch(Search):
 	"""Search for a tag by tag name."""
 	
