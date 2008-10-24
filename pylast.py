@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2.15'
+__version__ = '0.2.16'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -930,7 +930,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		pairs = self.getTopTagsWithCounts(limit)
 		
 		if not pairs:
-			return None
+			return []
 		
 		list = []
 		for pair in pairs:
@@ -945,7 +945,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		doc = Request(self, 'track.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		elements = doc.getElementsByTagName('tag')
@@ -1209,7 +1209,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		pairs = self.getTopTagsWithCounts(limit)
 		
 		if not pairs:
-			return None
+			return []
 		
 		list = []
 		for pair in pairs:
@@ -1224,7 +1224,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		doc = Request(self, 'artist.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		elements = doc.getElementsByTagName('tag')
 		list = []
@@ -2607,7 +2607,7 @@ class User(BaseObject, Cacheable):
 		
 		pairs = self.getTopTagsWithCounts(limit)
 		if not pairs:
-			return None
+			return []
 		
 		list = []
 		for pair in pairs:
@@ -2627,7 +2627,7 @@ class User(BaseObject, Cacheable):
 		doc = Request(self, 'user.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		elements = doc.getElementsByTagName('tag')

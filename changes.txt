@@ -1,9 +1,12 @@
-0.2.15:
+0.2.16
+ * All the getTopTags and getTopTagsWithCounts return an empty sequence if failed instead of None.
+
+0.2.15
  * API Breakage, changed the design of Asynchronizer.async_call.
  * Added: Artist.getTopTagsWithCounts, Track.getTopTagsWithCounts and User.getTopTagsWithCounts.
  * Added: Artist.getTopFansWithWeights, Track.getTopFansWithWeights.
  
-0.2.14:
+0.2.14
  * Changed the version numbering system.
  * Fixed Authentication and MD5 with non-ASCII characters (issue #7)
  * Created UserPlaylist class.
@@ -12,7 +15,7 @@
  * User.fetchPlaylist is now deprecated.
  * Created UserPlaylistCreator class.
 
-0.2b13:
+0.2b13
  * fixed: User.get_friends limit parameter (issue #5)
  * changed: using hashlib module instead of deprecated md5 module.
 
