@@ -1,5 +1,6 @@
 0.2.16
  * All the getTopTags and getTopTagsWithCounts return an empty sequence if failed instead of None.
+ * toStr() is now less crashy.
 
 0.2.15
  * API Breakage, changed the design of Asynchronizer.async_call.

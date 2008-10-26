@@ -708,7 +708,7 @@ class Album(BaseObject, Cacheable, Taggable):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getArtist().getName() + u' - ' + self.getTitle()
+		return self.getArtist().getName().encode('utf-8') + ' - ' + self.getTitle().encode('utf-8')
 
 class Track(BaseObject, Cacheable, Taggable):
 	"""A Last.fm track."""
@@ -1028,7 +1028,7 @@ class Track(BaseObject, Cacheable, Taggable):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getArtist().getName() + u' - ' + self.getTitle()
+		return self.getArtist().getName().encode('utf-8') + ' - ' + self.getTitle().encode('utf-8')
 		
 class Artist(BaseObject, Cacheable, Taggable):
 	"""A Last.fm artist."""
@@ -1311,7 +1311,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getName()
+		return self.getName().encode('utf-8')
 
 class Event(BaseObject, Cacheable):
 	"""A Last.fm event."""
@@ -1521,17 +1521,17 @@ class Event(BaseObject, Cacheable):
 		artists = self.getArtists()
 		for i in range(0, len(artists)):
 			if i == 0:
-				sa = artists[i].getName()
+				sa = artists[i].getName().encode('utf-8')
 				continue
 			elif i< len(artists)-1:
 				sa += ', '
-				sa += artists[i].getName()
+				sa += artists[i].getName().encode('utf-8')
 				continue
 			elif i == len(artists) - 1:
 				sa += ' and '
-				sa += artists[i].getName()
+				sa += artists[i].getName().encode('utf-8')
 		
-		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle(), 'artists': sa, 'place': self.getVenueName()}
+		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle().encode('utf-8'), 'artists': sa, 'place': self.getVenueName().encode('utf-8')}
 
 class Country(BaseObject):
 	"""A country at Last.fm."""
@@ -1619,7 +1619,7 @@ class Country(BaseObject):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getName()
+		return self.getName().encode('utf-8')
 	
 class Group(BaseObject):
 	"""A Last.fm group."""
@@ -1750,7 +1750,7 @@ class Group(BaseObject):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getName()
+		return self.getName().encode('utf-8')
 
 class Library(BaseObject):
 	"""A user's Last.fm library."""
@@ -2227,7 +2227,7 @@ class Tag(BaseObject):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getName()
+		return self.getName().encode('utf-8')
 
 class User(BaseObject, Cacheable):
 	"""A Last.fm user."""
@@ -2791,7 +2791,7 @@ class User(BaseObject, Cacheable):
 	def toStr(self):
 		"""Returns a string representation of the object."""
 		
-		return self.getName()
+		return self.getName().encode('utf-8')
 
 class Search(BaseObject):
 	"""An abstract search class. Use one of its derivatives."""
