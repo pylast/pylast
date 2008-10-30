@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2.16'
+__version__ = '0.2.17'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -50,6 +50,7 @@ STATUS_INVALID_SK = 9
 STATUS_INVALID_API_KEY = 10
 STATUS_OFFLINE = 11
 STATUS_SUBSCRIBERS_ONLY = 12
+STATUS_INVALID_SIGNATURE = 13
 STATUS_TOKEN_UNAUTHORIZED = 14
 STATUS_TOKEN_EXPIRED = 15
 
@@ -94,18 +95,19 @@ def _status2str(lastfm_status):
 		STATUS_OK: 'OK',
 		STATUS_FAILED: 'Failed',
 		STATUS_INVALID_METHOD: 'Invalid Method - No method with that name in this package',
-		STATUS_TOKEN_ERROR: 'Token Error - There was an error granting the request token',
+		STATUS_TOKEN_ERROR: 'Token Error - There was an error granting the Request token',
 		STATUS_INVALID_SERVICE: 'Invalid Service - This service does not exist',
 		STATUS_AUTH_FAILED: 'Authentication Failed - You do not have permissions to access the service',
 		STATUS_INVALID_FORMAT: "Invalid Format - This service doesn't exist in that format",
-		STATUS_INVALID_PARAMS: 'Invalid Parameters - Your request is missing a required parameter',
+		STATUS_INVALID_PARAMS: 'Invalid Parameters - Your Request is missing a required parameter',
 		STATUS_INVALID_RESOURCE: 'Invalid Resource Specified',
 		STATUS_INVALID_SK: 'Invalid Session Key - Please re-authenticate',
 		STATUS_INVALID_API_KEY: 'Invalid API Key - You must be granted a valid key by last.fm',
 		STATUS_OFFLINE: 'Service Offline - This service is temporarily offline. Try again later.',
 		STATUS_SUBSCRIBERS_ONLY: 'Subscribers Only - This service is only available to paid last.fm subscribers',
 		STATUS_TOKEN_UNAUTHORIZED: 'Unauthorized Token - This token has not been authorized',
-		STATUS_TOKEN_EXPIRED: 'Token Expired -This token has expired'
+		STATUS_TOKEN_EXPIRED: 'Token Expired -This token has expired',
+		STATUS_INVALID_SIGNATURE: 'Invalid method signature supplied',
 	}
 	
 	return statuses[int(lastfm_status)]
@@ -140,7 +142,7 @@ class ServiceException(Exception):
 		return self._lastfm_status
 
 class _ThreadedFunct(threading.Thread):
-	"""A class used by Asynchronizer."""
+	"""A class used by _Asynchronizer."""
 	
 	def __init__(self, sender, funct, funct_args, callback, callback_args):
 		threading.Thread.__init__(self)
@@ -165,7 +167,7 @@ class _ThreadedFunct(threading.Thread):
 			else:
 				self.callback(self.sender, output)
 
-class Asynchronizer(object):
+class _Asynchronizer(object):
 	"""This class helps performing asynchronous operations less painfully."""
 	
 	def async_call(self, call, callback = None, call_args = None, callback_args = None):
@@ -179,14 +181,14 @@ class Asynchronizer(object):
 		thread = _ThreadedFunct(self, call, call_args, callback, callback_args)
 		thread.start()
 
-class Exceptionable(object):
+class _Exceptionable(object):
 	"""An abstract class that adds support for error reporting."""
 	
 	def __init__(self, parent = None):
 		self.__errors = []
 		self.__raising_exceptions = not USE_SILENT_EXCEPTIONS
 		
-		#An Exceptionable parent to mirror all the errors to automatically.
+		#An _Exceptionable parent to mirror all the errors to automatically.
 		self._parent = parent
 	
 	def last_error(self):
@@ -234,11 +236,11 @@ class Exceptionable(object):
 		"""Get the status on raising exceptions."""
 		return self.__raising_exceptions
 	
-class Request(Exceptionable):
+class _Request(_Exceptionable):
 	"""Representing an abstract web service operation."""
 	
 	def __init__(self, parent, method_name, api_key, params, sign_it = False, secret = None):
-		Exceptionable.__init__(self, parent)
+		_Exceptionable.__init__(self, parent)
 		
 		self.method_name = method_name
 		self.api_key = api_key
@@ -267,7 +269,7 @@ class Request(Exceptionable):
 		return hash.hexdigest()
 	
 	def execute(self):
-		"""Returns the XML DOM response of the POST request from the server"""
+		"""Returns the XML DOM response of the POST Request from the server"""
 		
 		self.params['api_key'] = self.api_key
 		self.params['method'] = self.method_name
@@ -312,7 +314,7 @@ class Request(Exceptionable):
 			details = e.firstChild.data.strip()
 			self._report_error(ServiceException(status, details))
 
-class SessionGenerator(Asynchronizer, Exceptionable):
+class SessionGenerator(_Asynchronizer, _Exceptionable):
 	"""Steps of authorization:
 	1. Retrieve token: token = getToken()
 	2. Authorize this token by openning the web page at the URL returned by getAuthURL(token)
@@ -322,8 +324,8 @@ class SessionGenerator(Asynchronizer, Exceptionable):
 	"""
 	
 	def __init__(self, api_key, secret):
-		Asynchronizer.__init__(self)
-		Exceptionable.__init__(self)
+		_Asynchronizer.__init__(self)
+		_Exceptionable.__init__(self)
 		
 		self.api_key = api_key
 		self.secret = secret
@@ -335,7 +337,7 @@ class SessionGenerator(Asynchronizer, Exceptionable):
 		"""
 		
 		
-		doc = Request(self, 'auth.getToken', self.api_key, dict(), True, self.secret).execute()
+		doc = _Request(self, 'auth.getToken', self.api_key, dict(), True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -357,7 +359,7 @@ class SessionGenerator(Asynchronizer, Exceptionable):
 		"""
 		
 		params = {'token': token}
-		doc = Request(self, 'auth.getSession', self.api_key, params, True, self.secret).execute()
+		doc = _Request(self, 'auth.getSession', self.api_key, params, True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -373,12 +375,12 @@ class SessionGenerator(Asynchronizer, Exceptionable):
 		
 		return data
 
-class BaseObject(Asynchronizer, Exceptionable):
+class _BaseObject(_Asynchronizer, _Exceptionable):
 	"""An abstract webservices object."""
 		
 	def __init__(self, api_key, secret, session_key):
-		Asynchronizer.__init__(self)
-		Exceptionable.__init__(self)
+		_Asynchronizer.__init__(self)
+		_Exceptionable.__init__(self)
 		
 		self.api_key = api_key
 		self.secret = secret
@@ -426,7 +428,7 @@ class BaseObject(Asynchronizer, Exceptionable):
 	def __str__(self):
 		return self.toStr()
 
-class Cacheable(object):
+class _Cacheable(object):
 	"""Common functions for objects that can have cached metadata"""
 	
 	def __init__(self):
@@ -458,7 +460,7 @@ class Cacheable(object):
 		return value_or_container
 
 
-class Taggable(object):
+class _Taggable(object):
 	"""Common functions for classes with tags."""
 	
 	def __init__(self, ws_prefix):
@@ -484,7 +486,7 @@ class Taggable(object):
 		params = self._getParams()
 		params['tags'] = unicode(tag)
 		
-		Request(self, self.ws_prefix + '.addTags', self.api_key, params, True, self.secret).execute()
+		_Request(self, self.ws_prefix + '.addTags', self.api_key, params, True, self.secret).execute()
 	
 	def _removeTag(self, single_tag):
 		"""Remove a user's tag from this object."""
@@ -495,13 +497,13 @@ class Taggable(object):
 		params = self._getParams()
 		params['tag'] = unicode(single_tag)
 		
-		Request(self, self.ws_prefix + '.removeTag', self.api_key, params, True, self.secret).execute()
+		_Request(self, self.ws_prefix + '.removeTag', self.api_key, params, True, self.secret).execute()
 
 	def getTags(self):
 		"""Returns a list of the user-set tags to this object."""
 		
 		params = self._getParams()
-		doc = Request(self, self.ws_prefix + '.getTags', self.api_key, params, True, self.secret).execute()
+		doc = _Request(self, self.ws_prefix + '.getTags', self.api_key, params, True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -562,13 +564,13 @@ class Taggable(object):
 		self.removeTags(*to_remove)
 		self.addTags(*to_add)
 
-class Album(BaseObject, Cacheable, Taggable):
+class Album(_BaseObject, _Cacheable, _Taggable):
 	"""A Last.fm album."""
 	
 	def __init__(self, artist_name, album_title, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
-		Cacheable.__init__(self)
-		Taggable.__init__(self, 'album')
+		_BaseObject.__init__(self, api_key, secret, session_key)
+		_Cacheable.__init__(self)
+		_Taggable.__init__(self, 'album')
 		
 		self.artist_name = artist_name
 		self.title = album_title
@@ -583,7 +585,7 @@ class Album(BaseObject, Cacheable, Taggable):
 		
 		params = self._getParams()
 		
-		doc = Request(self, 'album.getInfo', self.api_key, params).execute()
+		doc = _Request(self, 'album.getInfo', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -627,6 +629,13 @@ class Album(BaseObject, Cacheable, Taggable):
 			return self._getCachedInfo('name')
 		else:
 			return self.title
+	
+	def getName(self, from_server = False):
+		"""Returns the album title (alias to Album.getTitle).
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
+		
+		return self.getTitle(from_server)
 	
 	def getReleaseDate(self):
 		"""Retruns the release date of the album."""
@@ -710,13 +719,13 @@ class Album(BaseObject, Cacheable, Taggable):
 		
 		return self.getArtist().getName().encode('utf-8') + ' - ' + self.getTitle().encode('utf-8')
 
-class Track(BaseObject, Cacheable, Taggable):
+class Track(_BaseObject, _Cacheable, _Taggable):
 	"""A Last.fm track."""
 	
 	def __init__(self, artist_name, title, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
-		Cacheable.__init__(self)
-		Taggable.__init__(self, 'track')
+		_BaseObject.__init__(self, api_key, secret, session_key)
+		_Cacheable.__init__(self)
+		_Taggable.__init__(self, 'track')
 		
 		self.artist_name = artist_name
 		self.title = title
@@ -730,7 +739,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		"""Returns a dictionary with vairous metadata values about this track."""
 		
 		params = self._getParams()
-		doc = Request(self, 'track.getInfo', self.api_key, params).execute()
+		doc = _Request(self, 'track.getInfo', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -789,6 +798,13 @@ class Track(BaseObject, Cacheable, Taggable):
 			return self._getCachedInfo('title')
 		else:
 			return self.title
+	
+	def getName(self, from_server = False):
+		"""Returns the track title (alias to Track.getTitle).
+		  * from_server: If set to True, the value will be retrieved from the server.
+		"""
+		
+		return self.getTitle(from_server)
 	
 	def getID(self):
 		"""Returns the track id on Last.fm."""
@@ -850,25 +866,25 @@ class Track(BaseObject, Cacheable, Taggable):
 		params = self._getParams()
 		params['playlistID'] = unicode(playlist_id)
 		
-		Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
 	
 	def love(self):
 		"""Adds the track to the user's loved tracks. """
 		
 		params = self._getParams()
-		Request(self, 'track.love', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'track.love', self.api_key, params, True, self.secret).execute()
 	
 	def ban(self):
 		"""Ban this track from ever playing on the radio. """
 		
 		params = self._getParams()
-		Request(self, 'track.ban', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'track.ban', self.api_key, params, True, self.secret).execute()
 	
 	def getSimilar(self):
 		"""Returns similar tracks for this track on Last.fm, based on listening data. """
 		
 		params = self._getParams()
-		doc = Request(self, 'track.getSimilar', self.api_key, params).execute()
+		doc = _Request(self, 'track.getSimilar', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -904,7 +920,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		"""Returns the top fans for this track as a sequence of (User, weight). """
 		
 		params = self._getParams()
-		doc = Request(self, 'track.getTopFans', self.api_key, params).execute()
+		doc = _Request(self, 'track.getTopFans', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -942,7 +958,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		"""Returns the top tags for this track on Last.fm, ordered by tag count as a sequence of (Tag, tag_count) tuples. """
 		
 		params = self._getParams()
-		doc = Request(self, 'track.getTopTags', self.api_key, params).execute()
+		doc = _Request(self, 'track.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
 			return []
@@ -985,7 +1001,7 @@ class Track(BaseObject, Cacheable, Taggable):
 		params['recipient'] = recipients
 		if message: params['message'] = unicode(message)
 		
-		Request(self, 'track.share', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'track.share', self.api_key, params, True, self.secret).execute()
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the track page on Last.fm. 
@@ -1030,13 +1046,13 @@ class Track(BaseObject, Cacheable, Taggable):
 		
 		return self.getArtist().getName().encode('utf-8') + ' - ' + self.getTitle().encode('utf-8')
 		
-class Artist(BaseObject, Cacheable, Taggable):
+class Artist(_BaseObject, _Cacheable, _Taggable):
 	"""A Last.fm artist."""
 	
 	def __init__(self, artist_name, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
-		Cacheable.__init__(self)
-		Taggable.__init__(self, 'artist')
+		_BaseObject.__init__(self, api_key, secret, session_key)
+		_Cacheable.__init__(self)
+		_Taggable.__init__(self, 'artist')
 		
 		self.name = artist_name
 	
@@ -1047,7 +1063,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Get the metadata for an artist on Last.fm, Includes biography"""
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getInfo', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getInfo', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1116,7 +1132,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Returns a list of the upcoming Events for this artist. """
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getEvents', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getEvents', self.api_key, params).execute()
 		
 		ids = self._extract_all(doc, 'id')
 		
@@ -1135,7 +1151,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		if limit:
 			params['limit'] = unicode(limit)
 		
-		doc = Request(self, 'artist.getSimilar', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getSimilar', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1152,7 +1168,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Returns a list of the top Albums by this artist on Last.fm. """
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getTopAlbums', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getTopAlbums', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1183,7 +1199,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Returns a list of the Users who listened to this artist the most as a sequence of (User, weight)."""
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getTopFans', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getTopFans', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1221,7 +1237,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Returns a list of tuples (Tag, tag_count) of the most frequently used Tags on this artist. """
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getTopTags', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
 			return []
@@ -1243,7 +1259,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		"""Returns a list of the most listened to Tracks by this artist. """
 		
 		params = self._getParams()
-		doc = Request(self, 'artist.getTopTracks', self.api_key, params).execute()
+		doc = _Request(self, 'artist.getTopTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1283,7 +1299,7 @@ class Artist(BaseObject, Cacheable, Taggable):
 		params['recipient'] = recipients
 		if message: params['message'] = unicode(message)
 		
-		Request(self, 'artist.share', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'artist.share', self.api_key, params, True, self.secret).execute()
 	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the artist page on Last.fm. 
@@ -1313,12 +1329,12 @@ class Artist(BaseObject, Cacheable, Taggable):
 		
 		return self.getName().encode('utf-8')
 
-class Event(BaseObject, Cacheable):
+class Event(_BaseObject, _Cacheable):
 	"""A Last.fm event."""
 	
 	def __init__(self, event_id, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
-		Cacheable.__init__(self)
+		_BaseObject.__init__(self, api_key, secret, session_key)
+		_Cacheable.__init__(self)
 		
 		self.id = unicode(event_id)
 	
@@ -1336,7 +1352,7 @@ class Event(BaseObject, Cacheable):
 		params = self._getParams()
 		params['status'] = unicode(attending_status)
 		
-		doc = Request(self, 'event.attend', self.api_key, params, True, self.secret).execute()
+		doc = _Request(self, 'event.attend', self.api_key, params, True, self.secret).execute()
 	
 	def _getInfo(self):
 		"""Get the metadata for an event on Last.fm
@@ -1344,7 +1360,7 @@ class Event(BaseObject, Cacheable):
 		
 		params = self._getParams()
 		
-		doc = Request(self, 'event.getInfo', self.api_key, params).execute()
+		doc = _Request(self, 'event.getInfo', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1512,7 +1528,7 @@ class Event(BaseObject, Cacheable):
 		params['recipient'] = recipients
 		if message: params['message'] = unicode(message)
 		
-		Request(self, 'event.share', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'event.share', self.api_key, params, True, self.secret).execute()
 	
 	def toStr(self):
 		"""Returns a string representation of the object."""
@@ -1533,13 +1549,13 @@ class Event(BaseObject, Cacheable):
 		
 		return "%(title)s: %(artists)s at %(place)s" %{'title': self.getTitle().encode('utf-8'), 'artists': sa, 'place': self.getVenueName().encode('utf-8')}
 
-class Country(BaseObject):
+class Country(_BaseObject):
 	"""A country at Last.fm."""
 	
 	# TODO geo.getEvents
 	
 	def __init__(self, country_name, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
+		_BaseObject.__init__(self, api_key, secret, session_key)
 		
 		self.name = country_name
 	
@@ -1558,7 +1574,7 @@ class Country(BaseObject):
 		"""Returns a tuple of the most popular Artists in the country, ordered by popularity. """
 		
 		params = self._getParams()
-		doc = Request(self, 'geo.getTopArtists', self.api_key, params).execute()
+		doc = _Request(self, 'geo.getTopArtists', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1580,7 +1596,7 @@ class Country(BaseObject):
 		if location:
 			params['location'] = unicode(location)
 			
-		doc = Request(self, 'geo.getTopTracks', self.api_key, params).execute()
+		doc = _Request(self, 'geo.getTopTracks', self.api_key, params).execute()
 		
 		list = []
 		
@@ -1621,11 +1637,11 @@ class Country(BaseObject):
 		
 		return self.getName().encode('utf-8')
 	
-class Group(BaseObject):
+class Group(_BaseObject):
 	"""A Last.fm group."""
 	
 	def __init__(self, group_name, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
+		_BaseObject.__init__(self, api_key, secret, session_key)
 		
 		self.name = group_name
 	
@@ -1647,7 +1663,7 @@ class Group(BaseObject):
 			params['from'] = unicode(from_value)
 			params['to'] = unicode(to_value)
 		
-		doc = Request(self, 'group.getWeeklyAlbumChart', self.api_key, params).execute()
+		doc = _Request(self, 'group.getWeeklyAlbumChart', self.api_key, params).execute()
 		
 		list = []
 		
@@ -1670,7 +1686,7 @@ class Group(BaseObject):
 			params['from'] = unicode(from_value)
 			params['to'] = unicode(to_value)
 		
-		doc = Request(self, 'group.getWeeklyArtistChart', self.api_key, params).execute()
+		doc = _Request(self, 'group.getWeeklyArtistChart', self.api_key, params).execute()
 		
 		list = []
 		
@@ -1691,7 +1707,7 @@ class Group(BaseObject):
 			params['from'] = from_value
 			params['to'] = to_value
 		
-		doc = Request(self, 'group.getWeeklyTrackChart', self.api_key, params).execute()
+		doc = _Request(self, 'group.getWeeklyTrackChart', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1709,7 +1725,7 @@ class Group(BaseObject):
 		"""Returns a list of range pairs to use with the chart methods. """
 		
 		params = self._getParams()
-		doc = Request(self, 'group.getWeeklyChartList', self.api_key, params).execute()
+		doc = _Request(self, 'group.getWeeklyChartList', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1752,11 +1768,11 @@ class Group(BaseObject):
 		
 		return self.getName().encode('utf-8')
 
-class Library(BaseObject):
+class Library(_BaseObject):
 	"""A user's Last.fm library."""
 	
 	def __init__(self, username, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
+		_BaseObject.__init__(self, api_key, secret, session_key)
 		
 		self._username = username
 		
@@ -1785,7 +1801,7 @@ class Library(BaseObject):
 	def _get_albums_info(self):
 		
 		params = self._getParams()
-		doc = Request(self, 'library.getAlbums', self.api_key, params).execute()
+		doc = _Request(self, 'library.getAlbums', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1796,7 +1812,7 @@ class Library(BaseObject):
 	def _get_artists_info(self):
 		
 		params = self._getParams()
-		doc = Request(self, 'library.getArtists', self.api_key, params).execute()
+		doc = _Request(self, 'library.getArtists', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1807,7 +1823,7 @@ class Library(BaseObject):
 	def _get_tracks_info(self):
 		
 		params = self._getParams()
-		doc = Request(self, 'library.getTracks', self.api_key, params).execute()
+		doc = _Request(self, 'library.getTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1885,7 +1901,7 @@ class Library(BaseObject):
 		if limit: params['limit'] = unicode(limit)
 		if page: params['page'] = unicode(page)
 		
-		doc = Request(self, 'library.getAlbums', self.api_key, params).execute()
+		doc = _Request(self, 'library.getAlbums', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1918,7 +1934,7 @@ class Library(BaseObject):
 		if limit: params['limit'] = unicode(limit)
 		if page: params['page'] = unicode(page)
 		
-		doc = Request(self, 'library.getArtists', self.api_key, params).execute()
+		doc = _Request(self, 'library.getArtists', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -1947,7 +1963,7 @@ class Library(BaseObject):
 		if limit: params['limit'] = unicode(limit)
 		if page: params['page'] = unicode(page)
 		
-		doc = Request(self, 'library.getTracks', self.api_key, params).execute()
+		doc = _Request(self, 'library.getTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2066,12 +2082,41 @@ class Library(BaseObject):
 			for track in stack:
 				if track._hash() == track_object._hash():
 					return self._tracks_tagcounts[track._hash()]
+	
+	def addAlbum(self, album):
+		"""Add an album to a user's Last.fm library. """
+		
+		params = self._getParams()
+		params['artist'] = album.getArtist().getName()
+		params['album'] = album.getName()
+		
+		_Request(self, 'library.addAlbum', self.api_key, params, True, self.secret).execute()
+	
+	def addArtist(self, artist):
+		"""Add an artist to a user's Last.fm library."""
+		
+		if isinstance(artist, Artist):
+			artist = artist.getName()
+		
+		params = self._getParams()
+		params['artist'] = artist
+		
+		_Request(self, 'library.addArtist', self.api_key, params, True, self.secret).execute()
+	
+	def addTrack(self, track):
+		"""Add a track to a user's Last.fm library."""
+		
+		params = self._getParams()
+		params['artist'] = track.getArtistName()
+		params['track'] = track.getTitle()
+		
+		_Request(self, 'library.addTrack', self.api_key, params, True, self.secret).execute()
 
-class Playlist(BaseObject):
+class Playlist(_BaseObject):
 	"An abstract Last.fm playlist."""
 	
 	def __init__(self, playlist_uri, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
+		_BaseObject.__init__(self, api_key, secret, session_key)
 		
 		self._playlist_uri = playlist_uri
 	
@@ -2088,7 +2133,7 @@ class Playlist(BaseObject):
 		
 		params = self._getParams()
 		
-		doc = Request(self, 'playlist.fetch', self.api_key, params).execute()
+		doc = _Request(self, 'playlist.fetch', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2111,11 +2156,13 @@ class Playlist(BaseObject):
 		
 		return self.getPlaylistURI()
 
-class Tag(BaseObject):
+class Tag(_BaseObject):
 	"""A Last.fm object tag."""
 	
+	# TODO: getWeeklyArtistChart (too lazy, i'll wait for when someone requests it)
+	
 	def __init__(self, tag_name, api_key, secret, session_key):
-		BaseObject.__init__(self, api_key, secret, session_key)
+		_BaseObject.__init__(self, api_key, secret, session_key)
 		
 		self.name = tag_name
 	
@@ -2131,7 +2178,7 @@ class Tag(BaseObject):
 		"""Returns the tags similar to this one, ordered by similarity. """
 		
 		params = self._getParams()
-		doc = Request(self, 'tag.getSimilar', self.api_key, params).execute()
+		doc = _Request(self, 'tag.getSimilar', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2147,7 +2194,7 @@ class Tag(BaseObject):
 		"""Returns a list of the top Albums tagged by this tag, ordered by tag count. """
 		
 		params = self._getParams()
-		doc = Request(self, 'tag.getTopAlbums', self.api_key, params).execute()
+		doc = _Request(self, 'tag.getTopAlbums', self.api_key, params).execute()
 		
 		list = []
 		
@@ -2163,7 +2210,7 @@ class Tag(BaseObject):
 		"""Returns a list of the top Artists tagged by this tag, ordered by tag count. """
 		
 		params = self._getParams()
-		doc = Request(self, 'tag.getTopArtists', self.api_key, params).execute()
+		doc = _Request(self, 'tag.getTopArtists', self.api_key, params).execute()
 		
 		list = []
 		
@@ -2178,7 +2225,7 @@ class Tag(BaseObject):
 		"""Returns a list of the top Tracks tagged by this tag, ordered by tag count. """
 		
 		params = self._getParams()
-		doc = Request(self, 'tag.getTopTracks', self.api_key, params).execute()
+		doc = _Request(self, 'tag.getTopTracks', self.api_key, params).execute()
 		
 		list = []
 		
@@ -2229,12 +2276,12 @@ class Tag(BaseObject):
 		
 		return self.getName().encode('utf-8')
 
-class User(BaseObject, Cacheable):
+class User(_BaseObject, _Cacheable):
 	"""A Last.fm user."""
 	
 	def __init__(self, user_name, api_key, api_secret, session_key):
-		BaseObject.__init__(self, api_key, api_secret, session_key)
-		Cacheable.__init__(self)
+		_BaseObject.__init__(self, api_key, api_secret, session_key)
+		_Cacheable.__init__(self)
 		
 		self.name = user_name
 		
@@ -2247,7 +2294,7 @@ class User(BaseObject, Cacheable):
 		"""Returns a dictionary with various metadata values."""
 		
 		params = self._getParams()
-		doc = Request(self, 'user.getInfo', self.api_key, params, True, self.secret).execute()
+		doc = _Request(self, 'user.getInfo', self.api_key, params, True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -2327,7 +2374,7 @@ class User(BaseObject, Cacheable):
 		"""Returns all the upcoming events for this user. """
 		
 		params = self._getParams()
-		doc = Request(self, 'user.getEvents', self.api_key, params).execute()
+		doc = _Request(self, 'user.getEvents', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2347,7 +2394,7 @@ class User(BaseObject, Cacheable):
 		if limit:
 			params['limit'] = unicode(limit)
 		
-		doc = Request(self, 'user.getFriends', self.api_key, params).execute()
+		doc = _Request(self, 'user.getFriends', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2366,7 +2413,7 @@ class User(BaseObject, Cacheable):
 		"""Returns the last 50 tracks loved by this user. """
 		
 		params = self._getParams()
-		doc = Request(self, 'user.getLovedTracks', self.api_key, params).execute()
+		doc = _Request(self, 'user.getLovedTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2390,7 +2437,7 @@ class User(BaseObject, Cacheable):
 		if limit:
 			params['limit'] = unicode(limit)
 		
-		doc = Request(self, 'user.getNeighbours', self.api_key, params).execute()
+		doc = _Request(self, 'user.getNeighbours', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2403,26 +2450,28 @@ class User(BaseObject, Cacheable):
 		
 		return list
 	
-	def getPastEvents(self, limit = None):
-		"""Retruns the past events of this user. """
-		
-		# TODO
-		# http://www.last.fm/api/show?service=343
-		# use the page value
+	def getPastEvents(self, limit = None, page = None):
+		"""Retruns a paginated list of all events a user has attended in the past.
+		* limit: The limit number of events to return.
+		* page: The page of results to return.
+		"""
 		
 		params = self._getParams()
 		if limit:
 			params['limit'] = unicode(limit)
+		if page:
+			params['page'] = unicode(page)
 		
-		doc = Request(self, 'user.getPastEvents', self.api_key, params).execute()
+		doc = _Request(self, 'user.getPastEvents', self.api_key, params).execute()
 		
 		if not doc:
 			return None
 		
 		ids = self._extract_all(doc, 'id')
 		list = []
+		
 		for id in ids:
-			list.append(User(id, *self.auth_data))
+			list.append(Event(id, *self.auth_data))
 		
 		return list
 	
@@ -2449,7 +2498,7 @@ class User(BaseObject, Cacheable):
 		"""Returns a list of dictionaries for each playlist. """
 		
 		params = self._getParams()
-		doc = Request(self, 'user.getPlaylists', self.api_key, params).execute()
+		doc = _Request(self, 'user.getPlaylists', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2508,7 +2557,7 @@ class User(BaseObject, Cacheable):
 		
 		list = []
 		
-		doc = Request(self, 'user.getRecentTracks', self.api_key, params).execute()
+		doc = _Request(self, 'user.getRecentTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2533,7 +2582,7 @@ class User(BaseObject, Cacheable):
 		
 		list = []
 		
-		doc = Request(self, 'user.getRecentTracks', self.api_key, params).execute()
+		doc = _Request(self, 'user.getRecentTracks', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2561,7 +2610,7 @@ class User(BaseObject, Cacheable):
 		params = self._getParams()
 		params['period'] = period
 		
-		doc = Request(self, 'user.getTopAlbums', self.api_key, params).execute()
+		doc = _Request(self, 'user.getTopAlbums', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2587,10 +2636,10 @@ class User(BaseObject, Cacheable):
 		params = self._getParams()
 		params['period'] = period
 		
-		doc = Request(self, 'user.getTopArtists', self.api_key, params).execute()
+		doc = _Request(self, 'user.getTopArtists', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		
@@ -2624,7 +2673,7 @@ class User(BaseObject, Cacheable):
 		if limit:
 			params['limit'] = unicode(limit)
 		
-		doc = Request(self, 'user.getTopTags', self.api_key, params).execute()
+		doc = _Request(self, 'user.getTopTags', self.api_key, params).execute()
 		
 		if not doc:
 			return []
@@ -2652,10 +2701,10 @@ class User(BaseObject, Cacheable):
 		params = self._getParams()
 		params['period'] = period
 		
-		doc = Request(self, 'user.getTopTracks', self.api_key, params).execute()
+		doc = _Request(self, 'user.getTopTracks', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		for track in doc.getElementsByTagName('track'):
@@ -2677,10 +2726,10 @@ class User(BaseObject, Cacheable):
 			params['from'] = from_value
 			params['to'] = to_value
 		
-		doc = Request(self, 'user.getWeeklyAlbumChart', self.api_key, params).execute()
+		doc = _Request(self, 'user.getWeeklyAlbumChart', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		
@@ -2703,10 +2752,10 @@ class User(BaseObject, Cacheable):
 			params['from'] = from_value
 			params['to'] = to_value
 		
-		doc = Request(self, 'user.getWeeklyArtistChart', self.api_key, params).execute()
+		doc = _Request(self, 'user.getWeeklyArtistChart', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		
@@ -2727,10 +2776,10 @@ class User(BaseObject, Cacheable):
 			params['from'] = from_value
 			params['to'] = to_value
 		
-		doc = Request(self, 'user.getWeeklyTrackChart', self.api_key, params).execute()
+		doc = _Request(self, 'user.getWeeklyTrackChart', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		for track in doc.getElementsByTagName('track'):
@@ -2746,10 +2795,10 @@ class User(BaseObject, Cacheable):
 		"""Returns a list of range pairs to use with the chart methods."""
 		
 		params = self._getParams()
-		doc = Request(self, 'user.getWeeklyChartList', self.api_key, params).execute()
+		doc = _Request(self, 'user.getWeeklyChartList', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		list = []
 		for chart in doc.getElementsByTagName('chart'):
@@ -2760,7 +2809,64 @@ class User(BaseObject, Cacheable):
 			list.append(c)
 		
 		return list
-
+	
+	def compareWithUser(self, user, shared_artists_limit = None):
+		"""Compare this user with another Last.fm user. Returns a sequence (tasteometer_score, (shared_artist1, shared_artist2, ...))
+		user: A User object or a username string/unicode object.
+		"""
+		
+		if isinstance(user, User):
+			user = user.getName()
+		
+		params = self._getParams()
+		if shared_artists_limit:
+			params['limit'] = unicode(shared_artists_limit)
+		params['type1'] = 'user'
+		params['type2'] = 'user'
+		params['value1'] = self.getName()
+		params['value2'] = user
+		
+		doc = _Request(self, 'tasteometer.compare', self.api_key, params).execute()
+		
+		if not doc:
+			return None
+		
+		score = self._extract(doc, 'score')
+		
+		artists = doc.getElementsByTagName('artists')[0]
+		shared_artists_names = self._extract_all(artists, 'name')
+		
+		shared_artists_list = []
+		
+		for name in shared_artists_names:
+			shared_artists_list.append(Artist(name, *self.auth_data))
+		
+		return (score, shared_artists_list)
+	
+	def getRecommendedEvents(self, page = None, limit = None):
+		"""Returns a paginated list of all events recommended to a user by Last.fm, based on their listening profile.
+		* page: The page number of results to return.
+		* limit: The limit of events to return.
+		"""
+		
+		params = self._getParams()
+		if page:
+			params['page'] = unicode(page)
+		if limit:
+			params['limit'] = unicode(limit)
+		
+		doc = _Request(self, 'user.getRecommendedEvents', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return []
+		
+		ids = self._extract_all(doc, 'id')
+		list = []
+		for id in ids:
+			list.append(Event(id, *self.auth_data))
+		
+		return list
+	
 	def getURL(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the user page on Last.fm. 
 		* domain_name: Last.fm's language domain. Possible values:
@@ -2793,18 +2899,18 @@ class User(BaseObject, Cacheable):
 		
 		return self.getName().encode('utf-8')
 
-class Search(BaseObject):
-	"""An abstract search class. Use one of its derivatives."""
+class _Search(_BaseObject):
+	"""An abstract class. Use one of its derivatives."""
 	
 	def __init__(self, api_key, api_secret, session_key):
-		BaseObject.__init__(self, api_key, api_secret, session_key)
+		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self._limit = None
 		self._page = None
 		self._total_result_count = None
 
 	def getLimit(self):
-		"""Returns the limit of the search."""
+		"""Returns the limit of the Search."""
 		
 		return self._limit
 	
@@ -2828,11 +2934,11 @@ class Search(BaseObject):
 		if matches:
 			return matches[0]
 
-class ArtistSearch(Search):
+class ArtistSearch(_Search):
 	"""Search for an artist by artist name."""
 	
 	def __init__(self, artist_name, api_key, api_secret, session_key):
-		Search.__init__(self, api_key, api_secret, session_key)
+		_Search.__init__(self, api_key, api_secret, session_key)
 		
 		self._artist_name = artist_name
 
@@ -2854,7 +2960,7 @@ class ArtistSearch(Search):
 		params['limit'] = unicode(limit)
 		params['page'] = unicode(page)
 		
-		doc = Request(self, 'artist.search', self.api_key, params).execute()
+		doc = _Request(self, 'artist.Search', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -2873,12 +2979,58 @@ class ArtistSearch(Search):
 		
 		return list
 
-class UserPlaylist(BaseObject, Cacheable):
+class AlbumSearch(_Search):
+	"""Search for an album by name."""
+	
+	def __init__(self, album_name, api_key, api_secret, session_key):
+		_Search.__init__(self, api_key, api_secret, session_key)
+		
+		self._album_name = album_name
+
+	def _getParams(self):
+		return {'sk': self.session_key, 'album': self.getAlbumName()}
+		
+	def getAlbumName(self):
+		"""Returns the album name."""
+		
+		return self._album_name
+
+	def getResults(self, limit = 30, page = 1):
+		"""Returns the matches sorted by relevance.
+		* limit: Limit the number of albums returned at one time. Default (maximum) is 30.
+		* page: Scan into the results by specifying a page number. Defaults to first page.
+		"""
+		
+		params = self._getParams()
+		params['limit'] = unicode(limit)
+		params['page'] = unicode(page)
+		
+		doc = _Request(self, 'album.search', self.api_key, params).execute()
+		
+		if not doc:
+			return []
+		
+		self._total_result_count = self._extract(doc, 'opensearch:totalResults')
+		self._page = page
+		self._limit = limit
+		
+		e = doc.getElementsByTagName('albummatches')[0]
+		
+		names = self._extract_all(e, 'name')
+		artists = self._extract_all(e, 'artist')
+		
+		list = []
+		for i in range(0, len(names)):
+			list.append(Album(artists[i], names[i], *self.auth_data))
+		
+		return list
+
+class UserPlaylist(_BaseObject, _Cacheable):
 	"""A Last.fm user playlist."""
 	
 	def __init__(self, username, playlist_id, api_key, api_secret, session_key):
-		BaseObject.__init__(self, api_key, api_secret, session_key)
-		Cacheable.__init__(self)
+		_BaseObject.__init__(self, api_key, api_secret, session_key)
+		_Cacheable.__init__(self)
 		
 		self._username = username
 		self._playlist_id = unicode(playlist_id)
@@ -2925,7 +3077,7 @@ class UserPlaylist(BaseObject, Cacheable):
 		params['artist'] = track.getArtist().getName()
 		params['track'] = track.getTitle()
 		
-		Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
+		_Request(self, 'playlist.addTrack', self.api_key, params, True, self.secret).execute()
 		
 		print self.last_error()
 	
@@ -3012,11 +3164,11 @@ class UserPlaylist(BaseObject, Cacheable):
 		return url %{'domain': domain_name, 'appendix': self._getCachedInfo('url_appendix')}
 
 
-class UserPlaylistCreator(BaseObject):
+class UserPlaylistCreator(_BaseObject):
 	"""Used to create playlists for the authenticated user."""
 	
 	def __init__(self, api_key, api_secret, session_key):
-		BaseObject.__init__(self, api_key, api_secret, session_key)
+		_BaseObject.__init__(self, api_key, api_secret, session_key)
 	
 	def _getParams(self):
 		return {'sk': self.session_key}
@@ -3032,7 +3184,7 @@ class UserPlaylistCreator(BaseObject):
 		params['title'] = unicode(title)
 		params['description'] = unicode(description)
 		
-		doc = Request(self, 'playlist.create', self.api_key, params, True, self.secret).execute()
+		doc = _Request(self, 'playlist.create', self.api_key, params, True, self.secret).execute()
 		
 		if not doc:
 			return None
@@ -3043,11 +3195,11 @@ class UserPlaylistCreator(BaseObject):
 		return UserPlaylist(user, id, *self.auth_data)
 	
 	
-class TagSearch(Search):
+class TagSearch(_Search):
 	"""Search for a tag by tag name."""
 	
 	def __init__(self, tag_name, api_key, api_secret, session_key):
-		Search.__init__(self, api_key, api_secret, session_key)
+		_Search.__init__(self, api_key, api_secret, session_key)
 		
 		self._tag_name = tag_name
 
@@ -3069,7 +3221,7 @@ class TagSearch(Search):
 		params['limit'] = unicode(limit)
 		params['page'] = unicode(page)
 		
-		doc = Request(self, 'tag.search', self.api_key, params).execute()
+		doc = _Request(self, 'tag.Search', self.api_key, params).execute()
 		
 		if not doc:
 			return None
@@ -3088,12 +3240,12 @@ class TagSearch(Search):
 		
 		return list
 
-class TrackSearch(Search):
+class TrackSearch(_Search):
 	"""Search for a track by track title. If you don't wanna narrow the results down
 	by specifying the artist name, set it to None"""
 	
 	def __init__(self, track_title, artist_name, api_key, api_secret, session_key):
-		Search.__init__(self, api_key, api_secret, session_key)
+		_Search.__init__(self, api_key, api_secret, session_key)
 		
 		self._track_title = track_title
 		self._artist_name = artist_name
@@ -3125,7 +3277,7 @@ class TrackSearch(Search):
 		params['limit'] = unicode(limit)
 		params['page'] = unicode(page)
 		
-		doc = Request(self, 'track.search', self.api_key, params).execute()
+		doc = _Request(self, 'track.Search', self.api_key, params).execute()
 		
 		if not doc:
 			return None
