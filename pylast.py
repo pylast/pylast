@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pyLast'
-__version__ = '0.2.17'
+__version__ = '0.2.18'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -66,6 +66,7 @@ PERIOD_12MONTHS = '12month'
 IMAGE_SMALL = 0
 IMAGE_MEDIUM = 1
 IMAGE_LARGE = 2
+IMAGE_EXTRA_LARGE = 3
 
 DOMAIN_ENGLISH = 'www.last.fm'
 DOMAIN_GERMAN = 'www.lastfm.de'
@@ -94,20 +95,20 @@ def _status2str(lastfm_status):
 	statuses = {
 		STATUS_OK: 'OK',
 		STATUS_FAILED: 'Failed',
-		STATUS_INVALID_METHOD: 'Invalid Method - No method with that name in this package',
-		STATUS_TOKEN_ERROR: 'Token Error - There was an error granting the Request token',
-		STATUS_INVALID_SERVICE: 'Invalid Service - This service does not exist',
-		STATUS_AUTH_FAILED: 'Authentication Failed - You do not have permissions to access the service',
-		STATUS_INVALID_FORMAT: "Invalid Format - This service doesn't exist in that format",
-		STATUS_INVALID_PARAMS: 'Invalid Parameters - Your Request is missing a required parameter',
-		STATUS_INVALID_RESOURCE: 'Invalid Resource Specified',
-		STATUS_INVALID_SK: 'Invalid Session Key - Please re-authenticate',
-		STATUS_INVALID_API_KEY: 'Invalid API Key - You must be granted a valid key by last.fm',
+		STATUS_INVALID_METHOD: 'Invalid Method - No method with that name in this package.',
+		STATUS_TOKEN_ERROR: 'Token Error - There was an error granting the Request token.',
+		STATUS_INVALID_SERVICE: 'Invalid Service - This service does not exist.',
+		STATUS_AUTH_FAILED: 'Authentication Failed - You do not have permissions to access the service.',
+		STATUS_INVALID_FORMAT: "Invalid Format - This service doesn't exist in that format.",
+		STATUS_INVALID_PARAMS: 'Invalid Parameters - Your Request is missing a required parameter.',
+		STATUS_INVALID_RESOURCE: 'Invalid Resource Specified.',
+		STATUS_INVALID_SK: 'Invalid Session Key - Please re-authenticate.',
+		STATUS_INVALID_API_KEY: 'Invalid API Key - You must be granted a valid key by last.fm.',
 		STATUS_OFFLINE: 'Service Offline - This service is temporarily offline. Try again later.',
-		STATUS_SUBSCRIBERS_ONLY: 'Subscribers Only - This service is only available to paid last.fm subscribers',
-		STATUS_TOKEN_UNAUTHORIZED: 'Unauthorized Token - This token has not been authorized',
-		STATUS_TOKEN_EXPIRED: 'Token Expired -This token has expired',
-		STATUS_INVALID_SIGNATURE: 'Invalid method signature supplied',
+		STATUS_SUBSCRIBERS_ONLY: 'Subscribers Only - This service is only available to paid last.fm subscribers.',
+		STATUS_TOKEN_UNAUTHORIZED: 'Unauthorized Token - This token has not been authorized.',
+		STATUS_TOKEN_EXPIRED: 'Token Expired -This token has expired.',
+		STATUS_INVALID_SIGNATURE: 'Invalid method signature supplied.',
 	}
 	
 	return statuses[int(lastfm_status)]
@@ -292,7 +293,7 @@ class _Request(_Exceptionable):
 		except Exception, e:
 			self._report_error(e)
 			return None
-		
+			
 		doc = minidom.parse(response)
 		
 		if self.__checkResponseStatus(doc) == STATUS_OK:
@@ -318,7 +319,7 @@ class SessionGenerator(_Asynchronizer, _Exceptionable):
 	"""Steps of authorization:
 	1. Retrieve token: token = getToken()
 	2. Authorize this token by openning the web page at the URL returned by getAuthURL(token)
-	3. Call getSessionData(token) to collect the session parameters.
+	3. Call getSessionKey(token) to collect the session parameters.
 	
 	A session key's lifetime is infinie, unless the user provokes the rights of the given API Key.
 	"""
@@ -335,7 +336,6 @@ class SessionGenerator(_Asynchronizer, _Exceptionable):
 		"""Retrieves a token from Last.fm.
 		The token then has to be authorized from getAuthURL before creating session.
 		"""
-		
 		
 		doc = _Request(self, 'auth.getToken', self.api_key, dict(), True, self.secret).execute()
 		
@@ -356,7 +356,12 @@ class SessionGenerator(_Asynchronizer, _Exceptionable):
 	def getSessionData(self, token):
 		"""Retrieves session data for the authorized token.
 		getSessionData(token) --> {'name': str, 'key': str, 'subscriber': bool}
+		
+		[DEPRECATED]
+		Use SessionGenerator.getSessionKey and AuthenticatedUser instead.
 		"""
+		
+		warn_deprecated("SessionGenerator.getSessionData", "SessionGenerator.getSessionKey and AuthenticatedUser")
 		
 		params = {'token': token}
 		doc = _Request(self, 'auth.getSession', self.api_key, params, True, self.secret).execute()
@@ -374,6 +379,18 @@ class SessionGenerator(_Asynchronizer, _Exceptionable):
 		data['subscriber'] = bool(subscriber_e.firstChild.data)
 		
 		return data
+
+	def getSessionKey(self, token):
+		"""Retrieves the authorized session key.
+		"""
+		
+		params = {'token': token}
+		doc = _Request(self, 'auth.getSession', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return None
+		
+		return doc.getElementsByTagName('key')[0].firstChild.data
 
 class _BaseObject(_Asynchronizer, _Exceptionable):
 	"""An abstract webservices object."""
@@ -642,12 +659,13 @@ class Album(_BaseObject, _Cacheable, _Taggable):
 		
 		return self._getCachedInfo('release_date')
 	
-	def getImage(self, size = IMAGE_LARGE):
+	def getImage(self, size = IMAGE_EXTRA_LARGE):
 		"""Returns the associated image URL.
 		* size: The image size. Possible values:
+		  o IMAGE_EXTRA_LARGE
 		  o IMAGE_LARGE
 		  o IMAGE_MEDIUM
-		  o IMAGE_SMALL 
+		  o IMAGE_SMALL
 		"""
 		
 		return self._getCachedInfo('images', size)
@@ -682,7 +700,6 @@ class Album(_BaseObject, _Cacheable, _Taggable):
 		
 		return l
 
-	
 	def fetchPlaylist(self):
 		"""Returns the list of Tracks on this album. """
 		
@@ -834,24 +851,8 @@ class Track(_BaseObject, _Cacheable, _Taggable):
 	def getAlbum(self):
 		"""Returns the album object of this track."""
 		
-		return Album(self.getArtistName(), self.getAlbumName(), *self.auth_data)
-	
-	def getImage(self, size = IMAGE_LARGE, if_na_get_artist_image = False):
-		"""Returns the associated image URL.
-		* size: The image size. Possible values:
-		  o IMAGE_LARGE
-		  o IMAGE_MEDIUM
-		  o IMAGE_SMALL 
-		* if_na_get_artist_image: If set to True, it will return the artist's image if the track has none.
-		"""
-		
-		url = self._getCachedInfo('images', size)
-		
-		if if_na_get_artist_image:
-			if not url or url.startswith('http://cdn.last.fm/depth/catalogue'):
-				url = self.getArtist().getImage(size)
-		
-		return url
+		if self.getAlbumName():
+			return Album(self.getArtistName(), self.getAlbumName(), *self.auth_data)
 	
 	def addToPlaylist(self, playlist_id):
 		"""Adds this track to a user playlist. 
@@ -1098,7 +1099,7 @@ class Artist(_BaseObject, _Cacheable, _Taggable):
 		* size: The image size. Possible values:
 		  o IMAGE_LARGE
 		  o IMAGE_MEDIUM
-		  o IMAGE_SMALL 
+		  o IMAGE_SMALL
 		"""
 		
 		return self._getCachedInfo('images', size)
@@ -1904,7 +1905,7 @@ class Library(_BaseObject):
 		doc = _Request(self, 'library.getAlbums', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		albums = doc.getElementsByTagName('album')
 		list = []
@@ -1937,7 +1938,7 @@ class Library(_BaseObject):
 		doc = _Request(self, 'library.getArtists', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		artists = doc.getElementsByTagName('artist')
 		list = []
@@ -1966,7 +1967,7 @@ class Library(_BaseObject):
 		doc = _Request(self, 'library.getTracks', self.api_key, params).execute()
 		
 		if not doc:
-			return None
+			return []
 		
 		tracks = doc.getElementsByTagName('track')
 		list = []
@@ -2276,99 +2277,21 @@ class Tag(_BaseObject):
 		
 		return self.getName().encode('utf-8')
 
-class User(_BaseObject, _Cacheable):
+class User(_BaseObject):
 	"""A Last.fm user."""
 	
 	def __init__(self, user_name, api_key, api_secret, session_key):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
-		_Cacheable.__init__(self)
 		
 		self.name = user_name
-		
-		self._cached_info = None
 	
 	def _getParams(self):
-		return {'sk': self.session_key, 'user': self.name}
-	
-	def _getInfo(self):
-		"""Returns a dictionary with various metadata values."""
+		return {'sk': self.session_key, "user": self.getName()}
 		
-		params = self._getParams()
-		doc = _Request(self, 'user.getInfo', self.api_key, params, True, self.secret).execute()
+	def getName(self):
+		"""Returns the nuser name."""
 		
-		if not doc:
-			return None
-		
-		data = {}
-		
-		data['name'] = self._extract(doc, 'name')
-		data['image'] = self._extract(doc, 'image')
-		data['language'] = self._extract(doc, 'lang')
-		data['country'] = self._extract(doc, 'country')
-		data['age'] = self._extract(doc, 'age')
-		data['gender'] = self._extract(doc, 'gender')
-		data['subscriber'] = self._extract(doc, 'subscriber')
-		data['play_count'] = self._extract(doc, 'playcount')
-		
-		return data
-	
-	def getName(self, from_server = False):
-		"""Returns the user name.
-		  * from_server: If set to True, the value will be retrieved from the server.
-		"""
-		
-		if from_server:
-			return self._getCachedInfo('name')
-		else:
-			return self.name
-	
-	def getImage(self):
-		"""Returns the user's avatar."""
-		
-		return self._getCachedInfo('image')
-	
-	def getLanguage(self):
-		"""Returns the language code of the language used by the user."""
-		
-		return self._getCachedInfo('language')
-	
-	def getCountryName(self):
-		"""Returns the name of the country of the user."""
-		
-		return self._getCachedInfo('country')
-	
-	def getAge(self):
-		"""Returns the user's age."""
-		
-		return self._getCachedInfo('age')
-	
-	def getGender(self):
-		"""Returns the user's gender. Either USER_MALE or USER_FEMALE."""
-		
-		value = self._getCachedInfo('gender')
-		if value == 'm':
-			return USER_MALE
-		elif value == 'f':
-			return USER_FEMALE
-		
-		return None
-	
-	def isSubscriber(self):
-		"""Returns whether the user is a subscriber or not. True or False."""
-		
-		value = self._getCachedInfo('subscriber')
-		
-		if value == '1':
-			return True
-		elif value == '0':
-			return False
-		
-		return None
-	
-	def getPlayCount(self):
-		"""Returns the user's playcount so far."""
-		
-		return int(self._getCachedInfo('play_count'))
+		return self.name
 	
 	def getEvents(self):
 		"""Returns all the upcoming events for this user. """
@@ -2899,6 +2822,91 @@ class User(_BaseObject, _Cacheable):
 		
 		return self.getName().encode('utf-8')
 
+class AuthenticatedUser(User, _Cacheable):
+	def __init__(self, api_key, api_secret, session_key):
+		User.__init__("", api_key, api_secret, session_key);
+		_Cacheable.__init__(self)
+		
+		self._cached_info = None
+	
+	def _getParams(self):
+		return {'sk': self.session_key}
+	
+	def _getInfo(self):
+		"""Returns a dictionary with various metadata values."""
+		
+		params = self._getParams()
+		doc = _Request(self, 'user.getInfo', self.api_key, params, True, self.secret).execute()
+		
+		if not doc:
+			return None
+		
+		data = {}
+		
+		data['name'] = self._extract(doc, 'name')
+		data['image'] = self._extract(doc, 'image')
+		data['language'] = self._extract(doc, 'lang')
+		data['country'] = self._extract(doc, 'country')
+		data['age'] = self._extract(doc, 'age')
+		data['gender'] = self._extract(doc, 'gender')
+		data['subscriber'] = self._extract(doc, 'subscriber')
+		data['play_count'] = self._extract(doc, 'playcount')
+		
+		return data
+	
+	def getName(self):
+		"""Returns the user name."""
+			
+		return self._getCachedInfo('name')
+	
+	def getImage(self):
+		"""Returns the user's avatar."""
+		
+		return self._getCachedInfo('image')
+	
+	def getLanguage(self):
+		"""Returns the language code of the language used by the user."""
+		
+		return self._getCachedInfo('language')
+	
+	def getCountryName(self):
+		"""Returns the name of the country of the user."""
+		
+		return self._getCachedInfo('country')
+	
+	def getAge(self):
+		"""Returns the user's age."""
+		
+		return self._getCachedInfo('age')
+	
+	def getGender(self):
+		"""Returns the user's gender. Either USER_MALE or USER_FEMALE."""
+		
+		value = self._getCachedInfo('gender')
+		if value == 'm':
+			return USER_MALE
+		elif value == 'f':
+			return USER_FEMALE
+		
+		return None
+	
+	def isSubscriber(self):
+		"""Returns whether the user is a subscriber or not. True or False."""
+		
+		value = self._getCachedInfo('subscriber')
+		
+		if value == '1':
+			return True
+		elif value == '0':
+			return False
+		
+		return None
+	
+	def getPlayCount(self):
+		"""Returns the user's playcount so far."""
+		
+		return int(self._getCachedInfo('play_count'))
+
 class _Search(_BaseObject):
 	"""An abstract class. Use one of its derivatives."""
 	
@@ -3138,7 +3146,7 @@ class UserPlaylist(_BaseObject, _Cacheable):
 		* size: The image size. Possible values:
 		  o IMAGE_LARGE
 		  o IMAGE_MEDIUM
-		  o IMAGE_SMALL 
+		  o IMAGE_SMALL
 		"""
 		
 		return self._getCachedInfo('images', size)

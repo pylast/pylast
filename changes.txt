@@ -1,3 +1,8 @@
+0.2.18
+ * Track.getAlbum doesn't crash when the album could not be determined.
+ * Most of User functions now exist in the new AuthenticatedUser due to a web services limitation.
+ * Track.getImage is removed, it's the same as Track.getAlbum().getImage().
+ 
 0.2.17
  * All the getTopTags and getTopTagsWithCounts return an empty sequence if failed instead of None.
  * toStr() is now less crashy.
@@ -26,7 +31,7 @@
 0.2b12
  * fixed: some unicode problems.
  * fix: a typo in the function name Exceptionable.clear_errors()
- * fixed: User.fetchPlaylist (#3)
+ * fixed: User.fetchPlaylist (issue #3)
  * api change: User.getPlaylistsIDs is now User.getPlaylistsData, and User.getPlaylistsIDs returns a list of IDs now.
 
 0.2b10
