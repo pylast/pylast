@@ -20,15 +20,6 @@
 #
 # http://code.google.com/p/pylast/
 
-# TODO:
-#	- go over all the apis from the official documentation. [done]
-#	- write better documentation of each function as you go. [done]
-#	- internal caching [done].
-#	- easy proxy support [done].
-#	- implement call delay.
-#	- better adherence to naming guidelines (http://www.python.org/doc/essays/styleguide.html) [done]
-#	- implement __repr__, __eq__ and __ne__ everywhere possible. [done]
-
 __name__ = 'pylast'
 __version__ = '0.3.0a'
 __doc__ = 'A Python interface to the Last.fm API.'
