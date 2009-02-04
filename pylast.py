@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.0a'
+__version__ = '0.3.0b'
 __doc__ = 'A Python interface to the Last.fm API.'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -207,7 +207,7 @@ class _Request(object):
 		
 		if is_proxy_enabled():
 			conn = httplib.HTTPConnection(host = _get_proxy()[0], port = _get_proxy()[1])
-			conn.request(method='POST', url="http://" + HOST_NAME + HOST_SUBDIR, 
+			conn.request(method='POST', url="http://" + self.HOST_NAME + self.HOST_SUBDIR, 
 				body=data, headers=headers)
 		else:
 			conn = httplib.HTTPConnection(host=self.HOST_NAME)
@@ -1165,7 +1165,7 @@ class Library(_BaseObject):
 	def _get_albums_pagecount(self):
 		"""Returns the number of album pages in this library."""
 		
-		doc = self._request("library.get_albums", True)
+		doc = self._request("library.getAlbums", True)
 		
 		return _number(doc.getElementsByTagName("albums")[0].getAttribute("totalPages"))
 	
@@ -1226,7 +1226,7 @@ class Library(_BaseObject):
 		params["page"] = str(self._albums_index)
 		
 		list = []
-		doc = self._request("library.get_albums", True, params)
+		doc = self._request("library.getAlbums", True, params)
 		for node in doc.getElementsByTagName("album"):
 			name = _extract(node, "name")
 			artist = _extract(node, "name", 1)
@@ -2922,11 +2922,20 @@ def _delay_call():
 	# delay time in seconds
 	DELAY_TIME = 1.0
 	now = time.time()
-	
-	print "Last call:", __last_call_time
-	print "Now:", int(time.time())
-	
+		
 	if (now - __last_call_time) < DELAY_TIME:
 		time.sleep(1)
 	
 	__last_call_time = now
+
+def clear_cache():
+	"""Clears the cache data and starts fresh."""
+	
+	global __cache_dir
+	
+	
+	if not os.path.exists(__cache_dir):
+		return
+	
+	for file in os.listdir(__cache_dir):
+		os.remove(os.path.join(__cache_dir, file))
