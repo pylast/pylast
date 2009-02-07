@@ -122,16 +122,16 @@ class _Request(object):
 	HOST_NAME = 'ws.audioscrobbler.com'
 	HOST_SUBDIR = '/2.0/'
 	
-	def __init__(self, method_name, params, api_key, api_secret = None, session_key = None):
+	def __init__(self, method_name, params, api_key, api_secret, session_key = None):
 
 		self.params = params
 		self.api_secret = api_secret
 		
 		self.params["api_key"] = api_key
 		self.params["method"] = method_name
-		self.params["sk"] = session_key
 		
 		if session_key:
+			self.params["sk"] = session_key
 			self.sign_it()
 	
 	def sign_it(self):
@@ -265,6 +265,9 @@ class SessionKeyGenerator(object):
 		"""
 		
 		request = _Request('auth.getToken', dict(), self.api_key, self.api_secret)
+		
+		# default action is that a request is signed only when
+		# a session key is provided.
 		request.sign_it()
 		
 		doc = request.execute()
@@ -293,6 +296,9 @@ class SessionKeyGenerator(object):
 			token = ""	#that's gonna raise a ServiceException of an unauthorized token when the request is executed.
 		
 		request = _Request('auth.getSession', {'token': token}, self.api_key, self.api_secret)
+		
+		# default action is that a request is signed only when
+		# a session key is provided.
 		request.sign_it()
 		
 		doc = request.execute()
@@ -304,11 +310,14 @@ class SessionKeyGenerator(object):
 		
 		params = {"username": username, "authToken": md5(username + md5_password)}
 		request = _Request("auth.getMobileSession", params, self.api_key, self.api_secret)
+		
+		# default action is that a request is signed only when
+		# a session key is provided.
 		request.sign_it()
 		
 		doc = request.execute()
 		
-		return doc.getElementsByTagName('key')[0].firstChild.data
+		return _extract(doc, "key")
 
 class _BaseObject(object):
 	"""An abstract webservices object."""
