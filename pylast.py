@@ -420,8 +420,6 @@ class _Taggable(object):
 		to_add = []
 		
 		tags_on_server = self.get_tags()
-		if tags_on_server == None:
-			return
 		
 		for tag in tags_on_server:
 			c_old_tags.append(tag.get_name().lower())
