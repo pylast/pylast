@@ -1643,13 +1643,13 @@ class Track(_BaseObject, _Taggable):
 		"""Returns the play count."""
 		
 		doc = self._request("track.getInfo", True)
-		return _number(_extract(node, "playcount"))
+		return _number(_extract(doc, "playcount"))
 	
 	def is_streamable(self):
 		"""Returns True if the track is available at Last.fm."""
 		
 		doc = self._request("track.getInfo", True)
-		return _extract(node, "streamable") == "1"
+		return _extract(doc, "streamable") == "1"
 	
 	def is_fulltrack_available(self):
 		"""Returns True if the fulltrack is available for streaming."""
