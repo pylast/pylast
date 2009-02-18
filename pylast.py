@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pylast - A Python interface to the Last.fm API.
+# pylast - A Python interface to Last.fm
 # Copyright (C) 2008-2009  Amr Hassan
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 __name__ = 'pylast'
 __version__ = '0.3.0b'
-__doc__ = 'A Python interface to the Last.fm API.'
+__doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
 
@@ -40,6 +40,7 @@ import threading
 from xml.dom import minidom
 import os
 import time
+from logging import *
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -85,6 +86,16 @@ DOMAIN_CHINESE = 'cn.last.fm'
 
 USER_MALE = 'Male'
 USER_FEMALE = 'Female'
+
+SCROBBLE_SOURCE_USER = "P"
+SCROBBLE_SOURCE_NON_PERSONALIZED_BROADCAST = "R"
+SCROBBLE_SOURCE_PERSONALIZED_BROADCAST = "E"
+SCROBBLE_SOURCE_LASTFM = "L"
+SCROBBLE_SOURCE_UNKNOWN = "U"
+
+SCROBBLE_MODE_PLAYED = "L"
+SCROBBLE_MODE_BANNED = "B"
+SCROBBLE_MODE_SKIPPED = "S"
 
 class _ThreadedCall(threading.Thread):
 	"""Facilitates calling a function on another thread."""
@@ -204,7 +215,7 @@ class _Request(object):
 			'Accept-Charset': 'utf-8',
 			'User-Agent': __name__ + '/' + __version__
 			}		
-		
+
 		if is_proxy_enabled():
 			conn = httplib.HTTPConnection(host = _get_proxy()[0], port = _get_proxy()[1])
 			conn.request(method='POST', url="http://" + self.HOST_NAME + self.HOST_SUBDIR, 
@@ -367,6 +378,7 @@ class _Taggable(object):
 		params['tags'] = unicode(tag)
 		
 		self._request(self.ws_prefix + '.addTags', False, params)
+		info("Tagged " + repr(self) + " as (" + repr(tag) + ")")
 	
 	def _remove_tag(self, single_tag):
 		"""Remove a user's tag from this object."""
@@ -378,6 +390,7 @@ class _Taggable(object):
 		params['tag'] = unicode(single_tag)
 		
 		self._request(self.ws_prefix + '.removeTag', False, params)
+		info("Removed tag (" + repr(tag) + ") from " + repr(self))
 
 	def get_tags(self):
 		"""Returns a list of the tags set by the user to this object."""
@@ -846,6 +859,7 @@ class Artist(_BaseObject, _Taggable):
 		if message: params['message'] = unicode(message)
 		
 		self._request('artist.share', False, params)
+		info(repr(self) + " was shared with " + repr(users))
 	
 	def get_url(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the artist page on Last.fm. 
@@ -904,6 +918,7 @@ class Event(_BaseObject):
 		params['status'] = unicode(attending_status)
 		
 		doc = self._request('event.attend', False, params)
+		info("Attendance to " + repr(self) + " was set to " + repr(attending_status))
 	
 	def get_id(self):
 		"""Returns the id of the event on Last.fm. """
@@ -1031,7 +1046,7 @@ class Event(_BaseObject):
 		if message: params['message'] = unicode(message)
 		
 		self._request('event.share', False, params)
-
+		info(repr(self) + " was shared with " + repr(users))
 
 class Country(_BaseObject):
 	"""A country at Last.fm."""
@@ -1152,6 +1167,7 @@ class Library(_BaseObject):
 		params["album"] = album.get_name()
 		
 		self._request("library.addAlbum", False, params)
+		info(repr(album) + " was added to " + repr(self))
 	
 	def add_artist(self, artist):
 		"""Add an artist to this library."""
@@ -1160,6 +1176,7 @@ class Library(_BaseObject):
 		params["artist"] = artist.get_name()
 		
 		self._request("library.addArtist", False, params)
+		info(repr(artist) + " was added to " + repr(self))
 	
 	def add_track(self, track):
 		"""Add a track to this library."""
@@ -1168,6 +1185,7 @@ class Library(_BaseObject):
 		params["track"] = track.get_title()
 		
 		self._request("library.addTrack", False, params)
+		info(repr(track) + " was added to " + repr(self))
 	
 	def _get_albums_pagecount(self):
 		"""Returns the number of album pages in this library."""
@@ -1317,7 +1335,10 @@ class Playlist(_BaseObject):
 			self.user = User(user, *self.auth_data)
 		
 		self.id = unicode(id)
-
+	
+	def __repr__(self):
+		return repr(self.user) + "'s playlist # " + repr(self.id)
+		
 	def _get_info_node(self):
 		"""Returns the node from user.getPlaylists where this playlist's info is."""
 		
@@ -1355,6 +1376,7 @@ class Playlist(_BaseObject):
 		params['track'] = track.get_title()
 		
 		self._request('playlist.addTrack', False, params)
+		info(repr(track) + " was added to " + repr(self))
 	
 	def get_title(self):
 		"""Returns the title of this playlist."""
@@ -2780,8 +2802,6 @@ def disable_caching():
 	global __cache_enabled
 		
 	__cache_enabled = False
-	
-	print "cache is disabled"
 
 def is_caching_enabled():
 	"""Returns True if caching is enabled."""
@@ -2946,3 +2966,169 @@ def clear_cache():
 	
 	for file in os.listdir(__cache_dir):
 		os.remove(os.path.join(__cache_dir, file))
+
+
+
+# ------------------------------------------------------------
+
+class ScrobblingException(Exception):
+	def __inint__(self, message):
+		Exception.__init__(self)
+		self.message = message
+		
+	def __repr__(self):
+		return self.message
+
+class BannedClient(ScrobblingException):
+	def __init__(self):
+		ScrobblingException.__init__(self, "This version of the client has been banned")
+
+class BadAuthentication(ScrobblingException):
+	def __init__(self):
+		ScrobblingException.__init__(self, "Bad authentication token")
+
+class BadTime(ScrobblingException):
+	def __init__(self):
+		ScrobblingException.__init__(self, "Time provided is not close enough to current time")
+
+class BadSession(ScrobblingException):
+	def __init__(self):
+		ScrobblingException.__init__(self, "Bad session id, consider re-handshaking")
+
+class _ScrobblerRequest(object):
+	
+	def __init__(self, url, params):
+		self.params = params
+		self.hostname = url[url.find("//") + 2:url.rfind("/")]
+		self.subdir = url[url.rfind("/"):]
+	
+	def execute(self):
+		"""Returns a string response of this request."""
+		
+		connection = httplib.HTTPConnection(self.hostname)
+
+		data = []
+		for name in self.params.keys():
+			value = urllib.quote_plus(self.params[name].encode('utf-8'))
+			data.append('='.join((name, value)))
+		data = "&".join(data)
+		
+		headers = {
+			"Content-type": "application/x-www-form-urlencoded",
+			"Accept-Charset": "utf-8",
+			"User-Agent": __name__ + "/" + __version__,
+			"HOST": self.hostname
+			}
+		
+		debug("Scrobbler Request:\n\tHOST :" + self.hostname + "\n\tSUBDIR: " + self.subdir +
+			"\n\tDATA:" + repr(data) + "\n\tHEADERS: " + repr(headers))
+		connection.request("POST", self.subdir, data, headers)
+		response = connection.getresponse().read()
+		
+		self._check_response_for_errors(response)
+		debug("Scrobbler Response:\n\t" + response)
+		
+		return response
+		
+	def _check_response_for_errors(self, response):
+		"""When passed a string response it checks for erros, raising
+		any exceptions as necessary."""
+		
+		lines = response.split("\n")
+		status_line = lines[0]
+		
+		if status_line == "OK":
+			return
+		elif status_line == "BANNED":
+			raise BannedClient()
+		elif status_line == "BADAUTH":
+			raise BadAuthenticationException()
+		elif status_line == "BADTIME":
+			raise BadTime()
+		elif status_line == "BADSESSION":
+			raise BadSession()
+		elif status_line.startswith("FAILED "):
+			reason = status_line[status_line.find("FAILED ")+len("FAILED "):]
+			raise ScrobblingException(reason)
+	
+class Scrobbler(object):
+	"""A class for scrobbling tracks to Last.fm"""
+	
+	session_id = None
+	nowplaying_url = None
+	submissions_url = None
+	
+	def __init__(self, client_id, client_version, username, md5_password):
+		self.client_id = client_id
+		self.client_version = client_version
+		self.username = username
+		self.password = md5_password
+	
+	def _do_handshake(self):
+		"""Handshakes with the server"""
+		
+		timestamp = str(int(time.time()))
+		token = md5(self.password + timestamp)
+		
+		params = {"hs": "true", "p": "1.2.1", "c": self.client_id,
+			"v": self.client_version, "u": self.username, "t": timestamp,
+			"a": token}
+		
+		response = _ScrobblerRequest("http://post.audioscrobbler.com:80/", params).execute().split("\n")
+		
+		self.session_id = response[1]
+		self.nowplaying_url = response[2]
+		self.submissions_url = response[3]
+	
+	def _get_session_id(self, new = False):
+		"""Returns a handshake. If new is true, then it will be requested from the server
+		even if one was cached."""
+		
+		if not self.session_id or new:
+			debug("Doing a scrobbling handshake")
+			self._do_handshake()
+		
+		return self.session_id
+	
+	def report_now_playing(self, artist, title, album = "", duration = "", track_number = "", mbid = ""):
+		
+		params = {"s": self._get_session_id(), "a": artist, "t": title,
+			"b": album, "l": duration, "n": track_number, "m": mbid}
+		
+		response = _ScrobblerRequest(self.nowplaying_url, params).execute()
+		
+		try:
+			_ScrobblerRequest(self.nowplaying_url, params).execute()
+		except BadSession:
+			self._do_handshake()
+			self.report_now_playing(artist, title, album, duration, track_number, mbid)
+		
+		info(artist + " - " + title + " was reported as now-playing")
+	
+	def scrobble(self, artist, title, time_started, source, mode, duration, album="", track_number="", mbid=""):
+		"""Scrobble a track. parameters:
+			artist: Artist name.
+			title: Track title.
+			time_started: UTC timestamp of when the track started playing.
+			source: The source of the track
+				SCROBBLE_SOURCE_USER: Chosen by the user (the most common value, unless you have a reason for choosing otherwise, use this).
+				SCROBBLE_SOURCE_NON_PERSONALIZED_BROADCAST: Non-personalised broadcast (e.g. Shoutcast, BBC Radio 1).
+				SCROBBLE_SOURCE_PERSONALIZED_BROADCAST: Personalised recommendation except Last.fm (e.g. Pandora, Launchcast).
+				SCROBBLE_SOURCE_LASTFM: ast.fm (any mode). In this case, the 5-digit recommendation_key value must be set.
+				SCROBBLE_SOURCE_UNKNOWN: Source unknown.
+			mode: The submission mode
+				SCROBBLE_MODE_PLAYED: The track was played.
+				SCROBBLE_MODE_SKIPPED: The track was skipped (Only if source was Last.fm)
+				SCROBBLE_MODE_BANNED: The track was banned (Only if source was Last.fm)
+			duration: Track duration in seconds.
+			album: The album name.
+			track_number: The track number on the album.
+			mbid: MusicBrainz ID.
+		"""
+		
+		params = {"s": self._get_session_id(), "a[0]": artist, "t[0]": title,
+			"i[0]": str(time_started), "o[0]": source, "r[0]": mode, "l[0]": str(duration),
+			"b[0]": album, "n[0]": track_number, "m[0]": mbid}
+		
+		response = _ScrobblerRequest(self.submissions_url, params).execute()
+		info(artist + " - " + title + " was scrobbled")
