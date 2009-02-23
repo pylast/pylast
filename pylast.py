@@ -721,7 +721,14 @@ class Artist(_BaseObject, _Taggable):
 		"""Returns the number of plays on Last.fm."""
 		
 		return _number(_extract(self._request("artist.getInfo", True), "playcount"))
-	
+
+	def get_mbid(self):
+		"""Returns the MusicBrainz ID of this artist."""
+		
+		doc = self._request("artist.getInfo", True)
+		
+		return _extract(doc, "mbid")
+		
 	def get_listener_count(self):
 		"""Returns the number of liteners on Last.fm."""
 		
@@ -2455,7 +2462,7 @@ class AuthenticatedUser(User):
 		doc = self._request("user.getInfo", True)
 		
 		return _number(_extract(doc, "playcount"))
-
+		
 	def _get_recommended_events_pagecount(self):
 		"""Returns the number of pages in the past events."""
 		
