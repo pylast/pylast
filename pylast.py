@@ -180,7 +180,7 @@ class _Request(object):
 			if key != "api_sig" and key != "api_key" and key != "sk":
 				cache_key += urllib.quote_plus(key) + urllib.quote_plus(urllib.quote_plus(self.params[key]))
 		
-		return cache_key
+		return hashlib.sha1(cache_key).hexdigest()
 	
 	def _is_cached(self):
 		"""Returns True if the request is available in the cache."""
