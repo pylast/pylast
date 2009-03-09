@@ -554,11 +554,12 @@ class LibraryItem (object):
 class PlayedTrack (object):
 	"""A track with a playback date."""
 	
-	def __init__(self, track, date):
+	def __init__(self, track, date, timestamp):
 		object.__init__(self)
 		
 		self.track = track
 		self.date = date
+		self.timestamp = timestamp
 	
 	def __repr__(self):
 		return repr(self.track) + " played at " + self.date
@@ -577,6 +578,11 @@ class PlayedTrack (object):
 		"""Returns the playback date."""
 		
 		return self.date
+	
+	def get_timestamp(self):
+		"""Returns the unix timestamp of the playback date."""
+		
+		return self.timestamp
 	
 
 class Album(_BaseObject, _Taggable):
@@ -2181,11 +2187,12 @@ class User(_BaseObject):
 			title = _extract(track, "name")
 			artist = _extract(track, "artist")
 			date = _extract(track, "date")
+			timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
 			
 			if track.hasAttribute('nowplaying'):
 				continue	#to prevent the now playing track from sneaking in here
 				
-			list.append(PlayedTrack(Track(artist, title, *self.auth_data), date))
+			list.append(PlayedTrack(Track(artist, title, *self.auth_data), date, timestamp))
 		
 		return list
 	
