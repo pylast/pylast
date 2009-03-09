@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.0b'
+__version__ = '0.3.1'
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -550,6 +550,34 @@ class LibraryItem (object):
 		"""Returns the item's tagcount in the Library."""
 		
 		return self.tagcount
+
+class PlayedTrack (object):
+	"""A track with a playback date."""
+	
+	def __init__(self, track, date):
+		object.__init__(self)
+		
+		self.track = track
+		self.date = date
+	
+	def __repr__(self):
+		return repr(self.track) + " played at " + self.date
+	
+	def get_track(self):
+		"""Return the track."""
+		
+		return self.track
+	
+	def get_item(self):
+		"""Returns the played track. An alias to get_track()."""
+		
+		return self.get_track();
+	
+	def get_date(self):
+		"""Returns the playback date."""
+		
+		return self.date
+	
 
 class Album(_BaseObject, _Taggable):
 	"""A Last.fm album."""
@@ -2137,7 +2165,10 @@ class User(_BaseObject):
 
 
 	def get_recent_tracks(self, limit = None):
-		"""Returns this user's recent listened-to tracks. """
+		"""Returns this user's recent listened-to tracks as
+		a sequence of PlayedTrack objects.
+		Use extract_items() with the return of this function to
+		get only a sequence of Track objects with no playback dates. """
 		
 		params = self._get_params()
 		if limit:
@@ -2147,13 +2178,14 @@ class User(_BaseObject):
 		
 		list = []
 		for track in doc.getElementsByTagName('track'):
-			title = _extract(track, 'name')
-			artist = _extract(track, 'artist')
+			title = _extract(track, "name")
+			artist = _extract(track, "artist")
+			date = _extract(track, "date")
 			
 			if track.hasAttribute('nowplaying'):
 				continue	#to prevent the now playing track from sneaking in here
 				
-			list.append(Track(artist, title, *self.auth_data))
+			list.append(PlayedTrack(Track(artist, title, *self.auth_data), date))
 		
 		return list
 	
