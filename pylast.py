@@ -1729,7 +1729,7 @@ class Track(_BaseObject, _Taggable):
 			return
 		
 		node = doc.getElementsByTagName("album")[0]
-		return Album(_extract(node, "artist"), _extract(node, "title"))
+		return Album(_extract(node, "artist"), _extract(node, "title"), *self.auth_data)
 	
 	def get_wiki_published_date(self):
 		"""Returns the date of publishing this version of the wiki."""
