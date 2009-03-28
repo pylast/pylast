@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
 __email__ = 'amr.hassan@gmail.com'
@@ -158,7 +158,7 @@ class _Request(object):
 		
 		keys.sort()
 		
-		string = unicode()
+		string = ""
 		
 		for name in keys:
 			string += name
@@ -166,7 +166,7 @@ class _Request(object):
 		
 		string += self.api_secret
 		
-		return md5(string.encode('utf-8'))
+		return md5(string)
 	
 	def _get_cache_key(self):
 		"""The cache key is a string of concatenated sorted names and values."""
@@ -207,7 +207,7 @@ class _Request(object):
 		
 		data = []
 		for name in self.params.keys():
-			data.append('='.join((name, urllib.quote_plus(self.params[name].encode('utf-8')))))
+			data.append('='.join((name, urllib.quote_plus(self.params[name]))))
 		data = '&'.join(data)
 		
 		headers = {
@@ -607,7 +607,7 @@ class Album(_BaseObject, _Taggable):
 		self.title = title
 
 	def __repr__(self):
-		return self.get_artist().get_name().encode('utf-8') + ' - ' + self.get_title().encode('utf-8')
+		return self.get_artist().get_name() + ' - ' + self.get_title()
 	
 	def __eq__(self, other):
 		return (self.get_title().lower() == other.get_title().lower()) and (self.get_artist().get_name().lower() == other.get_artist().get_name().lower())
@@ -724,7 +724,7 @@ class Artist(_BaseObject, _Taggable):
 		self.name = name
 
 	def __repr__(self):
-		return self.get_name().encode('utf-8')
+		return unicode(self.get_name())
 	
 	def __eq__(self, other):
 		return self.get_name().lower() == other.get_name().lower()
@@ -1098,7 +1098,7 @@ class Country(_BaseObject):
 		self.name = name
 	
 	def __repr__(self):
-		return self.get_name().encode('utf-8')
+		return self.get_name()
 	
 	def __eq__(self, other):
 		self.get_name().lower() == other.get_name().lower()
@@ -1508,7 +1508,7 @@ class Tag(_BaseObject):
 		return {'tag': self.get_name()}
 	
 	def __repr__(self):
-		return self.get_name().encode('utf-8')
+		return self.get_name()
 	
 	def __eq__(self):
 		return self.get_name().lower() == other.get_name().lower()
@@ -1646,7 +1646,7 @@ class Track(_BaseObject, _Taggable):
 		self.title = title
 
 	def __repr__(self):
-		return self.get_artist().get_name().encode('utf-8') + ' - ' + self.get_title().encode('utf-8')
+		return self.get_artist().get_name() + ' - ' + self.get_title()
 
 	def __eq__(self, other):
 		return (self.get_title().lower() == other.get_title().lower()) and (self.get_artist().get_name().lower() == other.get_artist().get_name().lower())
@@ -1869,7 +1869,7 @@ class Group(_BaseObject):
 		self.name = group_name
 	
 	def __repr__(self):
-		return self.get_name().encode('utf-8')
+		return self.get_name()
 	
 	def __eq__(self, other):
 		return self.get_name().lower() == other.get_name().lower()
@@ -2024,7 +2024,7 @@ class User(_BaseObject):
 		self._recommended_artists_index = 0
 	
 	def __repr__(self):
-		return self.get_name().encode('utf-8')
+		return self.get_name()
 	
 	def __eq__(self, another):
 		return self.get_name() == another.get_name()
@@ -2778,7 +2778,7 @@ def md5(text):
 	"""Returns the md5 hash of a string."""
 	
 	hash = hashlib.md5()
-	hash.update(text.encode('utf-8'))
+	hash.update(text)
 	
 	return hash.hexdigest()
 
@@ -2892,7 +2892,7 @@ def _get_url_safe(text):
 	"""Does all kinds of tricks on a text to make it safe to use in a url."""
 	
 	if type(text) == type(unicode()):
-		text = text.encode('utf-8')
+		text = text
 	
 	return urllib.quote_plus(urllib.quote_plus(text)).lower()
 
@@ -3055,7 +3055,7 @@ class _ScrobblerRequest(object):
 
 		data = []
 		for name in self.params.keys():
-			value = urllib.quote_plus(self.params[name].encode('utf-8'))
+			value = urllib.quote_plus(self.params[name])
 			data.append('='.join((name, value)))
 		data = "&".join(data)
 		
