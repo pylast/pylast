@@ -21,8 +21,8 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3'
-__revision__ = "$Id$"
+__version__ = '0.3.3'
+__revision__ = "$Revision$"
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
 __copyright__ = "Copyright (C) 2008-2009  Amr Hassan"
