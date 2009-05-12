@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 __revision__ = "$Revision$"
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
@@ -29,6 +29,9 @@ __copyright__ = "Copyright (C) 2008-2009  Amr Hassan"
 __license__ = "gpl"
 __email__ = 'amr.hassan@gmail.com'
 
+# Default values for Last.fm.
+WS_SERVER = ('ws.audioscrobbler.com', '/2.0/')
+SUBMISSION_SERVER = "http://post.audioscrobbler.com:80/"
 
 __proxy = None
 __proxy_enabled = False
@@ -43,7 +46,7 @@ import threading
 from xml.dom import minidom
 import os
 import time
-from logging import *
+from logging import info, warn, debug
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -133,8 +136,8 @@ class _ThreadedCall(threading.Thread):
 class _Request(object):
 	"""Representing an abstract web service operation."""
 	
-	HOST_NAME = 'ws.audioscrobbler.com'
-	HOST_SUBDIR = '/2.0/'
+	global WS_SERVER
+	(HOST_NAME, HOST_SUBDIR) = WS_SERVER
 	
 	def __init__(self, method_name, params, api_key, api_secret, session_key = None):
 
@@ -3123,7 +3126,8 @@ class Scrobbler(object):
 			"v": self.client_version, "u": self.username, "t": timestamp,
 			"a": token}
 		
-		response = _ScrobblerRequest("http://post.audioscrobbler.com:80/", params).execute().split("\n")
+		global SUBMISSION_SERVER
+		response = _ScrobblerRequest(SUBMISSION_SERVER, params).execute().split("\n")
 		
 		self.session_id = response[1]
 		self.nowplaying_url = response[2]
