@@ -21,7 +21,7 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 __revision__ = "$Revision$"
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
@@ -35,8 +35,8 @@ SUBMISSION_SERVER = "http://post.audioscrobbler.com:80/"
 
 __proxy = None
 __proxy_enabled = False
-__cache_dir = None
-__cache_enabled = False
+__cache_shelf = None
+__cache_filename = None
 __last_call_time = 0
 
 import hashlib
@@ -47,6 +47,8 @@ from xml.dom import minidom
 import os
 import time
 from logging import info, warn, debug
+import shelve
+import tempfile
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -147,6 +149,9 @@ class _Request(object):
 		self.params["api_key"] = api_key
 		self.params["method"] = method_name
 		
+		if is_caching_enabled():
+			self.shelf = get_cache_shelf()
+		
 		if session_key:
 			self.params["sk"] = session_key
 			self.sign_it()
@@ -188,23 +193,20 @@ class _Request(object):
 		
 		return hashlib.sha1(cache_key).hexdigest()
 	
-	def _is_cached(self):
-		"""Returns True if the request is available in the cache."""
-		
-		return os.path.exists(os.path.join(_get_cache_dir(), self._get_cache_key()))
-	
 	def _get_cached_response(self):
 		"""Returns a file object of the cached response."""
 		
 		if not self._is_cached():
 			response = self._download_response()
-			
-			response_file = open(os.path.join(_get_cache_dir(), self._get_cache_key()), "w")
-			response_file.write(response)
-			response_file.close()
+			self.shelf[self._get_cache_key()] = response
 		
-		return open(os.path.join(_get_cache_dir(), self._get_cache_key()), "r").read()
+		return self.shelf[self._get_cache_key()]
 	
+	def _is_cached(self):
+		"""Returns True if the request is already in cache."""
+		
+		return self.shelf.has_key(self._get_cache_key())
+		
 	def _download_response(self):
 		"""Returns a response body string from the server."""
 		
@@ -2830,46 +2832,44 @@ def async_call(sender, call, callback = None, call_args = None, callback_args = 
 	thread = _ThreadedCall(sender, call, call_args, callback, callback_args)
 	thread.start()
 
-def enable_caching(cache_dir = None):
-	"""Enables caching request-wide for all cachable calls.
-	* cache_dir: A directory path to use to store the caching data. Set to None to use a temporary directory.
+def enable_caching(cache_filename = None):
+	"""Enables caching request-wide for all cachable calls. Uses a shelve.DbfilenameShelf object.
+	* cache_filename: A filename for the db. Defaults to a temporary filename in the tmp directory.
 	"""
 	
-	global __cache_dir
-	global __cache_enabled
+	global __cache_shelf
+	global __cache_filename
 	
-	if cache_dir == None:
-		import tempfile
-		__cache_dir = tempfile.mkdtemp()
-	else:
-		if not os.path.exists(cache_dir):
-			os.mkdir(cache_dir)
-		__cache_dir = cache_dir
-	
-	__cache_enabled = True
+	if not cache_filename:
+		cache_filename = tempfile.mktemp(prefix="pylast_tmp_")
+		
+	__cache_filename = cache_filename
+	__cache_shelf = shelve.open(__cache_filename)
 		
 def disable_caching():
 	"""Disables all caching features."""
 
-	global __cache_enabled
-		
-	__cache_enabled = False
+	global __cache_shelf	
+	__cache_shelf = None
 
 def is_caching_enabled():
 	"""Returns True if caching is enabled."""
 	
-	global __cache_enabled
-	
-	return __cache_enabled
+	global __cache_shelf
+	return not (__cache_shelf == None)
 
-def _get_cache_dir():
-	"""Returns the directory in which cache files are saved."""
+def get_cache_filename():
+	"""Returns filename of the cache db in use."""
 	
-	global __cache_dir
-	global __cache_enabled
-	
-	return __cache_dir
+	global __cache_filename
+	return __cache_filename
 
+def get_cache_shelf():
+	"""Returns the Shelf object used for caching."""
+	
+	global __cache_shelf
+	return __cache_shelf
+	
 def _extract(node, name, index = 0):
 	"""Extracts a value from the xml string"""
 	
