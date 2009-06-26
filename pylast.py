@@ -21,13 +21,17 @@
 # http://code.google.com/p/pylast/
 
 __name__ = 'pylast'
-__version__ = '0.3.5'
+__version__ = '0.3'
 __revision__ = "$Revision$"
 __doc__ = 'A Python interface to Last.fm'
 __author__ = 'Amr Hassan'
 __copyright__ = "Copyright (C) 2008-2009  Amr Hassan"
 __license__ = "gpl"
 __email__ = 'amr.hassan@gmail.com'
+
+# Parse revision and add it to __version__
+r = __revision__
+__version__ = __version__ + "." + r[r.find(" ")+1:r.rfind("$")-1]
 
 # Default values for Last.fm.
 WS_SERVER = ('ws.audioscrobbler.com', '/2.0/')

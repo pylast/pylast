@@ -9,6 +9,7 @@ setup(name = pylast.__name__,
       author = pylast.__author__,
 	  description = pylast.__doc__,
       author_email = pylast.__email__,
-      url='http://code.google.com/p/pylast/',
-      py_modules= ("pylast",)
-)
+      url = "http://code.google.com/p/pylast/",
+      py_modules = ("pylast",),
+	  license = "GPLv3"
+	)
