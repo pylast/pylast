@@ -193,7 +193,7 @@ class _Request(object):
 		
 		for key in keys:
 			if key != "api_sig" and key != "api_key" and key != "sk":
-				cache_key += urllib.quote_plus(key) + urllib.quote_plus(urllib.quote_plus(self.params[key]))
+				cache_key += key + self.params[key].encode("utf-8")
 		
 		return hashlib.sha1(cache_key).hexdigest()
 	
@@ -219,7 +219,7 @@ class _Request(object):
 		
 		data = []
 		for name in self.params.keys():
-			data.append('='.join((name, urllib.quote_plus(self.params[name]))))
+			data.append('='.join((name, urllib.quote_plus(self.params[name].encode("utf-8")))))
 		data = '&'.join(data)
 		
 		headers = {
@@ -2790,7 +2790,7 @@ def md5(text):
 	"""Returns the md5 hash of a string."""
 	
 	hash = hashlib.md5()
-	hash.update(text)
+	hash.update(text.encode("utf-8"))
 	
 	return hash.hexdigest()
 
