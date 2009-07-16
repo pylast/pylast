@@ -39,8 +39,7 @@ SUBMISSION_SERVER = "http://post.audioscrobbler.com:80/"
 
 __proxy = None
 __proxy_enabled = False
-__cache_shelf = None
-__cache_filename = None
+__cache_backend = None
 __last_call_time = 0
 
 import hashlib
@@ -53,6 +52,12 @@ import time
 from logging import info, warn, debug
 import shelve
 import tempfile
+import sys
+
+try:
+	import sqlite3
+except ImportError:
+	pass
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -109,6 +114,40 @@ SCROBBLE_MODE_PLAYED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
+
+class _ShelfCacheBackend(object):
+	"""Used as a backend for caching cacheable requests."""
+	def __init__(self, file_path = None):
+		self.shelf = shelve.open(file_path)
+	
+	def get_xml(self, key):
+		return self.shelf[key]
+	
+	def set_xml(self, key, xml_string):
+		self.shelf[key] = xml_string
+	
+	def has_key(self, key):
+		return key in self.shelf.keys()
+
+class _SqliteCacheBackend(object):
+	"""Used as a backend for caching cacheable requests."""
+	def __init__(self, file_path = None):
+		self.connection = sqlite3.connect(file_path)
+		self.connection.execute("CREATE TABLE IF NOT EXISTS cache(key TEXT, xml TEXT)")
+		self.connection.commit()
+
+	def get_xml(self, key):
+		row = self.connection.execute("SELECT xml FROM cache WHERE key='%s'" %key).fetchone()
+		return row[0]
+	
+	def set_xml(self, key, xml_string):
+		self.connection.execute("INSERT INTO cache VALUES('%s', '%s')" %(key, xml_string))
+		self.connection.commit()
+
+	def has_key(self, key):
+		row = self.connection.execute("SELECT COUNT(*) FROM cache WHERE key='%s'" %key).fetchone()
+		return row[0] > 0
+		
 class _ThreadedCall(threading.Thread):
 	"""Facilitates calling a function on another thread."""
 	
@@ -154,7 +193,7 @@ class _Request(object):
 		self.params["method"] = method_name
 		
 		if is_caching_enabled():
-			self.shelf = get_cache_shelf()
+			self.cache = _get_cache_backend()
 		
 		if session_key:
 			self.params["sk"] = session_key
@@ -202,14 +241,14 @@ class _Request(object):
 		
 		if not self._is_cached():
 			response = self._download_response()
-			self.shelf[self._get_cache_key()] = response
+			self.cache.set_xml(self._get_cache_key(), response)
 		
-		return self.shelf[self._get_cache_key()]
+		return self.cache.get_xml(self._get_cache_key())
 	
 	def _is_cached(self):
 		"""Returns True if the request is already in cache."""
 		
-		return self.shelf.has_key(self._get_cache_key())
+		return self.cache.has_key(self._get_cache_key())
 		
 	def _download_response(self):
 		"""Returns a response body string from the server."""
@@ -487,11 +526,11 @@ class ServiceException(Exception):
 	"""Exception related to the Last.fm web service"""
 	
 	def __init__(self, lastfm_status, details):
-		self._lastfm_status = lastfm_status
-		self._details = details
+		self.lastfm_status = lastfm_status
+		self.details = details
 	
-	def __str__(self):
-		return self._details
+	def __repr__(self):
+		return self.details
 	
 	def get_id(self):
 		"""Returns the exception ID, from one of the following:
@@ -510,7 +549,7 @@ class ServiceException(Exception):
 			STATUS_TOKEN_EXPIRED = 15
 		"""
 		
-		return self._lastfm_status
+		return self.lastfm_status
 
 class TopItem (object):
 	"""A top item in a list that has a weight. Returned from functions like get_top_tracks() and get_top_artists()."""
@@ -604,8 +643,8 @@ class Album(_BaseObject, _Taggable):
 		"""
 		Create an album instance.
 		# Parameters:
-			* artist str|Artist: An artist name or an Artist object.
-			* title str: The album title.
+			* artist: An artist name or an Artist object.
+			* title: The album title.
 		"""
 		
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
@@ -2836,43 +2875,43 @@ def async_call(sender, call, callback = None, call_args = None, callback_args = 
 	thread = _ThreadedCall(sender, call, call_args, callback, callback_args)
 	thread.start()
 
-def enable_caching(cache_filename = None):
-	"""Enables caching request-wide for all cachable calls. Uses a shelve.DbfilenameShelf object.
-	* cache_filename: A filename for the db. Defaults to a temporary filename in the tmp directory.
+def enable_caching(file_path = None):
+	"""Enables caching request-wide for all cachable calls.
+	In choosing the backend used for caching, it will try _SqliteCacheBackend first if
+	the module sqlite3 is present. If not, it will fallback to _ShelfCacheBackend which uses shelve.Shelf objects.
+	
+	* file_path: A file path for the backend storage file. If 
+	None set, a temp file would probably be created, according the backend.
 	"""
 	
-	global __cache_shelf
-	global __cache_filename
+	global __cache_backend
 	
-	if not cache_filename:
-		cache_filename = tempfile.mktemp(prefix="pylast_tmp_")
-		
-	__cache_filename = cache_filename
-	__cache_shelf = shelve.open(__cache_filename)
+	if not file_path:
+		file_path = tempfile.mktemp(prefix="pylast_tmp_")
+	
+	if "sqlite3" in sys.modules.keys():
+		__cache_backend = _SqliteCacheBackend(file_path)
+		debug("Caching to Sqlite3 at " + file_path)
+	else:
+		__cache_backend = _ShelfCacheBackend(file_path)
+		debug("Caching to Shelf at " + file_path)
 		
 def disable_caching():
 	"""Disables all caching features."""
 
-	global __cache_shelf	
-	__cache_shelf = None
+	global __cache_backend
+	__cache_backend = None
 
 def is_caching_enabled():
 	"""Returns True if caching is enabled."""
 	
-	global __cache_shelf
-	return not (__cache_shelf == None)
+	global __cache_backend
+	return not (__cache_backend == None)
 
-def get_cache_filename():
-	"""Returns filename of the cache db in use."""
+def _get_cache_backend():
 	
-	global __cache_filename
-	return __cache_filename
-
-def get_cache_shelf():
-	"""Returns the Shelf object used for caching."""
-	
-	global __cache_shelf
-	return __cache_shelf
+	global __cache_backend
+	return __cache_backend
 	
 def _extract(node, name, index = 0):
 	"""Extracts a value from the xml string"""
@@ -3010,20 +3049,6 @@ def _delay_call():
 		time.sleep(1)
 	
 	__last_call_time = now
-
-def clear_cache():
-	"""Clears the cache data and starts fresh."""
-	
-	global __cache_dir
-	
-	
-	if not os.path.exists(__cache_dir):
-		return
-	
-	for file in os.listdir(__cache_dir):
-		os.remove(os.path.join(__cache_dir, file))
-
-
 
 # ------------------------------------------------------------
 
