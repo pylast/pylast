@@ -3123,7 +3123,7 @@ class _ScrobblerRequest(object):
 		elif status_line == "BANNED":
 			raise BannedClient()
 		elif status_line == "BADAUTH":
-			raise BadAuthenticationException()
+			raise BadAuthentication()
 		elif status_line == "BADTIME":
 			raise BadTime()
 		elif status_line == "BADSESSION":
