@@ -1,5 +1,4 @@
 Installation Instructions
 =========================
 
-1. cd into this directory
-2. Execute "python setup.py install". you'll probably need to add sudo to the beginning.
+Execute "python setup.py install" as a super user.

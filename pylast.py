@@ -45,6 +45,7 @@ __last_call_time = 0
 import hashlib
 import httplib
 import urllib
+import codecs
 import threading
 from xml.dom import minidom
 import os
@@ -137,15 +138,15 @@ class _SqliteCacheBackend(object):
 		self.connection.commit()
 
 	def get_xml(self, key):
-		row = self.connection.execute("SELECT xml FROM cache WHERE key='%s'" %key).fetchone()
+		row = self.connection.execute("SELECT xml FROM cache WHERE key=?", (key,)).fetchone()
 		return row[0]
 	
 	def set_xml(self, key, xml_string):
-		self.connection.execute("INSERT INTO cache VALUES('%s', '%s')" %(key, xml_string))
+		self.connection.execute("INSERT INTO cache VALUES(?, ?)", (key, xml_string))
 		self.connection.commit()
 
 	def has_key(self, key):
-		row = self.connection.execute("SELECT COUNT(*) FROM cache WHERE key='%s'" %key).fetchone()
+		row = self.connection.execute("SELECT COUNT(*) FROM cache WHERE key=?", (key,)).fetchone()
 		return row[0] > 0
 		
 class _ThreadedCall(threading.Thread):
@@ -275,9 +276,10 @@ class _Request(object):
 			conn = httplib.HTTPConnection(host=self.HOST_NAME)
 			conn.request(method='POST', url=self.HOST_SUBDIR, body=data, headers=headers)
 		
-		response = conn.getresponse().read()
-		self._check_response_for_errors(response)
-		return response
+		response = conn.getresponse()
+		response_text = unicode(response.read(), "utf-8")
+		self._check_response_for_errors(response_text)
+		return response_text
 		
 	def execute(self, cacheable = False):
 		"""Returns the XML DOM response of the POST Request from the server"""
@@ -287,12 +289,12 @@ class _Request(object):
 		else:
 			response = self._download_response()
 		
-		return minidom.parseString(response)
+		return minidom.parseString(response.encode("utf-8"))
 	
 	def _check_response_for_errors(self, response):
 		"""Checks the response for errors and raises one if any exists."""
 		
-		doc = minidom.parseString(response)
+		doc = minidom.parseString(response.encode("utf-8"))
 		e = doc.getElementsByTagName('lfm')[0]
 		
 		if e.getAttribute('status') != "ok":
@@ -384,7 +386,7 @@ class SessionKeyGenerator(object):
 class _BaseObject(object):
 	"""An abstract webservices object."""
 		
-	def __init__(self, api_key, api_secret, session_key):
+	def __init__(self, api_key, api_secret, session_key=""):
 				
 		self.api_key = api_key
 		self.api_secret = api_secret
@@ -639,7 +641,7 @@ class PlayedTrack (object):
 class Album(_BaseObject, _Taggable):
 	"""A Last.fm album."""
 	
-	def __init__(self, artist, title, api_key, api_secret, session_key):
+	def __init__(self, artist, title, api_key, api_secret, session_key=""):
 		"""
 		Create an album instance.
 		# Parameters:
@@ -763,7 +765,7 @@ class Album(_BaseObject, _Taggable):
 class Artist(_BaseObject, _Taggable):
 	"""A Last.fm artist."""
 	
-	def __init__(self, name, api_key, api_secret, session_key):
+	def __init__(self, name, api_key, api_secret, session_key=""):
 		"""Create an artist object.
 		# Parameters:
 			* name str: The artist's name.
@@ -981,7 +983,7 @@ class Artist(_BaseObject, _Taggable):
 class Event(_BaseObject):
 	"""A Last.fm event."""
 	
-	def __init__(self, event_id, api_key, api_secret, session_key):
+	def __init__(self, event_id, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.id = unicode(event_id)
@@ -1143,7 +1145,7 @@ class Event(_BaseObject):
 class Country(_BaseObject):
 	"""A country at Last.fm."""
 	
-	def __init__(self, name, api_key, api_secret, session_key):
+	def __init__(self, name, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.name = name
@@ -1228,7 +1230,7 @@ class Country(_BaseObject):
 class Library(_BaseObject):
 	"""A user's Last.fm library."""
 	
-	def __init__(self, user, api_key, api_secret, session_key):
+	def __init__(self, user, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		if isinstance(user, User):
@@ -1418,7 +1420,7 @@ class Library(_BaseObject):
 class Playlist(_BaseObject):
 	"""A Last.fm user playlist."""
 	
-	def __init__(self, user, id, api_key, api_secret, session_key):
+	def __init__(self, user, id, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		if isinstance(user, User):
@@ -1550,7 +1552,7 @@ class Tag(_BaseObject):
 	
 	# TODO: getWeeklyArtistChart (too lazy, i'll wait for when someone requests it)
 	
-	def __init__(self, name, api_key, api_secret, session_key):
+	def __init__(self, name, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.name = name
@@ -1685,7 +1687,7 @@ class Tag(_BaseObject):
 class Track(_BaseObject, _Taggable):
 	"""A Last.fm track."""
 	
-	def __init__(self, artist, title, api_key, api_secret, session_key):
+	def __init__(self, artist, title, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		_Taggable.__init__(self, 'track')
 		
@@ -1914,7 +1916,7 @@ class Track(_BaseObject, _Taggable):
 class Group(_BaseObject):
 	"""A Last.fm group."""
 	
-	def __init__(self, group_name, api_key, api_secret, session_key):
+	def __init__(self, group_name, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.name = group_name
@@ -2026,7 +2028,7 @@ class Group(_BaseObject):
 class XSPF(_BaseObject):
 	"A Last.fm XSPF playlist."""
 	
-	def __init__(self, uri, api_key, api_secret, session_key):
+	def __init__(self, uri, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.uri = uri
@@ -2065,7 +2067,7 @@ class XSPF(_BaseObject):
 class User(_BaseObject):
 	"""A Last.fm user."""
 	
-	def __init__(self, user_name, api_key, api_secret, session_key):
+	def __init__(self, user_name, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.name = user_name
@@ -2476,7 +2478,7 @@ class User(_BaseObject):
 		return Library(self, *self.auth_data)
 
 class AuthenticatedUser(User):
-	def __init__(self, api_key, api_secret, session_key):
+	def __init__(self, api_key, api_secret, session_key=""):
 		User.__init__(self, "", api_key, api_secret, session_key);
 	
 	def _get_params(self):
@@ -2630,7 +2632,7 @@ class AuthenticatedUser(User):
 class _Search(_BaseObject):
 	"""An abstract class. Use one of its derivatives."""
 	
-	def __init__(self, ws_prefix, search_terms, api_key, api_secret, session_key):
+	def __init__(self, ws_prefix, search_terms, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self._ws_prefix = ws_prefix
@@ -2669,7 +2671,7 @@ class _Search(_BaseObject):
 class AlbumSearch(_Search):
 	"""Search for an album by name."""
 	
-	def __init__(self, album_name, api_key, api_secret, session_key):
+	def __init__(self, album_name, api_key, api_secret, session_key=""):
 		
 		_Search.__init__(self, "album", {"album": album_name}, api_key, api_secret, session_key)
 	
@@ -2687,7 +2689,7 @@ class AlbumSearch(_Search):
 class ArtistSearch(_Search):
 	"""Search for an artist by artist name."""
 	
-	def __init__(self, artist_name, api_key, api_secret, session_key):
+	def __init__(self, artist_name, api_key, api_secret, session_key=""):
 		_Search.__init__(self, "artist", {"artist": artist_name}, api_key, api_secret, session_key)
 
 	def get_next_page(self):
@@ -2704,7 +2706,7 @@ class ArtistSearch(_Search):
 class TagSearch(_Search):
 	"""Search for a tag by tag name."""
 	
-	def __init__(self, tag_name, api_key, api_secret, session_key):
+	def __init__(self, tag_name, api_key, api_secret, session_key=""):
 		
 		_Search.__init__(self, "tag", {"tag": tag_name}, api_key, api_secret, session_key)
 		
@@ -2723,7 +2725,7 @@ class TrackSearch(_Search):
 	"""Search for a track by track title. If you don't wanna narrow the results down
 	by specifying the artist name, set it to empty string."""
 	
-	def __init__(self, artist_name, track_title, api_key, api_secret, session_key):
+	def __init__(self, artist_name, track_title, api_key, api_secret, session_key=""):
 		
 		_Search.__init__(self, "track", {"track": track_title, "artist": artist_name}, api_key, api_secret, session_key)
 
@@ -2742,7 +2744,7 @@ class VenueSearch(_Search):
 	"""Search for a venue by its name. If you don't wanna narrow the results down
 	by specifying a country, set it to empty string."""
 	
-	def __init__(self, venue_name, country_name, api_key, api_secret, session_key):
+	def __init__(self, venue_name, country_name, api_key, api_secret, session_key=""):
 		
 		_Search.__init__(self, "venue", {"venue": venue_name, "country": country_name}, api_key, api_secret, session_key)
 
@@ -2762,7 +2764,7 @@ class Venue(_BaseObject):
 	
 	# TODO: waiting for a venue.getInfo web service to use.
 	
-	def __init__(self, id, api_key, api_secret, session_key):
+	def __init__(self, id, api_key, api_secret, session_key=""):
 		_BaseObject.__init__(self, api_key, api_secret, session_key)
 		
 		self.id = _number(id)
@@ -2803,7 +2805,7 @@ class Venue(_BaseObject):
 		
 		return list
 		
-def create_new_playlist(title, description, api_key, api_secret, session_key):
+def create_new_playlist(title, description, api_key, api_secret, session_key=""):
 	"""Creates a playlist for the authenticated user and returns it.
 	* title: The title of the new playlist.
 	* description: The description of the new playlist.
@@ -2820,7 +2822,7 @@ def create_new_playlist(title, description, api_key, api_secret, session_key):
 	
 	return Playlist(user, id, api_key, api_secret, session_key)
 
-def get_authenticated_user(api_key, api_secret, session_key):
+def get_authenticated_user(api_key, api_secret, session_key=""):
 	"""Returns the authenticated user."""
 	
 	return AuthenticatedUser(api_key, api_secret, session_key)
@@ -2955,32 +2957,32 @@ def _number(string):
 	else:
 		return int(string)
 
-def search_for_album(album_name, api_key, api_secret, session_key):
+def search_for_album(album_name, api_key, api_secret, session_key=""):
 	"""Searches for an album by its name. Returns a AlbumSearch object.
 	Use get_next_page() to retreive sequences of results."""
 	
 	return AlbumSearch(album_name, api_key, api_secret, session_key)
 
-def search_for_artist(artist_name, api_key, api_secret, session_key):
+def search_for_artist(artist_name, api_key, api_secret, session_key=""):
 	"""Searches of an artist by its name. Returns a ArtistSearch object.
 	Use get_next_page() to retreive sequences of results."""
 	
 	return ArtistSearch(artist_name, api_key, api_secret, session_key)
 
-def search_for_tag(tag_name, api_key, api_secret, session_key):
+def search_for_tag(tag_name, api_key, api_secret, session_key=""):
 	"""Searches of a tag by its name. Returns a TagSearch object.
 	Use get_next_page() to retreive sequences of results."""
 	
 	return TagSearch(tag_name, api_key, api_secret, session_key)
 
-def search_for_track(artist_name, track_name, api_key, api_secret, session_key):
+def search_for_track(artist_name, track_name, api_key, api_secret, session_key=""):
 	"""Searches of a track by its name and its artist. Set artist to an empty string if not available.
 	Returns a TrackSearch object.
 	Use get_next_page() to retreive sequences of results."""
 	
 	return TrackSearch(artist_name, track_name, api_key, api_secret, session_key)
 
-def search_for_venue(venue_name, country_name, api_key, api_secret, session_key):
+def search_for_venue(venue_name, country_name, api_key, api_secret, session_key=""):
 	"""Searches of a venue by its name and its country. Set country_name to an empty string if not available.
 	Returns a VenueSearch object.
 	Use get_next_page() to retreive sequences of results."""
@@ -2996,7 +2998,7 @@ def extract_items(topitems_or_libraryitems):
 	
 	return list
 
-def get_top_tags(api_key, api_secret, session_key):
+def get_top_tags(api_key, api_secret, session_key=""):
 	"""Returns a sequence of the most used Last.fm tags as a sequence of TopItem objects."""
 	
 	doc = _Request("tag.getTopTags", dict(), api_key, api_secret, session_key).execute(True)
@@ -3009,7 +3011,7 @@ def get_top_tags(api_key, api_secret, session_key):
 	
 	return list
 
-def get_track_by_mbid(mbid, api_key, api_secret, session_key):
+def get_track_by_mbid(mbid, api_key, api_secret, session_key=""):
 	"""Looks up a track by its MusicBrainz ID."""
 	
 	params = {"mbid": unicode(mbid)}
@@ -3018,7 +3020,7 @@ def get_track_by_mbid(mbid, api_key, api_secret, session_key):
 	
 	return Track(_extract(doc, "name", 1), _extract(doc, "name"), api_key, api_secret, session_key)
 
-def get_artist_by_mbid(mbid, api_key, api_secret, session_key):
+def get_artist_by_mbid(mbid, api_key, api_secret, session_key=""):
 	"""Loooks up an artist by its MusicBrainz ID."""
 	
 	params = {"mbid": unicode(mbid)}
@@ -3027,7 +3029,7 @@ def get_artist_by_mbid(mbid, api_key, api_secret, session_key):
 	
 	return Artist(_extract(doc, "name"), api_key, api_secret, session_key)
 
-def get_album_by_mbid(mbid, api_key, api_secret, session_key):
+def get_album_by_mbid(mbid, api_key, api_secret, session_key=""):
 	"""Looks up an album by its MusicBrainz ID."""
 	
 	params = {"mbid": unicode(mbid)}
