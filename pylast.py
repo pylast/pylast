@@ -3210,9 +3210,9 @@ class Scrobbler(object):
 			mbid: MusicBrainz ID.
 		"""
 		
-		params = {"s": self._get_session_id(), "a[0]": artist, "t[0]": title,
+		params = {"s": self._get_session_id(), "a[0]": artist.encode("utf-8"), "t[0]": title.encode("utf-8"),
 			"i[0]": str(time_started), "o[0]": source, "r[0]": mode, "l[0]": str(duration),
-			"b[0]": album, "n[0]": track_number, "m[0]": mbid}
+			"b[0]": album.encode("utf-8"), "n[0]": track_number, "m[0]": mbid}
 		
 		response = _ScrobblerRequest(self.submissions_url, params).execute()
 		info(artist + " - " + title + " was scrobbled")
