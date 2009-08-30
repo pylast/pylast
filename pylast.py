@@ -2123,10 +2123,10 @@ class User(_BaseObject):
 		
 		return list
 	
-	def get_loved_tracks(self):
-		"""Returns the last 50 tracks loved by this user. """
+	def get_loved_tracks(self, limit=50, page=1):
+		"""Returns the loved tracks by this user """
 		
-		doc = self._request('user.getLovedTracks', True)
+		doc = self._request('user.getLovedTracks', True, {"limit": str(limit), "page": str(page)})
 		
 		list = []
 		for track in doc.getElementsByTagName('track'):
