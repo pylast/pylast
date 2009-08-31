@@ -1,0 +1,7 @@
+pylast
+------
+
+A python interface to Last.fm. Try using the pydoc utility for help
+on usage.
+For more info check out the project's home page at http://code.google.com/p/pylast/
+or the mailing list http://groups.google.com/group/pylast/
