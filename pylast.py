@@ -292,6 +292,55 @@ class Network(object):
 		self.proxy = None
 		self.last_call_time = 0
 	
+	def get_artist(self, artist_name):
+		"""
+			Return an Artist object
+		"""
+		
+		return Artist(artist_name, self)
+	
+	def get_track(self, artist, title):
+		"""
+			Return a Track object
+		"""
+		
+		return Track(artist, title, self)
+	
+	def get_album(self, artist, title):
+		"""
+			Return an Album object
+		"""
+		
+		return Album(artist, title, self)
+	
+	def get_authenticated_user(self):
+		"""
+			Returns the authenticated user
+		"""
+		
+		return AuthenticatedUser(self)
+	
+	def get_country(self, country_name):
+		"""
+			Returns a country object
+		"""
+		
+		return Country(country_name, self)
+	
+	def get_user(self, username):
+		"""
+			Returns a user object
+		"""
+		
+		return User(username, self)
+	
+	def get_tag(self, name):
+		"""
+			Returns a tag object
+		"""
+		
+		return Tag(name, self)
+	
 	def get_scrobbler(self, client_id, client_version):
 		"""
 			Returns a Scrobbler object used for submitting tracks to the server
@@ -386,7 +435,7 @@ class Network(object):
 		doc = self._Request(self, "tag.getTopTags").execute(True)
 		list = []
 		for node in doc.getElementsByTagName("tag"):
-			tag = Tag(_extract(node, "name"), network)
+			tag = Tag(_extract(node, "name"), self)
 			weight = _extract(node, "count")
 			
 			list.append(TopItem(tag, weight))
