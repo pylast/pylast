@@ -35,7 +35,7 @@ from xml.dom import minidom
 import xml.dom
 import os
 import time
-from logging import info, warn, debug
+import logging
 import shelve
 import tempfile
 import sys
@@ -292,6 +292,43 @@ class Network(object):
 		self.proxy = None
 		self.last_call_time = 0
 	
+		self.logging_enabled = False
+		self.logger = logging.getLogger(__name__ + ":" + self.name.lower())
+	
+	def _debug(self, message):
+		if self.logging_enabled:
+			self.logger.debug(message)
+	
+	def _info(self, message):
+		if self.logging_enabled:
+			self.logger.info(message)
+	
+	def _warning(self, message):
+		if self.logging_enabled:
+			self.logger.warning(message)
+	
+	def _critical(self, message):
+		if self.logging_enabled:
+			self.logger.critical(message)
+	
+	def _error(self, message):
+		if self.logging_enabled:
+			self.logger.error(message)
+	
+	def enable_logging(self):
+		"""
+			Enable logging through the logging module
+		"""
+		
+		self.logging_enabled = True
+	
+	def disable_logging(self):
+		"""
+			Disable logging
+		"""
+		
+		self.logging_enabled = False
+	
 	def get_artist(self, artist_name):
 		"""
 			Return an Artist object
@@ -432,7 +469,7 @@ class Network(object):
 	def get_top_tags(self):
 		"""Returns a sequence of the most used tags as a sequence of TopItem objects."""
 		
-		doc = self._Request(self, "tag.getTopTags").execute(True)
+		doc = _Request(self, "tag.getTopTags").execute(True)
 		list = []
 		for node in doc.getElementsByTagName("tag"):
 			tag = Tag(_extract(node, "name"), self)
@@ -477,10 +514,10 @@ class Network(object):
 		
 		if "sqlite3" in sys.modules.keys():
 			self.cache_backend = _SqliteCacheBackend(file_path)
-			debug("Caching to Sqlite3 at " + file_path)
+			self._debug("Caching to Sqlite3 at " + file_path)
 		else:
 			self.cache_backend = _ShelfCacheBackend(file_path)
-			debug("Caching to Shelf at " + file_path)
+			self._debug("Caching to Shelf at " + file_path)
 			
 	def disable_caching(self):
 		"""Disables all caching features."""
@@ -1010,7 +1047,7 @@ class _Taggable(object):
 		params['tags'] = _unicode(tag)
 		
 		self._request(self.ws_prefix + '.addTags', False, params)
-		info("Tagged " + repr(self) + " as (" + repr(tag) + ")")
+		self.network._info("Tagged " + repr(self) + " as (" + repr(tag) + ")")
 	
 	def _remove_tag(self, single_tag):
 		"""Remove a user's tag from this object."""
@@ -1022,7 +1059,7 @@ class _Taggable(object):
 		params['tag'] = _unicode(single_tag)
 		
 		self._request(self.ws_prefix + '.removeTag', False, params)
-		info("Removed tag (" + repr(tag) + ") from " + repr(self))
+		self.network._info("Removed tag (" + repr(tag) + ") from " + repr(self))
 
 	def get_tags(self):
 		"""Returns a list of the tags set by the user to this object."""
@@ -1493,7 +1530,7 @@ class Artist(_BaseObject, _Taggable):
 		if message: params['message'] = _unicode(message)
 		
 		self._request('artist.share', False, params)
-		info(repr(self) + " was shared with " + repr(users))
+		self.network._info(repr(self) + " was shared with " + repr(users))
 	
 	def get_url(self, domain_name = DOMAIN_ENGLISH):
 		"""Returns the url of the artist page on the network. 
@@ -1603,7 +1640,7 @@ class Event(_BaseObject):
 		params['status'] = _unicode(attending_status)
 		
 		doc = self._request('event.attend', False, params)
-		info("Attendance to " + repr(self) + " was set to " + repr(attending_status))
+		self.network._info("Attendance to " + repr(self) + " was set to " + repr(attending_status))
 	
 	def get_attendees(self):
 		"""
@@ -1746,7 +1783,7 @@ class Event(_BaseObject):
 		if message: params['message'] = _unicode(message)
 		
 		self._request('event.share', False, params)
-		info(repr(self) + " was shared with " + repr(users))
+		self.network._info(repr(self) + " was shared with " + repr(users))
 
 	def get_shouts(self, limit=50):
 		"""
@@ -1892,7 +1929,7 @@ class Library(_BaseObject):
 		params["album"] = album.get_name()
 		
 		self._request("library.addAlbum", False, params)
-		info(repr(album) + " was added to " + repr(self))
+		self.network._info(repr(album) + " was added to " + repr(self))
 	
 	def add_artist(self, artist):
 		"""Add an artist to this library."""
@@ -1901,7 +1938,7 @@ class Library(_BaseObject):
 		params["artist"] = artist.get_name()
 		
 		self._request("library.addArtist", False, params)
-		info(repr(artist) + " was added to " + repr(self))
+		self.network._info(repr(artist) + " was added to " + repr(self))
 	
 	def add_track(self, track):
 		"""Add a track to this library."""
@@ -1910,7 +1947,7 @@ class Library(_BaseObject):
 		params["track"] = track.get_title()
 		
 		self._request("library.addTrack", False, params)
-		info(repr(track) + " was added to " + repr(self))
+		self.network._info(repr(track) + " was added to " + repr(self))
 	
 	def get_albums(self, limit=50):
 		"""
@@ -2018,7 +2055,7 @@ class Playlist(_BaseObject):
 		params['track'] = track.get_title()
 		
 		self._request('playlist.addTrack', False, params)
-		info(repr(track) + " was added to " + repr(self))
+		self.network._info(repr(track) + " was added to " + repr(self))
 	
 	def get_title(self):
 		"""Returns the title of this playlist."""
@@ -3406,8 +3443,6 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
 			if not node.nodeType == xml.dom.Node.TEXT_NODE and len(nodes) < limit:
 				nodes.append(node)
 		
-		print "total_pages", total_pages, "page", page
-		
 		if page >= total_pages:
 			end_of_pages = True
 		
@@ -3528,13 +3563,13 @@ class _ScrobblerRequest(object):
 			"HOST": self.hostname
 			}
 		
-		debug("Scrobbler Request:\n\tHOST :" + self.hostname + "\n\tSUBDIR: " + self.subdir +
+		self.network._debug("Scrobbler Request:\n\tHOST :" + self.hostname + "\n\tSUBDIR: " + self.subdir +
 			"\n\tDATA:" + repr(data) + "\n\tHEADERS: " + repr(headers))
 		connection.request("POST", self.subdir, data, headers)
 		response = connection.getresponse().read()
 		
 		self._check_response_for_errors(response)
-		debug("Scrobbler Response:\n\t" + response)
+		self.network._debug("Scrobbler Response:\n\t" + response)
 		
 		return response
 		
@@ -3595,7 +3630,7 @@ class Scrobbler(object):
 		even if one was cached."""
 		
 		if not self.session_id or new:
-			debug("Doing a scrobbling handshake")
+			self.network._debug("Doing a scrobbling handshake")
 			self._do_handshake()
 		
 		return self.session_id
@@ -3613,7 +3648,7 @@ class Scrobbler(object):
 			self._do_handshake()
 			self.report_now_playing(artist, title, album, duration, track_number, mbid)
 		
-		info(artist + " - " + title + " was reported as now-playing")
+		self.network._info(artist + " - " + title + " was reported as now-playing")
 	
 	def scrobble(self, artist, title, time_started, source, mode, duration, album="", track_number="", mbid=""):
 		"""Scrobble a track. parameters:
@@ -3641,4 +3676,4 @@ class Scrobbler(object):
 			"b[0]": _string(album), "n[0]": track_number, "m[0]": mbid}
 		
 		response = _ScrobblerRequest(self.submissions_url, params).execute()
-		info(artist + " - " + title + " was scrobbled")
+		self.network._info(artist + " - " + title + " was scrobbled")
