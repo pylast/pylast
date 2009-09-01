@@ -94,6 +94,10 @@ COVER_LARGE = 2
 COVER_EXTRA_LARGE = 3
 COVER_MEGA = 4
 
+IMAGES_ORDER_POPULARITY = "popularity"
+IMAGES_ORDER_DATE = "dateadded"
+
+
 USER_MALE = 'Male'
 USER_FEMALE = 'Female'
 
@@ -1554,10 +1558,11 @@ class Artist(_BaseObject, _Taggable):
 		
 		return self.network._get_url(domain_name, "artist") %{'artist': artist}
 	
-	def get_images(self, limit=None):
+	def get_images(self, order=IMAGES_ORDER_POPULARITY, limit=None):
 		"""
 			Returns a sequence of Image objects
 			if limit is None it will return all
+			order can be IMAGES_ORDER_POPULARITY or IMAGES_ORDER_DATE
 		"""
 		
 		images = []
