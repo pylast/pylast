@@ -3545,10 +3545,11 @@ class BadSessionError(ScrobblingError):
 
 class _ScrobblerRequest(object):
 	
-	def __init__(self, url, params):
+	def __init__(self, url, params, network):
 		self.params = params
 		self.hostname = url[url.find("//") + 2:url.rfind("/")]
 		self.subdir = url[url.rfind("/"):]
+		self.network = network
 	
 	def execute(self):
 		"""Returns a string response of this request."""
@@ -3624,7 +3625,7 @@ class Scrobbler(object):
 			"a": token}
 		
 		SUBMISSION_SERVER = self.network.submission_server
-		response = _ScrobblerRequest(SUBMISSION_SERVER, params).execute().split("\n")
+		response = _ScrobblerRequest(SUBMISSION_SERVER, params, self.network).execute().split("\n")
 		
 		self.session_id = response[1]
 		self.nowplaying_url = response[2]
@@ -3645,7 +3646,7 @@ class Scrobbler(object):
 		params = {"s": self._get_session_id(), "a": artist, "t": title,
 			"b": album, "l": duration, "n": track_number, "m": mbid}
 		
-		response = _ScrobblerRequest(self.nowplaying_url, params).execute()
+		response = _ScrobblerRequest(self.nowplaying_url, params, self.network).execute()
 		
 		try:
 			_ScrobblerRequest(self.nowplaying_url, params).execute()
@@ -3680,5 +3681,5 @@ class Scrobbler(object):
 			"i[0]": str(time_started), "o[0]": source, "r[0]": mode, "l[0]": str(duration),
 			"b[0]": _string(album), "n[0]": track_number, "m[0]": mbid}
 		
-		response = _ScrobblerRequest(self.submissions_url, params).execute()
+		response = _ScrobblerRequest(self.submissions_url, params, self.network).execute()
 		self.network._info(artist + " - " + title + " was scrobbled")
