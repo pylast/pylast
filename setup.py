@@ -5,9 +5,12 @@ from distutils.core import setup
 import os
 def get_build():
 	path = "./.build"
+	
 	if os.path.exists(path):
 		fp = open(path, "r")
-		build = eval(fp.read())+1
+		build = eval(fp.read())
+		if os.path.exists("./.increase_build"):
+			build += 1
 		fp.close()
 	else:
 		build = 1
