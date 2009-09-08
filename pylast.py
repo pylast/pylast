@@ -574,7 +574,7 @@ class Network(object):
 		
 		params = {"mbid": _unicode(mbid)}
 		
-		doc = _Request("track.getInfo", params).execute(True)
+		doc = _Request(self, "track.getInfo", params).execute(True)
 		
 		return Track(_extract(doc, "name", 1), _extract(doc, "name"), self)
 
@@ -583,7 +583,7 @@ class Network(object):
 		
 		params = {"mbid": _unicode(mbid)}
 		
-		doc = _Request("artist.getInfo", params).execute(True)
+		doc = _Request(self, "artist.getInfo", params).execute(True)
 		
 		return Artist(_extract(doc, "name"), self)
 
@@ -592,7 +592,7 @@ class Network(object):
 		
 		params = {"mbid": _unicode(mbid)}
 		
-		doc = _Request("album.getInfo", params).execute(True)
+		doc = _Request(self, "album.getInfo", params).execute(True)
 		
 		return Album(_extract(doc, "artist"), _extract(doc, "name"), self)
 
