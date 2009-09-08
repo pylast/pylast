@@ -477,7 +477,7 @@ class Network(object):
 		list = []
 		for node in doc.getElementsByTagName("tag"):
 			tag = Tag(_extract(node, "name"), self)
-			weight = _extract(node, "count")
+			weight = _number(_extract(node, "count"))
 			
 			list.append(TopItem(tag, weight))
 		
@@ -996,6 +996,7 @@ def _namedtuple(name, children):
 		return fancydict
 
 TopItem = _namedtuple("TopItem", ["item", "weight"])
+SimilarItem = _namedtuple("SimilarItem", ["item", "match"])
 LibraryItem = _namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
 PlayedTrack = _namedtuple("PlayedTrack", ["track", "playback_date", "timestamp"])
 ImageSizes = _namedtuple("ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"])
@@ -1444,11 +1445,12 @@ class Artist(_BaseObject, _Taggable):
 		
 		doc = self._request('artist.getSimilar', True, params)
 		
-		names = _extract_all(doc, 'name')
+		names = _extract_all(doc, "name")
+		matches = _extract_all(doc, "match")
 		
 		artists = []
-		for name in names:
-			artists.append(Artist(name, self.network))
+		for i in range(0, len(names)):
+			artists.append(SimilarItem(Artist(names[i], self.network), _number(matches[i])))
 		
 		return artists
 
@@ -2250,7 +2252,7 @@ class Tag(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("artist"):
 			item = Artist(_extract(node, "name"), self.network)
-			weight = _extract(node, "weight")
+			weight = _number(_extract(node, "weight"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2432,8 +2434,9 @@ class Track(_BaseObject, _Taggable):
 		for node in doc.getElementsByTagName("track"):
 			title = _extract(node, 'name')
 			artist = _extract(node, 'name', 1)
+			match = _number(_extract(node, "match"))
 			
-			list.append(Track(artist, title, self.network))
+			list.append(SimilarItem(Track(artist, title, self.network), match))
 		
 		return list
 
@@ -2579,7 +2582,7 @@ class Group(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("artist"):
 			item = Artist(_extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2597,7 +2600,7 @@ class Group(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("album"):
 			item = Album(_extract(node, "artist"), _extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2615,7 +2618,7 @@ class Group(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("track"):
 			item = Track(_extract(node, "artist"), _extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2957,7 +2960,7 @@ class User(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("artist"):
 			item = Artist(_extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2975,7 +2978,7 @@ class User(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("album"):
 			item = Album(_extract(node, "artist"), _extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -2993,7 +2996,7 @@ class User(_BaseObject):
 		list = []
 		for node in doc.getElementsByTagName("track"):
 			item = Track(_extract(node, "artist"), _extract(node, "name"), self.network)
-			weight = _extract(node, "playcount")
+			weight = _number(_extract(node, "playcount"))
 			list.append(TopItem(item, weight))
 		
 		return list
@@ -3497,7 +3500,10 @@ def _number(string):
 	elif string == "":
 		return 0
 	else:
-		return int(string)
+		try:
+			return int(string)
+		except ValueError:
+			return float(string)
 
 def _unescape_htmlentity(string):
 	
