@@ -298,6 +298,11 @@ class Network(object):
 	
 		self.logging_enabled = False
 		self.logger = logging.getLogger(__name__ + ":" + self.name.lower())
+		
+		#generate a session_key if necessary
+		if not self.session_key and (self.username and self.password_hash):
+			sk_gen = SessionKeyGenerator(self)
+			self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
 	
 	def _debug(self, message):
 		if self.logging_enabled:
@@ -420,17 +425,10 @@ class Network(object):
 	def _get_url(self, domain, type):
 		return "http://%s/%s" %(self._get_language_domain(domain), self.urls[type])
 	
-	def _get_ws_auth(self, generate_session_key_if_can=True):
+	def _get_ws_auth(self):
 		"""
 			Returns a (API_KEY, API_SECRET, SESSION_KEY) tuple.
-			If SESSION_KEY == None and username and password_hash were provided, a SESSION_KEY will be
-			generated and stored
 		"""
-		
-		if generate_session_key_if_can and (not self.session_key) and (self.username and self.password_hash):
-			sk_gen = SessionKeyGenerator(self)
-			self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
-		
 		return (self.api_key, self.api_secret, self.session_key)
 
 	def _delay_call():
@@ -774,7 +772,7 @@ class _Request(object):
 		self.params = params
 		self.network = network
 		
-		(self.api_key, self.api_secret, self.session_key) = network._get_ws_auth(False)
+		(self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
 		
 		self.params["api_key"] = self.api_key
 		self.params["method"] = method_name
@@ -1011,7 +1009,9 @@ def _string_output(funct):
 
 class _BaseObject(object):
 	"""An abstract webservices object."""
-		
+	
+	network = None
+	
 	def __init__(self, network):
 		self.network = network
 	
@@ -1151,10 +1151,9 @@ class WSError(Exception):
 	def __init__(self, network, status, details):
 		self.status = status
 		self.details = details
-		self.message = repr(self)
 
 	@_string_output
-	def __repr__(self):
+	def __str__(self):
 		return self.details
 	
 	def get_id(self):
@@ -1178,6 +1177,9 @@ class WSError(Exception):
 
 class Album(_BaseObject, _Taggable):
 	"""An album."""
+	
+	title = None
+	artist = None
 	
 	def __init__(self, artist, title, network):
 		"""
@@ -1343,6 +1345,8 @@ class Album(_BaseObject, _Taggable):
 
 class Artist(_BaseObject, _Taggable):
 	"""An artist."""
+	
+	name = None
 	
 	def __init__(self, name, network):
 		"""Create an artist object.
@@ -1617,6 +1621,8 @@ class Artist(_BaseObject, _Taggable):
 class Event(_BaseObject):
 	"""An event."""
 	
+	id = None
+	
 	def __init__(self, event_id, network):
 		_BaseObject.__init__(self, network)
 		
@@ -1820,6 +1826,8 @@ class Event(_BaseObject):
 class Country(_BaseObject):
 	"""A country at Last.fm."""
 	
+	name = None
+	
 	def __init__(self, name, network):
 		_BaseObject.__init__(self, network)
 		
@@ -1903,6 +1911,8 @@ class Country(_BaseObject):
 
 class Library(_BaseObject):
 	"""A user's Last.fm library."""
+	
+	user = None
 	
 	def __init__(self, user, network):
 		_BaseObject.__init__(self, network)
@@ -2010,6 +2020,9 @@ class Library(_BaseObject):
 
 class Playlist(_BaseObject):
 	"""A Last.fm user playlist."""
+	
+	id = None
+	user = None
 	
 	def __init__(self, user, id, network):
 		_BaseObject.__init__(self, network)
@@ -2147,6 +2160,8 @@ class Tag(_BaseObject):
 	
 	# TODO: getWeeklyArtistChart (too lazy, i'll wait for when someone requests it)
 	
+	name = None
+	
 	def __init__(self, name, network):
 		_BaseObject.__init__(self, network)
 		
@@ -2280,6 +2295,9 @@ class Tag(_BaseObject):
 
 class Track(_BaseObject, _Taggable):
 	"""A Last.fm track."""
+	
+	artist = None
+	title = None
 	
 	def __init__(self, artist, title, network):
 		_BaseObject.__init__(self, network)
@@ -2536,6 +2554,8 @@ class Track(_BaseObject, _Taggable):
 class Group(_BaseObject):
 	"""A Last.fm group."""
 	
+	name = None
+	
 	def __init__(self, group_name, network):
 		_BaseObject.__init__(self, network)
 		
@@ -2662,6 +2682,8 @@ class Group(_BaseObject):
 class XSPF(_BaseObject):
 	"A Last.fm XSPF playlist."""
 	
+	uri = None
+	
 	def __init__(self, uri, network):
 		_BaseObject.__init__(self, network)
 		
@@ -2701,6 +2723,8 @@ class XSPF(_BaseObject):
 
 class User(_BaseObject):
 	"""A Last.fm user."""
+	
+	name = None
 	
 	def __init__(self, user_name, network):
 		_BaseObject.__init__(self, network)
@@ -3341,6 +3365,8 @@ class Venue(_BaseObject):
 	
 	# TODO: waiting for a venue.getInfo web service to use.
 	
+	id = None
+	
 	def __init__(self, id, network):
 		_BaseObject.__init__(self, network)
 		
@@ -3530,7 +3556,7 @@ class ScrobblingError(Exception):
 		self.message = message
 	
 	@_string_output
-	def __repr__(self):
+	def __str__(self):
 		return self.message
 
 class BannedClientError(ScrobblingError):
