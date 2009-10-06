@@ -1025,6 +1025,9 @@ class _BaseObject(object):
 		"""Returns the most common set of parameters between all objects."""
 		
 		return {}
+	
+	def __hash__(self):
+		return hash(self.network) + hash("".join(self._get_params().keys() + self._get_params().values()))
 
 class _Taggable(object):
 	"""Common functions for classes with tags."""
