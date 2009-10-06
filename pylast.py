@@ -1035,7 +1035,7 @@ class _BaseObject(object):
 	
 	def __hash__(self):
 		return hash(self.network) + \
-			hash(str(type(self)) + "".join(self._get_params().keys() + self._get_params().values()))
+			hash(str(type(self)) + "".join(self._get_params().keys() + self._get_params().values()).lower())
 
 class _Taggable(object):
 	"""Common functions for classes with tags."""
