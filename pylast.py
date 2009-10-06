@@ -373,6 +373,13 @@ class Network(object):
 		
 		return Country(country_name, self)
 	
+	def get_group(self, name):
+		"""
+			Returns a Group object
+		"""
+		
+		return Group(name, self)
+	
 	def get_user(self, username):
 		"""
 			Returns a user object
@@ -1027,7 +1034,8 @@ class _BaseObject(object):
 		return {}
 	
 	def __hash__(self):
-		return hash(self.network) + hash("".join(self._get_params().keys() + self._get_params().values()))
+		return hash(self.network) + \
+			hash(str(type(self)) + "".join(self._get_params().keys() + self._get_params().values()))
 
 class _Taggable(object):
 	"""Common functions for classes with tags."""
