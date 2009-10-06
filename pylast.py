@@ -2771,7 +2771,7 @@ class User(_BaseObject):
 		
 		list = []
 		for node in _collect_nodes(limit, self, "user.getFriends", False):
-			list.append(User(_extract(node, "name"), self))
+			list.append(User(_extract(node, "name"), self.network))
 		
 		return list
 	
