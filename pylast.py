@@ -99,7 +99,8 @@ SCROBBLE_SOURCE_PERSONALIZED_BROADCAST = "E"
 SCROBBLE_SOURCE_LASTFM = "L"
 SCROBBLE_SOURCE_UNKNOWN = "U"
 
-SCROBBLE_MODE_PLAYED = "L"
+SCROBBLE_MODE_PLAYED = ""
+SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
@@ -3602,6 +3603,7 @@ class Scrobbler(object):
                 SCROBBLE_SOURCE_UNKNOWN: Source unknown.
             mode: The submission mode
                 SCROBBLE_MODE_PLAYED: The track was played.
+                SCROBBLE_MODE_LOVED: The user manually loved the track (implies a listen)
                 SCROBBLE_MODE_SKIPPED: The track was skipped (Only if source was Last.fm)
                 SCROBBLE_MODE_BANNED: The track was banned (Only if source was Last.fm)
             duration: Track duration in seconds.
