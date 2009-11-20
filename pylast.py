@@ -290,7 +290,7 @@ class Network(object):
         self.last_call_time = 0
         
         #generate a session_key if necessary
-        if not self.session_key and (self.username and self.password_hash):
+        if (self.api_key and self.api_secret) and not self.session_key and (self.username and self.password_hash):
             sk_gen = SessionKeyGenerator(self)
             self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
     
@@ -548,7 +548,7 @@ class Network(object):
         
         return Album(_extract(doc, "artist"), _extract(doc, "name"), self)
 
-def get_lastfm_network(api_key=None, api_secret=None, session_key = None, username = None, password_hash = None):
+def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
     Returns a preconfigured Network object for Last.fm
     
@@ -604,7 +604,7 @@ def get_lastfm_network(api_key=None, api_secret=None, session_key = None, userna
                         }
                     )
 
-def get_librefm_network(api_key=None, api_secret=None, session_key = None, username = None, password_hash = None):
+def get_librefm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
     Returns a preconfigured Network object for Libre.fm
     
