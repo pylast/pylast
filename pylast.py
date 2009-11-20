@@ -784,7 +784,7 @@ class _Request(object):
         headers = {
             "Content-type": "application/x-www-form-urlencoded",
             'Accept-Charset': 'utf-8',
-            'User-Agent': __name__ + '/' + __version__
+            'User-Agent': "pylast" + '/' + __version__
             }        
         
         (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
@@ -3487,10 +3487,10 @@ class BadSessionError(ScrobblingError):
 
 class _ScrobblerRequest(object):
     
-    def __init__(self, url, params, network):
+    def __init__(self, url, params, network, type="POST"):
         self.params = params
-        self.hostname = url[url.find("//") + 2:url.rfind("/")]
-        self.subdir = url[url.rfind("/"):]
+        self.type = type
+        (self.hostname, self.subdir) = urllib.splithost(url[len("http:"):])
         self.network = network
     
     def execute(self):
@@ -3507,11 +3507,14 @@ class _ScrobblerRequest(object):
         headers = {
             "Content-type": "application/x-www-form-urlencoded",
             "Accept-Charset": "utf-8",
-            "User-Agent": __name__ + "/" + __version__,
+            "User-Agent": "pylast" + "/" + __version__,
             "HOST": self.hostname
             }
         
-        connection.request("POST", self.subdir, data, headers)
+        if self.type == "GET":
+            connection.request("GET", self.subdir + "?" + data, headers = headers)
+        else:
+            connection.request("POST", self.subdir, data, headers)
         response = connection.getresponse().read()
         
         self._check_response_for_errors(response)
@@ -3563,8 +3566,8 @@ class Scrobbler(object):
             "v": self.client_version, "u": self.username, "t": timestamp,
             "a": token}
         
-        SUBMISSION_SERVER = self.network.submission_server
-        response = _ScrobblerRequest(SUBMISSION_SERVER, params, self.network).execute().split("\n")
+        server = self.network.submission_server
+        response = _ScrobblerRequest(server, params, self.network, "GET").execute().split("\n")
         
         self.session_id = response[1]
         self.nowplaying_url = response[2]
