@@ -932,6 +932,7 @@ TopItem = _namedtuple("TopItem", ["item", "weight"])
 SimilarItem = _namedtuple("SimilarItem", ["item", "match"])
 LibraryItem = _namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
 PlayedTrack = _namedtuple("PlayedTrack", ["track", "playback_date", "timestamp"])
+LovedTrack = _namedtuple("LovedTrack", ["track", "date", "timestamp"])
 ImageSizes = _namedtuple("ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"])
 Image = _namedtuple("Image", ["title", "url", "dateadded", "format", "owner", "sizes", "votes"])
 Shout = _namedtuple("Shout", ["body", "author", "date"])
@@ -2708,18 +2709,32 @@ class User(_BaseObject):
         return seq
     
     def get_loved_tracks(self, limit=50):
-        """Returns the loved tracks by this user
-        if limit is None, it will return all of them
-        """
+        """Returns this user's loved track as a sequence of LovedTrack objects
+        in reverse order of their timestamp, all the way back to the first track.
         
-        tracks = []
-        for track in _collect_nodes(limit, self, "user.getLovedTracks", False):
-            title = _extract(track, 'name', 0)
-            artist = _extract(track, 'name', 1)
-            
-            tracks.append(Track(artist, title, self.network))
+        If limit==None, it will try to pull all the available data.
         
-        return tracks
+        This method uses caching. Enable caching only if you're pulling a
+        large amount of data.
+        
+        Use extract_items() with the return of this function to
+        get only a sequence of Track objects with no playback dates. """
+        
+        params = self._get_params()
+        if limit:
+            params['limit'] = _unicode(limit)
+        
+        seq = []
+        for track in _collect_nodes(limit, self, "user.getLovedTracks", True, params):
+                
+            title = _extract(track, "name")
+            artist = _extract(track, "name", 1)
+            date = _extract(track, "date")
+            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+                
+            seq.append(LovedTrack(Track(artist, title, self.network), date, timestamp))
+        
+        return seq
     
     def get_neighbours(self, limit = 50):
         """Returns a list of the user's friends."""
@@ -2780,9 +2795,15 @@ class User(_BaseObject):
         return Track(artist, title, self.network)
 
 
-    def get_recent_tracks(self, limit = None):
-        """Returns this user's recent listened-to tracks as
-        a sequence of PlayedTrack objects.
+    def get_recent_tracks(self, limit = 10):
+        """Returns this user's played track as a sequence of PlayedTrack objects
+        in reverse order of their playtime, all the way back to the first track.
+        
+        If limit==None, it will try to pull all the available data.
+        
+        This method uses caching. Enable caching only if you're pulling a
+        large amount of data.
+        
         Use extract_items() with the return of this function to
         get only a sequence of Track objects with no playback dates. """
         
@@ -2790,17 +2811,16 @@ class User(_BaseObject):
         if limit:
             params['limit'] = _unicode(limit)
         
-        doc = self._request('user.getRecentTracks', False, params)
-        
         seq = []
-        for track in doc.getElementsByTagName('track'):
+        for track in _collect_nodes(limit, self, "user.getRecentTracks", True, params):
+            
+            if track.hasAttribute('nowplaying'):
+                continue    #to prevent the now playing track from sneaking in here
+                
             title = _extract(track, "name")
             artist = _extract(track, "artist")
             date = _extract(track, "date")
             timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
-            
-            if track.hasAttribute('nowplaying'):
-                continue    #to prevent the now playing track from sneaking in here
                 
             seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
         
@@ -3456,7 +3476,7 @@ def extract_items(topitems_or_libraryitems):
     
     seq = []
     for i in topitems_or_libraryitems:
-        seq.append(i.get_item())
+        seq.append(i.item)
     
     return seq
 
