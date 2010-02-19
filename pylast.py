@@ -3580,11 +3580,17 @@ class Scrobbler(object):
         """Handshakes with the server"""
         
         timestamp = str(int(time.time()))
-        token = md5(self.password + timestamp)
+        
+        if self.password and self.username:
+            token = md5(self.password + timestamp)
+        elif self.network.api_key and self.network.api_secret and self.network.session_key:
+            if not self.username:
+                self.username = self.network.get_authenticated_user().get_name()
+            token = md5(self.network.api_secret + timestamp)
         
         params = {"hs": "true", "p": "1.2.1", "c": self.client_id,
             "v": self.client_version, "u": self.username, "t": timestamp,
-            "a": token}
+            "a": token, "sk": self.network.session_key, "api_key": self.network.api_key}
         
         server = self.network.submission_server
         response = _ScrobblerRequest(server, params, self.network, "GET").execute().split("\n")
