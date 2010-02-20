@@ -3590,7 +3590,11 @@ class Scrobbler(object):
         
         params = {"hs": "true", "p": "1.2.1", "c": self.client_id,
             "v": self.client_version, "u": self.username, "t": timestamp,
-            "a": token, "sk": self.network.session_key, "api_key": self.network.api_key}
+            "a": token}
+        
+        if self.network.session_key and self.network.api_key:
+            params["sk"] = self.network.session_key
+            params["api_key"] = self.network.api_key
         
         server = self.network.submission_server
         response = _ScrobblerRequest(server, params, self.network, "GET").execute().split("\n")
