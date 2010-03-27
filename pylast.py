@@ -63,6 +63,7 @@ EVENT_MAYBE_ATTENDING = '1'
 EVENT_NOT_ATTENDING = '2'
 
 PERIOD_OVERALL = 'overall'
+PERIOD_7DAYs = "7day"
 PERIOD_3MONTHS = '3month'
 PERIOD_6MONTHS = '6month'
 PERIOD_12MONTHS = '12month'
@@ -942,6 +943,16 @@ def _string_output(funct):
         return _string(funct(*args))
         
     return r
+
+def _pad_list(given_list, desired_length, padding = None):
+    """
+        Pads a list to be of the desired_length.
+    """
+    
+    while len(given_list) < desired_length:
+        given_list.append(padding)
+    
+    return given_list
 
 class _BaseObject(object):
     """An abstract webservices object."""
@@ -2826,10 +2837,67 @@ class User(_BaseObject):
         
         return seq
     
+    def get_id(self):
+        """Returns the user id."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return _extract(doc, "id")
+    
+    def get_language(self):
+        """Returns the language code of the language used by the user."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return _extract(doc, "lang")
+    
+    def get_country(self):
+        """Returns the name of the country of the user."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return Country(_extract(doc, "country"), self.network)
+    
+    def get_age(self):
+        """Returns the user's age."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return _number(_extract(doc, "age"))
+    
+    def get_gender(self):
+        """Returns the user's gender. Either USER_MALE or USER_FEMALE."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        value = _extract(doc, "gender")
+        
+        if value == 'm':
+            return USER_MALE
+        elif value == 'f':
+            return USER_FEMALE
+        
+        return None
+    
+    def is_subscriber(self):
+        """Returns whether the user is a subscriber or not. True or False."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return _extract(doc, "subscriber") == "1"
+    
+    def get_playcount(self):
+        """Returns the user's playcount so far."""
+        
+        doc = self._request("user.getInfo", True)
+        
+        return _number(_extract(doc, "playcount"))
+        
     def get_top_albums(self, period = PERIOD_OVERALL):
         """Returns the top albums played by a user. 
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
+          o PERIOD_7DAYS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS 
@@ -2854,6 +2922,7 @@ class User(_BaseObject):
         """Returns the top artists played by a user. 
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
+          o PERIOD_7DAYS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS 
@@ -2891,6 +2960,7 @@ class User(_BaseObject):
         """Returns the top tracks played by a user. 
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
+          o PERIOD_7DAYS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS 
@@ -3007,6 +3077,13 @@ class User(_BaseObject):
         
         return (score, shared_artists_seq)
     
+    def get_image(self):
+        """Returns the user's avatar."""
+            
+        doc = self._request("user.getInfo", True)
+        
+        return _extract(doc, "image")
+    
     def get_url(self, domain_name = DOMAIN_ENGLISH):
         """Returns the url of the user page on the network. 
         * domain_name: The network's language domain. Possible values:
@@ -3072,69 +3149,6 @@ class AuthenticatedUser(User):
         
         self.name = _extract(doc, "name")
         return self.name
-    
-    def get_id(self):
-        """Returns the user id."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return _extract(doc, "id")
-    
-    def get_cover_image(self):
-        """Returns the user's avatar."""
-            
-        doc = self._request("user.getInfo", True)
-        
-        return _extract(doc, "image")
-    
-    def get_language(self):
-        """Returns the language code of the language used by the user."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return _extract(doc, "lang")
-    
-    def get_country(self):
-        """Returns the name of the country of the user."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return Country(_extract(doc, "country"), self.network)
-    
-    def get_age(self):
-        """Returns the user's age."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return _number(_extract(doc, "age"))
-    
-    def get_gender(self):
-        """Returns the user's gender. Either USER_MALE or USER_FEMALE."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        value = _extract(doc, "gender")
-        
-        if value == 'm':
-            return USER_MALE
-        elif value == 'f':
-            return USER_FEMALE
-        
-        return None
-    
-    def is_subscriber(self):
-        """Returns whether the user is a subscriber or not. True or False."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return _extract(doc, "subscriber") == "1"
-    
-    def get_playcount(self):
-        """Returns the user's playcount so far."""
-        
-        doc = self._request("user.getInfo", True)
-        
-        return _number(_extract(doc, "playcount"))
         
     def get_recommended_events(self, limit=50):
         """
@@ -3650,3 +3664,39 @@ class Scrobbler(object):
             "b[0]": _string(album), "n[0]": track_number, "m[0]": mbid}
         
         _ScrobblerRequest(self.submissions_url, params, self.network).execute()
+    
+    def scrobble_many(self, tracks):
+        """
+            Scrobble several tracks at once.
+            
+            tracks: A sequence of a sequence of parameters for each trach. The order of parameters
+                is the same as if passed to the scrobble() method.
+        """
+        
+        remainder = []
+        
+        if len(tracks) > 50:
+            remainder = tracks[50:]
+            tracks = tracks[:50]
+        
+        params = {"s": self._get_session_id()}
+        
+        i = 0
+        for t in tracks:
+            _pad_list(t, 9, "")
+            params["a[%s]" % str(i)] = _string(t[0])
+            params["t[%s]" % str(i)] = _string(t[1])
+            params["i[%s]" % str(i)] = str(t[2])
+            params["o[%s]" % str(i)] = t[3]
+            params["r[%s]" % str(i)] = t[4]
+            params["l[%s]" % str(i)] = str(t[5])
+            params["b[%s]" % str(i)] = _string(t[6])
+            params["n[%s]" % str(i)] = t[7]
+            params["m[%s]" % str(i)] = t[8]
+            
+            i += 1
+        
+        _ScrobblerRequest(self.submissions_url, params, self.network).execute()
+        
+        if remainder:
+            self.scrobble_many(remainder)
