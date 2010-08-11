@@ -1186,7 +1186,6 @@ class Album(_BaseObject, _Taggable):
         """
         Returns a uri to the cover image
         size can be one of:
-            COVER_MEGA
             COVER_EXTRA_LARGE
             COVER_LARGE
             COVER_MEDIUM
@@ -1328,7 +1327,7 @@ class Artist(_BaseObject, _Taggable):
         
         return self.name
     
-    def get_cover_image(self, size = COVER_LARGE):
+    def get_cover_image(self, size = COVER_MEGA):
         """
         Returns a uri to the cover image
         size can be one of:
@@ -1356,7 +1355,11 @@ class Artist(_BaseObject, _Taggable):
     def get_listener_count(self):
         """Returns the number of liteners on the network."""
         
-        return _number(_extract(self._request("artist.getInfo", True), "listeners"))
+        if hasattr(self, "listener_count"):
+            return self.listener_count
+        else:
+            self.listener_count = _number(_extract(self._request("artist.getInfo", True), "listeners"))
+            return self.listener_count
     
     def is_streamable(self):
         """Returns True if the artist is streamable."""
@@ -1673,7 +1676,7 @@ class Event(_BaseObject):
         
         return _extract(doc, "description")
     
-    def get_cover_image(self, size = COVER_LARGE):
+    def get_cover_image(self, size = COVER_MEGA):
         """
         Returns a uri to the cover image
         size can be one of:
@@ -2063,7 +2066,7 @@ class Playlist(_BaseObject):
         
         return track in self.get_tracks()
 
-    def get_cover_image(self, size = COVER_LARGE):
+    def get_cover_image(self, size = COVER_EXTRA_LARGE):
         """
         Returns a uri to the cover image
         size can be one of:
@@ -2306,9 +2309,12 @@ class Track(_BaseObject, _Taggable):
     def get_listener_count(self):
         """Returns the listener count."""
         
-        doc = self._request("track.getInfo", True)
-        
-        return _number(_extract(doc, "listeners"))
+        if hasattr(self, "listener_count"):
+            return self.listener_count
+        else:
+            doc = self._request("track.getInfo", True)
+            self.listener_count = _number(_extract(doc, "listeners"))
+            return self.listener_count
     
     def get_playcount(self):
         """Returns the play count."""
@@ -3244,7 +3250,9 @@ class ArtistSearch(_Search):
         
         seq = []
         for node in master_node.getElementsByTagName("artist"):
-            seq.append(Artist(_extract(node, "name"), self.network))
+            artist = Artist(_extract(node, "name"), self.network)
+            artist.listener_count = _number(_extract(node, "listeners"))
+            seq.append(artist)
         
         return seq
 
@@ -3262,7 +3270,9 @@ class TagSearch(_Search):
         
         seq = []
         for node in master_node.getElementsByTagName("tag"):
-            seq.append(Tag(_extract(node, "name"), self.network))
+            tag = Tag(_extract(node, "name"), self.network)
+            tag.tag_count = _number(_extract(node, "count"))
+            seq.append(tag)
         
         return seq
 
@@ -3281,7 +3291,9 @@ class TrackSearch(_Search):
         
         seq = []
         for node in master_node.getElementsByTagName("track"):
-            seq.append(Track(_extract(node, "artist"), _extract(node, "name"), self.network))
+            track = Track(_extract(node, "artist"), _extract(node, "name"), self.network)
+            track.listener_count = _number(_extract(node, "listeners"))
+            seq.append(track)
         
         return seq
 
@@ -3522,6 +3534,10 @@ class BadSessionError(ScrobblingError):
 class _ScrobblerRequest(object):
     
     def __init__(self, url, params, network, type="POST"):
+        
+        for key in params:
+                params[key] = str(params[key])
+        
         self.params = params
         self.type = type
         (self.hostname, self.subdir) = urllib.splithost(url[len("http:"):])
@@ -3568,9 +3584,9 @@ class _ScrobblerRequest(object):
             raise BannedClientError()
         elif status_line == "BADAUTH":
             raise BadAuthenticationError()
-        elif status_line == "BadTimeError":
+        elif status_line == "BADTIME":
             raise BadTimeError()
-        elif status_line == "BadSessionError":
+        elif status_line == "BADSESSION":
             raise BadSessionError()
         elif status_line.startswith("FAILED "):
             reason = status_line[status_line.find("FAILED ")+len("FAILED "):]
