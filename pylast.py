@@ -160,7 +160,7 @@ class Network(object):
             sk_gen = SessionKeyGenerator(self)
             self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
     
-    def __repr__(self):
+    """def __repr__(self):
         attributes = ("name", "homepage", "ws_server", "api_key", "api_secret", "session_key", "submission_server",
             "username", "password_hash", "domain_names", "urls")
         
@@ -170,6 +170,7 @@ class Network(object):
             args.append("=".join((attr, repr(getattr(self, attr)))))
         
         return text % ", ".join(args)
+    """
     
     def __str__(self):
         return "The %s Network" %self.name
@@ -813,17 +814,17 @@ class _Taggable(object):
     def __init__(self, ws_prefix):
         self.ws_prefix = ws_prefix
     
-    def add_tags(self, *tags):
+    def add_tags(self, tags):
         """Adds one or several tags.
-        * *tags: Any number of tag names or Tag objects. 
+        * tags: A sequence of tag names or Tag objects.
         """
         
         for tag in tags:
             self._add_tag(tag)    
     
     def _add_tag(self, tag):
-        """Adds one or several tags.
-        * tag: one tag name or a Tag object.
+        """Adds one tag.
+        * tag: a tag name or a Tag object.
         """
         
         if isinstance(tag, Tag):
@@ -834,10 +835,10 @@ class _Taggable(object):
         
         self._request(self.ws_prefix + '.addTags', False, params)
     
-    def _remove_tag(self, single_tag):
+    def _remove_tag(self, tag):
         """Remove a user's tag from this object."""
         
-        if isinstance(single_tag, Tag):
+        if isinstance(tag, Tag):
             single_tag = single_tag.get_name()
         
         params = self._get_params()
@@ -859,9 +860,9 @@ class _Taggable(object):
         
         return tags
     
-    def remove_tags(self, *tags):
+    def remove_tags(self, tags):
         """Removes one or several tags from this object.
-        * *tags: Any number of tag names or Tag objects. 
+        * tags: a sequence of tag names or Tag objects.
         """
         
         for tag in tags:
@@ -872,9 +873,9 @@ class _Taggable(object):
         
         self.remove_tags(*(self.get_tags()))
     
-    def set_tags(self, *tags):
+    def set_tags(self, tags):
         """Sets this object's tags to only those tags.
-        * *tags: any number of tag names.
+        * tags: a sequence of tag names or Tag objects.
         """
         
         c_old_tags = []
@@ -903,8 +904,8 @@ class _Taggable(object):
             if not c_new_tags[i] in c_old_tags:
                 to_add.append(new_tags[i])
         
-        self.remove_tags(*to_remove)
-        self.add_tags(*to_add)
+        self.remove_tags(to_remove)
+        self.add_tags(to_add)
         
     def get_top_tags(self, limit = None):
         """Returns a list of the most frequently used Tags on this object."""
@@ -978,6 +979,9 @@ class Album(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
         
         self.title = title
+    
+    def __repr__(self):
+        return "pylast.Album(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -1138,7 +1142,10 @@ class Artist(_BaseObject, _Taggable):
         _Taggable.__init__(self, 'artist')
         
         self.name = name
-
+    
+    def __repr__(self):
+        return "pylast.Artist(%s, %s)" %(repr(self.get_name()), repr(self.network))
+    
     @_string_output
     def __str__(self):
         return self.get_name()
@@ -1355,7 +1362,9 @@ class Artist(_BaseObject, _Taggable):
         """
             Returns a sequence of Image objects
             if limit is None it will return all
-            order can be IMAGES_ORDER_POPULARITY or IMAGES_ORDER_DATE
+            order can be IMAGES_ORDER_POPULARITY or IMAGES_ORDER_DATE.
+            
+            If limit==None, it will try to pull all the available data.
         """
         
         images = []
@@ -1416,6 +1425,9 @@ class Event(_BaseObject):
         _BaseObject.__init__(self, network)
         
         self.id = _unicode(event_id)
+    
+    def __repr__(self):
+        return "pylast.Event(%s, %s)" %(repr(self.id), repr(self.network))
     
     @_string_output
     def __str__(self):
@@ -1620,6 +1632,9 @@ class Country(_BaseObject):
         
         self.name = name
     
+    def __repr__(self):
+        return "pylast.Country(%s, %s)" %(repr(self.name), repr(self.network))
+    
     @_string_output
     def __str__(self):
         return self.get_name()
@@ -1712,6 +1727,9 @@ class Library(_BaseObject):
         self._albums_index = 0
         self._artists_index = 0
         self._tracks_index = 0
+    
+    def __repr__(self):
+        return "pylast.Library(%s, %s)" %(repr(self.user), repr(self.network))
     
     @_string_output
     def __str__(self):
@@ -1949,8 +1967,8 @@ class Tag(_BaseObject):
         
         self.name = name
     
-    def _get_params(self):
-        return {'tag': self.get_name()}
+    def __repr__(self):
+        return "pylast.Tag(%s, %s)" %(repr(self.name), repr(self.network))
     
     @_string_output
     def __str__(self):
@@ -1961,6 +1979,9 @@ class Tag(_BaseObject):
     
     def __ne__(self, other):
         return self.get_name().lower() != other.get_name().lower()
+    
+    def _get_params(self):
+        return {'tag': self.get_name()}
     
     def get_name(self, properly_capitalized=False):
         """Returns the name of the tag. """
@@ -2094,6 +2115,9 @@ class Track(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
         
         self.title = title
+    
+    def __repr__(self):
+        return "pylast.Track(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -2352,6 +2376,9 @@ class Group(_BaseObject):
         
         self.name = group_name
     
+    def __repr__(self):
+        return "pylast.Group(%s, %s)" %(repr(self.name), repr(self.network))
+    
     @_string_output
     def __str__(self):
         return self.get_name()
@@ -2525,6 +2552,9 @@ class User(_BaseObject):
         self._past_events_index = 0
         self._recommended_events_index = 0
         self._recommended_artists_index = 0
+    
+    def __repr__(self):
+        return "pylast.User(%s, %s)" %(repr(self.name), repr(self.network))
     
     @_string_output
     def __str__(self):
@@ -3172,6 +3202,9 @@ class Venue(_BaseObject):
         
         self.id = _number(id)
     
+    def __repr__(self):
+        return "pylast.Venue(%s, %s)" %(repr(self.id), repr(self.network))
+    
     @_string_output
     def __str__(self):
         return "Venue #" + str(self.id)
@@ -3213,23 +3246,22 @@ def md5(text):
     """Returns the md5 hash of a string."""
     
     h = hashlib.md5()
-    h.update(_string(text))
+    h.update(_unicode(text).encode("utf-8"))
     
     return h.hexdigest()
 
 def _unicode(text):
-    
     if sys.version_info.major == 3:
-        return str(text, "utf-8")
+        if type(text) in (bytes, bytearray):
+            return str(text, "utf-8")
+        else:
+            return str(text)
         
     elif sys.version_info.major ==2:
-        if type(text) == unicode:
-            return text
-        
-        if type(text) == int:
+        if type(text) in (str,):
+            return unicode(text, "utf-8")
+        else:
             return unicode(text)
-            
-        return unicode(text, "utf-8")
 
 def _string(text):
     """For Python2 routines that can only process str type."""
@@ -3261,7 +3293,7 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     page = 1
     end_of_pages = False
     
-    while len(nodes) < limit and not end_of_pages:
+    while not end_of_pages and (not limit or (limit and len(nodes) < limit)):
         params["page"] = str(page)
         doc = sender._request(method_name, cacheable, params)
         
