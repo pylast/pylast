@@ -171,6 +171,9 @@ class Network(object):
         
         return text % ", ".join(args)
     
+    def __str__(self):
+        return "The %s Network" %self.name
+    
     def get_artist(self, artist_name):
         """
             Return an Artist object
@@ -977,7 +980,7 @@ class Album(_BaseObject, _Taggable):
         self.title = title
 
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return _unicode("%s - %s") %(self.get_artist().get_name(), self.get_title())
     
     def __eq__(self, other):
@@ -1137,7 +1140,7 @@ class Artist(_BaseObject, _Taggable):
         self.name = name
 
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_name()
     
     def __eq__(self, other):
@@ -1410,7 +1413,7 @@ class Event(_BaseObject):
         self.id = _unicode(event_id)
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return "Event #" + self.get_id()
     
     def __eq__(self, other):
@@ -1613,7 +1616,7 @@ class Country(_BaseObject):
         self.name = name
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_name()
     
     def __eq__(self, other):
@@ -1706,7 +1709,7 @@ class Library(_BaseObject):
         self._tracks_index = 0
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return repr(self.get_user()) + "'s Library"
     
     def _get_params(self):
@@ -1811,7 +1814,7 @@ class Playlist(_BaseObject):
         self.id = _unicode(id)
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return repr(self.user) + "'s playlist # " + repr(self.id)
         
     def _get_info_node(self):
@@ -1945,7 +1948,7 @@ class Tag(_BaseObject):
         return {'tag': self.get_name()}
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_name()
     
     def __eq__(self, other):
@@ -2085,7 +2088,7 @@ class Track(_BaseObject, _Taggable):
         self.title = title
 
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_artist().get_name() + ' - ' + self.get_title()
 
     def __eq__(self, other):
@@ -2339,7 +2342,7 @@ class Group(_BaseObject):
         self.name = group_name
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_name()
     
     def __eq__(self, other):
@@ -2470,7 +2473,7 @@ class XSPF(_BaseObject):
         return {'playlistURL': self.get_uri()}
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_uri()
     
     def __eq__(self, other):
@@ -2513,7 +2516,7 @@ class User(_BaseObject):
         self._recommended_artists_index = 0
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return self.get_name()
     
     def __eq__(self, another):
@@ -3156,7 +3159,7 @@ class Venue(_BaseObject):
         self.id = _number(id)
     
     @_string_output
-    def __repr__(self):
+    def __str__(self):
         return "Venue #" + str(self.id)
     
     def __eq__(self, other):
