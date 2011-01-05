@@ -19,14 +19,14 @@ def get_build():
 	fp.write(str(build))
 	fp.close()
 	
-	return unicode(build)
+	return str(build)
 
 setup(name = "pylast",
-      version = "0.4." + get_build(),
+      version = "0.5." + get_build(),
       author = "Amr Hassan <amr.hassan@gmail.com>",
 	  description = "A Python interface to Last.fm (and other API compatible social networks)",
       author_email = "amr.hassan@gmail.com",
       url = "http://code.google.com/p/pylast/",
       py_modules = ("pylast",),
-	  license = "GPLv3"
+	  license = "Apache2"
 	)
