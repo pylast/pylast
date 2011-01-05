@@ -1152,8 +1152,13 @@ class Artist(_BaseObject, _Taggable):
     def _get_params(self):
         return {'artist': self.get_name()}
     
-    def get_name(self):
-        """Returns the name of the artist."""
+    def get_name(self, properly_capitalized=False):
+        """Returns the name of the artist.
+        If properly_capitalized was asserted then the name would be downloaded
+        overwriting the given one."""
+        
+        if properly_capitalized:
+            self.name = _extract(self._request("artist.getInfo", True), "name")
         
         return self.name
     
@@ -1957,8 +1962,11 @@ class Tag(_BaseObject):
     def __ne__(self, other):
         return self.get_name().lower() != other.get_name().lower()
     
-    def get_name(self):
+    def get_name(self, properly_capitalized=False):
         """Returns the name of the tag. """
+        
+        if properly_capitalized:
+            self.name = _extract(self._request("tag.getInfo", True), "name")
         
         return self.name
 
@@ -2105,15 +2113,18 @@ class Track(_BaseObject, _Taggable):
         
         return self.artist
     
-    def get_title(self):
+    def get_title(self, properly_capitalized=False):
         """Returns the track title."""
+        
+        if properly_capitalized:
+            self.title = _extract(self._request("track.getInfo", True), "name")
         
         return self.title
     
-    def get_name(self):
+    def get_name(self, properly_capitalized=False):
         """Returns the track title (alias to Track.get_title)."""
         
-        return self.get_title()
+        return self.get_title(properly_capitalized)
     
     def get_id(self):
         """Returns the track id on the network."""
@@ -2528,8 +2539,11 @@ class User(_BaseObject):
     def _get_params(self):
         return {"user": self.get_name()}
         
-    def get_name(self):
+    def get_name(self, properly_capitalized=False):
         """Returns the nuser name."""
+        
+        if properly_capitalized:
+            self.name = _extract(self._request("user.getInfo", True), "name")
         
         return self.name
     
