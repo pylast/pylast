@@ -256,6 +256,8 @@ class Network(object):
             ...and provide us with the name of your client and its homepage address. 
         """
         
+        print("DeprecationWarning: Use Network.scrobble(...), Network.scrobble_many(...), and Netowrk.update_now_playing(...) instead")
+        
         return Scrobbler(self, client_id, client_version)
     
     def _get_language_domain(self, domain_language):
@@ -428,6 +430,92 @@ class Network(object):
         doc = _Request(self, "album.getInfo", params).execute(True)
         
         return Album(_extract(doc, "artist"), _extract(doc, "name"), self)
+    
+    def update_now_playing(self, artist, title, album = None, album_artist = None, 
+            duration = None, track_number = None, mbid = None, context = None):
+        """
+            Used to notify Last.fm that a user has started listening to a track. 
+            
+            Parameters:
+                artist (Required) : The artist name
+                title (Required) : The track title
+                album (Optional) : The album name.
+                album_artist (Optional) : The album artist - if this differs from the track artist.
+                duration (Optional) : The length of the track in seconds.
+                track_number (Optional) : The track number of the track on the album.
+                mbid (Optional) : The MusicBrainz Track ID.
+                context (Optional) : Sub-client version (not public, only enabled for certain API keys)
+        """
+            
+        params = {"track": title, "artist": artist}
+        
+        if album: params["album"] = album
+        if album_artist: params["albumArtist"] = album_artist
+        if context: params["context"] = context
+        if track_number: params["trackNumber"] = track_number
+        if mbid: params["mbid"] = mbid
+        if duration: params["duration"] = duration
+        
+        _Request(self, "track.updateNowPlaying", params).execute()
+    
+    def scrobble(self, artist, title, timestamp, album = None, album_artist = None, track_number = None, 
+        duration = None, stream_id = None, context = None, mbid = None):
+        
+        """Used to add a track-play to a user's profile.
+        
+        Parameters:
+            artist (Required) : The artist name.
+            title (Required) : The track name.
+            timestamp (Required) : The time the track started playing, in UNIX timestamp format (integer number of seconds since 00:00:00, January 1st 1970 UTC). This must be in the UTC time zone.
+            album (Optional) : The album name.
+            album_artist (Optional) : The album artist - if this differs from the track artist.
+            context (Optional) : Sub-client version (not public, only enabled for certain API keys)
+            stream_id (Optional) : The stream id for this track received from the radio.getPlaylist service.
+            track_number (Optional) : The track number of the track on the album.
+            mbid (Optional) : The MusicBrainz Track ID.
+            duration (Optional) : The length of the track in seconds.
+        """
+        
+        return self.scrobble_many(({"artist": artist, "title": title, "timestamp": timestamp, "album": album, "album_artist": album_artist,
+            "track_number": track_number, "duration": duration, "stream_id": stream_id, "context": context, "mbid": mbid},))
+        
+    def scrobble_many(self, tracks):
+        """
+            Used to scrobble a batch of tracks at once. The parameter tracks is a sequence of dicts per
+            track containing the keyword arguments as if passed to the scrobble() method.
+        """
+        
+        tracks_to_scrobble = tracks[:50]
+        if len(tracks) > 50:
+            remaining_tracks = tracks[50:]
+        else:
+            remaining_tracks = None
+        
+        params = {}
+        for i in range(len(tracks_to_scrobble)):
+            
+            params["artist[%d]" % i] = tracks_to_scrobble[i]["artist"]
+            params["track[%d]" % i] = tracks_to_scrobble[i]["title"]
+            
+            additional_args = ("timestamp", "album", "album_artist", "context", "stream_id", "track_number", "mbid", "duration")
+            args_map_to = {"album_artist": "albumArtist", "track_number": "trackNumber", "stream_id": "streamID"}  # so friggin lazy
+            
+            for arg in additional_args:
+                
+                if tracks_to_scrobble[i][arg]:
+                    if arg in args_map_to:
+                        maps_to = args_map_to[arg]
+                    else:
+                        maps_to = arg
+                    
+                    params["%s[%d]" %(maps_to, i)] = tracks_to_scrobble[i][arg]
+        
+        
+        _Request(self, "track.scrobble", params).execute()
+        
+        if remaining_tracks:
+            self.scrobble_many(reamining_tracks)
+            
 
 def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
@@ -3518,6 +3606,8 @@ class Scrobbler(object):
     
     def report_now_playing(self, artist, title, album = "", duration = "", track_number = "", mbid = ""):
         
+        print("DeprecationWarning: Use Netowrk.update_now_playing(...) instead")
+        
         params = {"s": self._get_session_id(), "a": artist, "t": title,
             "b": album, "l": duration, "n": track_number, "m": mbid}
         
@@ -3549,6 +3639,8 @@ class Scrobbler(object):
             mbid: MusicBrainz ID.
         """
         
+        print("DeprecationWarning: Use Network.scrobble(...) instead")
+        
         params = {"s": self._get_session_id(), "a[0]": _string(artist), "t[0]": _string(title),
             "i[0]": str(time_started), "o[0]": source, "r[0]": mode, "l[0]": str(duration),
             "b[0]": _string(album), "n[0]": track_number, "m[0]": mbid}
@@ -3562,6 +3654,8 @@ class Scrobbler(object):
             tracks: A sequence of a sequence of parameters for each trach. The order of parameters
                 is the same as if passed to the scrobble() method.
         """
+        
+        print("DeprecationWarning: Use Network.scrobble_many(...) instead")
         
         remainder = []
         
