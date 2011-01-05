@@ -18,28 +18,34 @@
 #
 # http://code.google.com/p/pylast/
     
-__version__ = '0.4'
+__version__ = '0.5'
 __author__ = 'Amr Hassan'
-__copyright__ = "Copyright (C) 2008-2009  Amr Hassan"
-__license__ = "gpl"
+__copyright__ = "Copyright (C) 2008-2010  Amr Hassan"
+__license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
 import hashlib
-import httplib
-import urllib
-import threading
 from xml.dom import minidom
 import xml.dom
 import time
 import shelve
 import tempfile
 import sys
-import htmlentitydefs
+import collections
 
-try:
-    import collections
-except ImportError:
-    pass
+if sys.version_info.major == 3:
+    from http.client import HTTPConnection
+    import html.entities as htmlentitydefs
+    from urllib.parse import splithost as url_split_host
+    from urllib.parse import quote_plus as url_quote_plus
+    
+    unichr = chr
+
+elif sys.version_info.major == 2:
+    from httplib import HTTPConnection
+    import htmlentitydefs 
+    from urllib import splithost as url_split_host
+    from urllib import quote_plus as url_quote_plus
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -103,145 +109,6 @@ SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
-"""
-A list of the implemented webservices (from http://www.last.fm/api/intro)
-=====================================
-# Album
-
-    * album.addTags            DONE
-    * album.getInfo            DONE
-    * album.getTags            DONE
-    * album.removeTag        DONE
-    * album.search             DONE
-
-# Artist
-
-    * artist.addTags         DONE
-    * artist.getEvents         DONE
-    * artist.getImages         DONE
-    * artist.getInfo         DONE
-    * artist.getPodcast     TODO
-    * artist.getShouts         DONE
-    * artist.getSimilar     DONE
-    * artist.getTags         DONE
-    * artist.getTopAlbums     DONE
-    * artist.getTopFans     DONE
-    * artist.getTopTags     DONE
-    * artist.getTopTracks     DONE
-    * artist.removeTag         DONE
-    * artist.search         DONE
-    * artist.share             DONE
-    * artist.shout             DONE
-
-# Auth
-
-    * auth.getMobileSession DONE
-    * auth.getSession         DONE
-    * auth.getToken         DONE
-
-# Event
-
-    * event.attend             DONE
-    * event.getAttendees     DONE
-    * event.getInfo            DONE
-    * event.getShouts         DONE
-    * event.share             DONE
-    * event.shout             DONE
-
-# Geo
-
-    * geo.getEvents
-    * geo.getTopArtists
-    * geo.getTopTracks
-
-# Group
-
-    * group.getMembers                DONE
-    * group.getWeeklyAlbumChart        DONE
-    * group.getWeeklyArtistChart    DONE
-    * group.getWeeklyChartList        DONE
-    * group.getWeeklyTrackChart        DONE
-
-# Library
-
-    * library.addAlbum        DONE
-    * library.addArtist        DONE
-    * library.addTrack        DONE
-    * library.getAlbums        DONE
-    * library.getArtists    DONE
-    * library.getTracks        DONE
-
-# Playlist
-
-    * playlist.addTrack    DONE
-    * playlist.create    DONE
-    * playlist.fetch    DONE
-
-# Radio
-
-    * radio.getPlaylist
-    * radio.tune
-
-# Tag
-
-    * tag.getSimilar    DONE
-    * tag.getTopAlbums    DONE
-    * tag.getTopArtists    DONE
-    * tag.getTopTags    DONE
-    * tag.getTopTracks    DONE
-    * tag.getWeeklyArtistChart    DONE
-    * tag.getWeeklyChartList    DONE
-    * tag.search    DONE
-
-# Tasteometer
-
-    * tasteometer.compare    DONE
-
-# Track
-
-    * track.addTags    DONE
-    * track.ban    DONE
-    * track.getInfo    DONE
-    * track.getSimilar    DONE
-    * track.getTags    DONE
-    * track.getTopFans    DONE
-    * track.getTopTags    DONE
-    * track.love    DONE
-    * track.removeTag    DONE
-    * track.search    DONE
-    * track.share    DONE
-
-# User
-
-    * user.getEvents    DONE
-    * user.getFriends    DONE
-    * user.getInfo    DONE
-    * user.getLovedTracks    DONE
-    * user.getNeighbours    DONE
-    * user.getPastEvents    DONE
-    * user.getPlaylists    DONE
-    * user.getRecentStations    TODO
-    * user.getRecentTracks    DONE
-    * user.getRecommendedArtists    DONE
-    * user.getRecommendedEvents    DONE
-    * user.getShouts    DONE
-    * user.getTopAlbums    DONE
-    * user.getTopArtists    DONE
-    * user.getTopTags    DONE
-    * user.getTopTracks    DONE
-    * user.getWeeklyAlbumChart    DONE
-    * user.getWeeklyArtistChart    DONE
-    * user.getWeeklyChartList    DONE
-    * user.getWeeklyTrackChart    DONE
-    * user.shout    DONE
-
-# Venue
-
-    * venue.getEvents    DONE
-    * venue.getPastEvents    DONE
-    * venue.search    DONE
-"""
-
 class Network(object):
     """
         A music social network website that is Last.fm or one exposing a Last.fm compatible API
@@ -258,7 +125,7 @@ class Network(object):
             session_key: a generated session_key or None
             submission_server: the url of the server to which tracks are submitted (scrobbled)
             username: a username of a valid user
-            password_hash: the output of pylast.md5(password) where password is the user's password thingy
+            password_hash: the output of pylast.md5(password) where password is the user's password
             domain_names: a dict mapping each DOMAIN_* value to a string domain name
             urls: a dict mapping types to urls
             
@@ -270,14 +137,14 @@ class Network(object):
             You should use a preconfigured network object through a get_*_network(...) method instead of creating an object
             of this class, unless you know what you're doing.
         """
-            
-        self.ws_server = ws_server
-        self.submission_server = submission_server
+        
         self.name = name
-        self.homepage = homepage
+        self.homepage = homepage    
+        self.ws_server = ws_server
         self.api_key = api_key
         self.api_secret = api_secret
         self.session_key = session_key
+        self.submission_server = submission_server
         self.username = username
         self.password_hash = password_hash
         self.domain_names = domain_names
@@ -292,6 +159,17 @@ class Network(object):
         if (self.api_key and self.api_secret) and not self.session_key and (self.username and self.password_hash):
             sk_gen = SessionKeyGenerator(self)
             self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
+    
+    def __repr__(self):
+        attributes = ("name", "homepage", "ws_server", "api_key", "api_secret", "session_key", "submission_server",
+            "username", "password_hash", "domain_names", "urls")
+        
+        text = "pylast.Network(%s)"
+        args = []
+        for attr in attributes:
+            args.append("=".join((attr, repr(getattr(self, attr)))))
+        
+        return text % ", ".join(args)
     
     def get_artist(self, artist_name):
         """
@@ -667,36 +545,6 @@ class _ShelfCacheBackend(object):
     
     def has_key(self, key):
         return key in self.shelf.keys()
-        
-class _ThreadedCall(threading.Thread):
-    """Facilitates calling a function on another thread."""
-    
-    def __init__(self, sender, funct, funct_args, callback, callback_args):
-        
-        threading.Thread.__init__(self)
-        
-        self.funct = funct
-        self.funct_args = funct_args
-        self.callback = callback
-        self.callback_args = callback_args
-        
-        self.sender = sender
-    
-    def run(self):
-        
-        output = []
-        
-        if self.funct:
-            if self.funct_args:
-                output = self.funct(*self.funct_args)
-            else:
-                output = self.funct()
-                
-        if self.callback:
-            if self.callback_args:
-                self.callback(self.sender, output, *self.callback_args)
-            else:
-                self.callback(self.sender, output)
     
 class _Request(object):
     """Representing an abstract web service operation."""
@@ -727,7 +575,7 @@ class _Request(object):
     def _get_signature(self):
         """Returns a 32-character hexadecimal md5 hash of the signature string."""
         
-        keys = self.params.keys()[:]
+        keys = list(self.params.keys())
         
         keys.sort()
         
@@ -744,7 +592,7 @@ class _Request(object):
     def _get_cache_key(self):
         """The cache key is a string of concatenated sorted names and values."""
         
-        keys = self.params.keys()
+        keys = list(self.params.keys())
         keys.sort()
         
         cache_key = str()
@@ -777,7 +625,7 @@ class _Request(object):
         
         data = []
         for name in self.params.keys():
-            data.append('='.join((name, urllib.quote_plus(_string(self.params[name])))))
+            data.append('='.join((name, url_quote_plus(_string(self.params[name])))))
         data = '&'.join(data)
         
         headers = {
@@ -789,11 +637,11 @@ class _Request(object):
         (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
         
         if self.network.is_proxy_enabled():
-            conn = httplib.HTTPConnection(host = self._get_proxy()[0], port = self._get_proxy()[1])
+            conn = HTTPConnection(host = self._get_proxy()[0], port = self._get_proxy()[1])
             conn.request(method='POST', url="http://" + HOST_NAME + HOST_SUBDIR, 
                 body=data, headers=headers)
         else:
-            conn = httplib.HTTPConnection(host=HOST_NAME)
+            conn = HTTPConnection(host=HOST_NAME)
             conn.request(method='POST', url=HOST_SUBDIR, body=data, headers=headers)
         
         response = conn.getresponse()
@@ -908,33 +756,14 @@ class SessionKeyGenerator(object):
         
         return _extract(doc, "key")
 
-def _namedtuple(name, children):
-    """
-        collections.namedtuple is available in (python >= 2.6)
-    """
-    
-    v = sys.version_info
-    if v[1] >= 6 and v[0] < 3:
-        return collections.namedtuple(name, children)
-    else:
-        def fancydict(*args):
-            d = {}
-            i = 0
-            for child in children:
-                d[child.strip()] = args[i]
-                i += 1
-            return d
-        
-        return fancydict
-
-TopItem = _namedtuple("TopItem", ["item", "weight"])
-SimilarItem = _namedtuple("SimilarItem", ["item", "match"])
-LibraryItem = _namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
-PlayedTrack = _namedtuple("PlayedTrack", ["track", "playback_date", "timestamp"])
-LovedTrack = _namedtuple("LovedTrack", ["track", "date", "timestamp"])
-ImageSizes = _namedtuple("ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"])
-Image = _namedtuple("Image", ["title", "url", "dateadded", "format", "owner", "sizes", "votes"])
-Shout = _namedtuple("Shout", ["body", "author", "date"])
+TopItem = collections.namedtuple("TopItem", ["item", "weight"])
+SimilarItem = collections.namedtuple("SimilarItem", ["item", "match"])
+LibraryItem = collections.namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
+PlayedTrack = collections.namedtuple("PlayedTrack", ["track", "playback_date", "timestamp"])
+LovedTrack = collections.namedtuple("LovedTrack", ["track", "date", "timestamp"])
+ImageSizes = collections.namedtuple("ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"])
+Image = collections.namedtuple("Image", ["title", "url", "dateadded", "format", "owner", "sizes", "votes"])
+Shout = collections.namedtuple("Shout", ["body", "author", "date"])
 
 def _string_output(funct):
     def r(*args):
@@ -973,7 +802,7 @@ class _BaseObject(object):
     
     def __hash__(self):
         return hash(self.network) + \
-            hash(str(type(self)) + "".join(self._get_params().keys() + self._get_params().values()).lower())
+            hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(self._get_params().values())).lower())
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1149,7 +978,7 @@ class Album(_BaseObject, _Taggable):
 
     @_string_output
     def __repr__(self):
-        return u"%s - %s" %(self.get_artist().get_name(), self.get_title())
+        return _unicode("%s - %s") %(self.get_artist().get_name(), self.get_title())
     
     def __eq__(self, other):
         return (self.get_title().lower() == other.get_title().lower()) and (self.get_artist().get_name().lower() == other.get_artist().get_name().lower())
@@ -2010,7 +1839,7 @@ class Playlist(_BaseObject):
     def get_tracks(self):
         """Returns a list of the tracks on this user playlist."""
         
-        uri = u'lastfm://playlist/%s' %self.get_id()
+        uri = _unicode('lastfm://playlist/%s') %self.get_id()
         
         return XSPF(uri, self.network).get_tracks()
     
@@ -3371,35 +3200,37 @@ def md5(text):
     
     return h.hexdigest()
 
-def async_call(sender, call, callback = None, call_args = None, callback_args = None):
-    """This is the function for setting up an asynchronous operation.
-    * call: The function to call asynchronously.
-    * callback: The function to call after the operation is complete, Its prototype has to be like:
-        callback(sender, output[, param1, param3, ... ])
-    * call_args: A sequence of args to be passed to call.
-    * callback_args: A sequence of args to be passed to callback.
-    """
-    
-    thread = _ThreadedCall(sender, call, call_args, callback, callback_args)
-    thread.start()
-
 def _unicode(text):
-    if type(text) == unicode:
-        return text
     
-    if type(text) == int:
-        return unicode(text)
+    if sys.version_info.major == 3:
+        return str(text, "utf-8")
         
-    return unicode(text, "utf-8")
+    elif sys.version_info.major ==2:
+        if type(text) == unicode:
+            return text
+        
+        if type(text) == int:
+            return unicode(text)
+            
+        return unicode(text, "utf-8")
 
 def _string(text):
-    if type(text) == str:
-        return text
+    """For Python2 routines that can only process str type."""
     
-    if type(text) == int:
-        return str(text)
+    if sys.version_info.major == 3:
+        if type(text) != str:
+            return str(text)
+        else:
+            return text
     
-    return text.encode("utf-8")
+    elif sys.version_info.major == 2:
+        if type(text) == str:
+            return text
+        
+        if type(text) == int:
+            return str(text)
+        
+        return text.encode("utf-8")
 
 def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     """
@@ -3407,7 +3238,6 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
         limit as possible
     """
     
-    if not limit: limit = sys.maxint
     if not params: params = sender._get_params()
     
     nodes = []
@@ -3465,10 +3295,7 @@ def _extract_all(node, name, limit_count = None):
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a url."""
     
-    if type(text) == unicode:
-        text = text.encode('utf-8')
-    
-    return urllib.quote_plus(urllib.quote_plus(text)).lower()
+    return url_quote_plus(url_quote_plus(_string(text))).lower()
 
 def _number(string):
     """
@@ -3487,7 +3314,7 @@ def _number(string):
 
 def _unescape_htmlentity(string):
     
-    string = _unicode(string)
+    #string = _unicode(string)  
     
     mapping = htmlentitydefs.name2codepoint
     for key in mapping:
@@ -3538,17 +3365,17 @@ class _ScrobblerRequest(object):
         
         self.params = params
         self.type = type
-        (self.hostname, self.subdir) = urllib.splithost(url[len("http:"):])
+        (self.hostname, self.subdir) = url_split_host(url[len("http:"):])
         self.network = network
     
     def execute(self):
         """Returns a string response of this request."""
         
-        connection = httplib.HTTPConnection(self.hostname)
+        connection = HTTPConnection(self.hostname)
 
         data = []
         for name in self.params.keys():
-            value = urllib.quote_plus(self.params[name])
+            value = url_quote_plus(self.params[name])
             data.append('='.join((name, value)))
         data = "&".join(data)
         
