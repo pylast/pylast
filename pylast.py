@@ -3439,7 +3439,7 @@ class _ScrobblerRequest(object):
             connection.request("GET", self.subdir + "?" + data, headers = headers)
         else:
             connection.request("POST", self.subdir, data, headers)
-        response = connection.getresponse().read()
+        response = _unicode(connection.getresponse().read())
         
         self._check_response_for_errors(response)
         
