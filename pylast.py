@@ -33,7 +33,7 @@ import tempfile
 import sys
 import collections
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     from http.client import HTTPConnection
     import html.entities as htmlentitydefs
     from urllib.parse import splithost as url_split_host
@@ -41,7 +41,7 @@ if sys.version_info.major == 3:
     
     unichr = chr
 
-elif sys.version_info.major == 2:
+elif sys.version_info[0] == 2:
     from httplib import HTTPConnection
     import htmlentitydefs 
     from urllib import splithost as url_split_host
@@ -3390,13 +3390,13 @@ def md5(text):
     return h.hexdigest()
 
 def _unicode(text):
-    if sys.version_info.major == 3:
+    if sys.version_info[0] == 3:
         if type(text) in (bytes, bytearray):
             return str(text, "utf-8")
         else:
             return str(text)
         
-    elif sys.version_info.major ==2:
+    elif sys.version_info[0] ==2:
         if type(text) in (str,):
             return unicode(text, "utf-8")
         else:
@@ -3405,13 +3405,13 @@ def _unicode(text):
 def _string(text):
     """For Python2 routines that can only process str type."""
     
-    if sys.version_info.major == 3:
+    if sys.version_info[0] == 3:
         if type(text) != str:
             return str(text)
         else:
             return text
     
-    elif sys.version_info.major == 2:
+    elif sys.version_info[0] == 2:
         if type(text) == str:
             return text
         
