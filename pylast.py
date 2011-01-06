@@ -109,7 +109,7 @@ SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
-class Network(object):
+class _Network(object):
     """
         A music social network website that is Last.fm or one exposing a Last.fm compatible API
     """
@@ -164,7 +164,7 @@ class Network(object):
         attributes = ("name", "homepage", "ws_server", "api_key", "api_secret", "session_key", "submission_server",
             "username", "password_hash", "domain_names", "urls")
         
-        text = "pylast.Network(%s)"
+        text = "pylast._Network(%s)"
         args = []
         for attr in attributes:
             args.append("=".join((attr, repr(getattr(self, attr)))))
@@ -256,7 +256,7 @@ class Network(object):
             ...and provide us with the name of your client and its homepage address. 
         """
         
-        print("DeprecationWarning: Use Network.scrobble(...), Network.scrobble_many(...), and Netowrk.update_now_playing(...) instead")
+        print("DeprecationWarning: Use _Network.scrobble(...), _Network.scrobble_many(...), and Netowrk.update_now_playing(...) instead")
         
         return Scrobbler(self, client_id, client_version)
     
@@ -515,11 +515,10 @@ class Network(object):
         
         if remaining_tracks:
             self.scrobble_many(reamining_tracks)
-            
-
-def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
-    """
-    Returns a preconfigured Network object for Last.fm
+    
+class LastFMNetwork(_Network):
+    
+    """A Last.fm network object
     
     api_key: a provided API_KEY
     api_secret: a provided API_SECRET
@@ -536,8 +535,9 @@ def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "
     http://www.last.fm/api/account
     """
     
-    return Network (
-                    name = "Last.fm",
+    def __init__(self, api_key="", api_secret="", session_key="", username="", password_hash=""):
+        _Network.__init__(self,
+            name = "Last.fm",
                     homepage = "http://last.fm",
                     ws_server = ("ws.audioscrobbler.com", "/2.0/"),
                     api_key = api_key,
@@ -571,11 +571,38 @@ def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "
                         "group": "group/%(name)s",
                         "user": "user/%(name)s",
                         }
-                    )
+                )
+    
+    def __repr__(self):
+        return "pylast.LastFMNetwork(%s)" %(", ".join(("'%s'" %self.api_key, "'%s'" %self.api_secret, "'%s'" %self.session_key, 
+            "'%s'" %self.username, "'%s'" %self.password_hash)))
 
-def get_librefm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
+def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
-    Returns a preconfigured Network object for Libre.fm
+    Returns a preconfigured _Network object for Last.fm
+    
+    api_key: a provided API_KEY
+    api_secret: a provided API_SECRET
+    session_key: a generated session_key or None
+    username: a username of a valid user
+    password_hash: the output of pylast.md5(password) where password is the user's password
+    
+    if username and password_hash were provided and not session_key, session_key will be
+    generated automatically when needed.
+            
+    Either a valid session_key or a combination of username and password_hash must be present for scrobbling.
+    
+    Most read-only webservices only require an api_key and an api_secret, see about obtaining them from:
+    http://www.last.fm/api/account
+    """
+    
+    print("DeprecationWarning: Create a LastFMNetwork object instead")
+    
+    return LastFMNetwork(api_key, api_secret, session_key, username, password_hash)
+
+class LibreFMNetwork(_Network):
+    """
+    A preconfigured _Network object for Libre.fm
     
     api_key: a provided API_KEY
     api_secret: a provided API_SECRET
@@ -587,7 +614,9 @@ def get_librefm_network(api_key="", api_secret="", session_key = "", username = 
     generated automatically when needed.
     """
     
-    return Network (
+    def __init__(self, api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
+        
+        _Network.__init__(self,
                     name = "Libre.fm",
                     homepage = "http://alpha.dev.libre.fm",
                     ws_server = ("alpha.dev.libre.fm", "/2.0/"),
@@ -623,6 +652,28 @@ def get_librefm_network(api_key="", api_secret="", session_key = "", username = 
                         "user": "user/%(name)s",
                         }
                     )
+        
+    def __repr__(self):
+        return "pylast.LibreFMNetwork(%s)" %(", ".join(("'%s'" %self.api_key, "'%s'" %self.api_secret, "'%s'" %self.session_key, 
+            "'%s'" %self.username, "'%s'" %self.password_hash)))
+
+def get_librefm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
+    """
+    Returns a preconfigured _Network object for Libre.fm
+    
+    api_key: a provided API_KEY
+    api_secret: a provided API_SECRET
+    session_key: a generated session_key or None
+    username: a username of a valid user
+    password_hash: the output of pylast.md5(password) where password is the user's password
+    
+    if username and password_hash were provided and not session_key, session_key will be
+    generated automatically when needed.
+    """
+    
+    print("DeprecationWarning: Create a LibreFMNetwork object instead")
+    
+    return LibreFMNetwork(api_key, api_secret, session_key, username, password_hash)
 
 class _ShelfCacheBackend(object):
     """Used as a backend for caching cacheable requests."""
