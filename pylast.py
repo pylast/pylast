@@ -2494,16 +2494,6 @@ class Track(_BaseObject, _Taggable):
                                 )
                             )
         return shouts
-    
-    def shout(self, message):
-        """
-            Post a shout
-        """
-        
-        params = self._get_params()
-        params["message"] = message
-        
-        self._request("track.Shout", False, params)
         
 class Group(_BaseObject):
     """A Last.fm group."""
