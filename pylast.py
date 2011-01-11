@@ -502,7 +502,7 @@ class _Network(object):
             
             for arg in additional_args:
                 
-                if tracks_to_scrobble[i][arg]:
+                if arg in tracks_to_scrobble[i] and tracks_to_scrobble[i][arg]:
                     if arg in args_map_to:
                         maps_to = args_map_to[arg]
                     else:
