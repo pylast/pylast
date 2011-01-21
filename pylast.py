@@ -451,10 +451,10 @@ class _Network(object):
         
         if album: params["album"] = album
         if album_artist: params["albumArtist"] = album_artist
-        if context: params["context"] = context
-        if track_number: params["trackNumber"] = track_number
+        if context: params["context"] = _unicode(context)
+        if track_number: params["trackNumber"] = _unicode(track_number)
         if mbid: params["mbid"] = mbid
-        if duration: params["duration"] = duration
+        if duration: params["duration"] = _unicode(duration)
         
         _Request(self, "track.updateNowPlaying", params).execute()
     
