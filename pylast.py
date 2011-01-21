@@ -781,11 +781,20 @@ class _Request(object):
         
         if self.network.is_proxy_enabled():
             conn = HTTPConnection(host = self._get_proxy()[0], port = self._get_proxy()[1])
-            conn.request(method='POST', url="http://" + HOST_NAME + HOST_SUBDIR, 
-                body=data, headers=headers)
+            
+            try:
+                conn.request(method='POST', url="http://" + HOST_NAME + HOST_SUBDIR, 
+                    body=data, headers=headers)
+            except Exception as e:
+                raise NetworkError(self.network, e)
+                
         else:
             conn = HTTPConnection(host=HOST_NAME)
-            conn.request(method='POST', url=HOST_SUBDIR, body=data, headers=headers)
+            
+            try:
+                conn.request(method='POST', url=HOST_SUBDIR, body=data, headers=headers)
+            except Exception as e:
+                raise NetworkError(self.network, e)
         
         try:
             response_text = _unicode(conn.getresponse().read())
@@ -1111,6 +1120,16 @@ class MalformedResponseError(Exception):
     
     def __str__(self):
         return "Malformed response from Last.fm. Underlying error: %s" %str(self.underlying_error)
+
+class NetworkError(Exception):
+    """Exception conveying a problem in sending a request to Last.fm"""
+    
+    def __init__(self, network, underlying_error):
+        self.network = network
+        self.underlying_error = underlying_error
+    
+    def __str__(self):
+        return "NetworkError: %s" %str(self.underlying_error)
 
 class Album(_BaseObject, _Taggable):
     """An album."""
