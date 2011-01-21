@@ -966,9 +966,9 @@ class _Taggable(object):
         """
         
         for tag in tags:
-            self._add_tag(tag)    
+            self.add_tag(tag)
     
-    def _add_tag(self, tag):
+    def add_tag(self, tag):
         """Adds one tag.
         * tag: a tag name or a Tag object.
         """
@@ -981,14 +981,14 @@ class _Taggable(object):
         
         self._request(self.ws_prefix + '.addTags', False, params)
     
-    def _remove_tag(self, tag):
+    def remove_tag(self, tag):
         """Remove a user's tag from this object."""
         
         if isinstance(tag, Tag):
-            single_tag = single_tag.get_name()
+            tag = tag.get_name()
         
         params = self._get_params()
-        params['tag'] = _unicode(single_tag)
+        params['tag'] = _unicode(tag)
         
         self._request(self.ws_prefix + '.removeTag', False, params)
 
@@ -1012,7 +1012,7 @@ class _Taggable(object):
         """
         
         for tag in tags:
-            self._remove_tag(tag)
+            self.remove_tag(tag)
     
     def clear_tags(self):
         """Clears all the user-set tags. """
