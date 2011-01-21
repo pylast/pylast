@@ -787,8 +787,11 @@ class _Request(object):
             conn = HTTPConnection(host=HOST_NAME)
             conn.request(method='POST', url=HOST_SUBDIR, body=data, headers=headers)
         
-        response = conn.getresponse()
-        response_text = _unicode(response.read())
+        try:
+            response_text = _unicode(conn.getresponse().read())
+        except Exception as e:
+            raise MalformedResponseError(self.network, e)
+        
         self._check_response_for_errors(response_text)
         return response_text
         
@@ -805,7 +808,11 @@ class _Request(object):
     def _check_response_for_errors(self, response):
         """Checks the response for errors and raises one if any exists."""
         
-        doc = minidom.parseString(_string(response))
+        try:
+            doc = minidom.parseString(_string(response))
+        except Exception as e:
+            raise MalformedResponseError(self.network, e)
+            
         e = doc.getElementsByTagName('lfm')[0]
         
         if e.getAttribute('status') != "ok":
@@ -1094,6 +1101,16 @@ class WSError(Exception):
         """
         
         return self.status
+
+class MalformedResponseError(Exception):
+    """Exception conveying a malformed response from Last.fm."""
+    
+    def __init__(self, network, underlying_error):
+        self.network = network
+        self.underlying_error = underlying_error
+    
+    def __str__(self):
+        return "Malformed response from Last.fm. Underlying error: %s" %str(self.underlying_error)
 
 class Album(_BaseObject, _Taggable):
     """An album."""
