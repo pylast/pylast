@@ -32,6 +32,10 @@ import shelve
 import tempfile
 import sys
 import collections
+import warnings
+
+def _deprecation_warning(message):
+    warnings.warn(message, DeprecationWarning)
 
 if sys.version_info[0] == 3:
     from http.client import HTTPConnection
@@ -256,7 +260,7 @@ class _Network(object):
             ...and provide us with the name of your client and its homepage address. 
         """
         
-        print("DeprecationWarning: Use _Network.scrobble(...), _Network.scrobble_many(...), and Netowrk.update_now_playing(...) instead")
+        _deprecation_warning("Use _Network.scrobble(...), _Network.scrobble_many(...), and Netowrk.update_now_playing(...) instead")
         
         return Scrobbler(self, client_id, client_version)
     
@@ -576,6 +580,9 @@ class LastFMNetwork(_Network):
     def __repr__(self):
         return "pylast.LastFMNetwork(%s)" %(", ".join(("'%s'" %self.api_key, "'%s'" %self.api_secret, "'%s'" %self.session_key, 
             "'%s'" %self.username, "'%s'" %self.password_hash)))
+    
+    def __str__(self):
+        return "LastFM Network"
 
 def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
@@ -596,7 +603,7 @@ def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "
     http://www.last.fm/api/account
     """
     
-    print("DeprecationWarning: Create a LastFMNetwork object instead")
+    _deprecation_warning("Create a LastFMNetwork object instead")
     
     return LastFMNetwork(api_key, api_secret, session_key, username, password_hash)
 
@@ -656,6 +663,9 @@ class LibreFMNetwork(_Network):
     def __repr__(self):
         return "pylast.LibreFMNetwork(%s)" %(", ".join(("'%s'" %self.api_key, "'%s'" %self.api_secret, "'%s'" %self.session_key, 
             "'%s'" %self.username, "'%s'" %self.password_hash)))
+    
+    def __str__(self):
+        return "Libre.fm Network"
 
 def get_librefm_network(api_key="", api_secret="", session_key = "", username = "", password_hash = ""):
     """
@@ -671,7 +681,7 @@ def get_librefm_network(api_key="", api_secret="", session_key = "", username = 
     generated automatically when needed.
     """
     
-    print("DeprecationWarning: Create a LibreFMNetwork object instead")
+    _deprecation_warning("DeprecationWarning: Create a LibreFMNetwork object instead")
     
     return LibreFMNetwork(api_key, api_secret, session_key, username, password_hash)
 
@@ -3693,7 +3703,7 @@ class Scrobbler(object):
     
     def report_now_playing(self, artist, title, album = "", duration = "", track_number = "", mbid = ""):
         
-        print("DeprecationWarning: Use Netowrk.update_now_playing(...) instead")
+        _deprecation_warning("DeprecationWarning: Use Netowrk.update_now_playing(...) instead")
         
         params = {"s": self._get_session_id(), "a": artist, "t": title,
             "b": album, "l": duration, "n": track_number, "m": mbid}
@@ -3726,7 +3736,7 @@ class Scrobbler(object):
             mbid: MusicBrainz ID.
         """
         
-        print("DeprecationWarning: Use Network.scrobble(...) instead")
+        _deprecation_warning("DeprecationWarning: Use Network.scrobble(...) instead")
         
         params = {"s": self._get_session_id(), "a[0]": _string(artist), "t[0]": _string(title),
             "i[0]": str(time_started), "o[0]": source, "r[0]": mode, "l[0]": str(duration),
@@ -3742,7 +3752,7 @@ class Scrobbler(object):
                 is the same as if passed to the scrobble() method.
         """
         
-        print("DeprecationWarning: Use Network.scrobble_many(...) instead")
+        _deprecation_warning("DeprecationWarning: Use Network.scrobble_many(...) instead")
         
         remainder = []
         
