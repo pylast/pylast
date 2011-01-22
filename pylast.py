@@ -299,8 +299,8 @@ class _Network(object):
         """
         
         params = {}
-        params['title'] = _unicode(title)
-        params['description'] = _unicode(description)
+        params['title'] = title
+        params['description'] = description
         
         doc = _Request(self, 'playlist.create', params).execute(False)
         
@@ -407,7 +407,7 @@ class _Network(object):
     def get_track_by_mbid(self, mbid):
         """Looks up a track by its MusicBrainz ID"""
         
-        params = {"mbid": _unicode(mbid)}
+        params = {"mbid": mbid}
         
         doc = _Request(self, "track.getInfo", params).execute(True)
         
@@ -416,7 +416,7 @@ class _Network(object):
     def get_artist_by_mbid(self, mbid):
         """Loooks up an artist by its MusicBrainz ID"""
         
-        params = {"mbid": _unicode(mbid)}
+        params = {"mbid": mbid}
         
         doc = _Request(self, "artist.getInfo", params).execute(True)
         
@@ -425,7 +425,7 @@ class _Network(object):
     def get_album_by_mbid(self, mbid):
         """Looks up an album by its MusicBrainz ID"""
         
-        params = {"mbid": _unicode(mbid)}
+        params = {"mbid": mbid}
         
         doc = _Request(self, "album.getInfo", params).execute(True)
         
@@ -451,10 +451,10 @@ class _Network(object):
         
         if album: params["album"] = album
         if album_artist: params["albumArtist"] = album_artist
-        if context: params["context"] = _unicode(context)
-        if track_number: params["trackNumber"] = _unicode(track_number)
+        if context: params["context"] = context
+        if track_number: params["trackNumber"] = track_number
         if mbid: params["mbid"] = mbid
-        if duration: params["duration"] = _unicode(duration)
+        if duration: params["duration"] = duration
         
         _Request(self, "track.updateNowPlaying", params).execute()
     
@@ -694,8 +694,11 @@ class _Request(object):
     
     def __init__(self, network, method_name, params = {}):
         
-        self.params = params
         self.network = network
+        self.params = {}
+        
+        for key in params:
+            self.params[key] = _unicode(params[key])
         
         (self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
         
@@ -986,7 +989,7 @@ class _Taggable(object):
             tag = tag.get_name()
         
         params = self._get_params()
-        params['tags'] = _unicode(tag)
+        params['tags'] = tag
         
         self._request(self.ws_prefix + '.addTags', False, params)
     
@@ -997,7 +1000,7 @@ class _Taggable(object):
             tag = tag.get_name()
         
         params = self._get_params()
-        params['tag'] = _unicode(tag)
+        params['tag'] = tag
         
         self._request(self.ws_prefix + '.removeTag', False, params)
 
@@ -1416,7 +1419,7 @@ class Artist(_BaseObject, _Taggable):
         
         params = self._get_params()
         if limit:
-            params['limit'] = _unicode(limit)
+            params['limit'] = limit
         
         doc = self._request('artist.getSimilar', True, params)
         
@@ -1507,7 +1510,8 @@ class Artist(_BaseObject, _Taggable):
         params = self._get_params()
         recipients = ','.join(nusers)
         params['recipient'] = recipients
-        if message: params['message'] = _unicode(message)
+        if message:
+            params['message'] = message
         
         self._request('artist.share', False, params)
     
@@ -1599,7 +1603,7 @@ class Event(_BaseObject):
     def __init__(self, event_id, network):
         _BaseObject.__init__(self, network)
         
-        self.id = _unicode(event_id)
+        self.id = event_id
     
     def __repr__(self):
         return "pylast.Event(%s, %s)" %(repr(self.id), repr(self.network))
@@ -1626,7 +1630,7 @@ class Event(_BaseObject):
         """
         
         params = self._get_params()
-        params['status'] = _unicode(attending_status)
+        params['status'] = attending_status
         
         self._request('event.attend', False, params)
     
@@ -1768,7 +1772,8 @@ class Event(_BaseObject):
         params = self._get_params()
         recipients = ','.join(nusers)
         params['recipient'] = recipients
-        if message: params['message'] = _unicode(message)
+        if message:
+            params['message'] = message
         
         self._request('event.share', False, params)
 
@@ -2009,7 +2014,7 @@ class Playlist(_BaseObject):
         else:
             self.user = User(user, self.network)
         
-        self.id = _unicode(id)
+        self.id = id
     
     @_string_output
     def __str__(self):
@@ -2490,7 +2495,8 @@ class Track(_BaseObject, _Taggable):
         params = self._get_params()
         recipients = ','.join(nusers)
         params['recipient'] = recipients
-        if message: params['message'] = _unicode(message)
+        if message:
+            params['message'] = message
         
         self._request('track.share', False, params)
     
@@ -2778,7 +2784,7 @@ class User(_BaseObject):
         
         params = self._get_params()
         if limit:
-            params['limit'] = _unicode(limit)
+            params['limit'] = limit
         
         seq = []
         for track in _collect_nodes(limit, self, "user.getLovedTracks", True, params):
@@ -2797,7 +2803,7 @@ class User(_BaseObject):
         
         params = self._get_params()
         if limit:
-            params['limit'] = _unicode(limit)
+            params['limit'] = limit
         
         doc = self._request('user.getNeighbours', True, params)
         
@@ -2865,7 +2871,7 @@ class User(_BaseObject):
         
         params = self._get_params()
         if limit:
-            params['limit'] = _unicode(limit)
+            params['limit'] = limit
         
         seq = []
         for track in _collect_nodes(limit, self, "user.getRecentTracks", True, params):
@@ -3102,7 +3108,7 @@ class User(_BaseObject):
         
         params = self._get_params()
         if shared_artists_limit:
-            params['limit'] = _unicode(shared_artists_limit)
+            params['limit'] = shared_artists_limit
         params['type1'] = 'user'
         params['type2'] = 'user'
         params['value1'] = self.get_name()
@@ -3419,12 +3425,16 @@ def _unicode(text):
     if sys.version_info[0] == 3:
         if type(text) in (bytes, bytearray):
             return str(text, "utf-8")
+        elif type(text) == str:
+            return text
         else:
             return str(text)
         
     elif sys.version_info[0] ==2:
         if type(text) in (str,):
             return unicode(text, "utf-8")
+        elif type(text) == unicode:
+            return text
         else:
             return unicode(text)
 
