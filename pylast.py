@@ -322,8 +322,10 @@ class _Network(object):
             tag = Tag(_extract(node, "name"), self)
             weight = _number(_extract(node, "count"))
             
-            if len(seq) < limit:
-                seq.append(TopItem(tag, weight))
+            seq.append(TopItem(tag, weight))
+        
+        if limit:
+            seq = seq[:limit]
         
         return seq
 
@@ -1075,7 +1077,7 @@ class _Taggable(object):
         self.remove_tags(to_remove)
         self.add_tags(to_add)
         
-    def get_top_tags(self, limit = None):
+    def get_top_tags(self, limit=None):
         """Returns a list of the most frequently used Tags on this object."""
         
         doc = self._request(self.ws_prefix + '.getTopTags', True)
@@ -1084,12 +1086,13 @@ class _Taggable(object):
         seq = []
         
         for element in elements:
-            if limit and len(seq) >= limit:
-                break
             tag_name = _extract(element, 'name')
             tagcount = _extract(element, 'count')
             
             seq.append(TopItem(Tag(tag_name, self.network), tagcount))
+        
+        if limit:
+            seq = seq[:limit]
         
         return seq
         
@@ -1239,8 +1242,10 @@ class Album(_BaseObject, _Taggable):
         
         seq = []
         for name in _extract_all(e, "name"):
-            if len(seq) < limit:
-                seq.append(Tag(name, self.network))
+            seq.append(Tag(name, self.network))
+        
+        if limit:
+            seq = seq[:limit]
         
         return seq
 
@@ -3003,8 +3008,8 @@ class User(_BaseObject):
         
         return seq
     
-    def get_top_tags(self, limit = None):
-        """Returns a sequence of the top tags used by this user with their counts as (Tag, tagcount). 
+    def get_top_tags(self, limit=None):
+        """Returns a sequence of the top tags used by this user with their counts as TopItem objects. 
         * limit: The limit of how many tags to return. 
         """
         
@@ -3012,8 +3017,10 @@ class User(_BaseObject):
         
         seq = []
         for node in doc.getElementsByTagName("tag"):
-            if len(seq) < limit:
-                seq.append(TopItem(Tag(_extract(node, "name"), self.network), _extract(node, "count")))
+            seq.append(TopItem(Tag(_extract(node, "name"), self.network), _extract(node, "count")))
+        
+        if limit:
+            seq = seq[:limit]
         
         return seq
     
