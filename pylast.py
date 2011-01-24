@@ -1963,14 +1963,19 @@ class Library(_BaseObject):
         
         self._request("library.addTrack", False, params)
     
-    def get_albums(self, limit=50):
+    def get_albums(self, artist=None, limit=50):
         """
         Returns a sequence of Album objects
-        if limit==None it will return all (may take a while)
+        If no artist is specified, it will return all, sorted by playcount descendingly.
+        If limit==None it will return all (may take a while)
         """
         
+        params = self._get_params()
+        if artist:
+            params["artist"] = artist
+        
         seq = []
-        for node in _collect_nodes(limit, self, "library.getAlbums", True):
+        for node in _collect_nodes(limit, self, "library.getAlbums", True, params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -1997,14 +2002,20 @@ class Library(_BaseObject):
         
         return seq
 
-    def get_tracks(self, limit=50):
+    def get_tracks(self, artist=None, album=None, limit=50):
         """
         Returns a sequence of Album objects
-        if limit==None it will return all (may take a while)
+        If limit==None it will return all (may take a while)
         """
         
+        params = self._get_params()
+        if artist:
+            params["artist"] = artist
+        if album:
+            params["album"] = album
+        
         seq = []
-        for node in _collect_nodes(limit, self, "library.getTracks", True):
+        for node in _collect_nodes(limit, self, "library.getTracks", True, params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -3479,7 +3490,8 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
         limit as possible
     """
     
-    if not params: params = sender._get_params()
+    if not params:
+        params = sender._get_params()
     
     nodes = []
     page = 1
