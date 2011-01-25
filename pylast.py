@@ -520,7 +520,7 @@ class _Network(object):
         _Request(self, "track.scrobble", params).execute()
         
         if remaining_tracks:
-            self.scrobble_many(reamining_tracks)
+            self.scrobble_many(remaining_tracks)
     
 class LastFMNetwork(_Network):
     
