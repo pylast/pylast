@@ -1411,10 +1411,16 @@ class Artist(_BaseObject, _Taggable):
         
         return _extract(self._request("artist.getInfo", True), "summary")
     
-    def get_bio_content(self):
+    def get_bio_content(self, language=None):
         """Returns the content of the artist's biography."""
         
-        return _extract(self._request("artist.getInfo", True), "content")
+        if language:
+            params = self._get_params()
+            params["lang"] = language
+        else:
+            params = None
+        
+        return _extract(self._request("artist.getInfo", True, params), "content")
     
     def get_upcoming_events(self):
         """Returns a list of the upcoming Events for this artist."""
