@@ -352,8 +352,6 @@ class _Network(object):
         
     def enable_caching(self, file_path = None):
         """Enables caching request-wide for all cachable calls.
-        In choosing the backend used for caching, it will try _SqliteCacheBackend first if
-        the module sqlite3 is present. If not, it will fallback to _ShelfCacheBackend which uses shelve.Shelf objects.
         
         * file_path: A file path for the backend storage file. If 
         None set, a temp file would probably be created, according the backend.
