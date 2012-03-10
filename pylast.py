@@ -313,6 +313,37 @@ class _Network(object):
         
         return Playlist(user, e_id, self)
 
+    def get_top_artists(self, limit=None):
+        """Returns a sequence of the most played artists."""
+        
+        doc = _Request(self, "chart.getTopArtists").execute(True)
+        seq = []
+        for node in doc.getElementsByTagName("artist"):
+            title = _extract(node, "name")
+            artist = Artist(title, self)
+            seq.append(artist)
+        
+        if limit:
+            seq = seq[:limit]
+        
+        return seq
+
+    def get_top_tracks(self, limit=None):
+        """Returns a sequence of the most played tracks."""
+        
+        doc = _Request(self, "chart.getTopTracks").execute(True)
+        seq = []
+        for node in doc.getElementsByTagName("track"):
+            title = _extract(node, "name")
+            artist = _extract(node, "name", 1)
+            track = Track(artist, title, self)
+            seq.append(track)
+        
+        if limit:
+            seq = seq[:limit]
+        
+        return seq
+
     def get_top_tags(self, limit=None):
         """Returns a sequence of the most used tags as a sequence of TopItem objects."""
         
