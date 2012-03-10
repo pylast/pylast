@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: pylast
+Version: 0.5.11
+Summary: A Python interface to Last.fm (and other API compatible social networks)
+Home-page: http://code.google.com/p/pylast/
+Author: Amr Hassan <amr.hassan@gmail.com>
+Author-email: amr.hassan@gmail.com
+License: Apache2
+Description: UNKNOWN
+Platform: UNKNOWN
