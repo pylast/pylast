@@ -721,7 +721,7 @@ class _Request(object):
         if self.session_key:
             self.params["sk"] = self.session_key
             self.sign_it()
-    
+
     def sign_it(self):
         """Sign this request."""
         
@@ -1150,8 +1150,9 @@ class Album(_BaseObject, _Taggable):
     
     title = None
     artist = None
-    
-    def __init__(self, artist, title, network):
+    username = None
+
+    def __init__(self, artist, title, network, username=None):
         """
         Create an album instance.
         # Parameters:
@@ -1168,6 +1169,7 @@ class Album(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
         
         self.title = title
+        self.username = username
     
     def __repr__(self):
         return "pylast.Album(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
@@ -1227,6 +1229,16 @@ class Album(_BaseObject, _Taggable):
         
         return _number(_extract(self._request("album.getInfo", cacheable = True), "playcount"))
     
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        return _number(_extract(self._request("album.getInfo", True, params), "userplaycount"))
+
     def get_listener_count(self):
         """Returns the number of liteners on the network"""
         
@@ -1322,8 +1334,9 @@ class Artist(_BaseObject, _Taggable):
     """An artist."""
     
     name = None
+    username = None
     
-    def __init__(self, name, network):
+    def __init__(self, name, network, username=None):
         """Create an artist object.
         # Parameters:
             * name str: The artist's name.
@@ -1333,6 +1346,7 @@ class Artist(_BaseObject, _Taggable):
         _Taggable.__init__(self, 'artist')
         
         self.name = name
+        self.username = username
     
     def __repr__(self):
         return "pylast.Artist(%s, %s)" %(repr(self.get_name()), repr(self.network))
@@ -1377,6 +1391,16 @@ class Artist(_BaseObject, _Taggable):
         """Returns the number of plays on the network."""
         
         return _number(_extract(self._request("artist.getInfo", True), "playcount"))
+
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        return _number(_extract(self._request("artist.getInfo", True, params), "userplaycount"))
 
     def get_mbid(self):
         """Returns the MusicBrainz ID of this artist."""
@@ -2320,8 +2344,9 @@ class Track(_BaseObject, _Taggable):
     
     artist = None
     title = None
-    
-    def __init__(self, artist, title, network):
+    username = None
+
+    def __init__(self, artist, title, network, username=None):
         _BaseObject.__init__(self, network)
         _Taggable.__init__(self, 'track')
         
@@ -2331,6 +2356,8 @@ class Track(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
         
         self.title = title
+
+        self.username = username
     
     def __repr__(self):
         return "pylast.Track(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
@@ -2402,6 +2429,17 @@ class Track(_BaseObject, _Taggable):
         
         doc = self._request("track.getInfo", True)
         return _number(_extract(doc, "playcount"))
+
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        doc = self._request("track.getInfo", True, params)
+        return _number(_extract(doc, "userplaycount"))
     
     def is_streamable(self):
         """Returns True if the track is available at Last.fm."""
@@ -2890,7 +2928,7 @@ class User(_BaseObject):
         artist = _extract(e, 'artist')
         title = _extract(e, 'name')
         
-        return Track(artist, title, self.network)
+        return Track(artist, title, self.network, self.name)
 
 
     def get_recent_tracks(self, limit = 10):
