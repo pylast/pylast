@@ -2832,12 +2832,30 @@ class User(_BaseObject):
 
         for e_id in ids:
             events.append(Event(e_id, self.network))
-
+        
         return events
+    
+    def get_artist_tracks(self, artist):
+        """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
+        # Not implemented: "Can be limited to specific timeranges, defaults to all time."
+        
+        params = self._get_params()
+        params['artist'] = artist
+
+        seq = []
+        for track in _collect_nodes(None, self, "user.getArtistTracks", False, params):
+            title = _extract(track, "name")
+            artist = _extract(track, "artist")
+            date = _extract(track, "date")
+            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+                
+            seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
+
+        return seq
 
     def get_friends(self, limit = 50):
         """Returns a list of the user's friends. """
-
+        
         seq = []
         for node in _collect_nodes(limit, self, "user.getFriends", False):
             seq.append(User(_extract(node, "name"), self.network))
@@ -3534,7 +3552,7 @@ def _string(text):
 
 def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     """
-        Returns a sequqnce of dom.Node objects about as close to
+        Returns a sequence of dom.Node objects about as close to
         limit as possible
     """
 
@@ -3557,14 +3575,14 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
             total_pages = _number(main.getAttribute("totalpages"))
         else:
             raise Exception("No total pages attribute")
-
+        
         for node in main.childNodes:
-            if not node.nodeType == xml.dom.Node.TEXT_NODE and len(nodes) < limit:
+            if not node.nodeType == xml.dom.Node.TEXT_NODE and (not limit or (len(nodes) < limit)):
                 nodes.append(node)
-
+        
         if page >= total_pages:
             end_of_pages = True
-
+        
         page += 1
 
     return nodes
