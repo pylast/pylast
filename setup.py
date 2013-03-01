@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+try:
+    from setuptools import setup
+except:
+    from distutils.core import setup
 
 import os
 def get_build():
@@ -22,11 +25,11 @@ def get_build():
 	return str(build)
 
 setup(name = "pylast",
-      version = "0.1+0.5." + get_build(),
+      version = "0.5." + get_build(),
       author = "Amr Hassan <amr.hassan@gmail.com>",
 	  description = "A Python interface to Last.fm (and other API compatible social networks)",
       author_email = "amr.hassan@gmail.com",
-      url = "https://github.com/Elizacat/",
+      url = "http://code.google.com/p/pylast/",
       py_modules = ("pylast",),
 	  license = "Apache2"
 	)

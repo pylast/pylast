@@ -1,6 +1,0 @@
-include pylast.py
-include setup.py
-include README
-include COPYING
-include INSTALL
-include .build
