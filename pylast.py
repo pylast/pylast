@@ -33,6 +33,7 @@ import tempfile
 import sys
 import collections
 import warnings
+import re
 
 def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
@@ -846,6 +847,10 @@ class _Request(object):
             response_text = _unicode(conn.getresponse().read())
         except Exception as e:
             raise MalformedResponseError(self.network, e)
+
+        # Pretty decent catch for invalid & characters - which last.fm
+        # seems to generate for some artist eg. "K'nann"
+        response_text = re.sub("&(?![^\W]+;)", "&amp;", response_text)
 
         self._check_response_for_errors(response_text)
         return response_text
