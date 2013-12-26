@@ -33,7 +33,6 @@ import tempfile
 import sys
 import collections
 import warnings
-import re
 
 def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
@@ -314,37 +313,6 @@ class _Network(object):
 
         return Playlist(user, e_id, self)
 
-    def get_top_artists(self, limit=None):
-        """Returns a sequence of the most played artists."""
-
-        doc = _Request(self, "chart.getTopArtists").execute(True)
-        seq = []
-        for node in doc.getElementsByTagName("artist"):
-            title = _extract(node, "name")
-            artist = Artist(title, self)
-            seq.append(artist)
-
-        if limit:
-            seq = seq[:limit]
-
-        return seq
-
-    def get_top_tracks(self, limit=None):
-        """Returns a sequence of the most played tracks."""
-
-        doc = _Request(self, "chart.getTopTracks").execute(True)
-        seq = []
-        for node in doc.getElementsByTagName("track"):
-            title = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            track = Track(artist, title, self)
-            seq.append(track)
-
-        if limit:
-            seq = seq[:limit]
-
-        return seq
-
     def get_top_tags(self, limit=None):
         """Returns a sequence of the most used tags as a sequence of TopItem objects."""
 
@@ -384,8 +352,6 @@ class _Network(object):
 
     def enable_caching(self, file_path = None):
         """Enables caching request-wide for all cachable calls.
-        In choosing the backend used for caching, it will try _SqliteCacheBackend first if
-        the module sqlite3 is present. If not, it will fallback to _ShelfCacheBackend which uses shelve.Shelf objects.
 
         * file_path: A file path for the backend storage file. If
         None set, a temp file would probably be created, according the backend.
@@ -848,10 +814,6 @@ class _Request(object):
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
-        # Pretty decent catch for invalid & characters - which last.fm
-        # seems to generate for some artist eg. "K'nann"
-        response_text = re.sub("&(?![^\W]+;)", "&amp;", response_text)
-
         self._check_response_for_errors(response_text)
         return response_text
 
@@ -1188,8 +1150,9 @@ class Album(_BaseObject, _Taggable):
 
     title = None
     artist = None
+    username = None
 
-    def __init__(self, artist, title, network):
+    def __init__(self, artist, title, network, username=None):
         """
         Create an album instance.
         # Parameters:
@@ -1206,6 +1169,7 @@ class Album(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
+        self.username = username
 
     def __repr__(self):
         return "pylast.Album(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
@@ -1264,6 +1228,16 @@ class Album(_BaseObject, _Taggable):
         """Returns the number of plays on the network"""
 
         return _number(_extract(self._request("album.getInfo", cacheable = True), "playcount"))
+
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        return _number(_extract(self._request("album.getInfo", True, params), "userplaycount"))
 
     def get_listener_count(self):
         """Returns the number of liteners on the network"""
@@ -1360,8 +1334,9 @@ class Artist(_BaseObject, _Taggable):
     """An artist."""
 
     name = None
+    username = None
 
-    def __init__(self, name, network):
+    def __init__(self, name, network, username=None):
         """Create an artist object.
         # Parameters:
             * name str: The artist's name.
@@ -1371,6 +1346,7 @@ class Artist(_BaseObject, _Taggable):
         _Taggable.__init__(self, 'artist')
 
         self.name = name
+        self.username = username
 
     def __repr__(self):
         return "pylast.Artist(%s, %s)" %(repr(self.get_name()), repr(self.network))
@@ -1415,6 +1391,16 @@ class Artist(_BaseObject, _Taggable):
         """Returns the number of plays on the network."""
 
         return _number(_extract(self._request("artist.getInfo", True), "playcount"))
+
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        return _number(_extract(self._request("artist.getInfo", True, params), "userplaycount"))
 
     def get_mbid(self):
         """Returns the MusicBrainz ID of this artist."""
@@ -1749,7 +1735,7 @@ class Event(_BaseObject):
         v = doc.getElementsByTagName("venue")[0]
         venue_id = _number(_extract(v, "id"))
 
-        return Venue(venue_id, self.network)
+        return Venue(venue_id, self.network, venue_element=v)
 
     def get_start_date(self):
         """Returns the date when the event starts."""
@@ -2358,8 +2344,9 @@ class Track(_BaseObject, _Taggable):
 
     artist = None
     title = None
+    username = None
 
-    def __init__(self, artist, title, network):
+    def __init__(self, artist, title, network, username=None):
         _BaseObject.__init__(self, network)
         _Taggable.__init__(self, 'track')
 
@@ -2369,6 +2356,8 @@ class Track(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
+
+        self.username = username
 
     def __repr__(self):
         return "pylast.Track(%s, %s, %s)" %(repr(self.artist.name), repr(self.title), repr(self.network))
@@ -2440,6 +2429,17 @@ class Track(_BaseObject, _Taggable):
 
         doc = self._request("track.getInfo", True)
         return _number(_extract(doc, "playcount"))
+
+    def get_userplaycount(self):
+        """Returns the number of plays by a given username"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        doc = self._request("track.getInfo", True, params)
+        return _number(_extract(doc, "userplaycount"))
 
     def is_streamable(self):
         """Returns True if the track is available at Last.fm."""
@@ -2835,6 +2835,24 @@ class User(_BaseObject):
 
         return events
 
+    def get_artist_tracks(self, artist):
+        """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
+        # Not implemented: "Can be limited to specific timeranges, defaults to all time."
+
+        params = self._get_params()
+        params['artist'] = artist
+
+        seq = []
+        for track in _collect_nodes(None, self, "user.getArtistTracks", False, params):
+            title = _extract(track, "name")
+            artist = _extract(track, "artist")
+            date = _extract(track, "date")
+            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+
+            seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
+
+        return seq
+
     def get_friends(self, limit = 50):
         """Returns a list of the user's friends. """
 
@@ -2928,7 +2946,7 @@ class User(_BaseObject):
         artist = _extract(e, 'artist')
         title = _extract(e, 'name')
 
-        return Track(artist, title, self.network)
+        return Track(artist, title, self.network, self.name)
 
 
     def get_recent_tracks(self, limit = 10):
@@ -3441,13 +3459,25 @@ class Venue(_BaseObject):
     """A venue where events are held."""
 
     # TODO: waiting for a venue.getInfo web service to use.
+    # TODO: As an intermediate use case, can pass the venue DOM element when using
+    # Event.get_venue() to populate the venue info, if the venue.getInfo API
+    # call becomes available this workaround should be removed
 
     id = None
+    info = None
+    name = None
+    location = None
+    url = None
 
-    def __init__(self, id, network):
+    def __init__(self, id, network, venue_element=None):
         _BaseObject.__init__(self, network)
 
         self.id = _number(id)
+        if venue_element is not None:
+            self.info = _extract_element_tree(venue_element)
+            self.name = self.info.get('name')
+            self.url = self.info.get('url')
+            self.location = self.info.get('location')
 
     def __repr__(self):
         return "pylast.Venue(%s, %s)" %(repr(self.id), repr(self.network))
@@ -3466,6 +3496,21 @@ class Venue(_BaseObject):
         """Returns the id of the venue."""
 
         return self.id
+
+    def get_name(self):
+        """Returns the name of the venue."""
+
+        return self.name
+
+    def get_url(self):
+        """Returns the URL of the venue page."""
+
+        return self.url
+
+    def get_location(self):
+        """Returns the location of the venue (dictionary)."""
+
+        return self.location
 
     def get_upcoming_events(self):
         """Returns the upcoming events in this venue."""
@@ -3534,7 +3579,7 @@ def _string(text):
 
 def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     """
-        Returns a sequqnce of dom.Node objects about as close to
+        Returns a sequence of dom.Node objects about as close to
         limit as possible
     """
 
@@ -3559,7 +3604,7 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
             raise Exception("No total pages attribute")
 
         for node in main.childNodes:
-            if not node.nodeType == xml.dom.Node.TEXT_NODE and len(nodes) < limit:
+            if not node.nodeType == xml.dom.Node.TEXT_NODE and (not limit or (len(nodes) < limit)):
                 nodes.append(node)
 
         if page >= total_pages:
@@ -3576,9 +3621,38 @@ def _extract(node, name, index = 0):
 
     if len(nodes):
         if nodes[index].firstChild:
-            return _unescape_htmlentity(nodes[index].firstChild.wholeText.strip())
+            return _unescape_htmlentity(nodes[index].firstChild.data.strip())
     else:
         return None
+
+def _extract_element_tree(node, index = 0):
+    """Extract an element tree into a multi-level dictionary
+
+    NB: If any elements have text nodes as well as nested
+    elements this will ignore the text nodes"""
+
+    def _recurse_build_tree(rootNode, targetDict):
+        """Recursively build a multi-level dict"""
+
+        def _has_child_elements(rootNode):
+            """Check if an element has any nested (child) elements"""
+
+            for node in rootNode.childNodes:
+                if node.nodeType == node.ELEMENT_NODE:
+                    return True
+            return False
+
+        for node in rootNode.childNodes:
+            if node.nodeType == node.ELEMENT_NODE:
+                if _has_child_elements(node):
+                    targetDict[node.tagName] = {}
+                    _recurse_build_tree(node, targetDict[node.tagName])
+                else:
+                    targetDict[node.tagName] = _unescape_htmlentity(node.firstChild.data.strip())
+
+        return targetDict
+
+    return _recurse_build_tree(node, {})
 
 def _extract_all(node, name, limit_count = None):
     """Extracts all the values from the xml string. returning a list."""
