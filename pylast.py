@@ -3648,8 +3648,8 @@ def _extract_element_tree(node, index = 0):
                     targetDict[node.tagName] = {}
                     _recurse_build_tree(node, targetDict[node.tagName])
                 else:
-                    targetDict[node.tagName] = _unescape_htmlentity(node.firstChild.data.strip())
-
+                    val = None if node.firstChild is None else _unescape_htmlentity(node.firstChild.data.strip())
+                    targetDict[node.tagName] = val
         return targetDict
 
     return _recurse_build_tree(node, {})
