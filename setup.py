@@ -26,7 +26,7 @@ setup(name = "pylast",
       author = "Amr Hassan <amr.hassan@gmail.com>",
 	  description = "A Python interface to Last.fm (and other API compatible social networks)",
       author_email = "amr.hassan@gmail.com",
-      url = "https://github.com/inversion/",
+      url = "https://github.com/hugovk/",
       py_modules = ("pylast",),
 	  license = "Apache2"
 	)
