@@ -5,7 +5,7 @@ from distutils.core import setup
 import os
 def get_build():
 	path = "./.build"
-
+	
 	if os.path.exists(path):
 		fp = open(path, "r")
 		build = eval(fp.read())
@@ -14,19 +14,19 @@ def get_build():
 		fp.close()
 	else:
 		build = 1
-
+	
 	fp = open(path, "w")
 	fp.write(str(build))
 	fp.close()
-
+	
 	return str(build)
 
 setup(name = "pylast",
-      version = "0.6." + get_build(),
+      version = "0.1+0.5." + get_build(),
       author = "Amr Hassan <amr.hassan@gmail.com>",
 	  description = "A Python interface to Last.fm (and other API compatible social networks)",
       author_email = "amr.hassan@gmail.com",
-      url = "https://github.com/inversion/",
+      url = "https://github.com/Elizacat/",
       py_modules = ("pylast",),
 	  license = "Apache2"
 	)
