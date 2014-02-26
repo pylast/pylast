@@ -2059,6 +2059,21 @@ class Library(_BaseObject):
 
         return seq
 
+    def remove_scrobble(self, artist, title, timestamp):
+        """Remove a scrobble from a user's Last.fm library. Parameters:
+            artist (Required) : The artist that composed the track
+            title (Required) : The name of the track
+            timestamp (Required) : The unix timestamp of the scrobble 
+                                   that you wish to remove
+        """
+
+        params = self._get_params()
+        params["artist"] = artist
+        params["track"] = title
+        params["timestamp"] = timestamp
+
+        self._request("library.removeScrobble", False, params)
+
 
 class Playlist(_BaseObject):
     """A Last.fm user playlist."""
