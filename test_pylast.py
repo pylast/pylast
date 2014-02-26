@@ -10,6 +10,9 @@ import pylast
 
 class TestSequenceFunctions(unittest.TestCase):
 
+    def unix_timestamp(self):
+        return int(time.mktime(datetime.datetime.now().timetuple()))
+
     def setUp(self):
         self.username = "TODO"
         password_hash = "TODO"
@@ -25,7 +28,7 @@ class TestSequenceFunctions(unittest.TestCase):
         # Arrange
         artist = "Test Artist"
         title = "Test Title"
-        timestamp = int(time.mktime(datetime.datetime.now().timetuple()))
+        timestamp = self.unix_timestamp()
         lastfm_user = self.network.get_user(self.username)
 
         # Act
@@ -42,7 +45,7 @@ class TestSequenceFunctions(unittest.TestCase):
         # Arrange
         artist = "Test Artist 2"
         title = "Test Title 2"
-        timestamp = int(time.mktime(datetime.datetime.now().timetuple()))
+        timestamp = self.unix_timestamp()
         library = pylast.Library(user = self.username, network = self.network)
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
         lastfm_user = self.network.get_user(self.username)
