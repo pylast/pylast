@@ -2063,7 +2063,7 @@ class Library(_BaseObject):
         """Remove a scrobble from a user's Last.fm library. Parameters:
             artist (Required) : The artist that composed the track
             title (Required) : The name of the track
-            timestamp (Required) : The unix timestamp of the scrobble 
+            timestamp (Required) : The unix timestamp of the scrobble
                                    that you wish to remove
         """
 
@@ -2830,7 +2830,7 @@ class User(_BaseObject):
         return {"user": self.get_name()}
 
     def get_name(self, properly_capitalized=False):
-        """Returns the nuser name."""
+        """Returns the user name."""
 
         if properly_capitalized:
             self.name = _extract(self._request("user.getInfo", True), "name")
@@ -3050,6 +3050,20 @@ class User(_BaseObject):
         doc = self._request("user.getInfo", True)
 
         return _number(_extract(doc, "playcount"))
+
+    def get_registered(self):
+        """Returns the user's registration date."""
+
+        doc = self._request("user.getInfo", True)
+
+        return _extract(doc, "registered")
+
+    def get_unixtime_registered(self):
+        """Returns the user's registration date as a UNIX timestamp."""
+
+        doc = self._request("user.getInfo", True)
+
+        return doc.getElementsByTagName("registered")[0].getAttribute("unixtime")
 
     def get_top_albums(self, period = PERIOD_OVERALL):
         """Returns the top albums played by a user.
