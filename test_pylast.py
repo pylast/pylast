@@ -30,17 +30,17 @@ class TestSequenceFunctions(unittest.TestCase):
         title = "Test Title"
         timestamp = self.unix_timestamp()
         lastfm_user = self.network.get_user(self.username)
-#
+
         # Act
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
-#
+
         # Assert
         last_scrobble = lastfm_user.get_recent_tracks(limit = 1)[0]
         self.assertEqual(str(last_scrobble.track.artist), str(artist))
         self.assertEqual(str(last_scrobble.track.title),  str(title))
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
-#
-#
+
+
     def test_unscrobble(self):
         # Arrange
         artist = "Test Artist 2"
@@ -49,36 +49,36 @@ class TestSequenceFunctions(unittest.TestCase):
         library = pylast.Library(user = self.username, network = self.network)
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
         lastfm_user = self.network.get_user(self.username)
-#
+
         # Act
         library.remove_scrobble(artist = artist, title = title, timestamp = timestamp)
-#
+
         # Assert
         last_scrobble = lastfm_user.get_recent_tracks(limit = 1)[0]
         self.assertNotEqual(str(last_scrobble.timestamp), str(timestamp))
-#
-#
+
+
     def test_add_album(self):
         # Arrange
         library = pylast.Library(user = self.username, network = self.network)
         album = self.network.get_album("Test Artist", "Test Album")
-#
+
         # Act
         library.add_album(album)
-#
+
         # Assert
         # Nothing here, just that no exception occurred
-#
-#
+
+
     def test_get_venue(self):
         # Arrange
         venue_name = "Last.fm Office"
         country_name = "United Kingom"
-#
+
         # Act
         venue_search = self.network.search_for_venue(venue_name, country_name)
         venue = venue_search.get_next_page()[0]
-#
+
         # Assert
         self.assertEqual(str(venue.id), "8778225")
 
