@@ -33,6 +33,7 @@ import tempfile
 import sys
 import collections
 import warnings
+import re
 
 def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
@@ -313,6 +314,37 @@ class _Network(object):
 
         return Playlist(user, e_id, self)
 
+    def get_top_artists(self, limit=None):
+        """Returns a sequence of the most played artists."""
+
+        doc = _Request(self, "chart.getTopArtists").execute(True)
+        seq = []
+        for node in doc.getElementsByTagName("artist"):
+            title = _extract(node, "name")
+            artist = Artist(title, self)
+            seq.append(artist)
+
+        if limit:
+            seq = seq[:limit]
+
+        return seq
+
+    def get_top_tracks(self, limit=None):
+        """Returns a sequence of the most played tracks."""
+
+        doc = _Request(self, "chart.getTopTracks").execute(True)
+        seq = []
+        for node in doc.getElementsByTagName("track"):
+            title = _extract(node, "name")
+            artist = _extract(node, "name", 1)
+            track = Track(artist, title, self)
+            seq.append(track)
+
+        if limit:
+            seq = seq[:limit]
+
+        return seq
+
     def get_top_tags(self, limit=None):
         """Returns a sequence of the most used tags as a sequence of TopItem objects."""
 
@@ -352,6 +384,8 @@ class _Network(object):
 
     def enable_caching(self, file_path = None):
         """Enables caching request-wide for all cachable calls.
+        In choosing the backend used for caching, it will try _SqliteCacheBackend first if
+        the module sqlite3 is present. If not, it will fallback to _ShelfCacheBackend which uses shelve.Shelf objects.
 
         * file_path: A file path for the backend storage file. If
         None set, a temp file would probably be created, according the backend.
@@ -813,6 +847,10 @@ class _Request(object):
             response_text = _unicode(conn.getresponse().read())
         except Exception as e:
             raise MalformedResponseError(self.network, e)
+
+        # Pretty decent catch for invalid & characters - which Last.fm
+        # seems to generate for some artist eg. "K'nann"
+        response_text = re.sub("&(?![^\W]+;)", "&amp;", response_text)
 
         self._check_response_for_errors(response_text)
         return response_text
