@@ -2039,6 +2039,17 @@ class Library(_BaseObject):
 
         self._request("library.addArtist", False, params)
 
+    def remove_artist(self, artist):
+        """Remove an artist from this library."""
+
+        params = self._get_params()
+        if type(artist) == str:
+            params["artist"] = artist
+        else:
+            params["artist"] = artist.get_name()
+
+        self._request("library.removeArtist", False, params)
+
     def add_track(self, track):
         """Add a track to this library."""
 

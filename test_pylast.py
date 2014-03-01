@@ -121,6 +121,25 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(value)
 
 
+    def test_remove_artist(self):
+        # Arrange
+        artist = "Test Artist 2"
+        library = pylast.Library(user = self.username, network = self.network)
+        library.add_artist(artist)
+
+        # Act
+        library.remove_artist(artist)
+
+        # Assert
+        artists = library.get_artists()
+        for artist in artists:
+            value = (str(artist[0]) == "Test Artist 2")
+            if value:
+                break
+        self.assertFalse(value)
+
+
+    def test_get_venue(self):
         # Arrange
         venue_name = "Last.fm Office"
         country_name = "United Kingom"
@@ -305,6 +324,7 @@ if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
 #     suite.addTest(TestPyLast('test_add_artist'))
+#     suite.addTest(TestPyLast('test_remove_artist'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
