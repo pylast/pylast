@@ -3002,7 +3002,12 @@ class User(_BaseObject):
 
         doc = self._request('user.getRecentTracks', False, params)
 
-        e = doc.getElementsByTagName('track')[0]
+        tracks = doc.getElementsByTagName('track')
+
+        if len(tracks) == 0:
+            return None
+
+        e = tracks[0]
 
         if not e.hasAttribute('nowplaying'):
             return None

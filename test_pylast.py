@@ -220,11 +220,21 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(value)
 
 
+    def test_now_playing_user_with_no_scrobbles(self):
+        # Arrange
+        user = self.network.get_user('test-account') # currently has no scrobbles
+
+        # Act
+        current_track = user.get_now_playing()
+
+        # Assert
+        self.assertIsNone(current_track)
+
+
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_user_equals_none'))
-#     suite.addTest(TestPyLast('test_user_not_equal_to_none'))
+#     suite.addTest(TestPyLast('test_now_playing_user_with_no_scrobbles'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
