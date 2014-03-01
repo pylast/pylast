@@ -907,7 +907,7 @@ class SessionKeyGenerator(object):
         self.web_auth_tokens = {}
 
     def _get_web_auth_token(self):
-        """Retrieves a token from the network for web authentication.
+        """Retreives a token from the network for web authentication.
         The token then has to be authorized from getAuthURL before creating session.
         """
 
@@ -935,7 +935,7 @@ class SessionKeyGenerator(object):
         return url
 
     def get_web_auth_session_key(self, url):
-        """Retrieves the session key of a web authorization process by its url."""
+        """Retreives the session key of a web authorization process by its url."""
 
         if url in self.web_auth_tokens.keys():
             token = self.web_auth_tokens[url]
@@ -953,7 +953,7 @@ class SessionKeyGenerator(object):
         return doc.getElementsByTagName('key')[0].firstChild.data
 
     def get_session_key(self, username, password_hash):
-        """Retrieve a session key with a username and a md5 hash of the user's password."""
+        """Retreive a session key with a username and a md5 hash of the user's password."""
 
         params = {"username": username, "authToken": md5(username + password_hash)}
         request = _Request(self.network, "auth.getMobileSession", params)
@@ -3431,7 +3431,7 @@ class _Search(_BaseObject):
 
         return doc.getElementsByTagName(self._ws_prefix + "matches")[0]
 
-    def _retrieve_next_page(self):
+    def _retreive_next_page(self):
         self._last_page_index += 1
         return self._retreive_page(self._last_page_index)
 
@@ -3445,7 +3445,7 @@ class AlbumSearch(_Search):
     def get_next_page(self):
         """Returns the next page of results as a sequence of Album objects."""
 
-        master_node = self._retrieve_next_page()
+        master_node = self._retreive_next_page()
 
         seq = []
         for node in master_node.getElementsByTagName("album"):
@@ -3462,7 +3462,7 @@ class ArtistSearch(_Search):
     def get_next_page(self):
         """Returns the next page of results as a sequence of Artist objects."""
 
-        master_node = self._retrieve_next_page()
+        master_node = self._retreive_next_page()
 
         seq = []
         for node in master_node.getElementsByTagName("artist"):
@@ -3482,7 +3482,7 @@ class TagSearch(_Search):
     def get_next_page(self):
         """Returns the next page of results as a sequence of Tag objects."""
 
-        master_node = self._retrieve_next_page()
+        master_node = self._retreive_next_page()
 
         seq = []
         for node in master_node.getElementsByTagName("tag"):
@@ -3503,7 +3503,7 @@ class TrackSearch(_Search):
     def get_next_page(self):
         """Returns the next page of results as a sequence of Track objects."""
 
-        master_node = self._retrieve_next_page()
+        master_node = self._retreive_next_page()
 
         seq = []
         for node in master_node.getElementsByTagName("track"):
@@ -3524,7 +3524,7 @@ class VenueSearch(_Search):
     def get_next_page(self):
         """Returns the next page of results as a sequence of Track objects."""
 
-        master_node = self._retrieve_next_page()
+        master_node = self._retreive_next_page()
 
         seq = []
         for node in master_node.getElementsByTagName("venue"):
