@@ -119,6 +119,7 @@ class TestSequenceFunctions(unittest.TestCase):
         # Just check date because of timezones
         self.assertEquals(unixtime_registered, u"1037793040")
 
+
     def test_get_genderless_user(self):
         # Arrange
         lastfm_user = self.network.get_user("test_user") # currently no gender set
@@ -139,6 +140,40 @@ class TestSequenceFunctions(unittest.TestCase):
 
         # Assert
         self.assertIsNone(country)
+
+
+    def test_love(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "Test Title"
+        track = pylast.Track(artist, title, self.network)
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        track.love()
+
+        # Assert
+        loved = lastfm_user.get_loved_tracks(limit = 1)
+        self.assertEqual(str(loved[0].track.artist), "Test Artist")
+        self.assertEqual(str(loved[0].track.title), "Test Title")
+
+    def test_unlove(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "Test Title"
+        track = pylast.Track(artist, title, self.network)
+        lastfm_user = self.network.get_user(self.username)
+        track.love()
+
+        # Act
+        track.unlove()
+
+        # Assert
+        loved = lastfm_user.get_loved_tracks(limit = 1)
+        if len(loved): # OK to be empty but if not:
+            self.assertNotEqual(str(loved.track.artist), "Test Artist")
+            self.assertNotEqual(str(loved.track.title), "Test Title")
+
 
 if __name__ == '__main__':
     unittest.main()
