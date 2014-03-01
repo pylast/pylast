@@ -2864,10 +2864,16 @@ class User(_BaseObject):
         return self.get_name()
 
     def __eq__(self, another):
-        return self.get_name() == another.get_name()
+        if isinstance(another, User):
+            return self.get_name() == another.get_name()
+        else:
+            return False
 
     def __ne__(self, another):
-        return self.get_name() != another.get_name()
+        if isinstance(another, User):
+            return self.get_name() != another.get_name()
+        else:
+            return True
 
     def _get_params(self):
         return {"user": self.get_name()}

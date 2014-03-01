@@ -198,10 +198,33 @@ class TestPyLast(unittest.TestCase):
         self.assertGreaterEqual(len(albums), 0)
 
 
+    def test_user_equals_none(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        value = (lastfm_user == None)
+
+        # Assert
+        self.assertFalse(value)
+
+
+    def test_user_not_equal_to_none(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        value = (lastfm_user != None)
+
+        # Assert
+        self.assertTrue(value)
+
+
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_get_limitless_albums'))
+#     suite.addTest(TestPyLast('test_user_equals_none'))
+#     suite.addTest(TestPyLast('test_user_not_equal_to_none'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
