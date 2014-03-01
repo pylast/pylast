@@ -318,13 +318,25 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(current_track.artist), "Test Artist")
 
 
+    def test_libre_fm(self):
+        # Arrange
+        username      = self.__class__.secrets["username"]
+        password_hash = self.__class__.secrets["password_hash"]
+
+        # Act
+        network = pylast.LibreFMNetwork(password_hash = password_hash, username = username)
+        tags = network.get_top_tags()
+
+        # Assert
+        print len(tags)
+        self.assertGreater(len(tags), 0)
+        self.assertTrue(type(tags[0])  == pylast.TopItem)
 
 
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_add_artist'))
-#     suite.addTest(TestPyLast('test_remove_artist'))
+#     suite.addTest(TestPyLast('test_libre_fm'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
