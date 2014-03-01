@@ -12,8 +12,6 @@ import pylast
 def load_secrets():
     with open("test_pylast.yaml", "r") as f: # see test_pylast_example.yaml
         doc = yaml.load(f)
-    print doc
-    print doc["username"]
     return doc
 
 class TestSequenceFunctions(unittest.TestCase):
