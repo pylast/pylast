@@ -51,3 +51,4 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+test_pylast.yaml

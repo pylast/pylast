@@ -5,20 +5,33 @@ Integration (not unit) tests for pylast.py
 import datetime
 import time
 import unittest
+import yaml # pip install pyyaml
 
 import pylast
 
+def load_secrets():
+    with open("test_pylast.yaml", "r") as f: # see test_pylast_example.yaml
+        doc = yaml.load(f)
+    print doc
+    print doc["username"]
+    return doc
+
 class TestSequenceFunctions(unittest.TestCase):
+
+    secrets = None
 
     def unix_timestamp(self):
         return int(time.mktime(datetime.datetime.now().timetuple()))
 
     def setUp(self):
-        self.username = "TODO"
-        password_hash = "TODO"
+        if self.__class__.secrets is None:
+            self.__class__.secrets = load_secrets()
 
-        API_KEY = "TODO"
-        API_SECRET = "TODO"
+        self.username = self.__class__.secrets["username"]
+        password_hash = self.__class__.secrets["password_hash"]
+
+        API_KEY       = self.__class__.secrets["api_key"]
+        API_SECRET    = self.__class__.secrets["api_secret"]
 
         self.network = pylast.LastFMNetwork(api_key = API_KEY, api_secret =
     API_SECRET, username = self.username, password_hash = password_hash)
