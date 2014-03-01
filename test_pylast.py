@@ -242,10 +242,28 @@ class TestPyLast(unittest.TestCase):
         self.assertGreaterEqual(len(user.get_loved_tracks(limit=0)), 23)
 
 
+    def test_update_now_playing(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "Test Title"
+        album = "Test Album"
+        track_number = 1
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        self.network.update_now_playing(artist = artist, title = title, album = album, track_number = track_number)
+
+        # Assert
+        current_track = lastfm_user.get_now_playing()
+        self.assertIsNotNone(current_track)
+        self.assertEqual(str(current_track.title), "Test Title")
+        self.assertEqual(str(current_track.artist), "Test Artist")
+
+
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_love_limits'))
+#     suite.addTest(TestPyLast('test_update_now_playing'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
