@@ -2019,6 +2019,15 @@ class Library(_BaseObject):
 
         self._request("library.addAlbum", False, params)
 
+    def remove_album(self, album):
+        """Remove an album from this library."""
+
+        params = self._get_params()
+        params["artist"] = album.get_artist().get_name()
+        params["album"] = album.get_name()
+
+        self._request("library.removeAlbum", False, params)
+
     def add_artist(self, artist):
         """Add an artist to this library."""
 
@@ -3932,7 +3941,7 @@ class Scrobbler(object):
 
     def report_now_playing(self, artist, title, album = "", duration = "", track_number = "", mbid = ""):
 
-        _deprecation_warning("DeprecationWarning: Use Netowrk.update_now_playing(...) instead")
+        _deprecation_warning("DeprecationWarning: Use Network.update_now_playing(...) instead")
 
         params = {"s": self._get_session_id(), "a": artist, "t": title,
             "b": album, "l": duration, "n": track_number, "m": mbid}

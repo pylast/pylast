@@ -78,7 +78,30 @@ class TestPyLast(unittest.TestCase):
         library.add_album(album)
 
         # Assert
-        # Nothing here, just that no exception occurred
+        my_albums = library.get_albums()
+        for my_album in my_albums:
+            value = (album == my_album[0])
+            if value:
+                break
+        self.assertTrue(value)
+
+
+    def test_remove_album(self):
+        # Arrange
+        library = pylast.Library(user = self.username, network = self.network)
+        album = self.network.get_album("Test Artist", "Test Album")
+        library.add_album(album)
+
+        # Act
+        library.remove_album(album)
+
+        # Assert
+        my_albums = library.get_albums()
+        for my_album in my_albums:
+            value = (album == my_album[0])
+            if value:
+                break
+        self.assertFalse(value)
 
 
     def test_get_venue(self):
@@ -260,10 +283,12 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(current_track.artist), "Test Artist")
 
 
+
+
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_update_now_playing'))
+#     suite.addTest(TestPyLast('test_remove_album'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
