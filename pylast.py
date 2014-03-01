@@ -404,7 +404,7 @@ class _Network(object):
     def is_caching_enabled(self):
         """Returns True if caching is enabled."""
 
-        return not (self.cache_backend == None)
+        return not (self.cache_backend is None)
 
     def _get_cache_backend(self):
 
@@ -3052,7 +3052,12 @@ class User(_BaseObject):
 
         doc = self._request("user.getInfo", True)
 
-        return Country(_extract(doc, "country"), self.network)
+        country = _extract(doc, "country")
+
+        if country is None:
+            return None
+        else:
+            return Country(country, self.network)
 
     def get_age(self):
         """Returns the user's age."""

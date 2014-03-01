@@ -108,6 +108,26 @@ class TestSequenceFunctions(unittest.TestCase):
         # Just check date because of timezones
         self.assertEquals(unixtime_registered, u"1037793040")
 
+    def test_get_genderless_user(self):
+        # Arrange
+        lastfm_user = self.network.get_user("test_user") # currently no gender set
+
+        # Act
+        gender = lastfm_user.get_gender()
+
+        # Assert
+        self.assertIsNone(gender)
+
+
+    def test_get_countryless_user(self):
+        # Arrange
+        lastfm_user = self.network.get_user("test_user") # currently no country set
+
+        # Act
+        country = lastfm_user.get_country()
+
+        # Assert
+        self.assertIsNone(country)
 
 if __name__ == '__main__':
     unittest.main()
