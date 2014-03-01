@@ -14,7 +14,7 @@ def load_secrets():
         doc = yaml.load(f)
     return doc
 
-class TestSequenceFunctions(unittest.TestCase):
+class TestPyLast(unittest.TestCase):
 
     secrets = None
 
@@ -157,6 +157,7 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(str(loved[0].track.artist), "Test Artist")
         self.assertEqual(str(loved[0].track.title), "Test Title")
 
+
     def test_unlove(self):
         # Arrange
         artist = "Test Artist"
@@ -175,7 +176,34 @@ class TestSequenceFunctions(unittest.TestCase):
             self.assertNotEqual(str(loved.track.title), "Test Title")
 
 
+    def test_get_100_albums(self):
+        # Arrange
+        library = pylast.Library(user = self.username, network = self.network)
+
+        # Act
+        albums = library.get_albums(limit = 100)
+
+        # Assert
+        self.assertGreaterEqual(len(albums), 0)
+
+
+    def test_get_limitless_albums(self):
+        # Arrange
+        library = pylast.Library(user = self.username, network = self.network)
+
+        # Act
+        albums = library.get_albums(limit = None)
+
+        # Assert
+        self.assertGreaterEqual(len(albums), 0)
+
+
 if __name__ == '__main__':
+
+#     suite = unittest.TestSuite()
+#     suite.addTest(TestPyLast('test_get_limitless_albums'))
+#     unittest.TextTestRunner().run(suite)
+
     unittest.main()
 
 # End of file
