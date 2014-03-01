@@ -231,10 +231,21 @@ class TestPyLast(unittest.TestCase):
         self.assertIsNone(current_track)
 
 
+    def test_love_limits(self):
+        # Arrange
+        user = self.network.get_user("test-user") # currently at least 23 loved tracks
+
+        # Act/Assert
+        self.assertEqual(len(user.get_loved_tracks(limit=20)), 20)
+        self.assertLessEqual(len(user.get_loved_tracks(limit=100)), 100)
+        self.assertGreaterEqual(len(user.get_loved_tracks(limit=None)), 23)
+        self.assertGreaterEqual(len(user.get_loved_tracks(limit=0)), 23)
+
+
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_now_playing_user_with_no_scrobbles'))
+#     suite.addTest(TestPyLast('test_love_limits'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
