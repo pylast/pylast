@@ -2032,7 +2032,10 @@ class Library(_BaseObject):
         """Add an artist to this library."""
 
         params = self._get_params()
-        params["artist"] = artist.get_name()
+        if type(artist) == str:
+            params["artist"] = artist
+        else:
+            params["artist"] = artist.get_name()
 
         self._request("library.addArtist", False, params)
 
