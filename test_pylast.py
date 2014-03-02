@@ -482,7 +482,7 @@ class TestPyLast(unittest.TestCase):
         total = search.get_total_result_count()
 
         # Assert
-        self.assertGreaterEqual(total, 0)
+        self.assertGreaterEqual(int(total), 0)
 
 if __name__ == '__main__':
 
