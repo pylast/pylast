@@ -361,111 +361,114 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(type(tags[0])  == pylast.TopItem)
 
 
+    def helper_is_thing_hashable(self, thing):
+        # Arrange
+        things = set()
+
+        # Act
+        things.add(thing)
+
+        # Assert
+        self.assertIsNotNone(thing)
+        self.assertEqual(len(things), 1)
+
     def test_album_is_hashable(self):
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
-        albums = set()
 
-        # Act
-        albums.add(album)
-
-        # Assert
-        self.assertIsNotNone(album)
-        self.assertEqual(len(albums), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(album)
 
 
     def test_artist_is_hashable(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
-        artists = set()
 
-        # Act
-        artists.add(artist)
-
-        # Assert
-        self.assertIsNotNone(artist)
-        self.assertEqual(len(artists), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(artist)
 
 
     def test_country_is_hashable(self):
         # Arrange
         country = pylast.Country("Italy", self.network)
-        countries = set()
 
-        # Act
-        countries.add(country)
-
-        # Assert
-        self.assertIsNotNone(country)
-        self.assertEqual(len(countries), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(country)
 
 
     def test_event_is_hashable(self):
         # Arrange
         user = self.network.get_user("RJ")
         event = user.get_past_events(limit = 1)[0]
-        events = set()
 
-        # Act
-        events.add(event)
+        # Act/Assert
+        self.helper_is_thing_hashable(event)
 
-        # Assert
-        self.assertIsNotNone(event)
-        self.assertEqual(len(events), 1)
+
+    def test_group_is_hashable(self):
+        # Arrange
+        group = pylast.Group("Audioscrobbler Beta", self.network)
+
+        # Act/Assert
+        self.helper_is_thing_hashable(group)
+
+
+    def test_library_is_hashable(self):
+        # Arrange
+        library = pylast.Library(user = self.username, network = self.network)
+
+        # Act/Assert
+        self.helper_is_thing_hashable(library)
+
+
+    def test_playlist_is_hashable(self):
+        # Arrange
+        playlist = pylast.Playlist(user = "RJ", id = "1k1qp_doglist", network = self.network)
+
+        # Act/Assert
+        self.helper_is_thing_hashable(playlist)
 
 
     def test_tag_is_hashable(self):
         # Arrange
         tag = self.network.get_top_tags(limit = 1)[0]
-        tags = set()
 
-        # Act
-        tags.add(tag)
-
-        # Assert
-        self.assertIsNotNone(tag)
-        self.assertEqual(len(tags), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(tag)
 
 
     def test_track_is_hashable(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
         track = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
-        tracks = set()
 
-        # Act
-        tracks.add(track)
-
-        # Assert
-        self.assertIsNotNone(track)
-        self.assertEqual(len(tracks), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(track)
 
 
     def test_user_is_hashable(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
-        users = set()
 
-        # Act
-        users.add(lastfm_user)
-
-        # Assert
-        self.assertIsNotNone(lastfm_user)
-        self.assertEqual(len(users), 1)
+        # Act/Assert
+        self.helper_is_thing_hashable(lastfm_user)
 
 
     def test_venue_is_hashable(self):
         # Arrange
         venue_id = "8778225" # Last.fm office
         venue = pylast.Venue(venue_id, self.network)
-        venues = set()
 
-        # Act
-        venues.add(venue)
+        # Act/Assert
+        self.helper_is_thing_hashable(venue)
 
-        # Assert
-        self.assertIsNotNone(venue)
-        self.assertEqual(len(venues), 1)
+
+    def test_xspf_is_hashable(self):
+        # Arrange
+        xspf = pylast.XSPF(uri = "lastfm://playlist/1k1qp_doglist", network = self.network)
+
+        # Act/Assert
+        self.helper_is_thing_hashable(xspf)
 
 
 if __name__ == '__main__':

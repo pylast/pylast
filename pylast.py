@@ -1979,6 +1979,8 @@ class Library(_BaseObject):
 
     user = None
 
+    __hash__ = _BaseObject.__hash__
+
     def __init__(self, user, network):
         _BaseObject.__init__(self, network)
 
@@ -2137,6 +2139,8 @@ class Playlist(_BaseObject):
 
     id = None
     user = None
+
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, user, id, network):
         _BaseObject.__init__(self, network)
@@ -2697,6 +2701,8 @@ class Group(_BaseObject):
 
     name = None
 
+    __hash__ = _BaseObject.__hash__
+
     def __init__(self, group_name, network):
         _BaseObject.__init__(self, network)
 
@@ -2827,6 +2833,8 @@ class XSPF(_BaseObject):
     "A Last.fm XSPF playlist."""
 
     uri = None
+
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, uri, network):
         _BaseObject.__init__(self, network)
