@@ -2,7 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import datetime
 import time
 import unittest
 import yaml # pip install pyyaml
@@ -19,7 +18,7 @@ class TestPyLast(unittest.TestCase):
     secrets = None
 
     def unix_timestamp(self):
-        return int(time.mktime(datetime.datetime.now().timetuple()))
+        return int(time.time())
 
     def setUp(self):
         if self.__class__.secrets is None:
