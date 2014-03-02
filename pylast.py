@@ -1282,21 +1282,6 @@ class Album(_BaseObject, _Taggable):
 
         return _number(_extract(self._request("album.getInfo", cacheable = True), "listeners"))
 
-    def get_top_tags(self, limit=None):
-        """Returns a list of the most-applied tags to this album."""
-
-        doc = self._request("album.getInfo", True)
-        e = doc.getElementsByTagName("toptags")[0]
-
-        seq = []
-        for name in _extract_all(e, "name"):
-            seq.append(Tag(name, self.network))
-
-        if limit:
-            seq = seq[:limit]
-
-        return seq
-
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
 

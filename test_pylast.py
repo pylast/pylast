@@ -57,6 +57,7 @@ class TestPyLast(unittest.TestCase):
         artist = "Test Artist 2"
         title = "Test Title 2"
         timestamp = self.unix_timestamp()
+        print timestamp
         library = pylast.Library(user = self.username, network = self.network)
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
         lastfm_user = self.network.get_user(self.username)
@@ -325,10 +326,21 @@ class TestPyLast(unittest.TestCase):
 
         # Act
         network = pylast.LibreFMNetwork(password_hash = password_hash, username = username)
-        tags = network.get_top_tags()
+        tags = network.get_top_tags(limit = 1)
 
         # Assert
-        print len(tags)
+        self.assertGreater(len(tags), 0)
+        self.assertTrue(type(tags[0])  == pylast.TopItem)
+
+
+    def test_album_tags_are_topitems(self):
+        # Arrange
+        albums = self.network.get_user('RJ').get_top_albums()
+
+        # Act
+        tags = albums[0].item.get_top_tags(limit = 1)
+
+        # Assert
         self.assertGreater(len(tags), 0)
         self.assertTrue(type(tags[0])  == pylast.TopItem)
 
@@ -336,7 +348,8 @@ class TestPyLast(unittest.TestCase):
 if __name__ == '__main__':
 
 #     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_libre_fm'))
+#     suite.addTest(TestPyLast('test_scrobble'))
+#     suite.addTest(TestPyLast('test_unscrobble'))
 #     unittest.TextTestRunner().run(suite)
 
     unittest.main()
