@@ -2406,6 +2406,7 @@ class Track(_BaseObject, _Taggable):
     artist = None
     title = None
     username = None
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
         _BaseObject.__init__(self, network)
@@ -3045,9 +3046,6 @@ class User(_BaseObject):
         seq = []
         for track in _collect_nodes(limit, self, "user.getRecentTracks", True, params):
 
-            print(type(track))
-            print(track)
-            print(track.toprettyxml())
             if track.hasAttribute('nowplaying'):
                 continue    #to prevent the now playing track from sneaking in here
 
@@ -3058,7 +3056,6 @@ class User(_BaseObject):
 
             seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
 
-        print(seq)
         return seq
 
     def get_id(self):
