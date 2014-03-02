@@ -362,10 +362,6 @@ class TestPyLast(unittest.TestCase):
 
 
     def test_track_is_hashable(self):
-        # TODO same for some other types
-        # https://github.com/hugovk/pylast/issues/82
-        # (passes in Python 2.7 but how about 3?)
-
         # Arrange
         lastfm_user = self.network.get_user(self.username)
         track = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
@@ -377,6 +373,23 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNotNone(track)
         self.assertEqual(len(tracks), 1)
+
+
+    def test_user_is_hashable(self):
+        # TODO same for some other types
+        # https://github.com/hugovk/pylast/issues/82
+        # (passes in Python 2.7 but how about 3?)
+
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+        users = set()
+
+        # Act
+        users.add(lastfm_user)
+
+        # Assert
+        self.assertIsNotNone(lastfm_user)
+        self.assertEqual(len(users), 1)
 
 
 if __name__ == '__main__':
