@@ -471,6 +471,19 @@ class TestPyLast(unittest.TestCase):
         self.helper_is_thing_hashable(xspf)
 
 
+    def test_invalid_xml(self):
+        # Arrange
+        # Currently causes PCDATA invalid Char value 25
+        artist = "Blind Willie Johnson"
+        title = "It's nobody's fault but mine"
+
+        # Act
+        search = self.network.search_for_track(artist, title)
+        total = search.get_total_result_count()
+
+        # Assert
+        self.assertGreaterEqual(total, 0)
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")

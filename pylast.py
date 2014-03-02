@@ -114,6 +114,16 @@ SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
+# From http://boodebr.org/main/python/all-about-python-and-unicode#UNI_XML
+RE_XML_ILLEGAL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
+                 u'|' + \
+                 u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
+                 (unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
+                  unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
+                  unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff))
+
+XML_ILLEGAL = re.compile(RE_XML_ILLEGAL)
+
 class _Network(object):
     """
         A music social network website that is Last.fm or one exposing a Last.fm compatible API
@@ -848,9 +858,7 @@ class _Request(object):
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
-        # Pretty decent catch for invalid & characters - which Last.fm
-        # seems to generate for some artist eg. "K'nann"
-        response_text = re.sub("&(?![^\W]+;)", "&amp;", response_text)
+        response_text = XML_ILLEGAL.sub("?", response_text)
 
         self._check_response_for_errors(response_text)
         return response_text
@@ -4045,3 +4053,5 @@ class Scrobbler(object):
 
         if remainder:
             self.scrobble_many(remainder)
+
+# End of file
