@@ -55,7 +55,7 @@ class TestPyLast(unittest.TestCase):
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
 
         # Assert
-        last_scrobble = lastfm_user.get_recent_tracks(limit = 1)[0]
+        last_scrobble = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
         self.assertEqual(str(last_scrobble.track.artist), str(artist))
         self.assertEqual(str(last_scrobble.track.title),  str(title))
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
@@ -74,7 +74,7 @@ class TestPyLast(unittest.TestCase):
         library.remove_scrobble(artist = artist, title = title, timestamp = timestamp)
 
         # Assert
-        last_scrobble = lastfm_user.get_recent_tracks(limit = 1)[0]
+        last_scrobble = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
         self.assertNotEqual(str(last_scrobble.timestamp), str(timestamp))
 
 
@@ -184,7 +184,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         # Just check date because of timezones
-        self.assertEquals(unixtime_registered, u"1037793040")
+        self.assertEqual(unixtime_registered, u"1037793040")
 
 
     def test_get_genderless_user(self):
@@ -360,7 +360,7 @@ class TestPyLast(unittest.TestCase):
 
         # Arrange
         lastfm_user = self.network.get_user(self.username)
-        track = lastfm_user.get_recent_tracks(limit = 1)[0]
+        track = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
         tracks = set()
 
         # Act
