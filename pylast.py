@@ -1189,6 +1189,7 @@ class Album(_BaseObject, _Taggable):
     title = None
     artist = None
     username = None
+
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
@@ -1359,6 +1360,7 @@ class Artist(_BaseObject, _Taggable):
 
     name = None
     username = None
+
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network, username=None):
@@ -1673,6 +1675,8 @@ class Event(_BaseObject):
     """An event."""
 
     id = None
+
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, event_id, network):
         _BaseObject.__init__(self, network)
@@ -2265,6 +2269,8 @@ class Tag(_BaseObject):
 
     name = None
 
+    __hash__ = _BaseObject.__hash__
+
     def __init__(self, name, network):
         _BaseObject.__init__(self, network)
 
@@ -2408,6 +2414,7 @@ class Track(_BaseObject, _Taggable):
     artist = None
     title = None
     username = None
+
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
@@ -2857,6 +2864,7 @@ class User(_BaseObject):
     """A Last.fm user."""
 
     name = None
+
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user_name, network):
