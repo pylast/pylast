@@ -1011,8 +1011,11 @@ class _BaseObject(object):
         return {}
 
     def __hash__(self):
+        # Convert any ints (or whatever) into strings
+        values = map(str, self._get_params().values())
+
         return hash(self.network) + \
-            hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(self._get_params().values())).lower())
+            hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(values)).lower())
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1884,6 +1887,8 @@ class Country(_BaseObject):
     """A country at Last.fm."""
 
     name = None
+
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network):
         _BaseObject.__init__(self, network)
@@ -3576,6 +3581,8 @@ class Venue(_BaseObject):
     name = None
     location = None
     url = None
+
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, id, network, venue_element=None):
         _BaseObject.__init__(self, network)

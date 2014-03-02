@@ -387,6 +387,19 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(artists), 1)
 
 
+    def test_country_is_hashable(self):
+        # Arrange
+        country = pylast.Country("Italy", self.network)
+        countries = set()
+
+        # Act
+        countries.add(country)
+
+        # Assert
+        self.assertIsNotNone(country)
+        self.assertEqual(len(countries), 1)
+
+
     def test_event_is_hashable(self):
         # Arrange
         user = self.network.get_user("RJ")
@@ -441,9 +454,23 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(users), 1)
 
 
+    def test_venue_is_hashable(self):
+        # Arrange
+        venue_id = "8778225" # Last.fm office
+        venue = pylast.Venue(venue_id, self.network)
+        venues = set()
+
+        # Act
+        venues.add(venue)
+
+        # Assert
+        self.assertIsNotNone(venue)
+        self.assertEqual(len(venues), 1)
+
+
 if __name__ == '__main__':
 
-    # For quick testing of a single-case (eg. test = "test_scrobble")
+    # For quick testing of a single case (eg. test = "test_scrobble")
     test = ""
 
     if test is not None and len(test):
