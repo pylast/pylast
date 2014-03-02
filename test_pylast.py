@@ -382,7 +382,7 @@ class TestPyLast(unittest.TestCase):
 if __name__ == '__main__':
 
     # For quick testing of a single-case (eg. test = "test_scrobble")
-    test = "test_remove_artist"
+    test = ""
 
     if test is not None and len(test):
         suite = unittest.TestSuite()
