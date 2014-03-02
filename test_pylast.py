@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import os
 import time
 import unittest
 import yaml # pip install pyyaml
@@ -9,9 +10,18 @@ import yaml # pip install pyyaml
 import pylast
 
 def load_secrets():
-    with open("test_pylast.yaml", "r") as f: # see test_pylast_example.yaml
-        doc = yaml.load(f)
+    secrets_file = "test_pylast.yaml"
+    if os.path.isfile(secrets_file):
+        with open(secrets_file, "r") as f: # see test_pylast_example.yaml
+            doc = yaml.load(f)
+    else:
+        doc = {}
+        doc["username"] = os.environ['PYLAST_USERNAME'].strip()
+        doc["password_hash"] = os.environ['PYLAST_PASSWORD_HASH'].strip()
+        doc["api_key"] = os.environ['PYLAST_API_KEY'].strip()
+        doc["api_secret"] = os.environ['PYLAST_API_SECRET'].strip()
     return doc
+
 
 class TestPyLast(unittest.TestCase):
 
@@ -56,7 +66,6 @@ class TestPyLast(unittest.TestCase):
         artist = "Test Artist 2"
         title = "Test Title 2"
         timestamp = self.unix_timestamp()
-        print timestamp
         library = pylast.Library(user = self.username, network = self.network)
         self.network.scrobble(artist = artist, title = title, timestamp = timestamp)
         lastfm_user = self.network.get_user(self.username)
@@ -364,7 +373,7 @@ class TestPyLast(unittest.TestCase):
 
 if __name__ == '__main__':
 
-    # For quick testing of a single-case (eg. test = "test_track_is_hashable"
+    # For quick testing of a single-case (eg. test = "test_scrobble")
     test = ""
 
     if test is not None and len(test):
