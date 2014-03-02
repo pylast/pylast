@@ -3045,8 +3045,9 @@ class User(_BaseObject):
         seq = []
         for track in _collect_nodes(limit, self, "user.getRecentTracks", True, params):
 
-            print type(track)
-            print track
+            print(type(track))
+            print(track)
+            print(track.toprettyxml())
             if track.hasAttribute('nowplaying'):
                 continue    #to prevent the now playing track from sneaking in here
 
