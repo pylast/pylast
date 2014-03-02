@@ -387,6 +387,33 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(artists), 1)
 
 
+    def test_event_is_hashable(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+        event = user.get_past_events(limit = 1)[0]
+        events = set()
+
+        # Act
+        events.add(event)
+
+        # Assert
+        self.assertIsNotNone(event)
+        self.assertEqual(len(events), 1)
+
+
+    def test_tag_is_hashable(self):
+        # Arrange
+        tag = self.network.get_top_tags(limit = 1)[0]
+        tags = set()
+
+        # Act
+        tags.add(tag)
+
+        # Assert
+        self.assertIsNotNone(tag)
+        self.assertEqual(len(tags), 1)
+
+
     def test_track_is_hashable(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
