@@ -2855,6 +2855,7 @@ class User(_BaseObject):
     """A Last.fm user."""
 
     name = None
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, user_name, network):
         _BaseObject.__init__(self, network)
