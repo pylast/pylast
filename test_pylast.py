@@ -361,6 +361,32 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(type(tags[0])  == pylast.TopItem)
 
 
+    def test_album_is_hashable(self):
+        # Arrange
+        album = self.network.get_album("Test Artist", "Test Album")
+        albums = set()
+
+        # Act
+        albums.add(album)
+
+        # Assert
+        self.assertIsNotNone(album)
+        self.assertEqual(len(albums), 1)
+
+
+    def test_artist_is_hashable(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+        artists = set()
+
+        # Act
+        artists.add(artist)
+
+        # Assert
+        self.assertIsNotNone(artist)
+        self.assertEqual(len(artists), 1)
+
+
     def test_track_is_hashable(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
@@ -376,10 +402,6 @@ class TestPyLast(unittest.TestCase):
 
 
     def test_user_is_hashable(self):
-        # TODO same for some other types
-        # https://github.com/hugovk/pylast/issues/82
-        # (passes in Python 2.7 but how about 3?)
-
         # Arrange
         lastfm_user = self.network.get_user(self.username)
         users = set()

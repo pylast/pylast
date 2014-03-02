@@ -1189,6 +1189,7 @@ class Album(_BaseObject, _Taggable):
     title = None
     artist = None
     username = None
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
         """
@@ -1358,6 +1359,7 @@ class Artist(_BaseObject, _Taggable):
 
     name = None
     username = None
+    __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network, username=None):
         """Create an artist object.
