@@ -3058,7 +3058,7 @@ class User(_BaseObject):
 
             seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
 
-        print seq
+        print(seq)
         return seq
 
     def get_id(self):
