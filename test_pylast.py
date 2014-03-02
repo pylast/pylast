@@ -344,13 +344,34 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(type(tags[0])  == pylast.TopItem)
 
 
+    def test_track_is_hashable(self):
+        # TODO same for some other types
+        # https://github.com/hugovk/pylast/issues/82
+        # (passes in Python 2.7 but how about 3?)
+
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+        track = lastfm_user.get_recent_tracks(limit = 1)[0]
+        tracks = set()
+
+        # Act
+        tracks.add(track)
+
+        # Assert
+        self.assertIsNotNone(track)
+        self.assertEqual(len(tracks), 1)
+
+
 if __name__ == '__main__':
 
-#     suite = unittest.TestSuite()
-#     suite.addTest(TestPyLast('test_scrobble'))
-#     suite.addTest(TestPyLast('test_unscrobble'))
-#     unittest.TextTestRunner().run(suite)
+    # For quick testing of a single-case (eg. test = "test_track_is_hashable"
+    test = ""
 
-    unittest.main()
+    if test is not None and len(test):
+        suite = unittest.TestSuite()
+        suite.addTest(TestPyLast(test))
+        unittest.TextTestRunner().run(suite)
+    else:
+        unittest.main()
 
 # End of file
