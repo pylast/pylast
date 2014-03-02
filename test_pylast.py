@@ -3,6 +3,7 @@
 Integration (not unit) tests for pylast.py
 """
 import os
+from random import choice
 import time
 import unittest
 import yaml # pip install pyyaml
@@ -98,7 +99,11 @@ class TestPyLast(unittest.TestCase):
     def test_remove_album(self):
         # Arrange
         library = pylast.Library(user = self.username, network = self.network)
-        album = self.network.get_album("Test Artist", "Test Album")
+        # Pick an artist with plenty of albums
+        artist = self.network.get_top_artists()[0]
+        albums = artist.get_top_albums()
+        # Pick a random one to avoid problems running concurrent tests
+        album = choice(albums)[0]
         library.add_album(album)
 
         # Act
@@ -132,17 +137,20 @@ class TestPyLast(unittest.TestCase):
 
     def test_remove_artist(self):
         # Arrange
-        artist = "Test Artist 2"
+        # Get plenty of artists
+        artists = self.network.get_top_artists()
+        # Pick a random one to avoid problems running concurrent tests
+        my_artist = choice(artists)
         library = pylast.Library(user = self.username, network = self.network)
-        library.add_artist(artist)
+        library.add_artist(my_artist)
 
         # Act
-        library.remove_artist(artist)
+        library.remove_artist(my_artist)
 
         # Assert
         artists = library.get_artists()
         for artist in artists:
-            value = (str(artist[0]) == "Test Artist 2")
+            value = (artist[0] == my_artist)
             if value:
                 break
         self.assertFalse(value)
@@ -374,7 +382,7 @@ class TestPyLast(unittest.TestCase):
 if __name__ == '__main__':
 
     # For quick testing of a single-case (eg. test = "test_scrobble")
-    test = ""
+    test = "test_remove_artist"
 
     if test is not None and len(test):
         suite = unittest.TestSuite()
