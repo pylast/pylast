@@ -7,7 +7,7 @@ python:
 install: pip install -r requirements.txt
 script: ./test_pylast.py
 env:
-  matrix:
+  global:
   - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
   - secure: gDWNEYA1EUv4G230/KzcTgcmEST0nf2FeW/z/prsoQBu+TWw1rKKSJAJeMLvuI1z4aYqqNYdmqjWyNhhVK3p5wmFP2lxbhaBT1jDsxxFpePc0nUkdAQOOD0yBpbBGkqkjjxU34HjTX2NFNEbcM3izVVE9oQmS5r4oFFNJgdL91c=
   - secure: RpsZblHFU7a5dnkO/JUgi70RkNJwoUh3jJqVo1oOLjL+lvuAmPXhI8MDk2diUk43X+XCBFBEnm7UCGnjUF+hDnobO4T+VrIFuVJWg3C7iKIT+YWvgG6A+CSeo/P0I0dAeUscTr5z4ylOq3EDx4MFSa8DmoWMmjKTAG1GAeTlY2k=
