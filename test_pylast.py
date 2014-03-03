@@ -662,8 +662,9 @@ class TestPyLast(unittest.TestCase):
         self.helper_upcoming_events_have_valid_ids(venue)
 
 
-    def helper_test_pickle(self, pickle):
+    def test_pickle(self):
         # Arrange
+        import pickle
         lastfm_user = self.network.get_user(self.username)
 
         # Act
@@ -672,22 +673,6 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(lastfm_user, loaded_user)
-
-
-    def test_pickle(self):
-        # Arrange
-        import pickle
-
-        # Act/Assert
-        self.helper_test_pickle(pickle)
-
-
-    def test_cpickle(self):
-        # Arrange
-        import cPickle as pickle
-
-        # Act/Assert
-        self.helper_test_pickle(pickle)
 
 
 if __name__ == '__main__':
