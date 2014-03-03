@@ -12,7 +12,7 @@ import pylast
 def load_secrets():
     secrets_file = "test_pylast.yaml"
     if os.path.isfile(secrets_file):
-    import yaml # pip install pyyaml
+        import yaml # pip install pyyaml
         with open(secrets_file, "r") as f: # see example_test_pylast.yaml
             doc = yaml.load(f)
     else:
