@@ -52,4 +52,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Test files
 test_pylast.yaml
+lastfm.txt.pkl

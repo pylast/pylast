@@ -662,6 +662,34 @@ class TestPyLast(unittest.TestCase):
         self.helper_upcoming_events_have_valid_ids(venue)
 
 
+    def helper_test_pickle(self, pickle):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        pickle.dump(lastfm_user,  open("lastfm.txt.pkl", "wb"))
+        loaded_user = pickle.load(open("lastfm.txt.pkl", "rb"))
+
+        # Assert
+        self.assertEqual(lastfm_user, loaded_user)
+
+
+    def test_pickle(self):
+        # Arrange
+        import pickle
+
+        # Act/Assert
+        self.helper_test_pickle(pickle)
+
+
+    def test_cpickle(self):
+        # Arrange
+        import cPickle as pickle
+
+        # Act/Assert
+        self.helper_test_pickle(pickle)
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
