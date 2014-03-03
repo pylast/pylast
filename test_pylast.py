@@ -484,6 +484,20 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertGreaterEqual(int(total), 0)
 
+
+    def test_user_play_count_in_track_info(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "Test Title"
+        track = pylast.Track(artist = artist, title = title, network = self.network, username = self.username)
+
+        # Act
+        count = track.get_userplaycount()
+
+        # Assert
+        self.assertGreaterEqual(count, 0)
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
