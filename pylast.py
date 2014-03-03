@@ -302,8 +302,10 @@ class _Network(object):
         DELAY_TIME = 0.2
         now = time.time()
 
-        if (now - self.last_call_time) < DELAY_TIME:
-            time.sleep(now - self.last_call_time - DELAY_TIME)
+        time_since_last = now - self.last_call_time
+
+        if time_since_last < DELAY_TIME:
+            time.sleep(DELAY_TIME - time_since_last)
 
         self.last_call_time = now
 

@@ -541,9 +541,16 @@ class TestPyLast(unittest.TestCase):
 
         # Act
         self.network.enable_rate_limit()
+        then = time.time()
+        # Make some network call, limit not applied first time
+        self.network.get_user(self.username)
+        # Make a second network call, limiting should be applied
+        self.network.get_top_artists()
+        now = time.time()
 
         # Assert
         self.assertTrue(self.network.is_rate_limited())
+        self.assertGreaterEqual(now - then, 0.2)
 
 
     def test_disable_rate_limiting(self):
@@ -553,6 +560,12 @@ class TestPyLast(unittest.TestCase):
 
         # Act
         self.network.disable_rate_limit()
+        then = time.time()
+        # Make some network call, limit not applied first time
+        self.network.get_user(self.username)
+        # Make a second network call, limiting should be applied
+        self.network.get_top_artists()
+        now = time.time()
 
         # Assert
         self.assertFalse(self.network.is_rate_limited())
