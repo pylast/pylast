@@ -159,7 +159,7 @@ class TestPyLast(unittest.TestCase):
     def test_get_venue(self):
         # Arrange
         venue_name = "Last.fm Office"
-        country_name = "United Kingom"
+        country_name = "United Kingdom"
 
         # Act
         venue_search = self.network.search_for_venue(venue_name, country_name)
@@ -569,6 +569,97 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertFalse(self.network.is_rate_limited())
+
+
+    # Commented out because (a) it'll take a long time and
+    # (b) it strangely fails due Last.fm's complaining of hitting the rate limit,
+    # even when limited to one call per second. The ToS allows 5 calls per second.
+    # def test_get_all_scrobbles(self):
+        # # Arrange
+        # lastfm_user = self.network.get_user("RJ")
+        # self.network.enable_rate_limit() # this is going to be slow...
+
+        # # Act
+        # tracks = lastfm_user.get_recent_tracks(limit = None)
+
+        # # Assert
+        # self.assertGreaterEqual(len(tracks), 0)
+
+
+    def helper_past_events_have_valid_ids(self, thing):
+        # Act
+        events = thing.get_past_events()
+
+        # Assert
+        self.helper_assert_events_have_valid_ids(events)
+
+
+    def helper_upcoming_events_have_valid_ids(self, thing):
+        # Act
+        events = thing.get_upcoming_events()
+
+        # Assert
+        self.helper_assert_events_have_valid_ids(events)
+
+
+    def helper_assert_events_have_valid_ids(self, events):
+        # Assert
+        self.assertGreaterEqual(len(events), 1) # if fails, add past/future event for user/Test Artist
+        for event in events[:2]: # checking first two should be enough
+            self.assertIsInstance(event.get_headliner(), pylast.Artist)
+
+
+    def test_artist_upcoming_events_returns_valid_ids(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+
+        # Act/Assert
+        self.helper_upcoming_events_have_valid_ids(artist)
+
+
+    def test_user_past_events_returns_valid_ids(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act/Assert
+        self.helper_past_events_have_valid_ids(lastfm_user)
+
+
+    def test_user_recommended_events_returns_valid_ids(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        events = lastfm_user.get_upcoming_events()
+
+        # Assert
+        self.helper_assert_events_have_valid_ids(events)
+
+
+    def test_user_upcoming_events_returns_valid_ids(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act/Assert
+        self.helper_upcoming_events_have_valid_ids(lastfm_user)
+
+
+    def test_venue_past_events_returns_valid_ids(self):
+        # Arrange
+        venue_id = "8778225" # Last.fm office
+        venue = pylast.Venue(venue_id, self.network)
+
+        # Act/Assert
+        self.helper_past_events_have_valid_ids(venue)
+
+
+    def test_venue_upcoming_events_returns_valid_ids(self):
+        # Arrange
+        venue_id = "8778225" # Last.fm office
+        venue = pylast.Venue(venue_id, self.network)
+
+        # Act/Assert
+        self.helper_upcoming_events_have_valid_ids(venue)
 
 
 if __name__ == '__main__':

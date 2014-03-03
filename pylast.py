@@ -1040,6 +1040,12 @@ class _BaseObject(object):
         return hash(self.network) + \
             hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(values)).lower())
 
+    def _get_events_from_doc(self, doc):
+        events = []
+        for node in doc.getElementsByTagName("event"):
+            events.append(Event(_extract(node, "id"), self.network))
+        return events
+
 class _Taggable(object):
     """Common functions for classes with tags."""
 
@@ -1508,13 +1514,7 @@ class Artist(_BaseObject, _Taggable):
 
         doc = self._request('artist.getEvents', True)
 
-        ids = _extract_all(doc, 'id')
-
-        events = []
-        for e_id in ids:
-            events.append(Event(e_id, self.network))
-
-        return events
+        return self._get_events_from_doc(doc)
 
     def get_similar(self, limit = None):
         """Returns the similar artists on the network."""
@@ -2955,17 +2955,11 @@ class User(_BaseObject):
         return self.name
 
     def get_upcoming_events(self):
-        """Returns all the upcoming events for this user. """
+        """Returns all the upcoming events for this user."""
 
         doc = self._request('user.getEvents', True)
 
-        ids = _extract_all(doc, 'id')
-        events = []
-
-        for e_id in ids:
-            events.append(Event(e_id, self.network))
-
-        return events
+        return self._get_events_from_doc(doc)
 
     def get_artist_tracks(self, artist):
         """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
@@ -3677,22 +3671,14 @@ class Venue(_BaseObject):
 
         doc = self._request("venue.getEvents", True)
 
-        seq = []
-        for node in doc.getElementsByTagName("event"):
-            seq.append(Event(_extract(node, "id"), self.network))
-
-        return seq
+        return self._get_events_from_doc(doc)
 
     def get_past_events(self):
         """Returns the past events held in this venue."""
 
         doc = self._request("venue.getEvents", True)
 
-        seq = []
-        for node in doc.getElementsByTagName("event"):
-            seq.append(Event(_extract(node, "id"), self.network))
-
-        return seq
+        return self._get_events_from_doc(doc)
 
 def md5(text):
     """Returns the md5 hash of a string."""
