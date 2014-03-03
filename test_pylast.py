@@ -498,6 +498,21 @@ class TestPyLast(unittest.TestCase):
         self.assertGreaterEqual(count, 0)
 
 
+    def test_user_loved_in_track_info(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "Test Title"
+        track = pylast.Track(artist = artist, title = title, network = self.network, username = self.username)
+
+        # Act
+        loved = track.get_userloved()
+
+        # Assert
+        self.assertIsNotNone(loved)
+        self.assertIsInstance(loved, bool)
+        self.assertNotIsInstance(loved, str)
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")

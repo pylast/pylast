@@ -903,7 +903,7 @@ class SessionKeyGenerator(object):
         c. password_hash = pylast.md5(raw_input("Please enter your password: ")
         d. session_key = SessionKeyGenerator(network).get_session_key(username, password_hash)
 
-    A session key's lifetime is infinie, unless the user provokes the rights of the given API Key.
+    A session key's lifetime is infinite, unless the user provokes the rights of the given API Key.
 
     If you create a Network object with just a API_KEY and API_SECRET and a username and a password_hash, a
     SESSION_KEY will be automatically generated for that network and stored in it so you don't have to do this
@@ -1291,7 +1291,7 @@ class Album(_BaseObject, _Taggable):
         return _number(_extract(self._request("album.getInfo", True, params), "userplaycount"))
 
     def get_listener_count(self):
-        """Returns the number of liteners on the network"""
+        """Returns the number of listeners on the network"""
 
         return _number(_extract(self._request("album.getInfo", cacheable = True), "listeners"))
 
@@ -1448,7 +1448,7 @@ class Artist(_BaseObject, _Taggable):
         return _extract(doc, "mbid")
 
     def get_listener_count(self):
-        """Returns the number of liteners on the network."""
+        """Returns the number of listeners on the network."""
 
         if hasattr(self, "listener_count"):
             return self.listener_count
@@ -2528,6 +2528,18 @@ class Track(_BaseObject, _Taggable):
 
         doc = self._request("track.getInfo", True, params)
         return _number(_extract(doc, "userplaycount"))
+
+    def get_userloved(self):
+        """Whether the user loved this track"""
+
+        if not self.username: return
+
+        params = self._get_params()
+        params['username'] = self.username
+
+        doc = self._request("track.getInfo", True, params)
+        loved = _number(_extract(doc, "userloved"))
+        return bool(loved)
 
     def is_streamable(self):
         """Returns True if the track is available at Last.fm."""
