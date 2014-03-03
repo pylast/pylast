@@ -6,14 +6,14 @@ import os
 from random import choice
 import time
 import unittest
-import yaml # pip install pyyaml
 
 import pylast
 
 def load_secrets():
     secrets_file = "test_pylast.yaml"
     if os.path.isfile(secrets_file):
-        with open(secrets_file, "r") as f: # see test_pylast_example.yaml
+    import yaml # pip install pyyaml
+        with open(secrets_file, "r") as f: # see example_test_pylast.yaml
             doc = yaml.load(f)
     else:
         doc = {}

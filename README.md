@@ -40,7 +40,7 @@ API_SECRET = "425b55975eed76058ac220b7b4e8a054"
 username = "your_user_name"
 password_hash = pylast.md5("your_password")
 
-network = pylast.LastFMNetwork(api_key = API_KEY, api_secret = 
+network = pylast.LastFMNetwork(api_key = API_KEY, api_secret =
     API_SECRET, username = username, password_hash = password_hash)
 
 # now you can use that object everywhere
@@ -61,7 +61,7 @@ Testing
 
 test_pylast.py contains integration tests with Last.fm, and plenty of code examples.
 
-You need a test account at Last.fm that can be cluttered with test data, and an API key and secret. Either copy test_pylast_example.yaml to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
+You need a test account at Last.fm that can be cluttered with test data, and an API key and secret. Either copy example_test_pylast.yaml to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
 ```
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
@@ -78,7 +78,7 @@ pip install pyyaml
 
 To run with coverage:
 ```
-pip install 
+pip install
 pip install coverage
 coverage run --source=pylast ./test_pylast.py
 coverage report # for command-line report
