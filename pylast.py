@@ -1496,7 +1496,9 @@ class Artist(_BaseObject, _Taggable):
         else:
             params = None
 
-        return _extract(self._request("artist.getInfo", True, params), "summary")
+        doc = self._request("artist.getInfo", True, params)
+
+        return doc.getElementsByTagName('summary')[0].firstChild.wholeText.strip()
 
     def get_bio_content(self, language=None):
         """Returns the content of the artist's biography."""

@@ -675,6 +675,18 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(lastfm_user, loaded_user)
 
 
+    def test_bio_summary(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+
+        # Act
+        bio = artist.get_bio_summary()
+
+        # Assert
+        self.assertIsNotNone(bio)
+        self.assertGreaterEqual(len(bio), 1)
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
