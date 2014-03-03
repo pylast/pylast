@@ -977,7 +977,7 @@ class SessionKeyGenerator(object):
 TopItem = collections.namedtuple("TopItem", ["item", "weight"])
 SimilarItem = collections.namedtuple("SimilarItem", ["item", "match"])
 LibraryItem = collections.namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
-PlayedTrack = collections.namedtuple("PlayedTrack", ["track", "playback_date", "timestamp"])
+PlayedTrack = collections.namedtuple("PlayedTrack", ["track", "album", "playback_date", "timestamp"])
 LovedTrack = collections.namedtuple("LovedTrack", ["track", "date", "timestamp"])
 ImageSizes = collections.namedtuple("ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"])
 Image = collections.namedtuple("Image", ["title", "url", "dateadded", "format", "owner", "sizes", "votes"])
@@ -2964,9 +2964,10 @@ class User(_BaseObject):
             title = _extract(track, "name")
             artist = _extract(track, "artist")
             date = _extract(track, "date")
+            album = _extract(track, "album")
             timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
 
-            seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
+            seq.append(PlayedTrack(Track(artist, title, self.network), album, date, timestamp))
 
         return seq
 
@@ -3096,9 +3097,10 @@ class User(_BaseObject):
             title = _extract(track, "name")
             artist = _extract(track, "artist")
             date = _extract(track, "date")
+            album = _extract(track, "album")
             timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
 
-            seq.append(PlayedTrack(Track(artist, title, self.network), date, timestamp))
+            seq.append(PlayedTrack(Track(artist, title, self.network), album, date, timestamp))
 
         return seq
 

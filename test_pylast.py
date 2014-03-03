@@ -513,6 +513,28 @@ class TestPyLast(unittest.TestCase):
         self.assertNotIsInstance(loved, str)
 
 
+    def test_album_in_recent_tracks(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        track = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
+
+        # Assert
+        self.assertTrue(hasattr(track, 'album'))
+
+
+    def test_album_in_artist_tracks(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        track = lastfm_user.get_artist_tracks(artist = "Test Artist")[0]
+
+        # Assert
+        self.assertTrue(hasattr(track, 'album'))
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
