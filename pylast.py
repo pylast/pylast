@@ -169,6 +169,7 @@ class _Network(object):
         self.proxy_enabled = False
         self.proxy = None
         self.last_call_time = 0
+        self.limit_rate = False
 
         #generate a session_key if necessary
         if (self.api_key and self.api_secret) and not self.session_key and (self.username and self.password_hash):
@@ -288,21 +289,21 @@ class _Network(object):
 
     def _get_ws_auth(self):
         """
-            Returns a (API_KEY, API_SECRET, SESSION_KEY) tuple.
+            Returns an (API_KEY, API_SECRET, SESSION_KEY) tuple.
         """
         return (self.api_key, self.api_secret, self.session_key)
 
     def _delay_call(self):
         """
-            Makes sure that web service calls are at least a second apart
+            Makes sure that web service calls are at least 0.2 seconds apart.
         """
 
-        # delay time in seconds
-        DELAY_TIME = 1.0
+        # Delay time in seconds from section 4.4 of http://www.last.fm/api/tos
+        DELAY_TIME = 0.2
         now = time.time()
 
         if (now - self.last_call_time) < DELAY_TIME:
-            time.sleep(1)
+            time.sleep(now - self.last_call_time - DELAY_TIME)
 
         self.last_call_time = now
 
@@ -391,6 +392,18 @@ class _Network(object):
         """Returns proxy details."""
 
         return self.proxy
+
+    def enable_rate_limit(self):
+        """Enables rate limiting for this network"""
+        self.limit_rate = True
+
+    def disable_rate_limit(self):
+        """Disables rate limiting for this network"""
+        self.limit_rate = False
+
+    def is_rate_limited(self):
+        """Return True if web service calls are rate limited"""
+        return self.limit_rate
 
     def enable_caching(self, file_path = None):
         """Enables caching request-wide for all cachable calls.
@@ -820,8 +833,8 @@ class _Request(object):
     def _download_response(self):
         """Returns a response body string from the server."""
 
-        # Delay the call if necessary
-        #self.network._delay_call()    # enable it if you want.
+        if self.network.limit_rate:
+            self.network._delay_call()
 
         data = []
         for name in self.params.keys():

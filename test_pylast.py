@@ -535,6 +535,29 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(hasattr(track, 'album'))
 
 
+    def test_enable_rate_limiting(self):
+        # Arrange
+        self.assertFalse(self.network.is_rate_limited())
+
+        # Act
+        self.network.enable_rate_limit()
+
+        # Assert
+        self.assertTrue(self.network.is_rate_limited())
+
+
+    def test_disable_rate_limiting(self):
+        # Arrange
+        self.network.enable_rate_limit()
+        self.assertTrue(self.network.is_rate_limited())
+
+        # Act
+        self.network.disable_rate_limit()
+
+        # Assert
+        self.assertFalse(self.network.is_rate_limited())
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
