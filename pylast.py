@@ -385,7 +385,6 @@ class _Network(object):
         tag (Optional) : Specifies a tag to filter by.
         festivalsonly[0|1] (Optional) : Whether only festivals should be returned, or all events.
         limit (Optional) : The number of results to fetch per page. Defaults to 10.
-        (page number not implemented)
         """
 
         params = {}
@@ -415,6 +414,34 @@ class _Network(object):
     # geo.getMetroWeeklyChartlist
     # geo.getMetros
     # geo.getTopArtists
+
+    def get_geo_top_tracks(self, country, location=None, limit=None, cacheable=True):
+        """Get the most popular tracks on Last.fm last week by country
+        Parameters:
+        country (Required) : A country name, as defined by the ISO 3166-1 country names standard
+        location (Optional) : A metro name, to fetch the charts for (must be within the country specified)
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        params = {"country": country}
+
+        if location: params["location"] = location
+        if limit: params["limit"] = limit
+
+        doc = _Request(self, "geo.getTopTracks", params).execute(cacheable)
+
+        tracks = doc.getElementsByTagName("track")
+        seq = []
+
+        for track in tracks:
+            title = _extract(track, "name")
+            artist = _extract(track, "name", 1)
+            listeners = _extract(track, "listeners")
+
+            seq.append(TopItem(Track(artist, title, self), listeners))
+
+        return seq
+
+    # TODO?
     # geo.getTopTracks
 
     def enable_proxy(self, host, port):
