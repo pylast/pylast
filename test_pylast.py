@@ -382,7 +382,9 @@ class TestPyLast(unittest.TestCase):
 
     def test_artist_is_hashable(self):
         # Arrange
-        artist = self.network.get_artist("Test Artist")
+        test_artist = self.network.get_artist("Test Artist")
+        artist = test_artist.get_similar(limit=1)[0].item
+        self.assertEqual(type(artist), pylast.Artist)
 
         # Act/Assert
         self.helper_is_thing_hashable(artist)
@@ -447,8 +449,9 @@ class TestPyLast(unittest.TestCase):
 
     def test_track_is_hashable(self):
         # Arrange
-        lastfm_user = self.network.get_user(self.username)
-        track = lastfm_user.get_recent_tracks(limit = 2)[0] # 2 to ignore now-playing
+        artist = self.network.get_artist("Test Artist")
+        track = artist.get_top_tracks()[0].item
+        self.assertEqual(type(track), pylast.Track)
 
         # Act/Assert
         self.helper_is_thing_hashable(track)
@@ -456,10 +459,12 @@ class TestPyLast(unittest.TestCase):
 
     def test_user_is_hashable(self):
         # Arrange
-        lastfm_user = self.network.get_user(self.username)
+        artist = self.network.get_artist("Test Artist")
+        user = artist.get_top_fans(limit=1)[0].item
+        self.assertEqual(type(user), pylast.User)
 
         # Act/Assert
-        self.helper_is_thing_hashable(lastfm_user)
+        self.helper_is_thing_hashable(user)
 
 
     def test_venue_is_hashable(self):
