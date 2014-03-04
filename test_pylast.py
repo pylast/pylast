@@ -396,6 +396,14 @@ class TestPyLast(unittest.TestCase):
         self.helper_is_thing_hashable(country)
 
 
+    def test_country_is_hashable(self):
+        # Arrange
+        metro = self.network.get_metro("Helsinki", "Finland")
+
+        # Act/Assert
+        self.helper_is_thing_hashable(metro)
+
+
     def test_event_is_hashable(self):
         # Arrange
         user = self.network.get_user("RJ")
@@ -896,6 +904,16 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(event.get_venue().location['city'], "Reading")
 
 
+    def test_geo_get_metros(self):
+        # Arrange
+        # Act
+        metros = self.network.get_metros(country = "Poland")
+
+        # Assert
+        self.assertGreaterEqual(len(metros), 1)
+        self.assertEqual(type(metros[0]), pylast.Metro)
+
+
     def test_geo_get_top_artists(self):
         # Arrange
         # Act
@@ -916,6 +934,19 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(tracks), 1)
         self.assertEqual(type(tracks[0]), pylast.TopItem)
         self.assertEqual(type(tracks[0].item), pylast.Track)
+
+
+    def test_metro_class(self):
+        # Arrange
+        # Act
+        metro = self.network.get_metro("Bergen", "Norway")
+
+        # Assert
+        self.assertEqual(metro.get_name(), "Bergen")
+        self.assertEqual(metro.get_country(), "Norway")
+        self.assertEqual(str(metro), "Bergen, Norway")
+        self.assertEqual(metro, pylast.Metro("Bergen", "Norway", self.network))
+        self.assertNotEqual(metro, pylast.Metro("Wellington", "New Zealand", self.network))
 
 
 if __name__ == '__main__':

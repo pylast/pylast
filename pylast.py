@@ -226,6 +226,13 @@ class _Network(object):
 
         return Country(country_name, self)
 
+    def get_metro(self, metro_name, country_name):
+        """
+            Returns a metro object
+        """
+
+        return Metro(metro_name, country_name, self)
+
     def get_group(self, name):
         """
             Returns a Group object
@@ -412,8 +419,28 @@ class _Network(object):
     # geo.getMetroUniqueArtistChart
     # geo.getMetroUniqueTrackChart
     # geo.getMetroWeeklyChartlist
-    # geo.getMetros
-    # geo.getTopArtists
+    def get_metros(self, country=None, cacheable=True):
+        """Get a list of valid countries and metros for use in the other webservices.
+        Parameters:
+        country (Optional) : Optionally restrict the results to those Metros from a particular country, as defined by the ISO 3166-1 country names standard
+        """
+        params = {}
+
+        if country: params["country"] = country
+
+        doc = _Request(self, "geo.getMetros", params).execute(cacheable)
+
+        metros = doc.getElementsByTagName("metro")
+        seq = []
+
+        for metro in metros:
+            name = _extract(metro, "name")
+            country = _extract(metro, "country")
+
+            seq.append(Metro(name, country, self))
+
+        return seq
+
 
     def get_geo_top_artists(self, country, limit=None, cacheable=True):
         """Get the most popular artists on Last.fm by country.
@@ -463,9 +490,6 @@ class _Network(object):
             seq.append(TopItem(Track(artist, title, self), listeners))
 
         return seq
-
-    # TODO?
-    # geo.getTopTracks
 
     def enable_proxy(self, host, port):
         """Enable a default web proxy"""
@@ -2088,6 +2112,48 @@ class Country(_BaseObject):
 
         return self.network._get_url(domain_name, "country") %{'country_name': country_name}
 
+
+class Metro(_BaseObject):
+    """A metro at Last.fm."""
+
+    name = None
+    country = None
+
+    __hash__ = _BaseObject.__hash__
+
+    def __init__(self, name, country, network):
+        _BaseObject.__init__(self, network)
+
+        self.name = name
+        self.country = country
+
+    def __repr__(self):
+        return "pylast.Metro(%s, %s, %s)" %(repr(self.name), repr(self.country), repr(self.network))
+
+    @_string_output
+    def __str__(self):
+        return self.get_name() + ", " + self.get_country()
+
+    def __eq__(self, other):
+        return self.get_name().lower() == other.get_name().lower() and \
+               self.get_country().lower() == other.get_country().lower()
+
+    def __ne__(self, other):
+        return self.get_name() != other.get_name() or \
+               self.get_country().lower() != other.get_country().lower()
+
+    def _get_params(self):
+        return {'name': self.get_name(), 'country': self.get_country()}
+
+    def get_name(self):
+        """Returns the metro name."""
+
+        return self.name
+
+    def get_country(self):
+        """Returns the metro country."""
+
+        return self.country
 
 class Library(_BaseObject):
     """A user's Last.fm library."""
