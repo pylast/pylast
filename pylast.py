@@ -1040,11 +1040,16 @@ class _BaseObject(object):
         return hash(self.network) + \
             hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(values)).lower())
 
-    def _get_events_from_doc(self, doc):
+    def _extract_events_from_doc(self, doc):
         events = []
         for node in doc.getElementsByTagName("event"):
             events.append(Event(_extract(node, "id"), self.network))
         return events
+
+    def _extract_cdata_from_request(self, method_name, tag_name, params):
+        doc = self._request(method_name, True, params)
+
+        return doc.getElementsByTagName(tag_name)[0].firstChild.wholeText.strip()
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1496,9 +1501,7 @@ class Artist(_BaseObject, _Taggable):
         else:
             params = None
 
-        doc = self._request("artist.getInfo", True, params)
-
-        return doc.getElementsByTagName('summary')[0].firstChild.wholeText.strip()
+        return self._extract_cdata_from_request("artist.getInfo", "summary", params)
 
     def get_bio_content(self, language=None):
         """Returns the content of the artist's biography."""
@@ -1509,14 +1512,14 @@ class Artist(_BaseObject, _Taggable):
         else:
             params = None
 
-        return _extract(self._request("artist.getInfo", True, params), "content")
+        return self._extract_cdata_from_request("artist.getInfo", "content", params)
 
     def get_upcoming_events(self):
         """Returns a list of the upcoming Events for this artist."""
 
         doc = self._request('artist.getEvents', True)
 
-        return self._get_events_from_doc(doc)
+        return self._extract_events_from_doc(doc)
 
     def get_similar(self, limit = None):
         """Returns the similar artists on the network."""
@@ -2961,7 +2964,7 @@ class User(_BaseObject):
 
         doc = self._request('user.getEvents', True)
 
-        return self._get_events_from_doc(doc)
+        return self._extract_events_from_doc(doc)
 
     def get_artist_tracks(self, artist):
         """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
@@ -3673,14 +3676,14 @@ class Venue(_BaseObject):
 
         doc = self._request("venue.getEvents", True)
 
-        return self._get_events_from_doc(doc)
+        return self._extract_events_from_doc(doc)
 
     def get_past_events(self):
         """Returns the past events held in this venue."""
 
         doc = self._request("venue.getEvents", True)
 
-        return self._get_events_from_doc(doc)
+        return self._extract_events_from_doc(doc)
 
 def md5(text):
     """Returns the md5 hash of a string."""

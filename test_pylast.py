@@ -675,6 +675,18 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(lastfm_user, loaded_user)
 
 
+    def test_bio_content(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+
+        # Act
+        bio = artist.get_bio_content()
+
+        # Assert
+        self.assertIsNotNone(bio)
+        self.assertGreaterEqual(len(bio), 1)
+
+
     def test_bio_summary(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
@@ -685,6 +697,54 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNotNone(bio)
         self.assertGreaterEqual(len(bio), 1)
+
+
+    def test_album_wiki_content(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test Album", self.network)
+
+        # Act
+        wiki = album.get_wiki_content()
+
+        # Assert
+        self.assertIsNotNone(wiki)
+        self.assertGreaterEqual(len(wiki), 1)
+
+
+    def test_album_wiki_summary(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test Album", self.network)
+
+        # Act
+        wiki = album.get_wiki_summary()
+
+        # Assert
+        self.assertIsNotNone(wiki)
+        self.assertGreaterEqual(len(wiki), 1)
+
+
+    def test_track_wiki_content(self):
+        # Arrange
+        track = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act
+        wiki = track.get_wiki_content()
+
+        # Assert
+        self.assertIsNotNone(wiki)
+        self.assertGreaterEqual(len(wiki), 1)
+
+
+    def test_track_wiki_summary(self):
+        # Arrange
+        track = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act
+        wiki = track.get_wiki_summary()
+
+        # Assert
+        self.assertIsNotNone(wiki)
+        self.assertGreaterEqual(len(wiki), 1)
 
 
 if __name__ == '__main__':
