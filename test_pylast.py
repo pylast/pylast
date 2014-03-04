@@ -1022,9 +1022,8 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(type(links), list)
         self.assertEqual(len(links), 2)
-        # How permanent are Spotify IDs? If they change, make tests more robust
-        self.assertEqual(links[0], "spotify:album:3gxOtUSRzweDWBKlpj7cG6")
-        self.assertEqual(links[1], "spotify:album:2fGCAYUMssLKiUAoNdxGLx")
+        self.assertIn("spotify:album:", links[0])
+        self.assertIn("spotify:album:", links[1])
 
 
     def test_get_artist_play_links(self):
@@ -1036,9 +1035,8 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(type(links), list)
         self.assertEqual(len(links), 2)
-        # How permanent are Spotify IDs? If they change, make tests more robust
-        self.assertEqual(links[0], "spotify:artist:6liAMWkVf5LH7YR9yfFy1Y")
-        self.assertEqual(links[1], "spotify:artist:4Z8W4fKeB5YxbusRsdQVPb")
+        self.assertIn("spotify:artist:", links[0])
+        self.assertIn("spotify:artist:", links[1])
 
 
     def test_get_track_play_links(self):
@@ -1053,9 +1051,9 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(type(links), list)
         self.assertEqual(len(links), 2)
-        # How permanent are Spotify IDs? If they change, make tests more robust
-        self.assertEqual(links[0], "spotify:track:2bt04YlMnqiwA3T6O9UqBO")
-        self.assertEqual(links[1], "spotify:track:0KYHSg38GsU1naJ5jh1llP")
+        # How permanent are spotify IDs? If they change, make tests more robust
+        self.assertIn("spotify:track:", links[0])
+        self.assertIn("spotify:track:", links[1])
 
 
 if __name__ == '__main__':
