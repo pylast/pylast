@@ -1676,13 +1676,13 @@ class Artist(_BaseObject, _Taggable):
                         )
         return images
 
-    def get_shouts(self, limit=50):
+    def get_shouts(self, limit=50, cacheable=False):
         """
             Returns a sequqence of Shout objects
         """
 
         shouts = []
-        for node in _collect_nodes(limit, self, "artist.getShouts", False):
+        for node in _collect_nodes(limit, self, "artist.getShouts", cacheable):
             shouts.append(Shout(
                                 _extract(node, "body"),
                                 User(_extract(node, "author"), self.network),
@@ -1886,13 +1886,13 @@ class Event(_BaseObject):
 
         self._request('event.share', False, params)
 
-    def get_shouts(self, limit=50):
+    def get_shouts(self, limit=50, cacheable=False):
         """
             Returns a sequqence of Shout objects
         """
 
         shouts = []
-        for node in _collect_nodes(limit, self, "event.getShouts", False):
+        for node in _collect_nodes(limit, self, "event.getShouts", cacheable):
             shouts.append(Shout(
                                 _extract(node, "body"),
                                 User(_extract(node, "author"), self.network),
@@ -2084,10 +2084,10 @@ class Library(_BaseObject):
 
         self._request("library.addTrack", False, params)
 
-    def get_albums(self, artist=None, limit=50):
+    def get_albums(self, artist=None, limit=50, cacheable=True):
         """
         Returns a sequence of Album objects
-        If no artist is specified, it will return all, sorted by playcount descendingly.
+        If no artist is specified, it will return all, sorted by decreasing play count.
         If limit==None it will return all (may take a while)
         """
 
@@ -2096,7 +2096,7 @@ class Library(_BaseObject):
             params["artist"] = artist
 
         seq = []
-        for node in _collect_nodes(limit, self, "library.getAlbums", True, params):
+        for node in _collect_nodes(limit, self, "library.getAlbums", cacheable, params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -2106,14 +2106,14 @@ class Library(_BaseObject):
 
         return seq
 
-    def get_artists(self, limit=50):
+    def get_artists(self, limit=50, cacheable=True):
         """
         Returns a sequence of Album objects
         if limit==None it will return all (may take a while)
         """
 
         seq = []
-        for node in _collect_nodes(limit, self, "library.getArtists", True):
+        for node in _collect_nodes(limit, self, "library.getArtists", cacheable):
             name = _extract(node, "name")
 
             playcount = _number(_extract(node, "playcount"))
@@ -2123,7 +2123,7 @@ class Library(_BaseObject):
 
         return seq
 
-    def get_tracks(self, artist=None, album=None, limit=50):
+    def get_tracks(self, artist=None, album=None, limit=50, cacheable=True):
         """
         Returns a sequence of Album objects
         If limit==None it will return all (may take a while)
@@ -2136,7 +2136,7 @@ class Library(_BaseObject):
             params["album"] = album
 
         seq = []
-        for node in _collect_nodes(limit, self, "library.getTracks", True, params):
+        for node in _collect_nodes(limit, self, "library.getTracks", cacheable, params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -2721,13 +2721,13 @@ class Track(_BaseObject, _Taggable):
 
         return self.network._get_url(domain_name, "track") %{'domain': self.network._get_language_domain(domain_name), 'artist': artist, 'title': title}
 
-    def get_shouts(self, limit=50):
+    def get_shouts(self, limit=50, cacheable=False):
         """
             Returns a sequqence of Shout objects
         """
 
         shouts = []
-        for node in _collect_nodes(limit, self, "track.getShouts", False):
+        for node in _collect_nodes(limit, self, "track.getShouts", cacheable):
             shouts.append(Shout(
                                 _extract(node, "body"),
                                 User(_extract(node, "author"), self.network),
@@ -2854,13 +2854,13 @@ class Group(_BaseObject):
 
         return self.network._get_url(domain_name, "group") %{'name': name}
 
-    def get_members(self, limit=50):
+    def get_members(self, limit=50, cacheable=False):
         """
             Returns a sequence of User objects
             if limit==None it will return all
         """
 
-        nodes = _collect_nodes(limit, self, "group.getMembers", False)
+        nodes = _collect_nodes(limit, self, "group.getMembers", cacheable)
 
         users = []
 
@@ -2966,7 +2966,7 @@ class User(_BaseObject):
 
         return self._extract_events_from_doc(doc)
 
-    def get_artist_tracks(self, artist):
+    def get_artist_tracks(self, artist, cacheable=False):
         """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
         # Not implemented: "Can be limited to specific timeranges, defaults to all time."
 
@@ -2974,7 +2974,7 @@ class User(_BaseObject):
         params['artist'] = artist
 
         seq = []
-        for track in _collect_nodes(None, self, "user.getArtistTracks", False, params):
+        for track in _collect_nodes(None, self, "user.getArtistTracks", cacheable, params):
             title = _extract(track, "name")
             artist = _extract(track, "artist")
             date = _extract(track, "date")
@@ -2985,16 +2985,16 @@ class User(_BaseObject):
 
         return seq
 
-    def get_friends(self, limit = 50):
+    def get_friends(self, limit = 50, cacheable=False):
         """Returns a list of the user's friends. """
 
         seq = []
-        for node in _collect_nodes(limit, self, "user.getFriends", False):
+        for node in _collect_nodes(limit, self, "user.getFriends", cacheable):
             seq.append(User(_extract(node, "name"), self.network))
 
         return seq
 
-    def get_loved_tracks(self, limit=50):
+    def get_loved_tracks(self, limit=50, cacheable=True):
         """Returns this user's loved track as a sequence of LovedTrack objects
         in reverse order of their timestamp, all the way back to the first track.
 
@@ -3011,7 +3011,7 @@ class User(_BaseObject):
             params['limit'] = limit
 
         seq = []
-        for track in _collect_nodes(limit, self, "user.getLovedTracks", True, params):
+        for track in _collect_nodes(limit, self, "user.getLovedTracks", cacheable, params):
 
             title = _extract(track, "name")
             artist = _extract(track, "name", 1)
@@ -3039,14 +3039,14 @@ class User(_BaseObject):
 
         return seq
 
-    def get_past_events(self, limit=50):
+    def get_past_events(self, limit=50, cacheable=False):
         """
         Returns a sequence of Event objects
         if limit==None it will return all
         """
 
         seq = []
-        for n in _collect_nodes(limit, self, "user.getPastEvents", False):
+        for n in _collect_nodes(limit, self, "user.getPastEvents", cacheable):
             seq.append(Event(_extract(n, "id"), self.network))
 
         return seq
@@ -3086,7 +3086,7 @@ class User(_BaseObject):
         return Track(artist, title, self.network, self.name)
 
 
-    def get_recent_tracks(self, limit = 10):
+    def get_recent_tracks(self, limit=10, cacheable=True):
         """Returns this user's played track as a sequence of PlayedTrack objects
         in reverse order of their playtime, all the way back to the first track.
 
@@ -3103,7 +3103,7 @@ class User(_BaseObject):
             params['limit'] = limit
 
         seq = []
-        for track in _collect_nodes(limit, self, "user.getRecentTracks", True, params):
+        for track in _collect_nodes(limit, self, "user.getRecentTracks", cacheable, params):
 
             if track.hasAttribute('nowplaying'):
                 continue    #to prevent the now playing track from sneaking in here
@@ -3412,13 +3412,13 @@ class User(_BaseObject):
 
         return Library(self, self.network)
 
-    def get_shouts(self, limit=50):
+    def get_shouts(self, limit=50, cacheable=False):
         """
             Returns a sequqence of Shout objects
         """
 
         shouts = []
-        for node in _collect_nodes(limit, self, "user.getShouts", False):
+        for node in _collect_nodes(limit, self, "user.getShouts", cacheable):
             shouts.append(Shout(
                                 _extract(node, "body"),
                                 User(_extract(node, "author"), self.network),
@@ -3452,26 +3452,26 @@ class AuthenticatedUser(User):
         self.name = _extract(doc, "name")
         return self.name
 
-    def get_recommended_events(self, limit=50):
+    def get_recommended_events(self, limit=50, cacheable=False):
         """
         Returns a sequence of Event objects
         if limit==None it will return all
         """
 
         seq = []
-        for node in _collect_nodes(limit, self, "user.getRecommendedEvents", False):
+        for node in _collect_nodes(limit, self, "user.getRecommendedEvents", cacheable):
             seq.append(Event(_extract(node, "id"), self.network))
 
         return seq
 
-    def get_recommended_artists(self, limit=50):
+    def get_recommended_artists(self, limit=50, cacheable=False):
         """
         Returns a sequence of Event objects
         if limit==None it will return all
         """
 
         seq = []
-        for node in _collect_nodes(limit, self, "user.getRecommendedArtists", False):
+        for node in _collect_nodes(limit, self, "user.getRecommendedArtists", cacheable):
             seq.append(Artist(_extract(node, "name"), self.network))
 
         return seq

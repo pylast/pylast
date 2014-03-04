@@ -755,6 +755,111 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(name, "Last.fm Network")
 
 
+    def test_artist_get_images_deprecated(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+
+        # Act/Assert
+        with self.assertRaisesRegexp(pylast.WSError, 'deprecated'):
+            artist.get_images()
+
+
+    def helper_validate_results(self, a, b, c):
+        # Assert
+        self.assertIsNotNone(a)
+        self.assertIsNotNone(b)
+        self.assertIsNotNone(c)
+        self.assertGreaterEqual(len(a), 0)
+        self.assertGreaterEqual(len(b), 0)
+        self.assertGreaterEqual(len(c), 0)
+        self.assertEqual(a, b)
+        self.assertEqual(b, c)
+
+
+    def helper_validate_cacheable(self, thing, function_name):
+        # Arrange
+        # get thing.function_name()
+        func = getattr(thing, function_name, None)
+
+        # Act
+        result1 = func(limit = 1, cacheable = False)
+        result2 = func(limit = 1, cacheable = True)
+        result3 = func(limit = 1)
+
+        # Assert
+        self.helper_validate_results(result1, result2, result3)
+
+
+    def test_cacheable_artist_get_shouts(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+
+        # Act/Assert
+        self.helper_validate_cacheable(artist, "get_shouts")
+
+
+    def test_cacheable_event_get_shouts(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+        event = user.get_past_events(limit = 1)[0]
+
+        # Act/Assert
+        self.helper_validate_cacheable(event, "get_shouts")
+
+
+    def test_cacheable_track_get_shouts(self):
+        # Arrange
+        track = self.network.get_top_tracks()[0]
+
+        # Act/Assert
+        self.helper_validate_cacheable(track, "get_shouts")
+
+
+    def test_cacheable_group_get_members(self):
+        # Arrange
+        group = self.network.get_group("Audioscrobbler Beta")
+
+        # Act/Assert
+        self.helper_validate_cacheable(group, "get_members")
+
+
+    def test_cacheable_library(self):
+        # Arrange
+        library = pylast.Library(self.username, self.network)
+
+        # Act/Assert
+        self.helper_validate_cacheable(library, "get_albums")
+        self.helper_validate_cacheable(library, "get_artists")
+        self.helper_validate_cacheable(library, "get_tracks")
+
+
+    def test_cacheable_user_artist_tracks(self):
+        # Arrange
+        lastfm_user = self.network.get_authenticated_user()
+
+        # Act
+        result1 = lastfm_user.get_artist_tracks(artist = "Test Artist", cacheable = False)
+        result2 = lastfm_user.get_artist_tracks(artist = "Test Artist", cacheable = True)
+        result3 = lastfm_user.get_artist_tracks(artist = "Test Artist")
+
+        # Assert
+        self.helper_validate_results(result1, result2, result3)
+
+
+    def test_cacheable_user(self):
+        # Arrange
+        lastfm_user = self.network.get_authenticated_user()
+
+        # Act/Assert
+        self.helper_validate_cacheable(lastfm_user, "get_friends")
+        self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
+        self.helper_validate_cacheable(lastfm_user, "get_past_events")
+        self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
+        self.helper_validate_cacheable(lastfm_user, "get_recommended_artists")
+        self.helper_validate_cacheable(lastfm_user, "get_recommended_events")
+        self.helper_validate_cacheable(lastfm_user, "get_shouts")
+
+
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
