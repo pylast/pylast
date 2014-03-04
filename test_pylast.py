@@ -916,19 +916,33 @@ class TestPyLast(unittest.TestCase):
         self.assertLess(start, end)
 
 
-    def test_get_metro_artist_chart(self):
+    def helper_get_metro_and_dates(self, function_name):
         # Arrange
         metro = self.network.get_metro("Salamanca", "Spain")
         dates = self.network.get_metro_weekly_chart_dates()
         (from_date, to_date) = dates[0]
 
+        # get metro.function_name()
+        func = getattr(metro, function_name, None)
+
         # Act
-        chart = metro.get_artist_chart(from_date = from_date, to_date = to_date, limit = 1)
+        chart = func(from_date = from_date, to_date = to_date, limit = 1)
 
         # Assert
         self.assertEqual(len(chart), 1)
         self.assertEqual(type(chart[0]), pylast.TopItem)
         self.assertEqual(type(chart[0].item), pylast.Artist)
+
+
+    def test_get_metro_artist_chart(self):
+        # Arrange/Act/Assert
+        self.helper_get_metro_and_dates("get_artist_chart")
+
+
+    def test_get_metro_hype_artist_chart(self):
+        # Arrange/Act/Assert
+        self.helper_get_metro_and_dates("get_hype_artist_chart")
+
 
     def test_geo_get_metros(self):
         # Arrange

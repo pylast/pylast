@@ -2158,14 +2158,8 @@ class Metro(_BaseObject):
 
         return self.country
 
-    def get_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
-        """Get a chart of artists for a metro.
-        Parameters:
-        from_date (Optional) : Beginning timestamp of the weekly range requested
-        to_date (Optional) : Ending timestamp of the weekly range requested
-        limit (Optional) : The number of results to fetch per page. Defaults to 50.
-        """
-
+    def _get_chart(self, method, limit=None, from_date=None, to_date=None, cacheable=True):
+        """Internal helper for getting geo charts."""
         params = self._get_params()
         if limit: params["limit"] = limit
         if from_date and to_date:
@@ -2181,6 +2175,24 @@ class Metro(_BaseObject):
             seq.append(TopItem(item, weight))
 
         return seq
+
+    def get_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of artists for a metro.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroArtistChart", limit, from_date, to_date, cacheable)
+
+    def get_hype_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of hyped (up and coming) artists for a metro.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroHypeArtistChart", limit, from_date, to_date, cacheable)
 
 
     # TODO?
