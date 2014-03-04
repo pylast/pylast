@@ -2158,19 +2158,19 @@ class Metro(_BaseObject):
 
         return self.country
 
-    def get_artist_chart(self, limit=None, cacheable=True):
+    def get_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
         """Get a chart of artists for a metro.
         Parameters:
-        TODO start (Optional) : Beginning timestamp of the weekly range requested (c.f. geo.getWeeklyChartlist)
-        TODO end (Optional) : Ending timestamp of the weekly range requested (c.f. geo.getWeeklyChartlist)
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
         limit (Optional) : The number of results to fetch per page. Defaults to 50.
         """
 
         params = self._get_params()
         if limit: params["limit"] = limit
-        # if from_date and to_date:
-            # params["from"] = from_date
-            # params["to"] = to_date
+        if from_date and to_date:
+            params["from"] = from_date
+            params["to"] = to_date
 
         doc = self._request("geo.getMetroArtistChart", cacheable, params)
 

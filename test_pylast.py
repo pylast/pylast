@@ -904,17 +904,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(event.get_venue().location['city'], "Reading")
 
 
-    def test_get_metro_artist_chart(self):
-        # Arrange
-        metro = self.network.get_metro("Salamanca", "Spain")
-
-        # Act
-        chart = metro.get_artist_chart()
-
-        # Assert
-        self.assertEqual(type(chart[0]), pylast.TopItem)
-        self.assertEqual(type(chart[0].item), pylast.Artist)
-
     def test_get_metro_weekly_chart_dates(self):
         # Arrange
         # Act
@@ -925,6 +914,21 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(type(dates[0]), tuple)
         (start, end) = dates[0]
         self.assertLess(start, end)
+
+
+    def test_get_metro_artist_chart(self):
+        # Arrange
+        metro = self.network.get_metro("Salamanca", "Spain")
+        dates = self.network.get_metro_weekly_chart_dates()
+        (from_date, to_date) = dates[0]
+
+        # Act
+        chart = metro.get_artist_chart(from_date = from_date, to_date = to_date, limit = 1)
+
+        # Assert
+        self.assertEqual(len(chart), 1)
+        self.assertEqual(type(chart[0]), pylast.TopItem)
+        self.assertEqual(type(chart[0].item), pylast.Artist)
 
     def test_geo_get_metros(self):
         # Arrange
