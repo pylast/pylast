@@ -972,6 +972,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertGreaterEqual(len(metros), 1)
         self.assertEqual(type(metros[0]), pylast.Metro)
+        self.assertEqual(metros[0].get_country(), "Poland")
 
 
     def test_geo_get_top_artists(self):
@@ -1007,6 +1008,54 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(metro), "Bergen, Norway")
         self.assertEqual(metro, pylast.Metro("Bergen", "Norway", self.network))
         self.assertNotEqual(metro, pylast.Metro("Wellington", "New Zealand", self.network))
+
+
+    def test_get_album_play_links(self):
+        # Arrange
+        album1 = self.network.get_album(artist = "Portishead", title = "Dummy")
+        album2 = self.network.get_album(artist = "Radiohead", title = "OK Computer")
+        albums = [album1, album2]
+
+        # Act
+        links = self.network.get_album_play_links(albums)
+
+        # Assert
+        self.assertEqual(type(links), list)
+        self.assertEqual(len(links), 2)
+        # How permanent are Spotify IDs? If they change, make tests more robust
+        self.assertEqual(links[0], "spotify:album:3gxOtUSRzweDWBKlpj7cG6")
+        self.assertEqual(links[1], "spotify:album:2fGCAYUMssLKiUAoNdxGLx")
+
+
+    def test_get_artist_play_links(self):
+        # Arrange
+        artists = ["Portishead", "Radiohead"]
+        # Act
+        links = self.network.get_artist_play_links(artists)
+
+        # Assert
+        self.assertEqual(type(links), list)
+        self.assertEqual(len(links), 2)
+        # How permanent are Spotify IDs? If they change, make tests more robust
+        self.assertEqual(links[0], "spotify:artist:6liAMWkVf5LH7YR9yfFy1Y")
+        self.assertEqual(links[1], "spotify:artist:4Z8W4fKeB5YxbusRsdQVPb")
+
+
+    def test_get_track_play_links(self):
+        # Arrange
+        track1 = self.network.get_track(artist = "Portishead", title = "Mysterons")
+        track2 = self.network.get_track(artist = "Radiohead", title = "Creep")
+        tracks = [track1, track2]
+
+        # Act
+        links = self.network.get_track_play_links(tracks)
+
+        # Assert
+        self.assertEqual(type(links), list)
+        self.assertEqual(len(links), 2)
+        # How permanent are Spotify IDs? If they change, make tests more robust
+        self.assertEqual(links[0], "spotify:track:2bt04YlMnqiwA3T6O9UqBO")
+        self.assertEqual(links[1], "spotify:track:0KYHSg38GsU1naJ5jh1llP")
 
 
 if __name__ == '__main__':

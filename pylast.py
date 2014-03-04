@@ -699,6 +699,39 @@ class _Network(object):
         if remaining_tracks:
             self.scrobble_many(remaining_tracks)
 
+    def get_play_links(self, type, things, cacheable=True):
+        method = type + ".getPlaylinks"
+        params = {}
+
+        for i, thing in enumerate(things):
+            if type == "artist":
+                params['artist[' + str(i) + ']'] = thing
+            elif type == "album":
+                params['artist[' + str(i) + ']'] = thing.artist
+                params['album['  + str(i) + ']'] = thing.title
+            elif type == "track":
+                params['artist[' + str(i) + ']'] = thing.artist
+                params['track['  + str(i) + ']'] = thing.title
+
+        doc = _Request(self, method, params).execute(cacheable)
+
+        seq = []
+
+        for node in doc.getElementsByTagName("externalids"):
+            spotify = _extract(node, "spotify")
+            seq.append(spotify)
+
+        return seq
+
+    def get_artist_play_links(self, artists, cacheable=True):
+        return self.get_play_links("artist", artists)
+
+    def get_album_play_links(self, albums, cacheable=True):
+        return self.get_play_links("album", albums)
+
+    def get_track_play_links(self, tracks, cacheable=True):
+        return self.get_play_links("track", tracks)
+
 class LastFMNetwork(_Network):
 
     """A Last.fm network object
