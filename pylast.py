@@ -411,14 +411,17 @@ class _Network(object):
 
         return _extract_events_from_doc(doc, self)
 
-    # TODO?
-    # geo.getMetroArtistChart
-    # geo.getMetroHypeArtistChart
-    # geo.getMetroHypeTrackChart
-    # geo.getMetroTrackChart
-    # geo.getMetroUniqueArtistChart
-    # geo.getMetroUniqueTrackChart
-    # geo.getMetroWeeklyChartlist
+    def get_metro_weekly_chart_dates(self, cacheable=True):
+        """Returns a list of From and To tuples for the available metro charts."""
+
+        doc = _Request(self, "geo.getMetroWeeklyChartlist").execute(cacheable)
+
+        seq = []
+        for node in doc.getElementsByTagName("chart"):
+            seq.append( (node.getAttribute("from"), node.getAttribute("to")) )
+
+        return seq
+
     def get_metros(self, country=None, cacheable=True):
         """Get a list of valid countries and metros for use in the other webservices.
         Parameters:
@@ -2143,7 +2146,7 @@ class Metro(_BaseObject):
                self.get_country().lower() != other.get_country().lower()
 
     def _get_params(self):
-        return {'name': self.get_name(), 'country': self.get_country()}
+        return {'metro': self.get_name(), 'country': self.get_country()}
 
     def get_name(self):
         """Returns the metro name."""
@@ -2154,6 +2157,40 @@ class Metro(_BaseObject):
         """Returns the metro country."""
 
         return self.country
+
+    def get_artist_chart(self, limit=None, cacheable=True):
+        """Get a chart of artists for a metro.
+        Parameters:
+        TODO start (Optional) : Beginning timestamp of the weekly range requested (c.f. geo.getWeeklyChartlist)
+        TODO end (Optional) : Ending timestamp of the weekly range requested (c.f. geo.getWeeklyChartlist)
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+
+        params = self._get_params()
+        if limit: params["limit"] = limit
+        # if from_date and to_date:
+            # params["from"] = from_date
+            # params["to"] = to_date
+
+        doc = self._request("geo.getMetroArtistChart", cacheable, params)
+
+        seq = []
+        for node in doc.getElementsByTagName("artist"):
+            item = Artist(_extract(node, "name"), self.network)
+            weight = _number(_extract(node, "listeners"))
+            seq.append(TopItem(item, weight))
+
+        return seq
+
+
+    # TODO?
+    # geo.getMetroHypeArtistChart
+    # geo.getMetroHypeTrackChart
+    # geo.getMetroTrackChart
+    # geo.getMetroUniqueArtistChart
+    # geo.getMetroUniqueTrackChart
+    # geo.getMetroWeeklyChartlist
+
 
 class Library(_BaseObject):
     """A user's Last.fm library."""
