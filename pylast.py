@@ -415,8 +415,31 @@ class _Network(object):
     # geo.getMetros
     # geo.getTopArtists
 
+    def get_geo_top_artists(self, country, limit=None, cacheable=True):
+        """Get the most popular artists on Last.fm by country.
+        Parameters:
+        country (Required) : A country name, as defined by the ISO 3166-1 country names standard
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        params = {"country": country}
+
+        if limit: params["limit"] = limit
+
+        doc = _Request(self, "geo.getTopArtists", params).execute(cacheable)
+
+        artists = doc.getElementsByTagName("artist")
+        seq = []
+
+        for artist in artists:
+            name = _extract(artist, "name")
+            listeners = _extract(artist, "listeners")
+
+            seq.append(TopItem(Artist(name, self), listeners))
+
+        return seq
+
     def get_geo_top_tracks(self, country, location=None, limit=None, cacheable=True):
-        """Get the most popular tracks on Last.fm last week by country
+        """Get the most popular tracks on Last.fm last week by country.
         Parameters:
         country (Required) : A country name, as defined by the ISO 3166-1 country names standard
         location (Optional) : A metro name, to fetch the charts for (must be within the country specified)

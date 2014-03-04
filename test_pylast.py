@@ -896,6 +896,17 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(event.get_venue().location['city'], "Reading")
 
 
+    def test_geo_get_top_artists(self):
+        # Arrange
+        # Act
+        artists = self.network.get_geo_top_artists(country = "United Kingdom", limit = 1)
+
+        # Assert
+        self.assertEqual(len(artists), 1)
+        self.assertEqual(type(artists[0]), pylast.TopItem)
+        self.assertEqual(type(artists[0].item), pylast.Artist)
+
+
     def test_geo_get_top_tracks(self):
         # Arrange
         # Act
@@ -904,6 +915,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(len(tracks), 1)
         self.assertEqual(type(tracks[0]), pylast.TopItem)
+        self.assertEqual(type(tracks[0].item), pylast.Track)
 
 
 if __name__ == '__main__':
