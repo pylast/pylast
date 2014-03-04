@@ -676,8 +676,10 @@ class TestPyLast(unittest.TestCase):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
-        pickle.dump(lastfm_user,  open("lastfm.txt.pkl", "wb"))
-        loaded_user = pickle.load(open("lastfm.txt.pkl", "rb"))
+        with open("lastfm.txt.pkl", "wb") as f:
+            pickle.dump(lastfm_user, f)
+        with open("lastfm.txt.pkl", "rb") as f:
+            loaded_user = pickle.load(f)
 
         # Assert
         self.assertEqual(lastfm_user, loaded_user)
