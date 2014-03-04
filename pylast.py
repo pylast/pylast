@@ -2194,14 +2194,20 @@ class Metro(_BaseObject):
         """
         return self._get_chart("geo.getMetroHypeArtistChart", limit, from_date, to_date, cacheable)
 
+    def get_unique_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of the artists which make that metro unique.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroUniqueArtistChart", limit, from_date, to_date, cacheable)
+
 
     # TODO?
-    # geo.getMetroHypeArtistChart
     # geo.getMetroHypeTrackChart
     # geo.getMetroTrackChart
-    # geo.getMetroUniqueArtistChart
     # geo.getMetroUniqueTrackChart
-    # geo.getMetroWeeklyChartlist
 
 
 class Library(_BaseObject):

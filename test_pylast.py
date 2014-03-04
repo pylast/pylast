@@ -944,6 +944,11 @@ class TestPyLast(unittest.TestCase):
         self.helper_get_metro_and_dates("get_hype_artist_chart")
 
 
+    def test_get_metro_unique_artist_chart(self):
+        # Arrange/Act/Assert
+        self.helper_get_metro_and_dates("get_unique_artist_chart")
+
+
     def test_geo_get_metros(self):
         # Arrange
         # Act
