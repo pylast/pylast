@@ -346,7 +346,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertGreater(len(tags), 0)
-        self.assertTrue(type(tags[0])  == pylast.TopItem)
+        self.assertEqual(type(tags[0]), pylast.TopItem)
 
 
     def test_album_tags_are_topitems(self):
@@ -358,7 +358,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertGreater(len(tags), 0)
-        self.assertTrue(type(tags[0])  == pylast.TopItem)
+        self.assertEqual(type(tags[0]), pylast.TopItem)
 
 
     def helper_is_thing_hashable(self, thing):
@@ -858,6 +858,42 @@ class TestPyLast(unittest.TestCase):
         self.helper_validate_cacheable(lastfm_user, "get_recommended_artists")
         self.helper_validate_cacheable(lastfm_user, "get_recommended_events")
         self.helper_validate_cacheable(lastfm_user, "get_shouts")
+
+
+    def test_geo_get_events_in_location(self):
+        # Arrange
+        # Act
+        events = self.network.get_geo_events(location = "London", tag = "blues", limit = 1)
+
+        # Assert
+        self.assertEqual(len(events), 1)
+        event = events[0]
+        self.assertEqual(type(event), pylast.Event)
+        self.assertEqual(event.get_venue().location['city'], "London")
+
+
+    def test_geo_get_events_in_latlong(self):
+        # Arrange
+        # Act
+        events = self.network.get_geo_events(lat = 40.67, long = -73.94, distance = 5, limit = 1)
+
+        # Assert
+        self.assertEqual(len(events), 1)
+        event = events[0]
+        self.assertEqual(type(event), pylast.Event)
+        self.assertEqual(event.get_venue().location['city'], "New York")
+
+
+    def test_geo_get_events_festival(self):
+        # Arrange
+        # Act
+        events = self.network.get_geo_events(location = "Reading", festivalsonly = True, limit = 1)
+
+        # Assert
+        self.assertEqual(len(events), 1)
+        event = events[0]
+        self.assertEqual(type(event), pylast.Event)
+        self.assertEqual(event.get_venue().location['city'], "Reading")
 
 
 if __name__ == '__main__':

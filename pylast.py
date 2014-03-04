@@ -374,6 +374,49 @@ class _Network(object):
 
         return seq
 
+    def get_geo_events(self, long=None, lat=None, location=None, distance=None, tag=None, festivalsonly=None, limit=None, cacheable=True):
+        """
+        Returns all events in a specific location by country or city name.
+        Parameters:
+        long (Optional) : Specifies a longitude value to retrieve events for (service returns nearby events by default)
+        lat (Optional) : Specifies a latitude value to retrieve events for (service returns nearby events by default)
+        location (Optional) : Specifies a location to retrieve events for (service returns nearby events by default)
+        distance (Optional) : Find events within a specified radius (in kilometres)
+        tag (Optional) : Specifies a tag to filter by.
+        festivalsonly[0|1] (Optional) : Whether only festivals should be returned, or all events.
+        limit (Optional) : The number of results to fetch per page. Defaults to 10.
+        (page number not implemented)
+        """
+
+        params = {}
+
+        if long: params["long"] = long
+        if lat: params["lat"] = lat
+        if location: params["location"] = location
+        if limit: params["limit"] = limit
+        if distance: params["distance"] = distance
+        if tag: params["tag"] = tag
+        if festivalsonly:
+            params["festivalsonly"] = 1
+        elif not festivalsonly:
+            params["festivalsonly"] = 0
+
+        doc = _Request(self, "geo.getEvents", params).execute(cacheable)
+
+        return _extract_events_from_doc(doc, self)
+
+    # TODO?
+    # geo.getMetroArtistChart
+    # geo.getMetroHypeArtistChart
+    # geo.getMetroHypeTrackChart
+    # geo.getMetroTrackChart
+    # geo.getMetroUniqueArtistChart
+    # geo.getMetroUniqueTrackChart
+    # geo.getMetroWeeklyChartlist
+    # geo.getMetros
+    # geo.getTopArtists
+    # geo.getTopTracks
+
     def enable_proxy(self, host, port):
         """Enable a default web proxy"""
 
@@ -1040,12 +1083,6 @@ class _BaseObject(object):
         return hash(self.network) + \
             hash(str(type(self)) + "".join(list(self._get_params().keys()) + list(values)).lower())
 
-    def _extract_events_from_doc(self, doc):
-        events = []
-        for node in doc.getElementsByTagName("event"):
-            events.append(Event(_extract(node, "id"), self.network))
-        return events
-
     def _extract_cdata_from_request(self, method_name, tag_name, params):
         doc = self._request(method_name, True, params)
 
@@ -1519,7 +1556,7 @@ class Artist(_BaseObject, _Taggable):
 
         doc = self._request('artist.getEvents', True)
 
-        return self._extract_events_from_doc(doc)
+        return _extract_events_from_doc(doc, self.network)
 
     def get_similar(self, limit = None):
         """Returns the similar artists on the network."""
@@ -2964,7 +3001,7 @@ class User(_BaseObject):
 
         doc = self._request('user.getEvents', True)
 
-        return self._extract_events_from_doc(doc)
+        return _extract_events_from_doc(doc, self.network)
 
     def get_artist_tracks(self, artist, cacheable=False):
         """Get a list of tracks by a given artist scrobbled by this user, including scrobble time."""
@@ -3676,14 +3713,14 @@ class Venue(_BaseObject):
 
         doc = self._request("venue.getEvents", True)
 
-        return self._extract_events_from_doc(doc)
+        return _extract_events_from_doc(doc, self.network)
 
     def get_past_events(self):
         """Returns the past events held in this venue."""
 
         doc = self._request("venue.getEvents", True)
 
-        return self._extract_events_from_doc(doc)
+        return _extract_events_from_doc(doc, self.network)
 
 def md5(text):
     """Returns the md5 hash of a string."""
@@ -3817,6 +3854,12 @@ def _extract_all(node, name, limit_count = None):
         seq.append(_extract(node, name, i))
 
     return seq
+
+def _extract_events_from_doc(doc, network):
+    events = []
+    for node in doc.getElementsByTagName("event"):
+        events.append(Event(_extract(node, "id"), network))
+    return events
 
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a url."""
