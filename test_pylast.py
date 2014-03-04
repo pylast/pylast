@@ -221,7 +221,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         artist = "Test Artist"
         title = "Test Title"
-        track = pylast.Track(artist, title, self.network)
+        track = self.network.get_track(artist, title)
         lastfm_user = self.network.get_user(self.username)
 
         # Act
@@ -390,7 +390,7 @@ class TestPyLast(unittest.TestCase):
 
     def test_country_is_hashable(self):
         # Arrange
-        country = pylast.Country("Italy", self.network)
+        country = self.network.get_country("Italy")
 
         # Act/Assert
         self.helper_is_thing_hashable(country)
@@ -407,7 +407,7 @@ class TestPyLast(unittest.TestCase):
 
     def test_group_is_hashable(self):
         # Arrange
-        group = pylast.Group("Audioscrobbler Beta", self.network)
+        group = self.network.get_group("Audioscrobbler Beta")
 
         # Act/Assert
         self.helper_is_thing_hashable(group)
@@ -680,7 +680,7 @@ class TestPyLast(unittest.TestCase):
         artist = pylast.Artist("Test Artist", self.network)
 
         # Act
-        bio = artist.get_bio_content()
+        bio = artist.get_bio_content(language = "en")
 
         # Assert
         self.assertIsNotNone(bio)
@@ -692,7 +692,7 @@ class TestPyLast(unittest.TestCase):
         artist = pylast.Artist("Test Artist", self.network)
 
         # Act
-        bio = artist.get_bio_summary()
+        bio = artist.get_bio_summary(language = "en")
 
         # Assert
         self.assertIsNotNone(bio)
@@ -745,6 +745,14 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNotNone(wiki)
         self.assertGreaterEqual(len(wiki), 1)
+
+
+    def test_lastfm_network_name(self):
+        # Act
+        name = str(self.network)
+
+        # Assert
+        self.assertEqual(name, "Last.fm Network")
 
 
 if __name__ == '__main__':
