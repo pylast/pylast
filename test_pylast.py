@@ -916,9 +916,9 @@ class TestPyLast(unittest.TestCase):
         self.assertLess(start, end)
 
 
-    def helper_get_metro_and_dates(self, function_name):
+    def helper_geo_chart(self, function_name, expected_type = pylast.Artist):
         # Arrange
-        metro = self.network.get_metro("Salamanca", "Spain")
+        metro = self.network.get_metro("Madrid", "Spain")
         dates = self.network.get_metro_weekly_chart_dates()
         (from_date, to_date) = dates[0]
 
@@ -931,22 +931,37 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(len(chart), 1)
         self.assertEqual(type(chart[0]), pylast.TopItem)
-        self.assertEqual(type(chart[0].item), pylast.Artist)
+        self.assertEqual(type(chart[0].item), expected_type)
 
 
     def test_get_metro_artist_chart(self):
         # Arrange/Act/Assert
-        self.helper_get_metro_and_dates("get_artist_chart")
+        self.helper_geo_chart("get_artist_chart")
 
 
     def test_get_metro_hype_artist_chart(self):
         # Arrange/Act/Assert
-        self.helper_get_metro_and_dates("get_hype_artist_chart")
+        self.helper_geo_chart("get_hype_artist_chart")
 
 
     def test_get_metro_unique_artist_chart(self):
         # Arrange/Act/Assert
-        self.helper_get_metro_and_dates("get_unique_artist_chart")
+        self.helper_geo_chart("get_unique_artist_chart")
+
+
+    def test_get_metro_track_chart(self):
+        # Arrange/Act/Assert
+        self.helper_geo_chart("get_track_chart", expected_type = pylast.Track)
+
+
+    def test_get_metro_hype_track_chart(self):
+        # Arrange/Act/Assert
+        self.helper_geo_chart("get_hype_track_chart", expected_type = pylast.Track)
+
+
+    def test_get_metro_unique_track_chart(self):
+        # Arrange/Act/Assert
+        self.helper_geo_chart("get_unique_track_chart", expected_type = pylast.Track)
 
 
     def test_geo_get_metros(self):

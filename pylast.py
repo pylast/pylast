@@ -2158,7 +2158,7 @@ class Metro(_BaseObject):
 
         return self.country
 
-    def _get_chart(self, method, limit=None, from_date=None, to_date=None, cacheable=True):
+    def _get_chart(self, method, tag="artist", limit=None, from_date=None, to_date=None, cacheable=True):
         """Internal helper for getting geo charts."""
         params = self._get_params()
         if limit: params["limit"] = limit
@@ -2166,49 +2166,76 @@ class Metro(_BaseObject):
             params["from"] = from_date
             params["to"] = to_date
 
-        doc = self._request("geo.getMetroArtistChart", cacheable, params)
+        doc = self._request(method, cacheable, params)
 
         seq = []
-        for node in doc.getElementsByTagName("artist"):
-            item = Artist(_extract(node, "name"), self.network)
+        for node in doc.getElementsByTagName(tag):
+            if tag == "artist":
+                item = Artist(_extract(node, "name"), self.network)
+            elif tag == "track":
+                title = _extract(node, "name")
+                artist = _extract_element_tree(node).get('artist')['name']
+                item = Track(artist, title, self.network)
+            else:
+                return None
             weight = _number(_extract(node, "listeners"))
             seq.append(TopItem(item, weight))
 
         return seq
 
-    def get_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+    def get_artist_chart(self, tag="artist", limit=None, from_date=None, to_date=None, cacheable=True):
         """Get a chart of artists for a metro.
         Parameters:
         from_date (Optional) : Beginning timestamp of the weekly range requested
         to_date (Optional) : Ending timestamp of the weekly range requested
         limit (Optional) : The number of results to fetch per page. Defaults to 50.
         """
-        return self._get_chart("geo.getMetroArtistChart", limit, from_date, to_date, cacheable)
+        return self._get_chart("geo.getMetroArtistChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
-    def get_hype_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+    def get_hype_artist_chart(self, tag="artist", limit=None, from_date=None, to_date=None, cacheable=True):
         """Get a chart of hyped (up and coming) artists for a metro.
         Parameters:
         from_date (Optional) : Beginning timestamp of the weekly range requested
         to_date (Optional) : Ending timestamp of the weekly range requested
         limit (Optional) : The number of results to fetch per page. Defaults to 50.
         """
-        return self._get_chart("geo.getMetroHypeArtistChart", limit, from_date, to_date, cacheable)
+        return self._get_chart("geo.getMetroHypeArtistChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
-    def get_unique_artist_chart(self, limit=None, from_date=None, to_date=None, cacheable=True):
+    def get_unique_artist_chart(self, tag="artist", limit=None, from_date=None, to_date=None, cacheable=True):
         """Get a chart of the artists which make that metro unique.
         Parameters:
         from_date (Optional) : Beginning timestamp of the weekly range requested
         to_date (Optional) : Ending timestamp of the weekly range requested
         limit (Optional) : The number of results to fetch per page. Defaults to 50.
         """
-        return self._get_chart("geo.getMetroUniqueArtistChart", limit, from_date, to_date, cacheable)
+        return self._get_chart("geo.getMetroUniqueArtistChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
+    def get_track_chart(self, tag="track", limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of tracks for a metro.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroTrackChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
-    # TODO?
-    # geo.getMetroHypeTrackChart
-    # geo.getMetroTrackChart
-    # geo.getMetroUniqueTrackChart
+    def get_hype_track_chart(self, tag="track", limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of tracks for a metro.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroHypeTrackChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
+    def get_unique_track_chart(self, tag="track", limit=None, from_date=None, to_date=None, cacheable=True):
+        """Get a chart of tracks for a metro.
+        Parameters:
+        from_date (Optional) : Beginning timestamp of the weekly range requested
+        to_date (Optional) : Ending timestamp of the weekly range requested
+        limit (Optional) : The number of results to fetch per page. Defaults to 50.
+        """
+        return self._get_chart("geo.getMetroUniqueTrackChart", tag = tag, limit = limit, from_date = from_date, to_date = to_date, cacheable = cacheable)
 
 class Library(_BaseObject):
     """A user's Last.fm library."""
