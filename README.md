@@ -3,11 +3,26 @@ pyLast
 
 [![Build Status](https://travis-ci.org/hugovk/pylast.png?branch=master)](https://travis-ci.org/hugovk/pylast) [![Coverage Status](https://coveralls.io/repos/hugovk/pylast/badge.png?branch=master)](https://coveralls.io/r/hugovk/pylast?branch=master)
 
-A Python interface to Last.fm (and other api-compatible websites such as Libre.fm).
+A Python interface to [Last.fm](http://www.last.fm/) and other api-compatible websites such as [Libre.fm](http://libre.fm/).
 
-Try using the pydoc utility for help on usage or see test_pylast.py for examples.
+Try using the pydoc utility for help on usage or see [test_pylast.py](test_pylast.py) for examples.
 
 Original code can be found at http://code.google.com/p/pylast/ but hasn't been updated since 2011.
+
+Installation
+------------
+
+The old 0.5 version from 2011 is in PyPI so if you have it installed remove it first:
+
+    pip uninstall pylast
+
+
+You can install this version with pip like this:
+
+    pip install -e git://github.com/hugovk/pylast.git#egg=pylast
+
+Or just copy [pylast.py](pylast.py) to somewhere your Python can see it. No other dependencies are needed.
+
 
 Features
 --------
@@ -56,12 +71,14 @@ track.add_tags(("awesome", "favorite"))
 # about anything and see examples of how it works
 ```
 
+More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [test_pylast.py](test_pylast.py).
+
 Testing
 -------
 
-test_pylast.py contains integration tests with Last.fm, and plenty of code examples.
+[test_pylast.py](test_pylast.py) contains integration tests with Last.fm, and plenty of code examples.
 
-You need a test account at Last.fm that can be cluttered with test data, and an API key and secret. Either copy example_test_pylast.yaml to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
+You need a test account at Last.fm that will be cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
 ```
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
@@ -78,7 +95,6 @@ pip install pyyaml
 
 To run with coverage:
 ```
-pip install
 pip install coverage
 coverage run --source=pylast ./test_pylast.py
 coverage report # for command-line report
