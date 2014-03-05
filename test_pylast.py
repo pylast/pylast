@@ -100,7 +100,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         library = pylast.Library(user = self.username, network = self.network)
         # Pick an artist with plenty of albums
-        artist = self.network.get_top_artists()[0]
+        artist = self.network.get_top_artists(limit = 1)[0].item
         albums = artist.get_top_albums()
         # Pick a random one to avoid problems running concurrent tests
         album = choice(albums)[0]
@@ -140,7 +140,7 @@ class TestPyLast(unittest.TestCase):
         # Get plenty of artists
         artists = self.network.get_top_artists()
         # Pick a random one to avoid problems running concurrent tests
-        my_artist = choice(artists)
+        my_artist = choice(artists).item
         library = pylast.Library(user = self.username, network = self.network)
         library.add_artist(my_artist)
 
@@ -824,7 +824,7 @@ class TestPyLast(unittest.TestCase):
 
     def test_cacheable_track_get_shouts(self):
         # Arrange
-        track = self.network.get_top_tracks()[0]
+        track = self.network.get_top_tracks()[0].item
 
         # Act/Assert
         self.helper_validate_cacheable(track, "get_shouts")
@@ -1058,9 +1058,53 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(type(links), list)
         self.assertEqual(len(links), 2)
-        # How permanent are spotify IDs? If they change, make tests more robust
         self.assertIn("spotify:track:", links[0])
         self.assertIn("spotify:track:", links[1])
+
+
+    def helper_only_one_thing_in_top_list(self, things, expected_type):
+        # Assert
+        self.assertEqual(len(things), 1)
+        self.assertEqual(type(things), list)
+        self.assertEqual(type(things[0]), pylast.TopItem)
+        self.assertEqual(type(things[0].item), expected_type)
+
+    def test_user_get_top_tags_with_limit(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        tags = user.get_top_tags(limit = 1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
+
+
+    def test_network_get_top_artists_with_limit(self):
+        # Arrange
+        # Act
+        artists = self.network.get_top_artists(limit = 1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
+
+
+    def test_network_get_top_tags_with_limit(self):
+        # Arrange
+        # Act
+        tags = self.network.get_top_tags(limit = 1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
+
+
+    def test_network_get_top_tracks_with_limit(self):
+        # Arrange
+        # Act
+        tracks = self.network.get_top_tracks(limit = 1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(tracks, pylast.Track)
 
 
 if __name__ == '__main__':

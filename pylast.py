@@ -334,50 +334,54 @@ class _Network(object):
 
         return Playlist(user, e_id, self)
 
-    def get_top_artists(self, limit=None):
-        """Returns a sequence of the most played artists."""
+    def get_top_artists(self, limit=None, cacheable=True):
+        """Returns the most played artists as a sequence of TopItem objects."""
 
-        doc = _Request(self, "chart.getTopArtists").execute(True)
+        params = {}
+        if limit: params["limit"] = limit
+
+        doc = _Request(self, "chart.getTopArtists", params).execute(cacheable)
+
         seq = []
         for node in doc.getElementsByTagName("artist"):
-            title = _extract(node, "name")
-            artist = Artist(title, self)
-            seq.append(artist)
-
-        if limit:
-            seq = seq[:limit]
+            artist = Artist(_extract(node, "name"), self)
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(artist, weight))
 
         return seq
 
-    def get_top_tracks(self, limit=None):
-        """Returns a sequence of the most played tracks."""
+    def get_top_tracks(self, limit=None, cacheable=True):
+        """Returns the most played tracks as a sequence of TopItem objects."""
 
-        doc = _Request(self, "chart.getTopTracks").execute(True)
+        params = {}
+        if limit: params["limit"] = limit
+
+        doc = _Request(self, "chart.getTopTracks", params).execute(cacheable)
+
         seq = []
         for node in doc.getElementsByTagName("track"):
             title = _extract(node, "name")
             artist = _extract(node, "name", 1)
             track = Track(artist, title, self)
-            seq.append(track)
-
-        if limit:
-            seq = seq[:limit]
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(track, weight))
 
         return seq
 
-    def get_top_tags(self, limit=None):
-        """Returns a sequence of the most used tags as a sequence of TopItem objects."""
+    def get_top_tags(self, limit=None, cacheable=True):
+        """Returns the most used tags as a sequence of TopItem objects."""
 
-        doc = _Request(self, "tag.getTopTags").execute(True)
+        # Last.fm has no "limit" parameter for tag.getTopTags
+        # so we need to get all (250) and then limit locally
+        doc = _Request(self, "tag.getTopTags").execute(cacheable)
+
         seq = []
         for node in doc.getElementsByTagName("tag"):
+            if len(seq) >= limit:
+                break
             tag = Tag(_extract(node, "name"), self)
             weight = _number(_extract(node, "count"))
-
             seq.append(TopItem(tag, weight))
-
-        if limit:
-            seq = seq[:limit]
 
         return seq
 
@@ -3510,19 +3514,20 @@ class User(_BaseObject):
 
         return seq
 
-    def get_top_tags(self, limit=None):
+    def get_top_tags(self, limit=None, cacheable=True):
         """Returns a sequence of the top tags used by this user with their counts as TopItem objects.
         * limit: The limit of how many tags to return.
+        * cacheable: Whether to cache results.
         """
 
-        doc = self._request("user.getTopTags", True)
+        params = self._get_params()
+        if limit: params["limit"] = limit
+
+        doc = self._request("user.getTopTags", cacheable, params)
 
         seq = []
         for node in doc.getElementsByTagName("tag"):
             seq.append(TopItem(Tag(_extract(node, "name"), self.network), _extract(node, "count")))
-
-        if limit:
-            seq = seq[:limit]
 
         return seq
 
