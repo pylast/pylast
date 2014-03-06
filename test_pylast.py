@@ -1205,6 +1205,23 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_at_least_one_thing_in_top_list(fans, pylast.User)
 
+    # Commented out to avoid spamming
+    # def test_share_spam(self):
+        # # Arrange
+        # users_to_spam = [TODO_ENTER_SPAMEES_HERE]
+        # spam_message = "Dig the krazee sound!"
+        # artist = self.network.get_top_artists(limit=1)[0].item
+        # track = artist.get_top_tracks(limit=1)[0].item
+        # event = artist.get_upcoming_events()[0]
+
+        # # Act
+        # artist.share(users_to_spam, spam_message)
+        # track.share(users_to_spam, spam_message)
+        # event.share(users_to_spam, spam_message)
+
+        # Assert
+        # Check inbox for spam!
+
 
 if __name__ == '__main__':
 

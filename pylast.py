@@ -1459,6 +1459,36 @@ class _BaseObject(object):
 
         return seq
 
+    def share(self, users, message=None):
+        """
+        Shares this (sends out recommendations).
+        Parameters:
+            * users [User|str,]: A list that can contain usernames, emails, User objects, or all of them.
+            * message str: A message to include in the recommendation message.
+        Only for Artist/Event/Track.
+        """
+
+        # Last.fm currently accepts a max of 10 recipient at a time
+        while(len(users) > 10):
+            section = users[0:9]
+            users = users[9:]
+            self.share(section, message)
+
+        nusers = []
+        for user in users:
+            if isinstance(user, User):
+                nusers.append(user.get_name())
+            else:
+                nusers.append(user)
+
+        params = self._get_params()
+        recipients = ','.join(nusers)
+        params['recipient'] = recipients
+        if message:
+            params['message'] = message
+
+        self._request(self.ws_prefix + '.share', False, params)
+
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1999,35 +2029,6 @@ class Artist(_BaseObject, _Taggable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def share(self, users, message=None):
-        """Shares this artist (sends out recommendations).
-        # Parameters:
-            * users [User|str,]: A list that can contain usernames, emails,
-                User objects, or all of them.
-            * message str: A message to include in the recommendation message.
-        """
-
-        # Last.fm currently accepts a max of 10 recipient at a time
-        while(len(users) > 10):
-            section = users[0:9]
-            users = users[9:]
-            self.share(section, message)
-
-        nusers = []
-        for user in users:
-            if isinstance(user, User):
-                nusers.append(user.get_name())
-            else:
-                nusers.append(user)
-
-        params = self._get_params()
-        recipients = ','.join(nusers)
-        params['recipient'] = recipients
-        if message:
-            params['message'] = message
-
-        self._request('artist.share', False, params)
-
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the artist page on the network.
         # Parameters:
@@ -2268,34 +2269,6 @@ class Event(_BaseObject):
 
         return self.network._get_url(
             domain_name, "event") % {'id': self.get_id()}
-
-    def share(self, users, message=None):
-        """Shares this event (sends out recommendations).
-          * users: A list that can contain usernames, emails, User objects,
-                or all of them.
-          * message: A message to include in the recommendation message.
-        """
-
-        # Last.fm currently accepts a max of 10 recipient at a time
-        while(len(users) > 10):
-            section = users[0:9]
-            users = users[9:]
-            self.share(section, message)
-
-        nusers = []
-        for user in users:
-            if isinstance(user, User):
-                nusers.append(user.get_name())
-            else:
-                nusers.append(user)
-
-        params = self._get_params()
-        recipients = ','.join(nusers)
-        params['recipient'] = recipients
-        if message:
-            params['message'] = message
-
-        self._request('event.share', False, params)
 
     def get_shouts(self, limit=50, cacheable=False):
         """
@@ -3209,34 +3182,6 @@ class Track(_BaseObject, _Taggable):
             seq.append(SimilarItem(Track(artist, title, self.network), match))
 
         return seq
-
-    def share(self, users, message=None):
-        """Shares this track (sends out recommendations).
-          * users: A list that can contain usernames, emails, User objects,
-                or all of them.
-          * message: A message to include in the recommendation message.
-        """
-
-        # Last.fm currently accepts a max of 10 recipient at a time
-        while(len(users) > 10):
-            section = users[0:9]
-            users = users[9:]
-            self.share(section, message)
-
-        nusers = []
-        for user in users:
-            if isinstance(user, User):
-                nusers.append(user.get_name())
-            else:
-                nusers.append(user)
-
-        params = self._get_params()
-        recipients = ','.join(nusers)
-        params['recipient'] = recipients
-        if message:
-            params['message'] = message
-
-        self._request('track.share', False, params)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the track page on the network.
