@@ -857,16 +857,20 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(type(event), pylast.Event)
         self.assertEqual(event.get_venue().location['city'], "Reading")
 
+    def helper_dates_valid(self, dates):
+        # Assert
+        self.assertGreaterEqual(len(dates), 1)
+        self.assertEqual(type(dates[0]), tuple)
+        (start, end) = dates[0]
+        self.assertLess(start, end)
+
     def test_get_metro_weekly_chart_dates(self):
         # Arrange
         # Act
         dates = self.network.get_metro_weekly_chart_dates()
 
         # Assert
-        self.assertGreaterEqual(len(dates), 1)
-        self.assertEqual(type(dates[0]), tuple)
-        (start, end) = dates[0]
-        self.assertLess(start, end)
+        self.helper_dates_valid(dates)
 
     def helper_geo_chart(self, function_name, expected_type=pylast.Artist):
         # Arrange
@@ -1121,6 +1125,57 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.helper_top_things(things, pylast.Track)
+
+    def helper_assert_chart(self, chart, expected_type):
+        # Assert
+        self.assertIsNotNone(chart)
+        self.assertGreater(len(chart), 0)
+        self.assertEqual(type(chart[0]), pylast.TopItem)
+        self.assertEqual(type(chart[0].item), expected_type)
+
+    def helper_get_assert_charts(self, thing, date):
+        # Arrange
+        (from_date, to_date) = date
+
+        # Act
+        artist_chart = thing.get_weekly_artist_charts(from_date, to_date)
+        if type(thing) is not pylast.Tag:
+            album_chart = thing.get_weekly_album_charts(from_date, to_date)
+            track_chart = thing.get_weekly_track_charts(from_date, to_date)
+
+        # Assert
+        self.helper_assert_chart(artist_chart, pylast.Artist)
+        if type(thing) is not pylast.Tag:
+            self.helper_assert_chart(album_chart, pylast.Album)
+            self.helper_assert_chart(track_chart, pylast.Track)
+
+    def test_group_charts(self):
+        # Arrange
+        group = self.network.get_group("mnml")
+        dates = group.get_weekly_chart_dates()
+        self.helper_dates_valid(dates)
+
+        # Act/Assert
+        self.helper_get_assert_charts(group, dates[-1])
+
+    def test_tag_charts(self):
+        # Arrange
+        tag = self.network.get_tag("rock")
+        dates = tag.get_weekly_chart_dates()
+        self.helper_dates_valid(dates)
+
+        # Act/Assert
+        self.helper_get_assert_charts(tag, dates[-1])
+
+
+    def test_user_charts(self):
+        # Arrange
+        lastfm_user = self.network.get_user("RJ")
+        dates = lastfm_user.get_weekly_chart_dates()
+        self.helper_dates_valid(dates)
+
+        # Act/Assert
+        self.helper_get_assert_charts(lastfm_user, dates[-1])
 
 
 if __name__ == '__main__':

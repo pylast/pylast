@@ -1310,8 +1310,9 @@ class _BaseObject(object):
 
     network = None
 
-    def __init__(self, network):
+    def __init__(self, network, ws_prefix):
         self.network = network
+        self.ws_prefix = ws_prefix
 
     def _request(self, method_name, cacheable=False, params=None):
         if not params:
@@ -1342,7 +1343,8 @@ class _BaseObject(object):
             self, method, thing, thing_type, params = None, cacheable=True):
         """Returns a list of the most played thing_types by this thing."""
 
-        doc = self._request(method, cacheable, params)
+        doc = self._request(
+            self.ws_prefix + "." + method, cacheable, params)
 
         seq = []
         for node in doc.getElementsByTagName(thing):
@@ -1355,11 +1357,90 @@ class _BaseObject(object):
 
         return seq
 
+    def get_weekly_chart_dates(self):
+        """Returns a list of From and To tuples for the available charts."""
+
+        doc = self._request(self.ws_prefix + ".getWeeklyChartList", True)
+
+        seq = []
+        for node in doc.getElementsByTagName("chart"):
+            seq.append((node.getAttribute("from"), node.getAttribute("to")))
+
+        return seq
+
+    def get_weekly_artist_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly artist charts for the week starting from the
+        from_date value to the to_date value.
+        """
+
+        params = self._get_params()
+        if from_date and to_date:
+            params["from"] = from_date
+            params["to"] = to_date
+
+        doc = self._request(
+            self.ws_prefix + ".getWeeklyArtistChart", True, params)
+
+        seq = []
+        for node in doc.getElementsByTagName("artist"):
+            item = Artist(_extract(node, "name"), self.network)
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(item, weight))
+
+        return seq
+
+    def get_weekly_album_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly album charts for the week starting from the
+        from_date value to the to_date value.
+        """
+
+        params = self._get_params()
+        if from_date and to_date:
+            params["from"] = from_date
+            params["to"] = to_date
+
+        doc = self._request(
+            self.ws_prefix + ".getWeeklyAlbumChart", True, params)
+
+        seq = []
+        for node in doc.getElementsByTagName("album"):
+            item = Album(
+                _extract(node, "artist"), _extract(node, "name"), self.network)
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(item, weight))
+
+        return seq
+
+    def get_weekly_track_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly track charts for the week starting from the
+        from_date value to the to_date value.
+        """
+
+        params = self._get_params()
+        if from_date and to_date:
+            params["from"] = from_date
+            params["to"] = to_date
+
+        doc = self._request(
+            self.ws_prefix + ".getWeeklyTrackChart", True, params)
+
+        seq = []
+        for node in doc.getElementsByTagName("track"):
+            item = Track(
+                _extract(node, "artist"), _extract(node, "name"), self.network)
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(item, weight))
+
+        return seq
+
 class _Taggable(object):
     """Common functions for classes with tags."""
 
     def __init__(self, ws_prefix):
-        self.ws_prefix = ws_prefix
+        self.ws_prefix = ws_prefix # TODO move to _BaseObject
 
     def add_tags(self, tags):
         """Adds one or several tags.
@@ -1546,7 +1627,7 @@ class Album(_BaseObject, _Taggable):
             * title: The album title.
         """
 
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'album')
         _Taggable.__init__(self, 'album')
 
         if isinstance(artist, Artist):
@@ -1734,7 +1815,7 @@ class Artist(_BaseObject, _Taggable):
             * name str: The artist's name.
         """
 
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'artist')
         _Taggable.__init__(self, 'artist')
 
         self.name = name
@@ -1883,7 +1964,7 @@ class Artist(_BaseObject, _Taggable):
             params['limit'] = limit
 
         return self._get_things(
-            "artist.getTopAlbums", "album", Album, params, cacheable)
+            "getTopAlbums", "album", Album, params, cacheable)
 
     def get_top_tracks(self, limit=None, cacheable=True):
         """Returns a list of the most played Tracks by this artist."""
@@ -1892,7 +1973,7 @@ class Artist(_BaseObject, _Taggable):
             params['limit'] = limit
 
         return self._get_things(
-            "artist.getTopTracks", "track", Track, params, cacheable)
+            "getTopTracks", "track", Track, params, cacheable)
 
     def get_top_fans(self, limit=None):
         """Returns a list of the Users who played this artist the most.
@@ -2037,7 +2118,7 @@ class Event(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, event_id, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'event')
 
         self.id = event_id
 
@@ -2250,7 +2331,7 @@ class Country(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, "geo")
 
         self.name = name
 
@@ -2267,7 +2348,7 @@ class Country(_BaseObject):
     def __ne__(self, other):
         return self.get_name() != other.get_name()
 
-    def _get_params(self):
+    def _get_params(self): # TODO can move to _BaseObject
         return {'country': self.get_name()}
 
     def _get_name_from_code(self, alpha2code):
@@ -2302,7 +2383,7 @@ class Country(_BaseObject):
             params['limit'] = limit
 
         return self._get_things(
-            "geo.getTopTracks", "track", Track, params, cacheable)
+            "getTopTracks", "track", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the event page on the network.
@@ -2336,7 +2417,7 @@ class Metro(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, country, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, None)
 
         self.name = name
         self.country = country
@@ -2497,7 +2578,7 @@ class Library(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'library')
 
         if isinstance(user, User):
             self.user = user
@@ -2665,7 +2746,7 @@ class Playlist(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user, id, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, "playlist")
 
         if isinstance(user, User):
             self.user = user
@@ -2801,15 +2882,12 @@ class Playlist(_BaseObject):
 class Tag(_BaseObject):
     """A Last.fm object tag."""
 
-    # TODO: getWeeklyArtistChart
-    # (too lazy, i'll wait for when someone requests it)
-
     name = None
 
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'tag')
 
         self.name = name
 
@@ -2872,7 +2950,7 @@ class Tag(_BaseObject):
             params['limit'] = limit
 
         return self._get_things(
-            "tag.getTopTracks", "track", Track, params, cacheable)
+            "getTopTracks", "track", Track, params, cacheable)
 
     def get_top_artists(self):
         """Returns a sequence of the most played artists."""
@@ -2885,38 +2963,6 @@ class Tag(_BaseObject):
             playcount = _extract(node, "playcount")
 
             seq.append(TopItem(Artist(name, self.network), playcount))
-
-        return seq
-
-    def get_weekly_chart_dates(self):
-        """Returns a list of From and To tuples for the available charts."""
-
-        doc = self._request("tag.getWeeklyChartList", True)
-
-        seq = []
-        for node in doc.getElementsByTagName("chart"):
-            seq.append((node.getAttribute("from"), node.getAttribute("to")))
-
-        return seq
-
-    def get_weekly_artist_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly artist charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("tag.getWeeklyArtistChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("artist"):
-            item = Artist(_extract(node, "name"), self.network)
-            weight = _number(_extract(node, "weight"))
-            seq.append(TopItem(item, weight))
 
         return seq
 
@@ -2952,7 +2998,7 @@ class Track(_BaseObject, _Taggable):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'track')
         _Taggable.__init__(self, 'track')
 
         if isinstance(artist, Artist):
@@ -3261,7 +3307,7 @@ class Group(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, group_name, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'group')
 
         self.name = group_name
 
@@ -3284,82 +3330,6 @@ class Group(_BaseObject):
     def get_name(self):
         """Returns the group name. """
         return self.name
-
-    def get_weekly_chart_dates(self):
-        """Returns a list of From and To tuples for the available charts."""
-
-        doc = self._request("group.getWeeklyChartList", True)
-
-        seq = []
-        for node in doc.getElementsByTagName("chart"):
-            seq.append((node.getAttribute("from"), node.getAttribute("to")))
-
-        return seq
-
-    def get_weekly_artist_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly artist charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("group.getWeeklyArtistChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("artist"):
-            item = Artist(_extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_album_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly album charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("group.getWeeklyAlbumChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("album"):
-            item = Album(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_track_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly track charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("group.getWeeklyTrackChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("track"):
-            item = Track(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the group page on the network.
@@ -3406,7 +3376,7 @@ class XSPF(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, uri, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, None)
 
         self.uri = uri
 
@@ -3451,7 +3421,7 @@ class User(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user_name, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, 'user')
 
         self.name = user_name
 
@@ -3829,83 +3799,7 @@ class User(_BaseObject):
             params['limit'] = limit
 
         return self._get_things(
-            "user.getTopTracks", "track", Track, params, cacheable)
-
-    def get_weekly_chart_dates(self):
-        """Returns a list of From and To tuples for the available charts."""
-
-        doc = self._request("user.getWeeklyChartList", True)
-
-        seq = []
-        for node in doc.getElementsByTagName("chart"):
-            seq.append((node.getAttribute("from"), node.getAttribute("to")))
-
-        return seq
-
-    def get_weekly_artist_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly artist charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("user.getWeeklyArtistChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("artist"):
-            item = Artist(_extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_album_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly album charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("user.getWeeklyAlbumChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("album"):
-            item = Album(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_track_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly track charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request("user.getWeeklyTrackChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("track"):
-            item = Track(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
+            "getTopTracks", "track", Track, params, cacheable)
 
     def compare_with_user(self, user, shared_artists_limit=None):
         """
@@ -4046,7 +3940,7 @@ class _Search(_BaseObject):
     """An abstract class. Use one of its derivatives."""
 
     def __init__(self, ws_prefix, search_terms, network):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, ws_prefix)
 
         self._ws_prefix = ws_prefix
         self.search_terms = search_terms
@@ -4219,7 +4113,7 @@ class Venue(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, id, network, venue_element=None):
-        _BaseObject.__init__(self, network)
+        _BaseObject.__init__(self, network, "venue")
 
         self.id = _number(id)
         if venue_element is not None:
