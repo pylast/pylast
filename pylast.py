@@ -522,7 +522,7 @@ class _Network(object):
         params = {"country": country}
 
         if location: params["location"] = location
-        if limit: params["limit"] = limit
+        if limit: params['limit'] = limit
 
         doc = _Request(self, "geo.getTopTracks", params).execute(cacheable)
 
@@ -1338,6 +1338,22 @@ class _BaseObject(object):
         return doc.getElementsByTagName(
             tag_name)[0].firstChild.wholeText.strip()
 
+    def _get_things(
+            self, method, thing, thing_type, params = None, cacheable=True):
+        """Returns a list of the most played thing_types by this thing."""
+
+        doc = self._request(method, cacheable, params)
+
+        seq = []
+        for node in doc.getElementsByTagName(thing):
+            title = _extract(node, "name")
+            artist = _extract(node, "name", 1)
+            playcount = _number(_extract(node, "playcount"))
+
+            seq.append(TopItem(
+                thing_type(artist, title, self.network), playcount))
+
+        return seq
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1860,37 +1876,23 @@ class Artist(_BaseObject, _Taggable):
 
         return artists
 
-    def get_top_albums(self):
-        """Retuns a list of the top albums."""
+    def get_top_albums(self, limit=None, cacheable=True):
+        """Returns a list of the top albums."""
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request('artist.getTopAlbums', True)
+        return self._get_things(
+            "artist.getTopAlbums", "album", Album, params, cacheable)
 
-        seq = []
-
-        for node in doc.getElementsByTagName("album"):
-            name = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            playcount = _extract(node, "playcount")
-
-            seq.append(TopItem(Album(artist, name, self.network), playcount))
-
-        return seq
-
-    def get_top_tracks(self):
+    def get_top_tracks(self, limit=None, cacheable=True):
         """Returns a list of the most played Tracks by this artist."""
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request("artist.getTopTracks", True)
-
-        seq = []
-        for track in doc.getElementsByTagName('track'):
-
-            title = _extract(track, "name")
-            artist = _extract(track, "name", 1)
-            playcount = _number(_extract(track, "playcount"))
-
-            seq.append(TopItem(Track(artist, title, self.network), playcount))
-
-        return seq
+        return self._get_things(
+            "artist.getTopTracks", "track", Track, params, cacheable)
 
     def get_top_fans(self, limit=None):
         """Returns a list of the Users who played this artist the most.
@@ -2293,22 +2295,14 @@ class Country(_BaseObject):
 
         return seq
 
-    def get_top_tracks(self):
+    def get_top_tracks(self, limit=None, cacheable=True):
         """Returns a sequence of the most played tracks"""
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request("geo.getTopTracks", True)
-
-        seq = []
-
-        for n in doc.getElementsByTagName('track'):
-
-            title = _extract(n, 'name')
-            artist = _extract(n, 'name', 1)
-            playcount = _number(_extract(n, "playcount"))
-
-            seq.append(TopItem(Track(artist, title, self.network), playcount))
-
-        return seq
+        return self._get_things(
+            "geo.getTopTracks", "track", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the event page on the network.
@@ -2871,21 +2865,14 @@ class Tag(_BaseObject):
 
         return seq
 
-    def get_top_tracks(self):
-        """Returns a list of the most played Tracks by this artist."""
+    def get_top_tracks(self, limit=None, cacheable=True):
+        """Returns a list of the most played Tracks for this tag."""
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request("tag.getTopTracks", True)
-
-        seq = []
-        for track in doc.getElementsByTagName('track'):
-
-            title = _extract(track, "name")
-            artist = _extract(track, "name", 1)
-            playcount = _number(_extract(track, "playcount"))
-
-            seq.append(TopItem(Track(artist, title, self.network), playcount))
-
-        return seq
+        return self._get_things(
+            "tag.getTopTracks", "track", Track, params, cacheable)
 
     def get_top_artists(self):
         """Returns a sequence of the most played artists."""
@@ -3826,7 +3813,7 @@ class User(_BaseObject):
 
         return seq
 
-    def get_top_tracks(self, period=PERIOD_OVERALL):
+    def get_top_tracks(self, period=PERIOD_OVERALL, limit=None, cacheable=True):
         """Returns the top tracks played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -3838,18 +3825,11 @@ class User(_BaseObject):
 
         params = self._get_params()
         params['period'] = period
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request('user.getTopTracks', True, params)
-
-        seq = []
-        for track in doc.getElementsByTagName('track'):
-            name = _extract(track, 'name')
-            artist = _extract(track, 'name', 1)
-            playcount = _extract(track, "playcount")
-
-            seq.append(TopItem(Track(artist, name, self.network), playcount))
-
-        return seq
+        return self._get_things(
+            "user.getTopTracks", "track", Track, params, cacheable)
 
     def get_weekly_chart_dates(self):
         """Returns a list of From and To tuples for the available charts."""

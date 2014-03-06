@@ -1040,6 +1040,88 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(tracks, pylast.Track)
 
+    def helper_top_things(self, things, expected_type):
+        # Assert
+        self.assertEqual(len(things), 2)
+        thing1 = things[0]
+        thing2 = things[1]
+        self.assertEqual(type(thing1), pylast.TopItem)
+        self.assertEqual(type(thing2), pylast.TopItem)
+        self.assertEqual(type(thing1.item), expected_type)
+        self.assertEqual(type(thing2.item), expected_type)
+        self.assertNotEqual(thing1, thing2)
+
+    def test_artist_top_tracks(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_tracks(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Track)
+
+    def test_artist_top_albums(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_albums(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Album)
+
+    def test_artist_top_fans(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_fans(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.User)
+
+    def test_country_top_tracks(self):
+        # Arrange
+        country = self.network.get_country("Croatia")
+
+        # Act
+        things = country.get_top_tracks(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Track)
+
+    def test_country_network_top_tracks(self):
+        # Arrange
+        # Act
+        things = self.network.get_geo_top_tracks("Croatia", limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Track)
+
+    def test_tag_top_tracks(self):
+        # Arrange
+        tag = self.network.get_tag("blues")
+
+        # Act
+        things = tag.get_top_tracks(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Track)
+
+    def test_user_top_tracks(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        things = lastfm_user.get_top_tracks(limit=2)
+
+        # Assert
+        self.helper_top_things(things, pylast.Track)
+
 
 if __name__ == '__main__':
 
