@@ -1373,7 +1373,6 @@ class _BaseObject(object):
         Returns the weekly artist charts for the week starting from the
         from_date value to the to_date value.
         """
-
         params = self._get_params()
         if from_date and to_date:
             params["from"] = from_date
@@ -1435,6 +1434,31 @@ class _BaseObject(object):
             seq.append(TopItem(item, weight))
 
         return seq
+
+    def get_top_fans(self, limit=None, cacheable=True):
+        """Returns a list of the Users who played this the most.
+        # Parameters:
+            * limit int: Max elements.
+        # For Artist/Track
+        """
+
+        doc = self._request(self.ws_prefix + '.getTopFans', cacheable)
+
+        seq = []
+
+        elements = doc.getElementsByTagName('user')
+
+        for element in elements:
+            if limit and len(seq) >= limit:
+                break
+
+            name = _extract(element, 'name')
+            weight = _number(_extract(element, 'weight'))
+
+            seq.append(TopItem(User(name, self.network), weight))
+
+        return seq
+
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1975,29 +1999,6 @@ class Artist(_BaseObject, _Taggable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def get_top_fans(self, limit=None):
-        """Returns a list of the Users who played this artist the most.
-        # Parameters:
-            * limit int: Max elements.
-        """
-
-        doc = self._request('artist.getTopFans', True)
-
-        seq = []
-
-        elements = doc.getElementsByTagName('user')
-
-        for element in elements:
-            if limit and len(seq) >= limit:
-                break
-
-            name = _extract(element, 'name')
-            weight = _number(_extract(element, 'weight'))
-
-            seq.append(TopItem(User(name, self.network), weight))
-
-        return seq
-
     def share(self, users, message=None):
         """Shares this artist (sends out recommendations).
         # Parameters:
@@ -2321,7 +2322,6 @@ class Event(_BaseObject):
         params["message"] = message
 
         self._request("event.Shout", False, params)
-
 
 class Country(_BaseObject):
     """A country at Last.fm."""
@@ -3207,26 +3207,6 @@ class Track(_BaseObject, _Taggable):
             match = _number(_extract(node, "match"))
 
             seq.append(SimilarItem(Track(artist, title, self.network), match))
-
-        return seq
-
-    def get_top_fans(self, limit=None):
-        """Returns a list of the Users who played this track."""
-
-        doc = self._request('track.getTopFans', True)
-
-        seq = []
-
-        elements = doc.getElementsByTagName('user')
-
-        for element in elements:
-            if limit and len(seq) >= limit:
-                break
-
-            name = _extract(element, 'name')
-            weight = _number(_extract(element, 'weight'))
-
-            seq.append(TopItem(User(name, self.network), weight))
 
         return seq
 

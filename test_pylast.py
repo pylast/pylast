@@ -1003,12 +1003,30 @@ class TestPyLast(unittest.TestCase):
         self.assertIn("spotify:track:", links[0])
         self.assertIn("spotify:track:", links[1])
 
+    def helper_at_least_one_thing_in_top_list(self, things, expected_type):
+        # Assert
+        self.assertGreater(len(things), 1)
+        self.assertEqual(type(things), list)
+        self.assertEqual(type(things[0]), pylast.TopItem)
+        self.assertEqual(type(things[0].item), expected_type)
+
     def helper_only_one_thing_in_top_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 1)
         self.assertEqual(type(things), list)
         self.assertEqual(type(things[0]), pylast.TopItem)
         self.assertEqual(type(things[0].item), expected_type)
+
+    def helper_two_different_things_in_top_list(self, things, expected_type):
+        # Assert
+        self.assertEqual(len(things), 2)
+        thing1 = things[0]
+        thing2 = things[1]
+        self.assertEqual(type(thing1), pylast.TopItem)
+        self.assertEqual(type(thing2), pylast.TopItem)
+        self.assertEqual(type(thing1.item), expected_type)
+        self.assertEqual(type(thing2.item), expected_type)
+        self.assertNotEqual(thing1, thing2)
 
     def test_user_get_top_tags_with_limit(self):
         # Arrange
@@ -1044,17 +1062,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(tracks, pylast.Track)
 
-    def helper_top_things(self, things, expected_type):
-        # Assert
-        self.assertEqual(len(things), 2)
-        thing1 = things[0]
-        thing2 = things[1]
-        self.assertEqual(type(thing1), pylast.TopItem)
-        self.assertEqual(type(thing2), pylast.TopItem)
-        self.assertEqual(type(thing1.item), expected_type)
-        self.assertEqual(type(thing2.item), expected_type)
-        self.assertNotEqual(thing1, thing2)
-
     def test_artist_top_tracks(self):
         # Arrange
         # Pick an artist with plenty of plays
@@ -1064,7 +1071,7 @@ class TestPyLast(unittest.TestCase):
         things = artist.get_top_tracks(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Track)
+        self.helper_two_different_things_in_top_list(things, pylast.Track)
 
     def test_artist_top_albums(self):
         # Arrange
@@ -1075,7 +1082,7 @@ class TestPyLast(unittest.TestCase):
         things = artist.get_top_albums(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Album)
+        self.helper_two_different_things_in_top_list(things, pylast.Album)
 
     def test_artist_top_fans(self):
         # Arrange
@@ -1086,7 +1093,7 @@ class TestPyLast(unittest.TestCase):
         things = artist.get_top_fans(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.User)
+        self.helper_two_different_things_in_top_list(things, pylast.User)
 
     def test_country_top_tracks(self):
         # Arrange
@@ -1096,7 +1103,7 @@ class TestPyLast(unittest.TestCase):
         things = country.get_top_tracks(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Track)
+        self.helper_two_different_things_in_top_list(things, pylast.Track)
 
     def test_country_network_top_tracks(self):
         # Arrange
@@ -1104,7 +1111,7 @@ class TestPyLast(unittest.TestCase):
         things = self.network.get_geo_top_tracks("Croatia", limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Track)
+        self.helper_two_different_things_in_top_list(things, pylast.Track)
 
     def test_tag_top_tracks(self):
         # Arrange
@@ -1114,7 +1121,7 @@ class TestPyLast(unittest.TestCase):
         things = tag.get_top_tracks(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Track)
+        self.helper_two_different_things_in_top_list(things, pylast.Track)
 
     def test_user_top_tracks(self):
         # Arrange
@@ -1124,7 +1131,7 @@ class TestPyLast(unittest.TestCase):
         things = lastfm_user.get_top_tracks(limit=2)
 
         # Assert
-        self.helper_top_things(things, pylast.Track)
+        self.helper_two_different_things_in_top_list(things, pylast.Track)
 
     def helper_assert_chart(self, chart, expected_type):
         # Assert
@@ -1176,6 +1183,27 @@ class TestPyLast(unittest.TestCase):
 
         # Act/Assert
         self.helper_get_assert_charts(lastfm_user, dates[-1])
+
+
+    def test_artist_top_fans(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+
+        # Act
+        fans = artist.get_top_fans()
+
+        # Assert
+        self.helper_at_least_one_thing_in_top_list(fans, pylast.User)
+
+    def test_track_top_fans(self):
+        # Arrange
+        track = self.network.get_track("The Cinematic Orchestra", "Postlude")
+
+        # Act
+        fans = track.get_top_fans()
+
+        # Assert
+        self.helper_at_least_one_thing_in_top_list(fans, pylast.User)
 
 
 if __name__ == '__main__':
