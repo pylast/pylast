@@ -1489,6 +1489,51 @@ class _BaseObject(object):
 
         self._request(self.ws_prefix + '.share', False, params)
 
+    def get_wiki_published_date(self):
+        """
+        Returns the date of publishing this version of the wiki.
+        Only for Album/Track.
+        """
+
+        doc = self._request(self.ws_prefix + ".getInfo", True)
+
+        if len(doc.getElementsByTagName("wiki")) == 0:
+            return
+
+        node = doc.getElementsByTagName("wiki")[0]
+
+        return _extract(node, "published")
+
+    def get_wiki_summary(self):
+        """
+        Returns the summary of the wiki.
+        Only for Album/Track.
+        """
+
+        doc = self._request(self.ws_prefix + ".getInfo", True)
+
+        if len(doc.getElementsByTagName("wiki")) == 0:
+            return
+
+        node = doc.getElementsByTagName("wiki")[0]
+
+        return _extract(node, "summary")
+
+    def get_wiki_content(self):
+        """
+        Returns the content of the wiki.
+        Only for Album/Track.
+        """
+
+        doc = self._request(self.ws_prefix + ".getInfo", True)
+
+        if len(doc.getElementsByTagName("wiki")) == 0:
+            return
+
+        node = doc.getElementsByTagName("wiki")[0]
+
+        return _extract(node, "content")
+
 
 class _Taggable(object):
     """Common functions for classes with tags."""
@@ -1817,42 +1862,6 @@ class Album(_BaseObject, _Taggable):
 
         return self.network._get_url(
             domain_name, "album") % {'artist': artist, 'album': album}
-
-    def get_wiki_published_date(self):
-        """Returns the date of publishing this version of the wiki."""
-
-        doc = self._request("album.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "published")
-
-    def get_wiki_summary(self):
-        """Returns the summary of the wiki."""
-
-        doc = self._request("album.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "summary")
-
-    def get_wiki_content(self):
-        """Returns the content of the wiki."""
-
-        doc = self._request("album.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "content")
 
 
 class Artist(_BaseObject, _Taggable):
@@ -3113,42 +3122,6 @@ class Track(_BaseObject, _Taggable):
         node = doc.getElementsByTagName("album")[0]
         return Album(
             _extract(node, "artist"), _extract(node, "title"), self.network)
-
-    def get_wiki_published_date(self):
-        """Returns the date of publishing this version of the wiki."""
-
-        doc = self._request("track.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "published")
-
-    def get_wiki_summary(self):
-        """Returns the summary of the wiki."""
-
-        doc = self._request("track.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "summary")
-
-    def get_wiki_content(self):
-        """Returns the content of the wiki."""
-
-        doc = self._request("track.getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "content")
 
     def love(self):
         """Adds the track to the user's loved tracks. """
