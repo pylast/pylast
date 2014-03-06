@@ -1028,6 +1028,15 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(type(thing2.item), expected_type)
         self.assertNotEqual(thing1, thing2)
 
+    def helper_two_things_in_list(self, things, expected_type):
+        # Assert
+        self.assertEqual(len(things), 2)
+        self.assertEqual(type(things), list)
+        thing1 = things[0]
+        thing2 = things[1]
+        self.assertEqual(type(thing1), expected_type)
+        self.assertEqual(type(thing2), expected_type)
+
     def test_user_get_top_tags_with_limit(self):
         # Arrange
         user = self.network.get_user("RJ")
@@ -1145,10 +1154,10 @@ class TestPyLast(unittest.TestCase):
         (from_date, to_date) = date
 
         # Act
-        artist_chart = thing.get_weekly_artist_charts(from_date, to_date)
+        artist_chart = thing.get_weekly_charts("artist", from_date, to_date)
         if type(thing) is not pylast.Tag:
-            album_chart = thing.get_weekly_album_charts(from_date, to_date)
-            track_chart = thing.get_weekly_track_charts(from_date, to_date)
+            album_chart = thing.get_weekly_charts("album", from_date, to_date)
+            track_chart = thing.get_weekly_charts("track", from_date, to_date)
 
         # Assert
         self.helper_assert_chart(artist_chart, pylast.Artist)
@@ -1174,7 +1183,6 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_get_assert_charts(tag, dates[-1])
 
-
     def test_user_charts(self):
         # Arrange
         lastfm_user = self.network.get_user("RJ")
@@ -1183,17 +1191,6 @@ class TestPyLast(unittest.TestCase):
 
         # Act/Assert
         self.helper_get_assert_charts(lastfm_user, dates[-1])
-
-
-    def test_artist_top_fans(self):
-        # Arrange
-        artist = self.network.get_artist("Test Artist")
-
-        # Act
-        fans = artist.get_top_fans()
-
-        # Assert
-        self.helper_at_least_one_thing_in_top_list(fans, pylast.User)
 
     def test_track_top_fans(self):
         # Arrange
@@ -1221,6 +1218,62 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         # Check inbox for spam!
+
+        #album/artist/event/track/user
+
+    def test_album_shouts(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+        album = artist.get_top_albums(limit=1)[0].item
+
+        # Act
+        shouts = album.get_shouts(limit=2)
+
+        # Assert
+        self.helper_two_things_in_list(shouts, pylast.Shout)
+
+    def test_artist_shouts(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        shouts = artist.get_shouts(limit=2)
+
+        # Assert
+        self.helper_two_things_in_list(shouts, pylast.Shout)
+
+    def test_event_shouts(self):
+        # Arrange
+        event_id = 3478520  # Glasto 2014
+        event = pylast.Event(event_id, self.network)
+
+        # Act
+        shouts = event.get_shouts(limit=2)
+
+        # Assert
+        self.helper_two_things_in_list(shouts, pylast.Shout)
+
+    def test_track_shouts(self):
+        # Arrange
+        track = self.network.get_track("The Cinematic Orchestra", "Postlude")
+
+        # Act
+        shouts = track.get_shouts(limit=2)
+
+        # Assert
+        self.helper_two_things_in_list(shouts, pylast.Shout)
+
+    def test_user_shouts(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        shouts = user.get_shouts(limit=2)
+
+        # Assert
+        self.helper_two_things_in_list(shouts, pylast.Shout)
 
 
 if __name__ == '__main__':

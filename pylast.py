@@ -1340,7 +1340,7 @@ class _BaseObject(object):
             tag_name)[0].firstChild.wholeText.strip()
 
     def _get_things(
-            self, method, thing, thing_type, params = None, cacheable=True):
+            self, method, thing, thing_type, params=None, cacheable=True):
         """Returns a list of the most played thing_types by this thing."""
 
         doc = self._request(
@@ -1368,55 +1368,14 @@ class _BaseObject(object):
 
         return seq
 
-    def get_weekly_artist_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly artist charts for the week starting from the
-        from_date value to the to_date value.
-        """
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request(
-            self.ws_prefix + ".getWeeklyArtistChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("artist"):
-            item = Artist(_extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_album_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly album charts for the week starting from the
-        from_date value to the to_date value.
-        """
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request(
-            self.ws_prefix + ".getWeeklyAlbumChart", True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName("album"):
-            item = Album(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
-    def get_weekly_track_charts(self, from_date=None, to_date=None):
+    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
         """
         Returns the weekly track charts for the week starting from the
         from_date value to the to_date value.
+        chart_kind should be one of "album", "track"
         """
+        method = ".getWeekly" + chart_kind.title() + "Chart"
+        chart_type = eval(chart_kind.title())
 
         params = self._get_params()
         if from_date and to_date:
@@ -1424,11 +1383,11 @@ class _BaseObject(object):
             params["to"] = to_date
 
         doc = self._request(
-            self.ws_prefix + ".getWeeklyTrackChart", True, params)
+            self.ws_prefix + method, True, params)
 
         seq = []
-        for node in doc.getElementsByTagName("track"):
-            item = Track(
+        for node in doc.getElementsByTagName(chart_kind.lower()):
+            item = chart_type(
                 _extract(node, "artist"), _extract(node, "name"), self.network)
             weight = _number(_extract(node, "playcount"))
             seq.append(TopItem(item, weight))
@@ -1463,7 +1422,8 @@ class _BaseObject(object):
         """
         Shares this (sends out recommendations).
         Parameters:
-            * users [User|str,]: A list that can contain usernames, emails, User objects, or all of them.
+            * users [User|str,]: A list that can contain usernames, emails,
+            User objects, or all of them.
             * message str: A message to include in the recommendation message.
         Only for Artist/Event/Track.
         """
@@ -1492,7 +1452,7 @@ class _BaseObject(object):
     def get_wiki_published_date(self):
         """
         Returns the date of publishing this version of the wiki.
-        Only for Album/Track.
+        Only for Album/Tag/Track.
         """
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
@@ -1534,12 +1494,32 @@ class _BaseObject(object):
 
         return _extract(node, "content")
 
+    def get_shouts(self, limit=50, cacheable=False):
+        """
+            Returns a sequence of Shout objects
+        """
+
+        shouts = []
+        for node in _collect_nodes(
+                limit,
+                self,
+                self.ws_prefix + ".getShouts",
+                cacheable):
+            shouts.append(
+                Shout(
+                    _extract(node, "body"),
+                    User(_extract(node, "author"), self.network),
+                    _extract(node, "date")
+                )
+            )
+        return shouts
+
 
 class _Taggable(object):
     """Common functions for classes with tags."""
 
     def __init__(self, ws_prefix):
-        self.ws_prefix = ws_prefix # TODO move to _BaseObject
+        self.ws_prefix = ws_prefix  # TODO move to _BaseObject
 
     def add_tags(self, tags):
         """Adds one or several tags.
@@ -1712,8 +1692,8 @@ class NetworkError(Exception):
 class Album(_BaseObject, _Taggable):
     """An album."""
 
-    title = None
     artist = None
+    title = None
     username = None
 
     __hash__ = _BaseObject.__hash__
@@ -1762,7 +1742,8 @@ class Album(_BaseObject, _Taggable):
 
     def _get_params(self):
         return {
-            'artist': self.get_artist().get_name(), 'album': self.get_title(),
+            'artist': self.get_artist().get_name(),
+            self.ws_prefix: self.get_title(),
         }
 
     def get_artist(self):
@@ -1781,10 +1762,10 @@ class Album(_BaseObject, _Taggable):
         return self.get_title()
 
     def get_release_date(self):
-        """Retruns the release date of the album."""
+        """Returns the release date of the album."""
 
-        return _extract(
-            self._request("album.getInfo", cacheable=True), "releasedate")
+        return _extract(self._request(
+            self.ws_prefix + ".getInfo", cacheable=True), "releasedate")
 
     def get_cover_image(self, size=COVER_EXTRA_LARGE):
         """
@@ -1797,18 +1778,21 @@ class Album(_BaseObject, _Taggable):
         """
 
         return _extract_all(
-            self._request("album.getInfo", cacheable=True), 'image')[size]
+            self._request(
+                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
 
     def get_id(self):
         """Returns the ID"""
 
-        return _extract(self._request("album.getInfo", cacheable=True), "id")
+        return _extract(
+            self._request(self.ws_prefix + ".getInfo", cacheable=True), "id")
 
     def get_playcount(self):
         """Returns the number of plays on the network"""
 
         return _number(_extract(
-            self._request("album.getInfo", cacheable=True), "playcount"))
+            self._request(
+                self.ws_prefix + ".getInfo", cacheable=True), "playcount"))
 
     def get_userplaycount(self):
         """Returns the number of plays by a given username"""
@@ -1819,13 +1803,15 @@ class Album(_BaseObject, _Taggable):
         params['username'] = self.username
 
         return _number(_extract(
-            self._request("album.getInfo", True, params), "userplaycount"))
+            self._request(
+                self.ws_prefix + ".getInfo", True, params), "userplaycount"))
 
     def get_listener_count(self):
         """Returns the number of listeners on the network"""
 
         return _number(_extract(
-            self._request("album.getInfo", cacheable=True), "listeners"))
+            self._request(
+                self.ws_prefix + ".getInfo", cacheable=True), "listeners"))
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -1837,7 +1823,8 @@ class Album(_BaseObject, _Taggable):
     def get_mbid(self):
         """Returns the MusicBrainz id of the album."""
 
-        return _extract(self._request("album.getInfo", cacheable=True), "mbid")
+        return _extract(
+            self._request(self.ws_prefix + ".getInfo", cacheable=True), "mbid")
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the album page on the network.
@@ -1861,7 +1848,7 @@ class Album(_BaseObject, _Taggable):
         album = _url_safe(self.get_title())
 
         return self.network._get_url(
-            domain_name, "album") % {'artist': artist, 'album': album}
+            domain_name, "album") % {'artist': artist, self.ws_prefix: album}
 
 
 class Artist(_BaseObject, _Taggable):
@@ -2094,22 +2081,6 @@ class Artist(_BaseObject, _Taggable):
             )
         return images
 
-    def get_shouts(self, limit=50, cacheable=False):
-        """
-            Returns a sequqence of Shout objects
-        """
-
-        shouts = []
-        for node in _collect_nodes(limit, self, "artist.getShouts", cacheable):
-            shouts.append(
-                Shout(
-                    _extract(node, "body"),
-                    User(_extract(node, "author"), self.network),
-                    _extract(node, "date")
-                )
-            )
-        return shouts
-
     def shout(self, message):
         """
             Post a shout
@@ -2279,22 +2250,6 @@ class Event(_BaseObject):
         return self.network._get_url(
             domain_name, "event") % {'id': self.get_id()}
 
-    def get_shouts(self, limit=50, cacheable=False):
-        """
-            Returns a sequqence of Shout objects
-        """
-
-        shouts = []
-        for node in _collect_nodes(limit, self, "event.getShouts", cacheable):
-            shouts.append(
-                Shout(
-                    _extract(node, "body"),
-                    User(_extract(node, "author"), self.network),
-                    _extract(node, "date")
-                )
-            )
-        return shouts
-
     def shout(self, message):
         """
             Post a shout
@@ -2304,6 +2259,7 @@ class Event(_BaseObject):
         params["message"] = message
 
         self._request("event.Shout", False, params)
+
 
 class Country(_BaseObject):
     """A country at Last.fm."""
@@ -2330,7 +2286,7 @@ class Country(_BaseObject):
     def __ne__(self, other):
         return self.get_name() != other.get_name()
 
-    def _get_params(self): # TODO can move to _BaseObject
+    def _get_params(self):  # TODO can move to _BaseObject
         return {'country': self.get_name()}
 
     def _get_name_from_code(self, alpha2code):
@@ -2980,6 +2936,12 @@ class Track(_BaseObject, _Taggable):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, username=None):
+        """
+        Create a track instance.
+        # Parameters:
+            * artist: An artist name or an Artist object.
+            * title: The artist title.
+        """
         _BaseObject.__init__(self, network, 'track')
         _Taggable.__init__(self, 'track')
 
@@ -2989,7 +2951,6 @@ class Track(_BaseObject, _Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
-
         self.username = username
 
     def __repr__(self):
@@ -3016,7 +2977,8 @@ class Track(_BaseObject, _Taggable):
 
     def _get_params(self):
         return {
-            'artist': self.get_artist().get_name(), 'track': self.get_title()}
+            'artist': self.get_artist().get_name(),
+            self.ws_prefix: self.get_title()}
 
     def get_artist(self):
         """Returns the associated Artist object."""
@@ -3027,7 +2989,8 @@ class Track(_BaseObject, _Taggable):
         """Returns the track title."""
 
         if properly_capitalized:
-            self.title = _extract(self._request("track.getInfo", True), "name")
+            self.title = _extract(
+                self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.title
 
@@ -3039,21 +3002,21 @@ class Track(_BaseObject, _Taggable):
     def get_id(self):
         """Returns the track id on the network."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "id")
 
     def get_duration(self):
         """Returns the track duration."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _number(_extract(doc, "duration"))
 
     def get_mbid(self):
         """Returns the MusicBrainz ID of this track."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "mbid")
 
@@ -3063,14 +3026,14 @@ class Track(_BaseObject, _Taggable):
         if hasattr(self, "listener_count"):
             return self.listener_count
         else:
-            doc = self._request("track.getInfo", True)
+            doc = self._request(self.ws_prefix + ".getInfo", True)
             self.listener_count = _number(_extract(doc, "listeners"))
             return self.listener_count
 
     def get_playcount(self):
         """Returns the play count."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
         return _number(_extract(doc, "playcount"))
 
     def get_userplaycount(self):
@@ -3081,7 +3044,7 @@ class Track(_BaseObject, _Taggable):
         params = self._get_params()
         params['username'] = self.username
 
-        doc = self._request("track.getInfo", True, params)
+        doc = self._request(self.ws_prefix + ".getInfo", True, params)
         return _number(_extract(doc, "userplaycount"))
 
     def get_userloved(self):
@@ -3092,27 +3055,27 @@ class Track(_BaseObject, _Taggable):
         params = self._get_params()
         params['username'] = self.username
 
-        doc = self._request("track.getInfo", True, params)
+        doc = self._request(self.ws_prefix + ".getInfo", True, params)
         loved = _number(_extract(doc, "userloved"))
         return bool(loved)
 
     def is_streamable(self):
         """Returns True if the track is available at Last.fm."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
         return _extract(doc, "streamable") == "1"
 
     def is_fulltrack_available(self):
         """Returns True if the fulltrack is available for streaming."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
         return doc.getElementsByTagName(
             "streamable")[0].getAttribute("fulltrack") == "1"
 
     def get_album(self):
         """Returns the album object of this track."""
 
-        doc = self._request("track.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         albums = doc.getElementsByTagName("album")
 
@@ -3126,17 +3089,17 @@ class Track(_BaseObject, _Taggable):
     def love(self):
         """Adds the track to the user's loved tracks. """
 
-        self._request('track.love')
+        self._request(self.ws_prefix + '.love')
 
     def unlove(self):
         """Remove the track to the user's loved tracks. """
 
-        self._request('track.unlove')
+        self._request(self.ws_prefix + '.unlove')
 
     def ban(self):
         """Ban this track from ever playing on the radio. """
 
-        self._request('track.ban')
+        self._request(self.ws_prefix + '.ban')
 
     def get_similar(self):
         """
@@ -3144,10 +3107,10 @@ class Track(_BaseObject, _Taggable):
         based on listening data.
         """
 
-        doc = self._request('track.getSimilar', True)
+        doc = self._request(self.ws_prefix + '.getSimilar', True)
 
         seq = []
-        for node in doc.getElementsByTagName("track"):
+        for node in doc.getElementsByTagName(self.ws_prefix):
             title = _extract(node, 'name')
             artist = _extract(node, 'name', 1)
             match = _number(_extract(node, "match"))
@@ -3180,22 +3143,6 @@ class Track(_BaseObject, _Taggable):
             'domain': self.network._get_language_domain(domain_name),
             'artist': artist, 'title': title}
 
-    def get_shouts(self, limit=50, cacheable=False):
-        """
-            Returns a sequqence of Shout objects
-        """
-
-        shouts = []
-        for node in _collect_nodes(limit, self, "track.getShouts", cacheable):
-            shouts.append(
-                Shout(
-                    _extract(node, "body"),
-                    User(_extract(node, "author"), self.network),
-                    _extract(node, "date")
-                )
-            )
-        return shouts
-
 
 class Group(_BaseObject):
     """A Last.fm group."""
@@ -3223,7 +3170,7 @@ class Group(_BaseObject):
         return self.get_name() != other.get_name()
 
     def _get_params(self):
-        return {'group': self.get_name()}
+        return {self.ws_prefix: self.get_name()}
 
     def get_name(self):
         """Returns the group name. """
@@ -3256,7 +3203,8 @@ class Group(_BaseObject):
             if limit==None it will return all
         """
 
-        nodes = _collect_nodes(limit, self, "group.getMembers", cacheable)
+        nodes = _collect_nodes(
+            limit, self, self.ws_prefix + ".getMembers", cacheable)
 
         users = []
 
@@ -3347,20 +3295,21 @@ class User(_BaseObject):
             return True
 
     def _get_params(self):
-        return {"user": self.get_name()}
+        return {self.ws_prefix: self.get_name()}
 
     def get_name(self, properly_capitalized=False):
         """Returns the user name."""
 
         if properly_capitalized:
-            self.name = _extract(self._request("user.getInfo", True), "name")
+            self.name = _extract(
+                self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.name
 
     def get_upcoming_events(self):
         """Returns all the upcoming events for this user."""
 
-        doc = self._request('user.getEvents', True)
+        doc = self._request(self.ws_prefix + '.getEvents', True)
 
         return _extract_events_from_doc(doc, self.network)
 
@@ -3377,7 +3326,11 @@ class User(_BaseObject):
 
         seq = []
         for track in _collect_nodes(
-                None, self, "user.getArtistTracks", cacheable, params):
+                None,
+                self,
+                self.ws_prefix + ".getArtistTracks",
+                cacheable,
+                params):
             title = _extract(track, "name")
             artist = _extract(track, "artist")
             date = _extract(track, "date")
@@ -3394,7 +3347,11 @@ class User(_BaseObject):
         """Returns a list of the user's friends. """
 
         seq = []
-        for node in _collect_nodes(limit, self, "user.getFriends", cacheable):
+        for node in _collect_nodes(
+                limit,
+                self,
+                self.ws_prefix + ".getFriends",
+                cacheable):
             seq.append(User(_extract(node, "name"), self.network))
 
         return seq
@@ -3419,8 +3376,11 @@ class User(_BaseObject):
 
         seq = []
         for track in _collect_nodes(
-                limit, self, "user.getLovedTracks", cacheable, params):
-
+                limit,
+                self,
+                self.ws_prefix + ".getLovedTracks",
+                cacheable,
+                params):
             title = _extract(track, "name")
             artist = _extract(track, "name", 1)
             date = _extract(track, "date")
@@ -3439,7 +3399,7 @@ class User(_BaseObject):
         if limit:
             params['limit'] = limit
 
-        doc = self._request('user.getNeighbours', True, params)
+        doc = self._request(self.ws_prefix + '.getNeighbours', True, params)
 
         seq = []
         names = _extract_all(doc, 'name')
@@ -3456,7 +3416,11 @@ class User(_BaseObject):
         """
 
         seq = []
-        for n in _collect_nodes(limit, self, "user.getPastEvents", cacheable):
+        for n in _collect_nodes(
+                limit,
+                self,
+                self.ws_prefix + ".getPastEvents",
+                cacheable):
             seq.append(Event(_extract(n, "id"), self.network))
 
         return seq
@@ -3464,7 +3428,7 @@ class User(_BaseObject):
     def get_playlists(self):
         """Returns a list of Playlists that this user owns."""
 
-        doc = self._request("user.getPlaylists", True)
+        doc = self._request(self.ws_prefix + ".getPlaylists", True)
 
         playlists = []
         for playlist_id in _extract_all(doc, "id"):
@@ -3481,7 +3445,7 @@ class User(_BaseObject):
         params = self._get_params()
         params['limit'] = '1'
 
-        doc = self._request('user.getRecentTracks', False, params)
+        doc = self._request(self.ws_prefix + '.getRecentTracks', False, params)
 
         tracks = doc.getElementsByTagName('track')
 
@@ -3518,7 +3482,11 @@ class User(_BaseObject):
 
         seq = []
         for track in _collect_nodes(
-                limit, self, "user.getRecentTracks", cacheable, params):
+                limit,
+                self,
+                self.ws_prefix + ".getRecentTracks",
+                cacheable,
+                params):
 
             if track.hasAttribute('nowplaying'):
                 continue  # to prevent the now playing track from sneaking in
@@ -3536,23 +3504,23 @@ class User(_BaseObject):
         return seq
 
     def get_id(self):
-        """Returns the user id."""
+        """Returns the user ID."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "id")
 
     def get_language(self):
         """Returns the language code of the language used by the user."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "lang")
 
     def get_country(self):
         """Returns the name of the country of the user."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         country = _extract(doc, "country")
 
@@ -3564,14 +3532,14 @@ class User(_BaseObject):
     def get_age(self):
         """Returns the user's age."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _number(_extract(doc, "age"))
 
     def get_gender(self):
         """Returns the user's gender. Either USER_MALE or USER_FEMALE."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         value = _extract(doc, "gender")
 
@@ -3585,28 +3553,28 @@ class User(_BaseObject):
     def is_subscriber(self):
         """Returns whether the user is a subscriber or not. True or False."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "subscriber") == "1"
 
     def get_playcount(self):
         """Returns the user's playcount so far."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _number(_extract(doc, "playcount"))
 
     def get_registered(self):
         """Returns the user's registration date."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "registered")
 
     def get_unixtime_registered(self):
         """Returns the user's registration date as a UNIX timestamp."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return doc.getElementsByTagName(
             "registered")[0].getAttribute("unixtime")
@@ -3624,7 +3592,7 @@ class User(_BaseObject):
         params = self._get_params()
         params['period'] = period
 
-        doc = self._request('user.getTopAlbums', True, params)
+        doc = self._request(self.ws_prefix + '.getTopAlbums', True, params)
 
         seq = []
         for album in doc.getElementsByTagName('album'):
@@ -3649,7 +3617,7 @@ class User(_BaseObject):
         params = self._get_params()
         params['period'] = period
 
-        doc = self._request('user.getTopArtists', True, params)
+        doc = self._request(self.ws_prefix + '.getTopArtists', True, params)
 
         seq = []
         for node in doc.getElementsByTagName('artist'):
@@ -3671,7 +3639,7 @@ class User(_BaseObject):
         params = self._get_params()
         if limit: params["limit"] = limit
 
-        doc = self._request("user.getTopTags", cacheable, params)
+        doc = self._request(self.ws_prefix + ".getTopTags", cacheable, params)
 
         seq = []
         for node in doc.getElementsByTagName("tag"):
@@ -3681,7 +3649,8 @@ class User(_BaseObject):
 
         return seq
 
-    def get_top_tracks(self, period=PERIOD_OVERALL, limit=None, cacheable=True):
+    def get_top_tracks(
+            self, period=PERIOD_OVERALL, limit=None, cacheable=True):
         """Returns the top tracks played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -3735,7 +3704,7 @@ class User(_BaseObject):
     def get_image(self):
         """Returns the user's avatar."""
 
-        doc = self._request("user.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "image")
 
@@ -3765,22 +3734,6 @@ class User(_BaseObject):
 
         return Library(self, self.network)
 
-    def get_shouts(self, limit=50, cacheable=False):
-        """
-            Returns a sequence of Shout objects
-        """
-
-        shouts = []
-        for node in _collect_nodes(limit, self, "user.getShouts", cacheable):
-            shouts.append(
-                Shout(
-                    _extract(node, "body"),
-                    User(_extract(node, "author"), self.network),
-                    _extract(node, "date")
-                )
-            )
-        return shouts
-
     def shout(self, message):
         """
             Post a shout
@@ -3789,7 +3742,7 @@ class User(_BaseObject):
         params = self._get_params()
         params["message"] = message
 
-        self._request("user.Shout", False, params)
+        self._request(self.ws_prefix + ".Shout", False, params)
 
 
 class AuthenticatedUser(User):
@@ -4031,7 +3984,7 @@ class Venue(_BaseObject):
         return self.get_id() == other.get_id()
 
     def _get_params(self):
-        return {"venue": self.get_id()}
+        return {self.ws_prefix: self.get_id()}
 
     def get_id(self):
         """Returns the id of the venue."""
@@ -4056,14 +4009,14 @@ class Venue(_BaseObject):
     def get_upcoming_events(self):
         """Returns the upcoming events in this venue."""
 
-        doc = self._request("venue.getEvents", True)
+        doc = self._request(self.ws_prefix + ".getEvents", True)
 
         return _extract_events_from_doc(doc, self.network)
 
     def get_past_events(self):
         """Returns the past events held in this venue."""
 
-        doc = self._request("venue.getEvents", True)
+        doc = self._request(self.ws_prefix + ".getEvents", True)
 
         return _extract_events_from_doc(doc, self.network)
 
