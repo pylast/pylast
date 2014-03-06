@@ -1449,25 +1449,12 @@ class _BaseObject(object):
 
         self._request(self.ws_prefix + '.share', False, params)
 
-    def get_wiki_published_date(self):
-        """
-        Returns the date of publishing this version of the wiki.
-        Only for Album/Tag/Track.
-        """
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "published")
-
-    def get_wiki_summary(self):
+    def get_wiki(self, section):
         """
         Returns the summary of the wiki.
         Only for Album/Track.
+        section can be "content", "summary" or "published"
+            (for published date)
         """
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
@@ -1477,22 +1464,7 @@ class _BaseObject(object):
 
         node = doc.getElementsByTagName("wiki")[0]
 
-        return _extract(node, "summary")
-
-    def get_wiki_content(self):
-        """
-        Returns the content of the wiki.
-        Only for Album/Track.
-        """
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        if len(doc.getElementsByTagName("wiki")) == 0:
-            return
-
-        node = doc.getElementsByTagName("wiki")[0]
-
-        return _extract(node, "content")
+        return _extract(node, section)
 
     def get_shouts(self, limit=50, cacheable=False):
         """

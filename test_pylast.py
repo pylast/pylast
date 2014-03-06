@@ -680,7 +680,18 @@ class TestPyLast(unittest.TestCase):
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act
-        wiki = album.get_wiki_content()
+        wiki = album.get_wiki("content")
+
+        # Assert
+        self.assertIsNotNone(wiki)
+        self.assertGreaterEqual(len(wiki), 1)
+
+    def test_album_wiki_published(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test Album", self.network)
+
+        # Act
+        wiki = album.get_wiki("published")
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -691,7 +702,7 @@ class TestPyLast(unittest.TestCase):
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act
-        wiki = album.get_wiki_summary()
+        wiki = album.get_wiki("summary")
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -702,7 +713,7 @@ class TestPyLast(unittest.TestCase):
         track = pylast.Track("Test Artist", "Test Title", self.network)
 
         # Act
-        wiki = track.get_wiki_content()
+        wiki = track.get_wiki("content")
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -713,7 +724,7 @@ class TestPyLast(unittest.TestCase):
         track = pylast.Track("Test Artist", "Test Title", self.network)
 
         # Act
-        wiki = track.get_wiki_summary()
+        wiki = track.get_wiki("summary")
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -1283,6 +1294,7 @@ if __name__ == '__main__':
 
     if test is not None and len(test):
         suite = unittest.TestSuite()
+
         suite.addTest(TestPyLast(test))
         unittest.TextTestRunner().run(suite)
     else:
