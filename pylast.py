@@ -1774,9 +1774,8 @@ class Album(_BaseObject, _Taggable):
         params = self._get_params()
         params['username'] = self.username
 
-        return _number(_extract(
-            self._request(
-                self.ws_prefix + ".getInfo", True, params), "userplaycount"))
+        doc = self._request(self.ws_prefix + ".getInfo", True, params)
+        return _number(_extract(doc, "userplaycount"))
 
     def get_listener_count(self):
         """Returns the number of listeners on the network"""
@@ -1858,7 +1857,7 @@ class Artist(_BaseObject, _Taggable):
         return self.get_name().lower() != other.get_name().lower()
 
     def _get_params(self):
-        return {'artist': self.get_name()}
+        return {self.ws_prefix: self.get_name()}
 
     def get_name(self, properly_capitalized=False):
         """Returns the name of the artist.
@@ -1866,7 +1865,8 @@ class Artist(_BaseObject, _Taggable):
         overwriting the given one."""
 
         if properly_capitalized:
-            self.name = _extract(self._request("artist.getInfo", True), "name")
+            self.name = _extract(
+                self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.name
 
@@ -1882,13 +1882,13 @@ class Artist(_BaseObject, _Taggable):
         """
 
         return _extract_all(
-            self._request("artist.getInfo", True), "image")[size]
+            self._request(self.ws_prefix + ".getInfo", True), "image")[size]
 
     def get_playcount(self):
         """Returns the number of plays on the network."""
 
         return _number(_extract(
-            self._request("artist.getInfo", True), "playcount"))
+            self._request(self.ws_prefix + ".getInfo", True), "playcount"))
 
     def get_userplaycount(self):
         """Returns the number of plays by a given username"""
@@ -1898,13 +1898,13 @@ class Artist(_BaseObject, _Taggable):
         params = self._get_params()
         params['username'] = self.username
 
-        return _number(_extract(
-            self._request("artist.getInfo", True, params), "userplaycount"))
+        doc = self._request(self.ws_prefix + ".getInfo", True, params)
+        return _number(_extract(doc, "userplaycount"))
 
     def get_mbid(self):
         """Returns the MusicBrainz ID of this artist."""
 
-        doc = self._request("artist.getInfo", True)
+        doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "mbid")
 
@@ -1915,19 +1915,20 @@ class Artist(_BaseObject, _Taggable):
             return self.listener_count
         else:
             self.listener_count = _number(_extract(
-                self._request("artist.getInfo", True), "listeners"))
+                self._request(self.ws_prefix + ".getInfo", True), "listeners"))
             return self.listener_count
 
     def is_streamable(self):
         """Returns True if the artist is streamable."""
 
         return bool(_number(_extract(
-            self._request("artist.getInfo", True), "streamable")))
+            self._request(self.ws_prefix + ".getInfo", True), "streamable")))
 
     def get_bio_published_date(self):
         """Returns the date on which the artist's biography was published."""
 
-        return _extract(self._request("artist.getInfo", True), "published")
+        return _extract(
+            self._request(self.ws_prefix + ".getInfo", True), "published")
 
     def get_bio_summary(self, language=None):
         """Returns the summary of the artist's biography."""
@@ -1939,7 +1940,7 @@ class Artist(_BaseObject, _Taggable):
             params = None
 
         return self._extract_cdata_from_request(
-            "artist.getInfo", "summary", params)
+            self.ws_prefix + ".getInfo", "summary", params)
 
     def get_bio_content(self, language=None):
         """Returns the content of the artist's biography."""
@@ -1951,12 +1952,12 @@ class Artist(_BaseObject, _Taggable):
             params = None
 
         return self._extract_cdata_from_request(
-            "artist.getInfo", "content", params)
+            self.ws_prefix + ".getInfo", "content", params)
 
     def get_upcoming_events(self):
         """Returns a list of the upcoming Events for this artist."""
 
-        doc = self._request('artist.getEvents', True)
+        doc = self._request(self.ws_prefix + '.getEvents', True)
 
         return _extract_events_from_doc(doc, self.network)
 
@@ -1967,7 +1968,7 @@ class Artist(_BaseObject, _Taggable):
         if limit:
             params['limit'] = limit
 
-        doc = self._request('artist.getSimilar', True, params)
+        doc = self._request(self.ws_prefix + '.getSimilar', True, params)
 
         names = _extract_all(doc, "name")
         matches = _extract_all(doc, "match")
@@ -2022,36 +2023,11 @@ class Artist(_BaseObject, _Taggable):
 
     def get_images(self, order=IMAGES_ORDER_POPULARITY, limit=None):
         """
-            Returns a sequence of Image objects
-            if limit is None it will return all
-            order can be IMAGES_ORDER_POPULARITY or IMAGES_ORDER_DATE.
-
-            If limit==None, it will try to pull all the available data.
+        The artist.getImages method has been deprecated by Last.fm.
         """
-
-        images = []
-
-        params = self._get_params()
-        params["order"] = order
-        nodes = _collect_nodes(limit, self, "artist.getImages", True, params)
-        for e in nodes:
-            if _extract(e, "name"):
-                user = User(_extract(e, "name"), self.network)
-            else:
-                user = None
-
-            images.append(
-                Image(
-                    _extract(e, "title"),
-                    _extract(e, "url"),
-                    _extract(e, "dateadded"),
-                    _extract(e, "format"),
-                    user,
-                    ImageSizes(*_extract_all(e, "size")),
-                    (_extract(e, "thumbsup"), _extract(e, "thumbsdown"))
-                )
-            )
-        return images
+        raise WSError(
+            self.network, "27",
+            "The artist.getImages method has been deprecated by Last.fm.")
 
     def shout(self, message):
         """
@@ -2530,7 +2506,7 @@ class Library(_BaseObject):
         params["artist"] = album.get_artist().get_name()
         params["album"] = album.get_name()
 
-        self._request("library.removeAlbum", False, params)
+        self._request(self.ws_prefix + ".removeAlbum", False, params)
 
     def add_artist(self, artist):
         """Add an artist to this library."""
@@ -2541,7 +2517,7 @@ class Library(_BaseObject):
         else:
             params["artist"] = artist.get_name()
 
-        self._request("library.addArtist", False, params)
+        self._request(self.ws_prefix + ".addArtist", False, params)
 
     def remove_artist(self, artist):
         """Remove an artist from this library."""
@@ -2552,7 +2528,7 @@ class Library(_BaseObject):
         else:
             params["artist"] = artist.get_name()
 
-        self._request("library.removeArtist", False, params)
+        self._request(self.ws_prefix + ".removeArtist", False, params)
 
     def add_track(self, track):
         """Add a track to this library."""
@@ -2560,7 +2536,7 @@ class Library(_BaseObject):
         params = self._get_params()
         params["track"] = track.get_title()
 
-        self._request("library.addTrack", False, params)
+        self._request(self.ws_prefix + ".addTrack", False, params)
 
     def get_albums(self, artist=None, limit=50, cacheable=True):
         """
@@ -2576,7 +2552,11 @@ class Library(_BaseObject):
 
         seq = []
         for node in _collect_nodes(
-                limit, self, "library.getAlbums", cacheable, params):
+                limit,
+                self,
+                self.ws_prefix + ".getAlbums",
+                cacheable,
+                params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -2595,7 +2575,10 @@ class Library(_BaseObject):
 
         seq = []
         for node in _collect_nodes(
-                limit, self, "library.getArtists", cacheable):
+                limit,
+                self,
+                self.ws_prefix + ".getArtists",
+                cacheable):
             name = _extract(node, "name")
 
             playcount = _number(_extract(node, "playcount"))
@@ -2620,7 +2603,11 @@ class Library(_BaseObject):
 
         seq = []
         for node in _collect_nodes(
-                limit, self, "library.getTracks", cacheable, params):
+                limit,
+                self,
+                self.ws_prefix + ".getTracks",
+                cacheable,
+                params):
             name = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))
@@ -2644,7 +2631,7 @@ class Library(_BaseObject):
         params["track"] = title
         params["timestamp"] = timestamp
 
-        self._request("library.removeScrobble", False, params)
+        self._request(self.ws_prefix + ".removeScrobble", False, params)
 
 
 class Playlist(_BaseObject):
@@ -2684,7 +2671,7 @@ class Playlist(_BaseObject):
         return {'user': self.user.get_name(), 'playlistID': self.get_id()}
 
     def get_id(self):
-        """Returns the playlist id."""
+        """Returns the playlist ID."""
 
         return self.id
 
@@ -2815,20 +2802,21 @@ class Tag(_BaseObject):
         return self.get_name().lower() != other.get_name().lower()
 
     def _get_params(self):
-        return {'tag': self.get_name()}
+        return {self.ws_prefix: self.get_name()}
 
     def get_name(self, properly_capitalized=False):
         """Returns the name of the tag. """
 
         if properly_capitalized:
-            self.name = _extract(self._request("tag.getInfo", True), "name")
+            self.name = _extract(
+                self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.name
 
     def get_similar(self):
         """Returns the tags similar to this one, ordered by similarity. """
 
-        doc = self._request('tag.getSimilar', True)
+        doc = self._request(self.ws_prefix + '.getSimilar', True)
 
         seq = []
         names = _extract_all(doc, 'name')
@@ -2840,7 +2828,7 @@ class Tag(_BaseObject):
     def get_top_albums(self):
         """Retuns a list of the top albums."""
 
-        doc = self._request('tag.getTopAlbums', True)
+        doc = self._request(self.ws_prefix + '.getTopAlbums', True)
 
         seq = []
 
@@ -2865,7 +2853,7 @@ class Tag(_BaseObject):
     def get_top_artists(self):
         """Returns a sequence of the most played artists."""
 
-        doc = self._request('tag.getTopArtists', True)
+        doc = self._request(self.ws_prefix + '.getTopArtists', True)
 
         seq = []
         for node in doc.getElementsByTagName("artist"):
@@ -3123,10 +3111,10 @@ class Group(_BaseObject):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, group_name, network):
+    def __init__(self, name, network):
         _BaseObject.__init__(self, network, 'group')
 
-        self.name = group_name
+        self.name = name
 
     def __repr__(self):
         return "pylast.Group(%s, %s)" % (repr(self.name), repr(self.network))
@@ -3222,9 +3210,9 @@ class XSPF(_BaseObject):
         doc = self._request('playlist.fetch', True)
 
         seq = []
-        for n in doc.getElementsByTagName('track'):
-            title = _extract(n, 'title')
-            artist = _extract(n, 'creator')
+        for node in doc.getElementsByTagName('track'):
+            title = _extract(node, 'title')
+            artist = _extract(node, 'creator')
 
             seq.append(Track(artist, title, self.network))
 
@@ -3388,12 +3376,12 @@ class User(_BaseObject):
         """
 
         seq = []
-        for n in _collect_nodes(
+        for node in _collect_nodes(
                 limit,
                 self,
                 self.ws_prefix + ".getPastEvents",
                 cacheable):
-            seq.append(Event(_extract(n, "id"), self.network))
+            seq.append(Event(_extract(node, "id"), self.network))
 
         return seq
 
@@ -3567,10 +3555,10 @@ class User(_BaseObject):
         doc = self._request(self.ws_prefix + '.getTopAlbums', True, params)
 
         seq = []
-        for album in doc.getElementsByTagName('album'):
-            name = _extract(album, 'name')
-            artist = _extract(album, 'name', 1)
-            playcount = _extract(album, "playcount")
+        for node in doc.getElementsByTagName('album'):
+            name = _extract(node, 'name')
+            artist = _extract(node, 'name', 1)
+            playcount = _extract(node, "playcount")
 
             seq.append(TopItem(Album(artist, name, self.network), playcount))
 
