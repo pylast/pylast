@@ -1373,6 +1373,26 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
 
+    def test_tag_top_albums(self):
+        # Arrange
+        tag = self.network.get_tag("blues")
+
+        # Act
+        albums = tag.get_top_albums(limit=1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(albums, pylast.Album)
+
+    def test_user_top_albums(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        albums = user.get_top_albums(limit=1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(albums, pylast.Album)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

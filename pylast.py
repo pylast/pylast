@@ -2862,20 +2862,16 @@ class Tag(_BaseObject):
 
         return seq
 
-    def get_top_albums(self):
+    def get_top_albums(self, limit=None, cacheable=True):
         """Retuns a list of the top albums."""
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
 
-        doc = self._request(self.ws_prefix + '.getTopAlbums', True)
+        doc = self._request(
+            self.ws_prefix + '.getTopAlbums', cacheable, params)
 
-        seq = []
-        for node in doc.getElementsByTagName("album"):
-            name = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            playcount = _extract(node, "playcount")
-
-            seq.append(TopItem(Album(artist, name, self.network), playcount))
-
-        return seq
+        return _extract_top_albums(doc, self.network)
 
     def get_top_tracks(self, limit=None, cacheable=True):
         """Returns a list of the most played Tracks for this tag."""
@@ -3468,7 +3464,8 @@ class User(_BaseObject):
         return doc.getElementsByTagName(
             "registered")[0].getAttribute("unixtime")
 
-    def get_top_albums(self, period=PERIOD_OVERALL):
+    def get_top_albums(
+            self, period=PERIOD_OVERALL, limit=None, cacheable=True):
         """Returns the top albums played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -3480,18 +3477,12 @@ class User(_BaseObject):
 
         params = self._get_params()
         params['period'] = period
+        if limit: params['limit'] = limit
 
-        doc = self._request(self.ws_prefix + '.getTopAlbums', True, params)
+        doc = self._request(
+            self.ws_prefix + '.getTopAlbums', cacheable, params)
 
-        seq = []
-        for node in doc.getElementsByTagName('album'):
-            name = _extract(node, 'name')
-            artist = _extract(node, 'name', 1)
-            playcount = _extract(node, "playcount")
-
-            seq.append(TopItem(Album(artist, name, self.network), playcount))
-
-        return seq
+        return _extract_top_albums(doc, self.network)
 
     def get_top_artists(self, period=PERIOD_OVERALL, limit=None):
         """Returns the top artists played by a user.
@@ -4053,6 +4044,19 @@ def _extract_top_artists(doc, network):
         playcount = _extract(node, "playcount")
 
         seq.append(TopItem(Artist(name, network), playcount))
+
+    return seq
+
+
+def _extract_top_albums(doc, network):
+    # TODO Maybe include the _request here too?
+    seq = []
+    for node in doc.getElementsByTagName("album"):
+        name = _extract(node, "name")
+        artist = _extract(node, "name", 1)
+        playcount = _extract(node, "playcount")
+
+        seq.append(TopItem(Album(artist, name, network), playcount))
 
     return seq
 
