@@ -643,12 +643,14 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         import pickle
         lastfm_user = self.network.get_user(self.username)
+        filename = str(self.unix_timestamp()) + ".pkl"
 
         # Act
-        with open("lastfm.txt.pkl", "wb") as f:
+        with open(filename, "wb") as f:
             pickle.dump(lastfm_user, f)
-        with open("lastfm.txt.pkl", "rb") as f:
+        with open(filename, "rb") as f:
             loaded_user = pickle.load(f)
+        os.remove(filename)
 
         # Assert
         self.assertEqual(lastfm_user, loaded_user)
@@ -1290,7 +1292,7 @@ class TestPyLast(unittest.TestCase):
 if __name__ == '__main__':
 
     # For quick testing of a single case (eg. test = "test_scrobble")
-    test = "test_geo_get_events_in_latlong"
+    test = ""
 
     if test is not None and len(test):
         suite = unittest.TestSuite()
