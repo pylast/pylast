@@ -1288,6 +1288,49 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_two_things_in_list(shouts, pylast.Shout)
 
+    def test_album_data(self):
+        # Arrange
+        thing = self.network.get_album("Test Artist", "Test Album")
+
+        # Act
+        stringed = str(thing)
+        repr = thing.__repr__()
+        title = thing.get_title()
+        name = thing.get_name()
+        playcount = thing.get_playcount()
+        url = thing.get_url()
+
+        # Assert
+        self.assertEqual(stringed, "Test Artist - Test Album")
+        self.assertIn("pylast.Album('Test Artist', 'Test Album',", repr)
+        self.assertEqual(title, name)
+        self.assertIsInstance(playcount, int)
+        self.assertGreater(playcount, 1)
+        self.assertEqual(
+            "http://www.last.fm/music/test%2bartist/test%2balbum", url)
+
+    def test_track_data(self):
+        # Arrange
+        thing = self.network.get_track("Test Artist", "Test Title")
+
+        # Act
+        stringed = str(thing)
+        repr = thing.__repr__()
+        title = thing.get_title()
+        name = thing.get_name()
+        playcount = thing.get_playcount()
+        url = thing.get_url(pylast.DOMAIN_FRENCH)
+
+        # Assert
+        self.assertEqual(stringed, "Test Artist - Test Title")
+        self.assertIn("pylast.Track('Test Artist', 'Test Title',", repr)
+        self.assertEqual(title, "Test Title")
+        self.assertEqual(title, name)
+        self.assertIsInstance(playcount, int)
+        self.assertGreater(playcount, 1)
+        self.assertEqual(
+            "http://www.lastfm.fr/music/test%2bartist/_/test%2btitle", url)
+
 
 if __name__ == '__main__':
 

@@ -1661,8 +1661,8 @@ class NetworkError(Exception):
         return "NetworkError: %s" % str(self.underlying_error)
 
 
-class Album(_BaseObject, _Taggable):
-    """An album."""
+class _Opus(_BaseObject, _Taggable):
+    """An album or track."""
 
     artist = None
     title = None
@@ -1670,16 +1670,17 @@ class Album(_BaseObject, _Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, artist, title, network, username=None):
+    def __init__(self, artist, title, network, ws_prefix, username=None):
         """
-        Create an album instance.
+        Create an opus instance.
         # Parameters:
             * artist: An artist name or an Artist object.
-            * title: The album title.
+            * title: The album or track title.
+            * ws_prefix: 'album' or 'track'
         """
 
-        _BaseObject.__init__(self, network, 'album')
-        _Taggable.__init__(self, 'album')
+        _BaseObject.__init__(self, network, ws_prefix)
+        _Taggable.__init__(self, ws_prefix)
 
         if isinstance(artist, Artist):
             self.artist = artist
@@ -1690,8 +1691,9 @@ class Album(_BaseObject, _Taggable):
         self.username = username
 
     def __repr__(self):
-        return "pylast.Album(%s, %s, %s)" % (
-            repr(self.artist.name), repr(self.title), repr(self.network))
+        return "pylast.%s(%s, %s, %s)" % (
+            self.ws_prefix.title(), repr(self.artist.name),
+            repr(self.title), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -1715,46 +1717,28 @@ class Album(_BaseObject, _Taggable):
     def _get_params(self):
         return {
             'artist': self.get_artist().get_name(),
-            self.ws_prefix: self.get_title(),
-        }
+            self.ws_prefix: self.get_title()}
 
     def get_artist(self):
         """Returns the associated Artist object."""
 
         return self.artist
 
-    def get_title(self):
-        """Returns the album title."""
+    def get_title(self, properly_capitalized=False):
+        """Returns the artist or track title."""
+        if properly_capitalized:
+            self.title = _extract(
+                self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.title
 
-    def get_name(self):
-        """Returns the album title (alias to Album.get_title)."""
+    def get_name(self, properly_capitalized=False):
+        """Returns the album or track title (alias to get_title())."""
 
-        return self.get_title()
-
-    def get_release_date(self):
-        """Returns the release date of the album."""
-
-        return _extract(self._request(
-            self.ws_prefix + ".getInfo", cacheable=True), "releasedate")
-
-    def get_cover_image(self, size=COVER_EXTRA_LARGE):
-        """
-        Returns a uri to the cover image
-        size can be one of:
-            COVER_EXTRA_LARGE
-            COVER_LARGE
-            COVER_MEDIUM
-            COVER_SMALL
-        """
-
-        return _extract_all(
-            self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+        return self.get_title(properly_capitalized)
 
     def get_id(self):
-        """Returns the ID"""
+        """Returns the ID on the network."""
 
         return _extract(
             self._request(self.ws_prefix + ".getInfo", cacheable=True), "id")
@@ -1784,6 +1768,41 @@ class Album(_BaseObject, _Taggable):
             self._request(
                 self.ws_prefix + ".getInfo", cacheable=True), "listeners"))
 
+    def get_mbid(self):
+        """Returns the MusicBrainz ID of the album or track."""
+
+        return _extract(
+            self._request(self.ws_prefix + ".getInfo", cacheable=True), "mbid")
+
+
+class Album(_Opus):
+    """An album."""
+
+    __hash__ = _Opus.__hash__
+
+    def __init__(self, artist, title, network, username=None):
+        super(Album, self).__init__(artist, title, network, "album", username)
+
+    def get_release_date(self):
+        """Returns the release date of the album."""
+
+        return _extract(self._request(
+            self.ws_prefix + ".getInfo", cacheable=True), "releasedate")
+
+    def get_cover_image(self, size=COVER_EXTRA_LARGE):
+        """
+        Returns a uri to the cover image
+        size can be one of:
+            COVER_EXTRA_LARGE
+            COVER_LARGE
+            COVER_MEDIUM
+            COVER_SMALL
+        """
+
+        return _extract_all(
+            self._request(
+                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
 
@@ -1791,14 +1810,8 @@ class Album(_BaseObject, _Taggable):
 
         return XSPF(uri, self.network).get_tracks()
 
-    def get_mbid(self):
-        """Returns the MusicBrainz id of the album."""
-
-        return _extract(
-            self._request(self.ws_prefix + ".getInfo", cacheable=True), "mbid")
-
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the album page on the network.
+        """Returns the URL of the album or track page on the network.
         # Parameters:
         * domain_name str: The network's language domain. Possible values:
             o DOMAIN_ENGLISH
@@ -1816,10 +1829,11 @@ class Album(_BaseObject, _Taggable):
         """
 
         artist = _url_safe(self.get_artist().get_name())
-        album = _url_safe(self.get_title())
+        title = _url_safe(self.get_title())
 
         return self.network._get_url(
-            domain_name, "album") % {'artist': artist, self.ws_prefix: album}
+            domain_name, self.ws_prefix) % {
+            'artist': artist, 'album': title}
 
 
 class Artist(_BaseObject, _Taggable):
@@ -2886,85 +2900,13 @@ class Tag(_BaseObject):
         return self.network._get_url(domain_name, "tag") % {'name': name}
 
 
-class Track(_BaseObject, _Taggable):
+class Track(_Opus):
     """A Last.fm track."""
 
-    artist = None
-    title = None
-    username = None
-
-    __hash__ = _BaseObject.__hash__
+    __hash__ = _Opus.__hash__
 
     def __init__(self, artist, title, network, username=None):
-        """
-        Create a track instance.
-        # Parameters:
-            * artist: An artist name or an Artist object.
-            * title: The artist title.
-        """
-        _BaseObject.__init__(self, network, 'track')
-        _Taggable.__init__(self, 'track')
-
-        if isinstance(artist, Artist):
-            self.artist = artist
-        else:
-            self.artist = Artist(artist, self.network)
-
-        self.title = title
-        self.username = username
-
-    def __repr__(self):
-        return "pylast.Track(%s, %s, %s)" % (
-            repr(self.artist.name), repr(self.title), repr(self.network))
-
-    @_string_output
-    def __str__(self):
-        return self.get_artist().get_name() + ' - ' + self.get_title()
-
-    def __eq__(self, other):
-        a = self.get_title().lower()
-        b = other.get_title().lower()
-        c = self.get_artist().get_name().lower()
-        d = other.get_artist().get_name().lower()
-        return (a == b) and (c == d)
-
-    def __ne__(self, other):
-        a = self.get_title().lower()
-        b = other.get_title().lower()
-        c = self.get_artist().get_name().lower()
-        d = other.get_artist().get_name().lower()
-        return (a != b) or (c != d)
-
-    def _get_params(self):
-        return {
-            'artist': self.get_artist().get_name(),
-            self.ws_prefix: self.get_title()}
-
-    def get_artist(self):
-        """Returns the associated Artist object."""
-
-        return self.artist
-
-    def get_title(self, properly_capitalized=False):
-        """Returns the track title."""
-
-        if properly_capitalized:
-            self.title = _extract(
-                self._request(self.ws_prefix + ".getInfo", True), "name")
-
-        return self.title
-
-    def get_name(self, properly_capitalized=False):
-        """Returns the track title (alias to Track.get_title)."""
-
-        return self.get_title(properly_capitalized)
-
-    def get_id(self):
-        """Returns the track id on the network."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "id")
+        super(Track, self).__init__(artist, title, network, "track", username)
 
     def get_duration(self):
         """Returns the track duration."""
@@ -2972,40 +2914,6 @@ class Track(_BaseObject, _Taggable):
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _number(_extract(doc, "duration"))
-
-    def get_mbid(self):
-        """Returns the MusicBrainz ID of this track."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "mbid")
-
-    def get_listener_count(self):
-        """Returns the listener count."""
-
-        if hasattr(self, "listener_count"):
-            return self.listener_count
-        else:
-            doc = self._request(self.ws_prefix + ".getInfo", True)
-            self.listener_count = _number(_extract(doc, "listeners"))
-            return self.listener_count
-
-    def get_playcount(self):
-        """Returns the play count."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-        return _number(_extract(doc, "playcount"))
-
-    def get_userplaycount(self):
-        """Returns the number of plays by a given username"""
-
-        if not self.username: return
-
-        params = self._get_params()
-        params['username'] = self.username
-
-        doc = self._request(self.ws_prefix + ".getInfo", True, params)
-        return _number(_extract(doc, "userplaycount"))
 
     def get_userloved(self):
         """Whether the user loved this track"""
@@ -3080,27 +2988,28 @@ class Track(_BaseObject, _Taggable):
         return seq
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the track page on the network.
-        * domain_name: The network's language domain. Possible values:
-          o DOMAIN_ENGLISH
-          o DOMAIN_GERMAN
-          o DOMAIN_SPANISH
-          o DOMAIN_FRENCH
-          o DOMAIN_ITALIAN
-          o DOMAIN_POLISH
-          o DOMAIN_PORTUGUESE
-          o DOMAIN_SWEDISH
-          o DOMAIN_TURKISH
-          o DOMAIN_RUSSIAN
-          o DOMAIN_JAPANESE
-          o DOMAIN_CHINESE
+        """Returns the URL of the album or track page on the network.
+        # Parameters:
+        * domain_name str: The network's language domain. Possible values:
+            o DOMAIN_ENGLISH
+            o DOMAIN_GERMAN
+            o DOMAIN_SPANISH
+            o DOMAIN_FRENCH
+            o DOMAIN_ITALIAN
+            o DOMAIN_POLISH
+            o DOMAIN_PORTUGUESE
+            o DOMAIN_SWEDISH
+            o DOMAIN_TURKISH
+            o DOMAIN_RUSSIAN
+            o DOMAIN_JAPANESE
+            o DOMAIN_CHINESE
         """
 
         artist = _url_safe(self.get_artist().get_name())
         title = _url_safe(self.get_title())
 
-        return self.network._get_url(domain_name, "track") % {
-            'domain': self.network._get_language_domain(domain_name),
+        return self.network._get_url(
+            domain_name, self.ws_prefix) % {
             'artist': artist, 'title': title}
 
 
