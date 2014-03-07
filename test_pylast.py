@@ -1343,6 +1343,36 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(
             "http://www.lastfm.fr/music/test%2bartist/_/test%2btitle", url)
 
+    def test_tag_top_artists(self):
+        # Arrange
+        tag = self.network.get_tag("blues")
+
+        # Act
+        artists = tag.get_top_artists(limit=1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
+
+    def test_country_top_artists(self):
+        # Arrange
+        country = self.network.get_country("Ukraine")
+
+        # Act
+        artists = country.get_top_artists(limit=1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
+
+    def test_user_top_artists(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        artists = lastfm_user.get_top_artists(limit=1)
+
+        # Assert
+        self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
