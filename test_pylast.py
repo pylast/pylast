@@ -1179,10 +1179,10 @@ class TestPyLast(unittest.TestCase):
         (from_date, to_date) = date
 
         # Act
-        artist_chart = thing.get_weekly_charts("artist", from_date, to_date)
+        artist_chart = thing.get_weekly_artist_charts(from_date, to_date)
         if type(thing) is not pylast.Tag:
-            album_chart = thing.get_weekly_charts("album", from_date, to_date)
-            track_chart = thing.get_weekly_charts("track", from_date, to_date)
+            album_chart = thing.get_weekly_album_charts(from_date, to_date)
+            track_chart = thing.get_weekly_track_charts(from_date, to_date)
 
         # Assert
         self.helper_assert_chart(artist_chart, pylast.Artist)

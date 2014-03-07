@@ -1368,14 +1368,38 @@ class _BaseObject(object):
 
         return seq
 
-    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
+    def get_weekly_album_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly album charts for the week starting from the
+        from_date value to the to_date value.
+        Only for Group or User.
+        """
+        return self.get_weekly_charts("album", from_date, to_date)
+
+    def get_weekly_artist_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly artist charts for the week starting from the
+        from_date value to the to_date value.
+        Only for Group, Tag or User.
+        """
+        return self.get_weekly_charts("artist", from_date, to_date)
+
+    def get_weekly_track_charts(self, from_date=None, to_date=None):
         """
         Returns the weekly track charts for the week starting from the
         from_date value to the to_date value.
-        chart_kind should be one of "album", "track"
+        Only for Group or User.
+        """
+        return self.get_weekly_charts("track", from_date, to_date)
+
+    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
+        """
+        Returns the weekly charts for the week starting from the
+        from_date value to the to_date value.
+        chart_kind should be one of "album", "artist" or "track"
         """
         method = ".getWeekly" + chart_kind.title() + "Chart"
-        chart_type = eval(chart_kind.title())
+        chart_type = eval(chart_kind.title())  # string to type
 
         params = self._get_params()
         if from_date and to_date:
