@@ -87,10 +87,20 @@ export PYLAST_API_KEY=TODO_ENTER_YOURS_HERE
 export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 ```
 
-Then:
+To run all:
 ```
 pip install pyyaml
 ./test_pylast.py
+```
+
+Or run just one:
+```
+./test_pylast.py -1 test_scrobble
+```
+
+Or all those tests matching a term:
+```
+./test_pylast.py -m geo
 ```
 
 To run with coverage:

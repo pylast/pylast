@@ -1449,9 +1449,30 @@ class _BaseObject(object):
 
         self._request(self.ws_prefix + '.share', False, params)
 
-    def get_wiki(self, section):
+    def get_wiki_published_date(self):
         """
         Returns the summary of the wiki.
+        Only for Album/Track.
+        """
+        return self.get_wiki("published")
+
+    def get_wiki_summary(self):
+        """
+        Returns the summary of the wiki.
+        Only for Album/Track.
+        """
+        return self.get_wiki("summary")
+
+    def get_wiki_content(self):
+        """
+        Returns the summary of the wiki.
+        Only for Album/Track.
+        """
+        return self.get_wiki("content")
+
+    def get_wiki(self, section):
+        """
+        Returns a section of the wiki.
         Only for Album/Track.
         section can be "content", "summary" or "published"
             (for published date)

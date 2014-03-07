@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import argparse
 import os
 from random import choice
 import time
@@ -682,18 +683,18 @@ class TestPyLast(unittest.TestCase):
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act
-        wiki = album.get_wiki("content")
+        wiki = album.get_wiki_content()
 
         # Assert
         self.assertIsNotNone(wiki)
         self.assertGreaterEqual(len(wiki), 1)
 
-    def test_album_wiki_published(self):
+    def test_album_wiki_published_date(self):
         # Arrange
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act
-        wiki = album.get_wiki("published")
+        wiki = album.get_wiki_published_date()
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -704,7 +705,7 @@ class TestPyLast(unittest.TestCase):
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act
-        wiki = album.get_wiki("summary")
+        wiki = album.get_wiki_summary()
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -715,7 +716,7 @@ class TestPyLast(unittest.TestCase):
         track = pylast.Track("Test Artist", "Test Title", self.network)
 
         # Act
-        wiki = track.get_wiki("content")
+        wiki = track.get_wiki_content()
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -726,7 +727,7 @@ class TestPyLast(unittest.TestCase):
         track = pylast.Track("Test Artist", "Test Title", self.network)
 
         # Act
-        wiki = track.get_wiki("summary")
+        wiki = track.get_wiki_summary()
 
         # Assert
         self.assertIsNotNone(wiki)
@@ -1333,15 +1334,35 @@ class TestPyLast(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description = "Integration (not unit) tests for pylast.py",
+        formatter_class = argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-1', '--single',
+        help="Run a single test")
+    parser.add_argument('-m', '--matching',
+        help="Run tests with this in the name")
+    args = parser.parse_args()
 
-    # For quick testing of a single case (eg. test = "test_scrobble")
-    test = ""
-
-    if test is not None and len(test):
+    if args.single:
         suite = unittest.TestSuite()
 
-        suite.addTest(TestPyLast(test))
+        suite.addTest(TestPyLast(args.single))
         unittest.TextTestRunner().run(suite)
+
+    elif args.matching:
+        suite = unittest.TestSuite()
+
+        import inspect
+        methods = inspect.getmembers(TestPyLast, predicate=inspect.ismethod)
+
+        tests = []
+        for method, _ in methods:
+            if method.startswith("test_") and args.matching in method:
+                print method
+                suite.addTest(TestPyLast(method))
+
+        unittest.TextTestRunner().run(suite)
+
     else:
         unittest.main()
 
