@@ -1474,8 +1474,8 @@ class _BaseObject(object):
         """
         Returns a section of the wiki.
         Only for Album/Track.
-        section can be "content", "summary" or "published"
-            (for published date)
+        section can be "content", "summary" or
+            "published" (for published date)
         """
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
@@ -1959,35 +1959,32 @@ class Artist(_BaseObject, _Taggable):
         return bool(_number(_extract(
             self._request(self.ws_prefix + ".getInfo", True), "streamable")))
 
+    def get_bio(self, section, language=None):
+        """
+        Returns a section of the bio.
+        section can be "content", "summary" or
+            "published" (for published date)
+        """
+        if language:
+            params = self._get_params()
+            params["lang"] = language
+        else:
+            params = None
+
+        return self._extract_cdata_from_request(
+            self.ws_prefix + ".getInfo", section, params)
+
     def get_bio_published_date(self):
         """Returns the date on which the artist's biography was published."""
-
-        return _extract(
-            self._request(self.ws_prefix + ".getInfo", True), "published")
+        return self.get_bio("published")
 
     def get_bio_summary(self, language=None):
         """Returns the summary of the artist's biography."""
-
-        if language:
-            params = self._get_params()
-            params["lang"] = language
-        else:
-            params = None
-
-        return self._extract_cdata_from_request(
-            self.ws_prefix + ".getInfo", "summary", params)
+        return self.get_bio("summary", language)
 
     def get_bio_content(self, language=None):
         """Returns the content of the artist's biography."""
-
-        if language:
-            params = self._get_params()
-            params["lang"] = language
-        else:
-            params = None
-
-        return self._extract_cdata_from_request(
-            self.ws_prefix + ".getInfo", "content", params)
+        return self.get_bio("content", language)
 
     def get_upcoming_events(self):
         """Returns a list of the upcoming Events for this artist."""

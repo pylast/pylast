@@ -656,6 +656,17 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(lastfm_user, loaded_user)
 
+    def test_bio_published_date(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+
+        # Act
+        bio = artist.get_bio_published_date()
+
+        # Assert
+        self.assertIsNotNone(bio)
+        self.assertGreaterEqual(len(bio), 1)
+
     def test_bio_content(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
@@ -1335,11 +1346,13 @@ class TestPyLast(unittest.TestCase):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description = "Integration (not unit) tests for pylast.py",
-        formatter_class = argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-1', '--single',
+        description="Integration (not unit) tests for pylast.py",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        '-1', '--single',
         help="Run a single test")
-    parser.add_argument('-m', '--matching',
+    parser.add_argument(
+        '-m', '--matching',
         help="Run tests with this in the name")
     args = parser.parse_args()
 
@@ -1358,7 +1371,7 @@ if __name__ == '__main__':
         tests = []
         for method, _ in methods:
             if method.startswith("test_") and args.matching in method:
-                print method
+                print(method)
                 suite.addTest(TestPyLast(method))
 
         unittest.TextTestRunner().run(suite)
