@@ -89,7 +89,7 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 
 To run all:
 ```
-pip install pyyaml
+pip install -r test_requirements.txt
 ./test_pylast.py
 ```
 
@@ -105,9 +105,13 @@ Or all those tests matching a term:
 
 To run with coverage:
 ```
-pip install coverage
 coverage run --source=pylast ./test_pylast.py
 coverage report # for command-line report
 coverage html   # for HTML report
 open htmlcov/index.html
+```
+
+To perform some static analysis:
+```
+./check.sh
 ```

@@ -1,0 +1,5 @@
+clonedigger
+coverage
+pep8
+pyyaml
+pyflakes
