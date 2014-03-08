@@ -8,7 +8,12 @@ install:
 script: coverage run --source=pylast ./test_pylast.py
 after_success:
   coveralls
-after_script: ./check.sh
+after_script:
+- ./check.sh
+- pip install clonedigger
+- clonedigger pylast.py
+- grep "Clones detected" output.html
+- grep "lines are duplicates" output.html
 env:
   global:
   - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
