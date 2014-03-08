@@ -5,7 +5,6 @@ python:
 install:
 - pip install -r test_requirements.txt
 - pip install coveralls
-before_script: ./check.sh
 script: coverage run --source=pylast ./test_pylast.py
 after_success:
   coveralls
