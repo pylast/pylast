@@ -337,7 +337,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertGreater(len(tags), 0)
-        self.assertEqual(type(tags[0]), pylast.TopItem)
+        self.assertIsInstance(tags[0], pylast.TopItem)
 
     def test_album_tags_are_topitems(self):
         # Arrange
@@ -348,7 +348,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertGreater(len(tags), 0)
-        self.assertEqual(type(tags[0]), pylast.TopItem)
+        self.assertIsInstance(tags[0], pylast.TopItem)
 
     def helper_is_thing_hashable(self, thing):
         # Arrange
@@ -372,7 +372,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         test_artist = self.network.get_artist("Test Artist")
         artist = test_artist.get_similar(limit=1)[0].item
-        self.assertEqual(type(artist), pylast.Artist)
+        self.assertIsInstance(artist, pylast.Artist)
 
         # Act/Assert
         self.helper_is_thing_hashable(artist)
@@ -432,7 +432,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         artist = self.network.get_artist("Test Artist")
         track = artist.get_top_tracks()[0].item
-        self.assertEqual(type(track), pylast.Track)
+        self.assertIsInstance(track, pylast.Track)
 
         # Act/Assert
         self.helper_is_thing_hashable(track)
@@ -441,7 +441,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         artist = self.network.get_artist("Test Artist")
         user = artist.get_top_fans(limit=1)[0].item
-        self.assertEqual(type(user), pylast.User)
+        self.assertIsInstance(user, pylast.User)
 
         # Act/Assert
         self.helper_is_thing_hashable(user)
@@ -855,7 +855,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(len(events), 1)
         event = events[0]
-        self.assertEqual(type(event), pylast.Event)
+        self.assertIsInstance(event, pylast.Event)
         self.assertEqual(event.get_venue().location['city'], "London")
 
     def test_geo_get_events_in_latlong(self):
@@ -867,7 +867,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(len(events), 1)
         event = events[0]
-        self.assertEqual(type(event), pylast.Event)
+        self.assertIsInstance(event, pylast.Event)
         self.assertEqual(event.get_venue().location['city'], "London")
 
     def test_geo_get_events_festival(self):
@@ -879,13 +879,13 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(len(events), 1)
         event = events[0]
-        self.assertEqual(type(event), pylast.Event)
+        self.assertIsInstance(event, pylast.Event)
         self.assertEqual(event.get_venue().location['city'], "Reading")
 
     def helper_dates_valid(self, dates):
         # Assert
         self.assertGreaterEqual(len(dates), 1)
-        self.assertEqual(type(dates[0]), tuple)
+        self.assertIsInstance(dates[0], tuple)
         (start, end) = dates[0]
         self.assertLess(start, end)
 
@@ -911,8 +911,8 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(chart), 1)
-        self.assertEqual(type(chart[0]), pylast.TopItem)
-        self.assertEqual(type(chart[0].item), expected_type)
+        self.assertIsInstance(chart[0], pylast.TopItem)
+        self.assertIsInstance(chart[0].item, expected_type)
 
     def test_get_metro_artist_chart(self):
         # Arrange/Act/Assert
@@ -947,7 +947,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertGreaterEqual(len(metros), 1)
-        self.assertEqual(type(metros[0]), pylast.Metro)
+        self.assertIsInstance(metros[0], pylast.Metro)
         self.assertEqual(metros[0].get_country(), "Poland")
 
     def test_geo_get_top_artists(self):
@@ -958,8 +958,8 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(artists), 1)
-        self.assertEqual(type(artists[0]), pylast.TopItem)
-        self.assertEqual(type(artists[0].item), pylast.Artist)
+        self.assertIsInstance(artists[0], pylast.TopItem)
+        self.assertIsInstance(artists[0].item, pylast.Artist)
 
     def test_geo_get_top_tracks(self):
         # Arrange
@@ -969,8 +969,8 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(tracks), 1)
-        self.assertEqual(type(tracks[0]), pylast.TopItem)
-        self.assertEqual(type(tracks[0].item), pylast.Track)
+        self.assertIsInstance(tracks[0], pylast.TopItem)
+        self.assertIsInstance(tracks[0].item, pylast.Track)
 
     def test_metro_class(self):
         # Arrange
@@ -996,7 +996,7 @@ class TestPyLast(unittest.TestCase):
         links = self.network.get_album_play_links(albums)
 
         # Assert
-        self.assertEqual(type(links), list)
+        self.assertIsInstance(links, list)
         self.assertEqual(len(links), 2)
         self.assertIn("spotify:album:", links[0])
         self.assertIn("spotify:album:", links[1])
@@ -1008,7 +1008,7 @@ class TestPyLast(unittest.TestCase):
         links = self.network.get_artist_play_links(artists)
 
         # Assert
-        self.assertEqual(type(links), list)
+        self.assertIsInstance(links, list)
         self.assertEqual(len(links), 2)
         self.assertIn("spotify:artist:", links[0])
         self.assertIn("spotify:artist:", links[1])
@@ -1023,7 +1023,7 @@ class TestPyLast(unittest.TestCase):
         links = self.network.get_track_play_links(tracks)
 
         # Assert
-        self.assertEqual(type(links), list)
+        self.assertIsInstance(links, list)
         self.assertEqual(len(links), 2)
         self.assertIn("spotify:track:", links[0])
         self.assertIn("spotify:track:", links[1])
@@ -1031,36 +1031,36 @@ class TestPyLast(unittest.TestCase):
     def helper_at_least_one_thing_in_top_list(self, things, expected_type):
         # Assert
         self.assertGreater(len(things), 1)
-        self.assertEqual(type(things), list)
-        self.assertEqual(type(things[0]), pylast.TopItem)
-        self.assertEqual(type(things[0].item), expected_type)
+        self.assertIsInstance(things, list)
+        self.assertIsInstance(things[0], pylast.TopItem)
+        self.assertIsInstance(things[0].item, expected_type)
 
     def helper_only_one_thing_in_top_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 1)
-        self.assertEqual(type(things), list)
-        self.assertEqual(type(things[0]), pylast.TopItem)
-        self.assertEqual(type(things[0].item), expected_type)
+        self.assertIsInstance(things, list)
+        self.assertIsInstance(things[0], pylast.TopItem)
+        self.assertIsInstance(things[0].item, expected_type)
 
     def helper_two_different_things_in_top_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 2)
         thing1 = things[0]
         thing2 = things[1]
-        self.assertEqual(type(thing1), pylast.TopItem)
-        self.assertEqual(type(thing2), pylast.TopItem)
-        self.assertEqual(type(thing1.item), expected_type)
-        self.assertEqual(type(thing2.item), expected_type)
+        self.assertIsInstance(thing1, pylast.TopItem)
+        self.assertIsInstance(thing2, pylast.TopItem)
+        self.assertIsInstance(thing1.item, expected_type)
+        self.assertIsInstance(thing2.item, expected_type)
         self.assertNotEqual(thing1, thing2)
 
     def helper_two_things_in_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 2)
-        self.assertEqual(type(things), list)
+        self.assertIsInstance(things, list)
         thing1 = things[0]
         thing2 = things[1]
-        self.assertEqual(type(thing1), expected_type)
-        self.assertEqual(type(thing2), expected_type)
+        self.assertIsInstance(thing1, expected_type)
+        self.assertIsInstance(thing2, expected_type)
 
     def test_user_get_top_tags_with_limit(self):
         # Arrange
@@ -1171,8 +1171,8 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNotNone(chart)
         self.assertGreater(len(chart), 0)
-        self.assertEqual(type(chart[0]), pylast.TopItem)
-        self.assertEqual(type(chart[0].item), expected_type)
+        self.assertIsInstance(chart[0], pylast.TopItem)
+        self.assertIsInstance(chart[0].item, expected_type)
 
     def helper_get_assert_charts(self, thing, date):
         # Arrange
