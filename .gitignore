@@ -34,6 +34,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 output.html
+output.xml
 
 # Translations
 *.mo

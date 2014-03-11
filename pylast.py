@@ -1342,67 +1342,6 @@ class _BaseObject(object):
 
         return seq
 
-    def get_weekly_chart_dates(self):
-        """Returns a list of From and To tuples for the available charts."""
-
-        doc = self._request(self.ws_prefix + ".getWeeklyChartList", True)
-
-        seq = []
-        for node in doc.getElementsByTagName("chart"):
-            seq.append((node.getAttribute("from"), node.getAttribute("to")))
-
-        return seq
-
-    def get_weekly_album_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly album charts for the week starting from the
-        from_date value to the to_date value.
-        Only for Group or User.
-        """
-        return self.get_weekly_charts("album", from_date, to_date)
-
-    def get_weekly_artist_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly artist charts for the week starting from the
-        from_date value to the to_date value.
-        Only for Group, Tag or User.
-        """
-        return self.get_weekly_charts("artist", from_date, to_date)
-
-    def get_weekly_track_charts(self, from_date=None, to_date=None):
-        """
-        Returns the weekly track charts for the week starting from the
-        from_date value to the to_date value.
-        Only for Group or User.
-        """
-        return self.get_weekly_charts("track", from_date, to_date)
-
-    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
-        """
-        Returns the weekly charts for the week starting from the
-        from_date value to the to_date value.
-        chart_kind should be one of "album", "artist" or "track"
-        """
-        method = ".getWeekly" + chart_kind.title() + "Chart"
-        chart_type = eval(chart_kind.title())  # string to type
-
-        params = self._get_params()
-        if from_date and to_date:
-            params["from"] = from_date
-            params["to"] = to_date
-
-        doc = self._request(
-            self.ws_prefix + method, True, params)
-
-        seq = []
-        for node in doc.getElementsByTagName(chart_kind.lower()):
-            item = chart_type(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
-            weight = _number(_extract(node, "playcount"))
-            seq.append(TopItem(item, weight))
-
-        return seq
-
     def get_top_fans(self, limit=None, cacheable=True):
         """Returns a list of the Users who played this the most.
         # Parameters:
@@ -1515,6 +1454,74 @@ class _BaseObject(object):
                 )
             )
         return shouts
+
+
+class _Chartable(object):
+    """Common functions for classes with charts."""
+
+    def __init__(self, ws_prefix):
+        self.ws_prefix = ws_prefix  # TODO move to _BaseObject?
+
+    def get_weekly_chart_dates(self):
+        """Returns a list of From and To tuples for the available charts."""
+
+        doc = self._request(self.ws_prefix + ".getWeeklyChartList", True)
+
+        seq = []
+        for node in doc.getElementsByTagName("chart"):
+            seq.append((node.getAttribute("from"), node.getAttribute("to")))
+
+        return seq
+
+    def get_weekly_album_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly album charts for the week starting from the
+        from_date value to the to_date value.
+        Only for Group or User.
+        """
+        return self.get_weekly_charts("album", from_date, to_date)
+
+    def get_weekly_artist_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly artist charts for the week starting from the
+        from_date value to the to_date value.
+        Only for Group, Tag or User.
+        """
+        return self.get_weekly_charts("artist", from_date, to_date)
+
+    def get_weekly_track_charts(self, from_date=None, to_date=None):
+        """
+        Returns the weekly track charts for the week starting from the
+        from_date value to the to_date value.
+        Only for Group or User.
+        """
+        return self.get_weekly_charts("track", from_date, to_date)
+
+    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
+        """
+        Returns the weekly charts for the week starting from the
+        from_date value to the to_date value.
+        chart_kind should be one of "album", "artist" or "track"
+        """
+        method = ".getWeekly" + chart_kind.title() + "Chart"
+        chart_type = eval(chart_kind.title())  # string to type
+
+        params = self._get_params()
+        if from_date and to_date:
+            params["from"] = from_date
+            params["to"] = to_date
+
+        doc = self._request(
+            self.ws_prefix + method, True, params)
+
+        seq = []
+        for node in doc.getElementsByTagName(chart_kind.lower()):
+            item = chart_type(
+                _extract(node, "artist"), _extract(node, "name"), self.network)
+            weight = _number(_extract(node, "playcount"))
+            seq.append(TopItem(item, weight))
+
+        return seq
 
 
 class _Taggable(object):
@@ -2813,7 +2820,7 @@ class Playlist(_BaseObject):
             'appendix': appendix, "user": self.get_user().get_name()}
 
 
-class Tag(_BaseObject):
+class Tag(_BaseObject, _Chartable):
     """A Last.fm object tag."""
 
     name = None
@@ -2822,6 +2829,7 @@ class Tag(_BaseObject):
 
     def __init__(self, name, network):
         _BaseObject.__init__(self, network, 'tag')
+        _Chartable.__init__(self, 'tag')
 
         self.name = name
 
@@ -3029,7 +3037,7 @@ class Track(_Opus):
             'artist': artist, 'title': title}
 
 
-class Group(_BaseObject):
+class Group(_BaseObject, _Chartable):
     """A Last.fm group."""
 
     name = None
@@ -3038,6 +3046,7 @@ class Group(_BaseObject):
 
     def __init__(self, name, network):
         _BaseObject.__init__(self, network, 'group')
+        _Chartable.__init__(self, 'group')
 
         self.name = name
 
@@ -3144,7 +3153,7 @@ class XSPF(_BaseObject):
         return seq
 
 
-class User(_BaseObject):
+class User(_BaseObject, _Chartable):
     """A Last.fm user."""
 
     name = None
@@ -3153,6 +3162,7 @@ class User(_BaseObject):
 
     def __init__(self, user_name, network):
         _BaseObject.__init__(self, network, 'user')
+        _Chartable.__init__(self, 'user')
 
         self.name = user_name
 
