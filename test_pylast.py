@@ -5,6 +5,7 @@ Integration (not unit) tests for pylast.py
 import argparse
 import os
 from random import choice
+import sys
 import time
 import unittest
 
@@ -29,6 +30,16 @@ def load_secrets():
 class TestPyLast(unittest.TestCase):
 
     secrets = None
+
+    # Based on django/utils/six.py to remove Python 3's
+    # "DeprecationWarning: Please use assertRaisesRegex instead"
+    if sys.version_info[0] == 2:
+        _assertRaisesRegex = "assertRaisesRegexp"
+    else:
+        _assertRaisesRegex = "assertRaisesRegex"
+
+    def assertRaisesRegex(self, *args, **kwargs):
+        return getattr(self, self._assertRaisesRegex)(*args, **kwargs)
 
     def unix_timestamp(self):
         return int(time.time())
@@ -756,7 +767,7 @@ class TestPyLast(unittest.TestCase):
         artist = self.network.get_artist("Test Artist")
 
         # Act/Assert
-        with self.assertRaisesRegexp(pylast.WSError, 'deprecated'):
+        with self.assertRaisesRegex(pylast.WSError, 'deprecated'):
             artist.get_images()
 
     def helper_validate_results(self, a, b, c):
