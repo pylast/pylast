@@ -31,15 +31,10 @@ class TestPyLast(unittest.TestCase):
 
     secrets = None
 
-    # Based on django/utils/six.py to remove Python 3's
+    # To remove Python 3's
     # "DeprecationWarning: Please use assertRaisesRegex instead"
     if sys.version_info[0] == 2:
-        _assertRaisesRegex = "assertRaisesRegexp"
-    else:
-        _assertRaisesRegex = "assertRaisesRegex"
-
-    def assertRaisesRegex(self, *args, **kwargs):
-        return getattr(self, self._assertRaisesRegex)(*args, **kwargs)
+        assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
 
     def unix_timestamp(self):
         return int(time.time())
