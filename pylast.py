@@ -1059,7 +1059,7 @@ class _Request(object):
             if key != "api_sig" and key != "api_key" and key != "sk":
                 cache_key += key + _string(self.params[key])
 
-        return hashlib.sha1(cache_key).hexdigest()
+        return hashlib.sha1(cache_key.encode("utf-8")).hexdigest()
 
     def _get_cached_response(self):
         """Returns a file object of the cached response."""
