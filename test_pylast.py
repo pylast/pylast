@@ -1393,6 +1393,21 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(albums, pylast.Album)
 
+    def test_caching(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        self.network.enable_caching()
+        shouts1 = user.get_shouts(limit=1, cacheable=True)
+        shouts2 = user.get_shouts(limit=1, cacheable=True)
+
+        # Assert
+        self.assertTrue(self.network.is_caching_enabled())
+        self.assertEqual(shouts1, shouts2)
+        self.network.disable_caching()
+        self.assertFalse(self.network.is_caching_enabled())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

@@ -986,14 +986,14 @@ class _ShelfCacheBackend(object):
     def __init__(self, file_path=None):
         self.shelf = shelve.open(file_path)
 
+    def __iter__(self):
+        return iter(self.shelf.keys())
+
     def get_xml(self, key):
         return self.shelf[key]
 
     def set_xml(self, key, xml_string):
         self.shelf[key] = xml_string
-
-    def has_key(self, key):
-        return key in self.shelf.keys()
 
 
 class _Request(object):
@@ -1073,7 +1073,7 @@ class _Request(object):
     def _is_cached(self):
         """Returns True if the request is already in cache."""
 
-        return self.cache.has_key(self._get_cache_key())
+        return self._get_cache_key() in self.cache
 
     def _download_response(self):
         """Returns a response body string from the server."""
