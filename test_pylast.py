@@ -1414,6 +1414,34 @@ class TestPyLast(unittest.TestCase):
         self.network.disable_caching()
         self.assertFalse(self.network.is_caching_enabled())
 
+    def test_create_playlist(self):
+        # Arrange
+        title = "Test playlist"
+        description = "Testing"
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        playlist = self.network.create_new_playlist(title, description)
+
+        # Assert
+        self.assertIsInstance(playlist, pylast.Playlist)
+        self.assertEqual(playlist.get_title(), "Test playlist")
+        self.assertEqual(playlist.get_description(), "Testing")
+        self.assertEqual(playlist.get_user(), lastfm_user)
+
+    def test_empty_playlist_unstreamable(self):
+        # Arrange
+        title = "Empty playlist"
+        description = "Unstreamable"
+
+        # Act
+        playlist = self.network.create_new_playlist(title, description)
+
+        # Assert
+        self.assertEqual(playlist.get_size(), 0)
+        self.assertEqual(playlist.get_duration(), 0)
+        self.assertFalse(playlist.is_streamable())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
