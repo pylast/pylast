@@ -1442,6 +1442,42 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(playlist.get_duration(), 0)
         self.assertFalse(playlist.is_streamable())
 
+    def test_big_playlist_is_streamable(self):
+        # Arrange
+        # Find a big playlist on Last.fm, eg "top 100 classick rock songs"
+        user = "kaxior"
+        id = 10417943
+        playlist = pylast.Playlist(user, id, self.network)
+        self.assertEqual(
+            playlist.get_url(),
+            "http://www.last.fm/user/kaxior/library/"
+            "playlists/67ajb_top_100_classick_rock_songs")
+
+        # Act
+        # Nothing
+
+        # Assert
+        self.assertIsInstance(playlist, pylast.Playlist)
+        self.assertGreaterEqual(playlist.get_size(), 45)
+        self.assertGreater(playlist.get_duration(), 0)
+        self.assertTrue(playlist.is_streamable())
+
+    def test_add_track_to_playlist(self):
+        # Arrange
+        title = "One track playlist"
+        description = "Testing"
+        playlist = self.network.create_new_playlist(title, description)
+        track = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act
+        playlist.add_track(track)
+
+        # Assert
+        self.assertEqual(playlist.get_size(), 1)
+        self.assertEqual(len(playlist.get_tracks()), 1)
+        self.assertTrue(playlist.has_track(track))
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
