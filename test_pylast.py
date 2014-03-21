@@ -1477,6 +1477,66 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(playlist.get_tracks()), 1)
         self.assertTrue(playlist.has_track(track))
 
+    def test_album_mbid(self):
+        # Arrange
+        mbid = "a6a265bf-9f81-4055-8224-f7ac0aa6b937"
+
+        # Act
+        album = self.network.get_album_by_mbid(mbid)
+        album_mbid = album.get_mbid()
+
+        # Assert
+        self.assertIsInstance(album, pylast.Album)
+        self.assertEqual(album.title, "TEST")
+        self.assertEqual(album_mbid, mbid)
+
+    def test_artist_mbid(self):
+        # Arrange
+        mbid = "7e84f845-ac16-41fe-9ff8-df12eb32af55"
+
+        # Act
+        artist = self.network.get_artist_by_mbid(mbid)
+
+        # Assert
+        self.assertIsInstance(artist, pylast.Artist)
+        self.assertEqual(artist.name, "MusicBrainz Test Artist")
+
+    def test_track_mbid(self):
+        # Arrange
+        mbid = "ebc037b1-cc9c-44f2-a21f-83c219f0e1e0"
+
+        # Act
+        track = self.network.get_track_by_mbid(mbid)
+        track_mbid = track.get_mbid()
+
+        # Assert
+        self.assertIsInstance(track, pylast.Track)
+        self.assertEqual(track.title, "first")
+        self.assertEqual(track_mbid, mbid)
+
+    def test_artist_listener_count(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+        print artist
+
+        # Act
+        count = artist.get_listener_count()
+
+        # Assert
+        self.assertIsInstance(count, int)
+        self.assertGreater(count, 0)
+
+    def test_event_attendees(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+        event = user.get_past_events(limit=1)[0]
+
+        # Act
+        users = event.get_attendees()
+
+        # Assert
+        self.assertIsInstance(users, list)
+        self.assertIsInstance(users[0], pylast.User)
 
 
 if __name__ == '__main__':
