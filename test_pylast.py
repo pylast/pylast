@@ -1517,7 +1517,6 @@ class TestPyLast(unittest.TestCase):
     def test_artist_listener_count(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
-        print artist
 
         # Act
         count = artist.get_listener_count()
