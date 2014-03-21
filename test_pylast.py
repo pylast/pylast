@@ -868,13 +868,13 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         # Act
         events = self.network.get_geo_events(
-            lat=51.52742783719291, long=-0.0860444083809, distance=5, limit=1)
+            lat=53.466667, long=-2.233333, distance=5, limit=1)
 
         # Assert
         self.assertEqual(len(events), 1)
         event = events[0]
         self.assertIsInstance(event, pylast.Event)
-        self.assertEqual(event.get_venue().location['city'], "London")
+        self.assertEqual(event.get_venue().location['city'], "Manchester")
 
     def test_geo_get_events_festival(self):
         # Arrange
@@ -1571,6 +1571,6 @@ if __name__ == '__main__':
         unittest.TextTestRunner().run(suite)
 
     else:
-        unittest.main()
+        unittest.main(failfast=True)
 
 # End of file
