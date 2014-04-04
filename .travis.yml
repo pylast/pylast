@@ -1,7 +1,11 @@
 language: python
 python:
-- '2.7'
-- '3.3'
+- "2.6"
+- "2.7"
+- "3.2"
+- "3.3"
+- "3.4"
+- "pypy"
 install:
 - pip install -r test_requirements.txt
 - pip install coveralls
@@ -9,6 +13,7 @@ script: coverage run --source=pylast ./test_pylast.py
 after_success:
   coveralls
 after_script:
+- coverage report
 - ./check.sh
 - pip install clonedigger
 - clonedigger pylast.py
@@ -20,3 +25,10 @@ env:
   - secure: gDWNEYA1EUv4G230/KzcTgcmEST0nf2FeW/z/prsoQBu+TWw1rKKSJAJeMLvuI1z4aYqqNYdmqjWyNhhVK3p5wmFP2lxbhaBT1jDsxxFpePc0nUkdAQOOD0yBpbBGkqkjjxU34HjTX2NFNEbcM3izVVE9oQmS5r4oFFNJgdL91c=
   - secure: RpsZblHFU7a5dnkO/JUgi70RkNJwoUh3jJqVo1oOLjL+lvuAmPXhI8MDk2diUk43X+XCBFBEnm7UCGnjUF+hDnobO4T+VrIFuVJWg3C7iKIT+YWvgG6A+CSeo/P0I0dAeUscTr5z4ylOq3EDx4MFSa8DmoWMmjKTAG1GAeTlY2k=
   - secure: T5OKyd5Bs0nZbUr+YICbThC5GrFq/kUjX8FokzCv7NWsYaUWIwEmMXXzoYALoB3A+rAglOx6GABaupoNKKg3tFQyxXphuMKpZ8MasMAMFjFW0d7wsgGy0ylhVwrgoKzDbCQ5FKbohC+9ltLs+kKMCQ0L+MI70a/zTfF4/dVWO/o=
+
+matrix:
+  allow_failures:
+    - python: "2.6"
+    - python: "3.2"
+    - python: "3.4"
+    - python: "pypy"

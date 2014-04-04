@@ -53,6 +53,7 @@ class TestPyLast(unittest.TestCase):
             api_key=API_KEY, api_secret=API_SECRET,
             username=self.username, password_hash=password_hash)
 
+
     def test_scrobble(self):
         # Arrange
         artist = "Test Artist"
@@ -1538,6 +1539,84 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(users[0], pylast.User)
 
 
+    def test_tag_artist(self):
+        # Arrange
+        artist = self.network.get_artist("Test Artist")
+#         artist.clear_tags()
+
+        # Act
+        artist.add_tag("testing")
+
+        # Assert
+        tags = artist.get_tags()
+        self.assertGreater(len(tags), 0)
+        found = False
+        for tag in tags:
+            if tag.name == "testing":
+                found = True
+                break
+        self.assertTrue(found)
+
+    def test_remove_tag_of_type_text(self):
+        # Arrange
+        tag = "testing"  # text
+        artist = self.network.get_artist("Test Artist")
+        artist.add_tag(tag)
+
+        # Act
+        artist.remove_tag(tag)
+
+        # Assert
+        tags = artist.get_tags()
+        found = False
+        for tag in tags:
+            if tag.name == "testing":
+                found = True
+                break
+        self.assertFalse(found)
+
+
+    def test_remove_tag_of_type_tag(self):
+        # Arrange
+        tag = pylast.Tag("testing", self.network)  # Tag
+        artist = self.network.get_artist("Test Artist")
+        artist.add_tag(tag)
+
+        # Act
+        artist.remove_tag(tag)
+
+        # Assert
+        tags = artist.get_tags()
+        found = False
+        for tag in tags:
+            if tag.name == "testing":
+                found = True
+                break
+        self.assertFalse(found)
+
+
+    def test_remove_tags(self):
+        # Arrange
+        tags = ["testing1", "testing2"]
+        artist = self.network.get_artist("Test Artist")
+        artist.add_tags(tags)
+
+        # Act
+        artist.remove_tags(tags)
+
+        # Assert
+        tags = artist.get_tags()
+        found = False
+        for tag in tags:
+            if tag.name == "testing1" or tag.name == "testing2":
+                found = True
+                break
+        self.assertFalse(found)
+
+
+
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description="Integration (not unit) tests for pylast.py",
@@ -1545,6 +1624,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-1', '--single',
         help="Run a single test")
+    parser.add_argument(
+        '-r', '--repeat',
+        help="Repeat a single test (100 times) until failure")
     parser.add_argument(
         '-m', '--matching',
         help="Run tests with this in the name")
@@ -1555,6 +1637,17 @@ if __name__ == '__main__':
 
         suite.addTest(TestPyLast(args.single))
         unittest.TextTestRunner().run(suite)
+
+    elif args.repeat:
+        suite = unittest.TestSuite()
+
+        suite.addTest(TestPyLast(args.repeat))
+        for i in range(100):
+            print("Attempt " + str(i+1))
+            result = unittest.TextTestRunner().run(suite)
+            problems = len(result.errors) + len(result.failures)
+            if problems:
+                break
 
     elif args.matching:
         suite = unittest.TestSuite()

@@ -204,7 +204,7 @@ class _Network(object):
     """
 
     def __str__(self):
-        return "The %s Network" % self.name
+        return "%s Network" % self.name
 
     def get_artist(self, artist_name):
         """
@@ -854,9 +854,6 @@ class LastFMNetwork(_Network):
              "'%s'" % self.username,
              "'%s'" % self.password_hash)))
 
-    def __str__(self):
-        return "Last.fm Network"
-
 
 def get_lastfm_network(
         api_key="", api_secret="", session_key="", username="",
@@ -952,9 +949,6 @@ class LibreFMNetwork(_Network):
              "'%s'" % self.session_key,
              "'%s'" % self.username,
              "'%s'" % self.password_hash)))
-
-    def __str__(self):
-        return "Libre.fm Network"
 
 
 def get_librefm_network(
