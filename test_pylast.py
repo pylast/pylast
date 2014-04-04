@@ -1628,9 +1628,9 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(tags_after), len(tags_before) - 2)
         found1, found2 = False, False
         for tag in tags:
-            if tag.name == "settag1":
+            if tag == "settag1":
                 found1 = True
-            elif tag.name == "settag2":
+            elif tag == "settag2":
                 found2 = True
         self.assertTrue(found1)
         self.assertTrue(found2)
