@@ -237,7 +237,7 @@ class TestPyLast(unittest.TestCase):
 
     def test_unlove(self):
         # Arrange
-        artist = "Test Artist"
+        artist = pylast.Artist("Test Artist", self.network)
         title = "Test Title"
         track = pylast.Track(artist, title, self.network)
         lastfm_user = self.network.get_user(self.username)
@@ -1594,7 +1594,6 @@ class TestPyLast(unittest.TestCase):
                 break
         self.assertFalse(found)
 
-
     def test_remove_tags(self):
         # Arrange
         tags = ["testing1", "testing2"]
@@ -1612,6 +1611,90 @@ class TestPyLast(unittest.TestCase):
                 found = True
                 break
         self.assertFalse(found)
+
+    def test_set_tags(self):
+        # Arrange
+        tags = ["settag1", "settag2"]
+        artist = self.network.get_artist("Test Artist")
+        artist.add_tags(tags)
+        artist.add_tags("1more")
+        tags_before = artist.get_tags()
+
+        # Act
+        artist.remove_tags(tags)
+
+        # Assert
+        tags_after = artist.get_tags()
+        self.assertEqual(len(tags_after), len(tags_before) - 2)
+        found1, found2 = False, False
+        for tag in tags:
+            if tag.name == "settag1":
+                found1 = True
+            elif tag.name == "settag2":
+                found2 = True
+        self.assertTrue(found1)
+        self.assertTrue(found2)
+
+    def test_tracks_notequal(self):
+        # Arrange
+        track1 = pylast.Track("Test Artist", "Test Title", self.network)
+        track2 = pylast.Track("Test Artist", "Test Track", self.network)
+
+        # Act
+        # Assert
+        self.assertNotEqual(track1, track2)
+
+    def test_track_id(self):
+        # Arrange
+        track = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act
+        id = track.get_id()
+
+        # Assert
+        self.assertEqual(id, "14053327")
+
+    def test_track_title_prop_caps(self):
+        # Arrange
+        track = pylast.Track("test artist", "test title", self.network)
+
+        # Act
+        title = track.get_title(properly_capitalized=True)
+
+        # Assert
+        self.assertEqual(title, "Test Title")
+
+    def test_track_listener_count(self):
+        # Arrange
+        track = pylast.Track("test artist", "test title", self.network)
+
+        # Act
+        count = track.get_listener_count()
+
+        # Assert
+        self.assertGreater(count, 21)
+
+    def test_album_rel_date(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test Release", self.network)
+
+        # Act
+        date = album.get_release_date()
+
+        # Assert
+        self.assertIn("2011", date)
+
+    def test_album_tracks(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test Release", self.network)
+
+        # Act
+        tracks = album.get_tracks()
+
+        # Assert
+        self.assertIsInstance(tracks, list)
+        self.assertIsInstance(tracks[0], pylast.Track)
+        self.assertEqual(len(tracks), 4)
 
 
 
