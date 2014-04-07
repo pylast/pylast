@@ -1727,6 +1727,29 @@ class TestPyLast(unittest.TestCase):
                 break
         self.assertTrue(found)
 
+    def test_artists(self):
+        # Arrange
+        artist1 = self.network.get_artist("Radiohead")
+        artist2 = self.network.get_artist("Portishead")
+
+        # Act
+        url = artist1.get_url()
+        mbid = artist1.get_mbid()
+        image = artist1.get_cover_image()
+        playcount = artist1.get_playcount()
+        streamable = artist1.is_streamable()
+        name = artist1.get_name(properly_capitalized=False)
+        name_cap = artist1.get_name(properly_capitalized=True)
+
+        # Assert
+        self.assertIn("http", image)
+        self.assertGreater(playcount, 1)
+        self.assertTrue(artist1 != artist2)
+        self.assertEqual(name.lower(), name_cap.lower())
+        self.assertEqual(url, "http://www.last.fm/music/radiohead")
+        self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
+        self.assertTrue(streamable)  # Maybe better just to check if Boolean
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
