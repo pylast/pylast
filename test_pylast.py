@@ -1784,6 +1784,25 @@ class TestPyLast(unittest.TestCase):
         self.assertGreater(review_count, 0)
         self.assertGreater(attendance_count, 100)
 
+    def test_countries(self):
+        # Arrange
+        country1 = pylast.Country("Italy", self.network)
+        country2 = pylast.Country("Finland", self.network)
+
+        # Act
+        text = str(country1)
+        rep = repr(country1)
+        url = country1.get_url()
+
+        # Assert
+        self.assertIn("Italy", rep)
+        self.assertIn("pylast.Country", rep)
+        self.assertEqual(text, "Italy")
+        self.assertTrue(country1 == country1)
+        self.assertTrue(country1 != country2)
+        self.assertEqual(url, "http://www.last.fm/place/italy")
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description="Integration (not unit) tests for pylast.py",
