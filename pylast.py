@@ -359,7 +359,8 @@ class _Network(object):
         """Returns the most played artists as a sequence of TopItem objects."""
 
         params = {}
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
 
         doc = _Request(self, "chart.getTopArtists", params).execute(cacheable)
 
@@ -369,7 +370,8 @@ class _Network(object):
         """Returns the most played tracks as a sequence of TopItem objects."""
 
         params = {}
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
 
         doc = _Request(self, "chart.getTopTracks", params).execute(cacheable)
 
@@ -462,7 +464,8 @@ class _Network(object):
         """
         params = {}
 
-        if country: params["country"] = country
+        if country:
+            params["country"] = country
 
         doc = _Request(self, "geo.getMetros", params).execute(cacheable)
 
@@ -487,7 +490,8 @@ class _Network(object):
         """
         params = {"country": country}
 
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
 
         doc = _Request(self, "geo.getTopArtists", params).execute(cacheable)
 
@@ -506,8 +510,10 @@ class _Network(object):
         """
         params = {"country": country}
 
-        if location: params["location"] = location
-        if limit: params['limit'] = limit
+        if location:
+            params["location"] = location
+        if limit:
+            params["limit"] = limit
 
         doc = _Request(self, "geo.getTopTracks", params).execute(cacheable)
 
@@ -1784,7 +1790,8 @@ class _Opus(_BaseObject, _Taggable):
     def get_userplaycount(self):
         """Returns the number of plays by a given username"""
 
-        if not self.username: return
+        if not self.username:
+            return
 
         params = self._get_params()
         params['username'] = self.username
@@ -1938,7 +1945,8 @@ class Artist(_BaseObject, _Taggable):
     def get_userplaycount(self):
         """Returns the number of plays by a given username"""
 
-        if not self.username: return
+        if not self.username:
+            return
 
         params = self._get_params()
         params['username'] = self.username
@@ -2380,7 +2388,8 @@ class Metro(_BaseObject):
             to_date=None, cacheable=True):
         """Internal helper for getting geo charts."""
         params = self._get_params()
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
         if from_date and to_date:
             params["from"] = from_date
             params["to"] = to_date
@@ -2936,7 +2945,8 @@ class Track(_Opus):
     def get_userloved(self):
         """Whether the user loved this track"""
 
-        if not self.username: return
+        if not self.username:
+            return
 
         params = self._get_params()
         params['username'] = self.username
@@ -3288,7 +3298,8 @@ class User(_BaseObject, _Chartable):
         if limit:
             params['limit'] = limit
 
-        doc = self._request(self.ws_prefix + '.getNeighbours', cacheable, params)
+        doc = self._request(
+            self.ws_prefix + '.getNeighbours', cacheable, params)
 
         seq = []
         names = _extract_all(doc, 'name')
@@ -3481,7 +3492,8 @@ class User(_BaseObject, _Chartable):
 
         params = self._get_params()
         params['period'] = period
-        if limit: params['limit'] = limit
+        if limit:
+            params['limit'] = limit
 
         doc = self._request(
             self.ws_prefix + '.getTopAlbums', cacheable, params)
@@ -3500,7 +3512,8 @@ class User(_BaseObject, _Chartable):
 
         params = self._get_params()
         params['period'] = period
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
 
         doc = self._request(self.ws_prefix + '.getTopArtists', True, params)
 
@@ -3515,7 +3528,8 @@ class User(_BaseObject, _Chartable):
         """
 
         params = self._get_params()
-        if limit: params["limit"] = limit
+        if limit:
+            params["limit"] = limit
 
         doc = self._request(self.ws_prefix + ".getTopTags", cacheable, params)
 

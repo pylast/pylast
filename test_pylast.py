@@ -1700,6 +1700,33 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(tracks[0], pylast.Track)
         self.assertEqual(len(tracks), 4)
 
+    def test_tags(self):
+        # Arrange
+        tag1 = self.network.get_tag("blues")
+        tag2 = self.network.get_tag("rock")
+
+        # Act
+        tag_repr = repr(tag1)
+        tag_str = str(tag1)
+        name = tag1.get_name(properly_capitalized=True)
+        similar = tag1.get_similar()
+        url = tag1.get_url()
+
+        # Assert
+        self.assertEqual("blues", tag_str)
+        self.assertIn("pylast.Tag", tag_repr)
+        self.assertIn("blues", tag_repr)
+        self.assertEqual("blues", name)
+        self.assertTrue(tag1 == tag1)
+        self.assertTrue(tag1 != tag2)
+        self.assertEqual(url, "http://www.last.fm/tag/blues")
+        found = False
+        for tag in similar:
+            if tag.name == "delta blues":
+                found = True
+                break
+        self.assertTrue(found)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
