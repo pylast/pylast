@@ -3281,14 +3281,14 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_neighbours(self, limit=50):
+    def get_neighbours(self, limit=50, cacheable=True):
         """Returns a list of the user's friends."""
 
         params = self._get_params()
         if limit:
             params['limit'] = limit
 
-        doc = self._request(self.ws_prefix + '.getNeighbours', True, params)
+        doc = self._request(self.ws_prefix + '.getNeighbours', cacheable, params)
 
         seq = []
         names = _extract_all(doc, 'name')

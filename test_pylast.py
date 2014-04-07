@@ -846,6 +846,7 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_validate_cacheable(lastfm_user, "get_friends")
         self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
+        self.helper_validate_cacheable(lastfm_user, "get_neighbours")
         self.helper_validate_cacheable(lastfm_user, "get_past_events")
         self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
         self.helper_validate_cacheable(lastfm_user, "get_recommended_artists")
