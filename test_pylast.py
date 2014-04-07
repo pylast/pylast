@@ -1606,13 +1606,13 @@ class TestPyLast(unittest.TestCase):
         tags_after = artist.get_tags()
         self.assertEqual(len(tags_after), len(tags_before) - 2)
         found1, found2 = False, False
-        for tag in tags:
-            if tag == "removetag1":
+        for tag in tags_after:
+            if tag.name == "removetag1":
                 found1 = True
-            elif tag == "removetag2":
+            elif tag.name == "removetag2":
                 found2 = True
-        self.assertTrue(found1)
-        self.assertTrue(found2)
+        self.assertFalse(found1)
+        self.assertFalse(found2)
 
     def test_set_tags(self):
         # Arrange
@@ -1630,10 +1630,10 @@ class TestPyLast(unittest.TestCase):
         self.assertNotEqual(tags_before, tags_after)
         self.assertEqual(len(tags_after), 2)
         found1, found2 = False, False
-        for tag in tags:
-            if tag == "settag1":
+        for tag in tags_after:
+            if tag.name == "settag1":
                 found1 = True
-            elif tag == "settag2":
+            elif tag.name == "settag2":
                 found2 = True
         self.assertTrue(found1)
         self.assertTrue(found2)
