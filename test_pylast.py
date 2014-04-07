@@ -1204,7 +1204,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(group, dates[-1])
+        self.helper_get_assert_charts(group, dates[-2])
 
     def test_tag_charts(self):
         # Arrange
