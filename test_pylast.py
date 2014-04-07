@@ -1750,6 +1750,39 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
         self.assertTrue(streamable)  # Maybe better just to check if Boolean
 
+    def test_events(self):
+        # Arrange
+        event_id_1 = 3162700  # Glasto 2013
+        event_id_2 = 3478520  # Glasto 2014
+        event1 = pylast.Event(event_id_1, self.network)
+        event2 = pylast.Event(event_id_2, self.network)
+
+        # Act
+        text = str(event1)
+        rep = repr(event1)
+        title = event1.get_title()
+        artists = event1.get_artists()
+        start = event1.get_start_date()
+        description = event1.get_description()
+        review_count = event1.get_review_count()
+        attendance_count = event1.get_attendance_count()
+
+        # Assert
+        self.assertIn("3162700", rep)
+        self.assertIn("pylast.Event", rep)
+        self.assertEqual(text, "Event #3162700")
+        self.assertTrue(event1 != event2)
+        self.assertIn("Glastonbury", title)
+        found = False
+        for artist in artists:
+            if artist.name == "The Rolling Stones":
+                found = True
+                break
+        self.assertTrue(found)
+        self.assertIn("Wed, 26 Jun 2013", start)
+        self.assertIn("astonishing bundle", description)
+        self.assertGreater(review_count, 0)
+        self.assertGreater(attendance_count, 100)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

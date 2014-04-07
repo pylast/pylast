@@ -2107,7 +2107,7 @@ class Event(_BaseObject):
 
     @_string_output
     def __str__(self):
-        return "Event #" + self.get_id()
+        return "Event #" + str(self.get_id())
 
     def __eq__(self, other):
         return self.get_id() == other.get_id()
