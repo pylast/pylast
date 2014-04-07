@@ -53,7 +53,6 @@ class TestPyLast(unittest.TestCase):
             api_key=API_KEY, api_secret=API_SECRET,
             username=self.username, password_hash=password_hash)
 
-
     def test_scrobble(self):
         # Arrange
         artist = "Test Artist"
@@ -1538,7 +1537,6 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(users, list)
         self.assertIsInstance(users[0], pylast.User)
 
-
     def test_tag_artist(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
@@ -1575,7 +1573,6 @@ class TestPyLast(unittest.TestCase):
                 break
         self.assertFalse(found)
 
-
     def test_remove_tag_of_type_tag(self):
         # Arrange
         tag = pylast.Tag("testing", self.network)  # Tag
@@ -1596,25 +1593,7 @@ class TestPyLast(unittest.TestCase):
 
     def test_remove_tags(self):
         # Arrange
-        tags = ["testing1", "testing2"]
-        artist = self.network.get_artist("Test Artist")
-        artist.add_tags(tags)
-
-        # Act
-        artist.remove_tags(tags)
-
-        # Assert
-        tags = artist.get_tags()
-        found = False
-        for tag in tags:
-            if tag.name == "testing1" or tag.name == "testing2":
-                found = True
-                break
-        self.assertFalse(found)
-
-    def test_set_tags(self):
-        # Arrange
-        tags = ["settag1", "settag2"]
+        tags = ["removetag1", "removetag2"]
         artist = self.network.get_artist("Test Artist")
         artist.add_tags(tags)
         artist.add_tags("1more")
@@ -1626,6 +1605,30 @@ class TestPyLast(unittest.TestCase):
         # Assert
         tags_after = artist.get_tags()
         self.assertEqual(len(tags_after), len(tags_before) - 2)
+        found1, found2 = False, False
+        for tag in tags:
+            if tag == "removetag1":
+                found1 = True
+            elif tag == "removetag2":
+                found2 = True
+        self.assertTrue(found1)
+        self.assertTrue(found2)
+
+    def test_set_tags(self):
+        # Arrange
+        tags = ["sometag1", "sometag2"]
+        artist = self.network.get_artist("Test Artist")
+        artist.add_tags(tags)
+        tags_before = artist.get_tags()
+        new_tags = ["settag1", "settag2"]
+
+        # Act
+        artist.set_tags(new_tags)
+
+        # Assert
+        tags_after = artist.get_tags()
+        self.assertNotEqual(tags_before, tags_after)
+        self.assertEqual(len(tags_after), 2)
         found1, found2 = False, False
         for tag in tags:
             if tag == "settag1":
@@ -1695,9 +1698,6 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(tracks, list)
         self.assertIsInstance(tracks[0], pylast.Track)
         self.assertEqual(len(tracks), 4)
-
-
-
 
 
 if __name__ == '__main__':
