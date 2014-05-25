@@ -1488,7 +1488,7 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertIsInstance(album, pylast.Album)
-        self.assertEqual(album.title, "TEST")
+        self.assertEqual(album.title.lower(), "test")
         self.assertEqual(album_mbid, mbid)
 
     def test_artist_mbid(self):
