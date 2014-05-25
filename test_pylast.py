@@ -1748,7 +1748,8 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(name.lower(), name_cap.lower())
         self.assertEqual(url, "http://www.last.fm/music/radiohead")
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
-        self.assertTrue(streamable)  # Maybe better just to check if Boolean
+        self.assertIsInstance(streamable, bool)
+
 
     def test_events(self):
         # Arrange
