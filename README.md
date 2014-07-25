@@ -1,7 +1,7 @@
 pyLast
 ======
 
-[![Build Status](https://travis-ci.org/hugovk/pylast.png?branch=master)](https://travis-ci.org/hugovk/pylast) [![Coverage Status](https://coveralls.io/repos/hugovk/pylast/badge.png?branch=master)](https://coveralls.io/r/hugovk/pylast?branch=master)
+[![Build Status](https://travis-ci.org/pylast/pylast.png?branch=master)](https://travis-ci.org/pylast/pylast) [![Coverage Status](https://coveralls.io/repos/pylast/pylast/badge.png?branch=master)](https://coveralls.io/r/pylast/pylast?branch=master)
 
 A Python interface to [Last.fm](http://www.last.fm/) and other api-compatible websites such as [Libre.fm](http://libre.fm/).
 
@@ -19,7 +19,7 @@ The old 0.5 version from 2011 is in PyPI so if you have it installed remove it f
 
 You can install this version with pip like this:
 
-    pip install -e git://github.com/hugovk/pylast.git#egg=pylast
+    pip install -e git://github.com/pylast/pylast.git#egg=pylast
 
 Or just copy [pylast.py](pylast.py) to somewhere your Python can see it. No other dependencies are needed.
 
