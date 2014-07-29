@@ -7,21 +7,14 @@ A Python interface to [Last.fm](http://www.last.fm/) and other api-compatible we
 
 Try using the pydoc utility for help on usage or see [test_pylast.py](test_pylast.py) for examples.
 
-Original code can be found at http://code.google.com/p/pylast/ but hasn't been updated since 2011.
-
 Installation
 ------------
 
-The old 0.5 version from 2011 is in PyPI so if you have it installed remove it first:
+The easiest way is via pip:
 
-    pip uninstall pylast
+    pip install pylast
 
-
-You can install this version with pip like this:
-
-    pip install -e git://github.com/pylast/pylast.git#egg=pylast
-
-Or just copy [pylast.py](pylast.py) to somewhere your Python can see it. No other dependencies are needed.
+Or copy [pylast.py](pylast.py) to somewhere your Python can see it. No other dependencies are needed.
 
 
 Features
