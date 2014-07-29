@@ -25,7 +25,7 @@ def get_build():
 
 setup(
     name="pylast",
-    version="0.6." + get_build(),
+    version="1.0." + get_build(),
     author="Amr Hassan <amr.hassan@gmail.com>",
     description="A Python interface to Last.fm (and other API compatible social networks)",
     author_email="amr.hassan@gmail.com",
