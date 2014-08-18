@@ -1738,6 +1738,8 @@ class _Opus(_BaseObject, _Taggable):
             self.get_artist().get_name(), self.get_title())
 
     def __eq__(self, other):
+        if type(self) != type(other):
+            return False
         a = self.get_title().lower()
         b = other.get_title().lower()
         c = self.get_artist().get_name().lower()
@@ -1745,6 +1747,8 @@ class _Opus(_BaseObject, _Taggable):
         return (a == b) and (c == d)
 
     def __ne__(self, other):
+        if type(self) != type(other):
+            return True
         a = self.get_title().lower()
         b = other.get_title().lower()
         c = self.get_artist().get_name().lower()

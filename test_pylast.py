@@ -1804,6 +1804,23 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(url, "http://www.last.fm/place/italy")
 
 
+    def test_track_eq_none_is_false(self):
+        # Arrange
+        track1 = None
+        track2 = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act / Assert
+        self.assertFalse(track1 == track2)
+
+    def test_track_ne_none_is_true(self):
+        # Arrange
+        track1 = None
+        track2 = pylast.Track("Test Artist", "Test Title", self.network)
+
+        # Act / Assert
+        self.assertTrue(track1 != track2)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description="Integration (not unit) tests for pylast.py",
