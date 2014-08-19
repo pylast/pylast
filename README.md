@@ -36,7 +36,7 @@ Getting Started
 
 Here's a simple code example to get you started. In order to create any object from pyLast, you need a Network object which represents a social music network that is Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm and use it as follows:
 
-```
+```python
 import pylast
 
 # You have to have your own unique two values for API_KEY and API_SECRET
@@ -73,7 +73,7 @@ Testing
 
 You need a test account at Last.fm that will be cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
-```
+```sh
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
 export PYLAST_PASSWORD_HASH=TODO_ENTER_YOURS_HERE
 export PYLAST_API_KEY=TODO_ENTER_YOURS_HERE
@@ -81,23 +81,23 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 ```
 
 To run all:
-```
+```sh
 pip install -r test_requirements.txt
 ./test_pylast.py
 ```
 
 Or run just one:
-```
+```sh
 ./test_pylast.py -1 test_scrobble
 ```
 
 Or all those tests matching a term:
-```
+```sh
 ./test_pylast.py -m geo
 ```
 
 To run with coverage:
-```
+```sh
 coverage run --source=pylast ./test_pylast.py
 coverage report # for command-line report
 coverage html   # for HTML report
@@ -105,6 +105,6 @@ open htmlcov/index.html
 ```
 
 To perform some static analysis:
-```
+```sh
 ./check.sh
 ```
