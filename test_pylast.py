@@ -1251,7 +1251,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         # Check inbox for spam!
 
-        #album/artist/event/track/user
+        # album/artist/event/track/user
 
     def test_album_shouts(self):
         # Arrange
@@ -1750,7 +1750,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
         self.assertIsInstance(streamable, bool)
 
-
     def test_events(self):
         # Arrange
         event_id_1 = 3162700  # Glasto 2013
@@ -1803,7 +1802,6 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(country1 != country2)
         self.assertEqual(url, "http://www.last.fm/place/italy")
 
-
     def test_track_eq_none_is_false(self):
         # Arrange
         track1 = None
@@ -1819,6 +1817,26 @@ class TestPyLast(unittest.TestCase):
 
         # Act / Assert
         self.assertTrue(track1 != track2)
+
+    def test_band_members(self):
+        # Arrange
+        artist = pylast.Artist("The Beatles", self.network)
+
+        # Act
+        band_members = artist.get_band_members()
+
+        # Assert
+        self.assertGreaterEqual(len(band_members), 4)
+
+    def test_no_band_members(self):
+        # Arrange
+        artist = pylast.Artist("John Lennon", self.network)
+
+        # Act
+        band_members = artist.get_band_members()
+
+        # Assert
+        self.assertIsNone(band_members)
 
 
 if __name__ == '__main__':
