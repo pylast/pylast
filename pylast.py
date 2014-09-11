@@ -1747,13 +1747,7 @@ class _Opus(_BaseObject, _Taggable):
         return (a == b) and (c == d)
 
     def __ne__(self, other):
-        if type(self) != type(other):
-            return True
-        a = self.get_title().lower()
-        b = other.get_title().lower()
-        c = self.get_artist().get_name().lower()
-        d = other.get_artist().get_name().lower()
-        return (a != b) or (c != d)
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {
@@ -1907,10 +1901,13 @@ class Artist(_BaseObject, _Taggable):
         return self.get_name()
 
     def __eq__(self, other):
-        return self.get_name().lower() == other.get_name().lower()
+        if type(self) is type(other):
+            return self.get_name().lower() == other.get_name().lower()
+        else:
+            return False
 
     def __ne__(self, other):
-        return self.get_name().lower() != other.get_name().lower()
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -2114,10 +2111,13 @@ class Event(_BaseObject):
         return "Event #" + str(self.get_id())
 
     def __eq__(self, other):
-        return self.get_id() == other.get_id()
+        if type(self) is type(other):
+            return self.get_id() == other.get_id()
+        else:
+            return False
 
     def __ne__(self, other):
-        return self.get_id() != other.get_id()
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {'event': self.get_id()}

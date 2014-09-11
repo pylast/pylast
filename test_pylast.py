@@ -1803,7 +1803,6 @@ class TestPyLast(unittest.TestCase):
         self.assertTrue(country1 != country2)
         self.assertEqual(url, "http://www.last.fm/place/italy")
 
-
     def test_track_eq_none_is_false(self):
         # Arrange
         track1 = None
@@ -1819,6 +1818,56 @@ class TestPyLast(unittest.TestCase):
 
         # Act / Assert
         self.assertTrue(track1 != track2)
+
+    def test_artist_eq_none_is_false(self):
+        # Arrange
+        artist1 = None
+        artist2 = pylast.Artist("Test Artist", self.network)
+
+        # Act / Assert
+        self.assertFalse(artist1 == artist2)
+
+    def test_artist_ne_none_is_true(self):
+        # Arrange
+        artist1 = None
+        artist2 = pylast.Artist("Test Artist", self.network)
+
+        # Act / Assert
+        self.assertTrue(artist1 != artist2)
+
+    def test_album_eq_none_is_false(self):
+        # Arrange
+        album1 = None
+        album2 = pylast.Album("Test Artist", "Test Album", self.network)
+
+        # Act / Assert
+        self.assertFalse(album1 == album2)
+
+    def test_album_ne_none_is_true(self):
+        # Arrange
+        album1 = None
+        album2 = pylast.Album("Test Artist", "Test Album", self.network)
+
+        # Act / Assert
+        self.assertTrue(album1 != album2)
+
+    def test_event_eq_none_is_false(self):
+        # Arrange
+        event1 = None
+        event_id = 3478520  # Glasto 2014
+        event2 = pylast.Event(event_id, self.network)
+
+        # Act / Assert
+        self.assertFalse(event1 == event2)
+
+    def test_event_ne_none_is_true(self):
+        # Arrange
+        event1 = None
+        event_id = 3478520  # Glasto 2014
+        event2 = pylast.Event(event_id, self.network)
+
+        # Act / Assert
+        self.assertTrue(event1 != event2)
 
 
 if __name__ == '__main__':
