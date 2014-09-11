@@ -377,7 +377,7 @@ class TestPyLast(unittest.TestCase):
     def test_artist_is_hashable(self):
         # Arrange
         test_artist = self.network.get_artist("Test Artist")
-        artist = test_artist.get_similar(limit=1)[0].item
+        artist = test_artist.get_similar(limit=2)[0].item
         self.assertIsInstance(artist, pylast.Artist)
 
         # Act/Assert
