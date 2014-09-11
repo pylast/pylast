@@ -28,3 +28,4 @@ matrix:
   allow_failures:
     - python: "3.4"
     - python: "pypy"
+  fast_finish: true

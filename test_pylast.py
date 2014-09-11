@@ -1213,7 +1213,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(tag, dates[-1])
+        self.helper_get_assert_charts(tag, dates[-2])
 
     def test_user_charts(self):
         # Arrange
@@ -1222,7 +1222,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(lastfm_user, dates[-1])
+        self.helper_get_assert_charts(lastfm_user, dates[1])
 
     def test_track_top_fans(self):
         # Arrange
