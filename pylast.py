@@ -425,12 +425,18 @@ class _Network(object):
 
         params = {}
 
-        if long: params["long"] = long
-        if lat: params["lat"] = lat
-        if location: params["location"] = location
-        if limit: params["limit"] = limit
-        if distance: params["distance"] = distance
-        if tag: params["tag"] = tag
+        if long:
+            params["long"] = long
+        if lat:
+            params["lat"] = lat
+        if location:
+            params["location"] = location
+        if limit:
+            params["limit"] = limit
+        if distance:
+            params["distance"] = distance
+        if tag:
+            params["tag"] = tag
         if festivalsonly:
             params["festivalsonly"] = 1
         elif not festivalsonly:
@@ -671,12 +677,18 @@ class _Network(object):
 
         params = {"track": title, "artist": artist}
 
-        if album: params["album"] = album
-        if album_artist: params["albumArtist"] = album_artist
-        if context: params["context"] = context
-        if track_number: params["trackNumber"] = track_number
-        if mbid: params["mbid"] = mbid
-        if duration: params["duration"] = duration
+        if album:
+            params["album"] = album
+        if album_artist:
+            params["albumArtist"] = album_artist
+        if context:
+            params["context"] = context
+        if track_number:
+            params["trackNumber"] = track_number
+        if mbid:
+            params["mbid"] = mbid
+        if duration:
+            params["duration"] = duration
 
         _Request(self, "track.updateNowPlaying", params).execute()
 
@@ -3377,12 +3389,22 @@ class User(_BaseObject, _Chartable):
 
         return Track(artist, title, self.network, self.name)
 
-    def get_recent_tracks(self, limit=10, cacheable=True):
+    def get_recent_tracks(self, limit=10, cacheable=True,
+                          time_from=None, time_to=None):
         """
         Returns this user's played track as a sequence of PlayedTrack objects
         in reverse order of playtime, all the way back to the first track.
 
-        If limit==None, it will try to pull all the available data.
+        Parameters:
+        limit : If None, it will try to pull all the available data.
+        from (Optional) : Beginning timestamp of a range - only display
+        scrobbles after this time, in UNIX timestamp format (integer
+        number of seconds since 00:00:00, January 1st 1970 UTC). This
+        must be in the UTC time zone.
+        to (Optional) : End timestamp of a range - only display scrobbles
+        before this time, in UNIX timestamp format (integer number of
+        seconds since 00:00:00, January 1st 1970 UTC). This must be in
+        the UTC time zone.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
@@ -3394,6 +3416,10 @@ class User(_BaseObject, _Chartable):
         params = self._get_params()
         if limit:
             params['limit'] = limit
+        if time_from:
+            params['from'] = time_from
+        if time_to:
+            params['to'] = time_to
 
         seq = []
         for track in _collect_nodes(
