@@ -121,10 +121,10 @@ RE_XML_ILLEGAL = (u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' +
                   u'|' +
                   u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])'
                   %
-                 (unichr(0xd800), unichr(0xdbff), unichr(0xdc00),
-                  unichr(0xdfff), unichr(0xd800), unichr(0xdbff),
-                  unichr(0xdc00), unichr(0xdfff), unichr(0xd800),
-                  unichr(0xdbff), unichr(0xdc00), unichr(0xdfff)))
+                  (unichr(0xd800), unichr(0xdbff), unichr(0xdc00),
+                   unichr(0xdfff), unichr(0xd800), unichr(0xdbff),
+                   unichr(0xdc00), unichr(0xdfff), unichr(0xd800),
+                   unichr(0xdbff), unichr(0xdc00), unichr(0xdfff)))
 
 XML_ILLEGAL = re.compile(RE_XML_ILLEGAL)
 
@@ -1023,7 +1023,7 @@ class _Request(object):
     def sign_it(self):
         """Sign this request."""
 
-        if not "api_sig" in self.params.keys():
+        if "api_sig" not in self.params.keys():
             self.params['api_sig'] = self._get_signature()
 
     def _get_signature(self):
@@ -2092,6 +2092,17 @@ class Artist(_BaseObject, _Taggable):
         params["message"] = message
 
         self._request("artist.Shout", False, params)
+
+    def get_band_members(self):
+        """Returns a list of band members or None if unknown."""
+
+        names = None
+        doc = self._request(self.ws_prefix + ".getInfo", True)
+
+        for node in doc.getElementsByTagName("bandmembers"):
+            names = _extract_all(node, "name")
+
+        return names
 
 
 class Event(_BaseObject):
@@ -4115,7 +4126,7 @@ def _number(string):
 
 def _unescape_htmlentity(string):
 
-    #string = _unicode(string)
+    # string = _unicode(string)
 
     mapping = htmlentitydefs.name2codepoint
     for key in mapping:
