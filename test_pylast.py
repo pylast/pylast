@@ -1838,6 +1838,26 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNone(band_members)
 
+    def test_get_recent_tracks_from_to(self):
+        # Arrange
+        lastfm_user = self.network.get_user("RJ")
+
+        from datetime import datetime
+        start = datetime(2011, 7, 21, 15, 10)
+        end = datetime(2011, 7, 21, 15, 15)
+        import calendar
+        utc_start = calendar.timegm(start.utctimetuple())
+        utc_end = calendar.timegm(end.utctimetuple())
+
+        # Act
+        tracks = lastfm_user.get_recent_tracks(time_from=utc_start,
+                                               time_to=utc_end)
+
+        # Assert
+        self.assertEqual(len(tracks), 1)
+        self.assertEqual(str(tracks[0].track.artist), "Johnny Cash")
+        self.assertEqual(str(tracks[0].track.title), "Ring of Fire")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
