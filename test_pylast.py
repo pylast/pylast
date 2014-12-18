@@ -863,7 +863,8 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(events), 1)
         event = events[0]
         self.assertIsInstance(event, pylast.Event)
-        self.assertEqual(event.get_venue().location['city'], "London")
+        self.assertIn(event.get_venue().location['city'],
+                      ["London", "Camden"])
 
     def test_geo_get_events_in_latlong(self):
         # Arrange

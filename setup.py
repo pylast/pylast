@@ -27,7 +27,8 @@ setup(
     name="pylast",
     version="1.0." + get_build(),
     author="Amr Hassan <amr.hassan@gmail.com>",
-    description="A Python interface to Last.fm (and other API compatible social networks)",
+    description=("A Python interface to Last.fm "
+                 "(and other API compatible social networks)"),
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
     classifiers=[
