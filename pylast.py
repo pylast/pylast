@@ -427,7 +427,7 @@ class _Network(object):
         params = {}
 
         if longitude:
-            params["long"] = longlongitude
+            params["long"] = longitude
         if latitude:
             params["lat"] = latitude
         if location:
@@ -1110,7 +1110,8 @@ class _Request(object):
 
         if self.network.is_proxy_enabled():
             conn = HTTPConnection(
-                host=self.network._get_proxy()[0], port=self.network._get_proxy()[1])
+                host=self.network._get_proxy()[0],
+                port=self.network._get_proxy()[1])
 
             try:
                 conn.request(
