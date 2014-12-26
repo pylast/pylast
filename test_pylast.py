@@ -870,7 +870,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         # Act
         events = self.network.get_geo_events(
-            lat=53.466667, long=-2.233333, distance=5, limit=1)
+            latitude=53.466667, longitude=-2.233333, distance=5, limit=1)
 
         # Assert
         self.assertEqual(len(events), 1)
