@@ -4,6 +4,7 @@
 #     A Python interface to Last.fm (and other API compatible social networks)
 #
 # Copyright 2008-2010 Amr Hassan
+# Copyright 2013-2014 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,8 +21,8 @@
 # http://code.google.com/p/pylast/
 
 __version__ = '1.0.0'
-__author__ = 'Amr Hassan'
-__copyright__ = "Copyright (C) 2008-2010  Amr Hassan"
+__author__ = 'Amr Hassan, hugovk'
+__copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
@@ -1759,13 +1760,7 @@ class _Opus(_BaseObject, _Taggable):
         return (a == b) and (c == d)
 
     def __ne__(self, other):
-        if type(self) != type(other):
-            return True
-        a = self.get_title().lower()
-        b = other.get_title().lower()
-        c = self.get_artist().get_name().lower()
-        d = other.get_artist().get_name().lower()
-        return (a != b) or (c != d)
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {
@@ -1919,10 +1914,13 @@ class Artist(_BaseObject, _Taggable):
         return self.get_name()
 
     def __eq__(self, other):
-        return self.get_name().lower() == other.get_name().lower()
+        if type(self) is type(other):
+            return self.get_name().lower() == other.get_name().lower()
+        else:
+            return False
 
     def __ne__(self, other):
-        return self.get_name().lower() != other.get_name().lower()
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -2137,10 +2135,13 @@ class Event(_BaseObject):
         return "Event #" + str(self.get_id())
 
     def __eq__(self, other):
-        return self.get_id() == other.get_id()
+        if type(self) is type(other):
+            return self.get_id() == other.get_id()
+        else:
+            return False
 
     def __ne__(self, other):
-        return self.get_id() != other.get_id()
+        return not self.__eq__(other)
 
     def _get_params(self):
         return {'event': self.get_id()}

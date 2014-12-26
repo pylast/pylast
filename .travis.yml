@@ -1,15 +1,22 @@
 language: python
+
 python:
 - "2.7"
 - "3.3"
 - "3.4"
 - "pypy"
+
+sudo: false
+
 install:
 - pip install -r test_requirements.txt
 - pip install coveralls
+
 script: coverage run --source=pylast ./test_pylast.py
+
 after_success:
   coveralls
+
 after_script:
 - coverage report
 - ./check.sh
@@ -17,6 +24,7 @@ after_script:
 - clonedigger pylast.py
 - grep "Clones detected" output.html
 - grep "lines are duplicates" output.html
+
 env:
   global:
   - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
@@ -28,3 +36,4 @@ matrix:
   allow_failures:
     - python: "3.4"
     - python: "pypy"
+  fast_finish: true
