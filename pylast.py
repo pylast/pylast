@@ -769,7 +769,7 @@ class _Network(object):
             self.scrobble_many(remaining_tracks)
 
     def get_play_links(self, link_type, things, cacheable=True):
-        method = type + ".getPlaylinks"
+        method = link_type + ".getPlaylinks"
         params = {}
 
         for i, thing in enumerate(things):
