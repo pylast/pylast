@@ -312,9 +312,9 @@ class _Network(object):
         if domain_language in self.domain_names:
             return self.domain_names[domain_language]
 
-    def _get_url(self, domain, type):
+    def _get_url(self, domain, url_type):
         return "http://%s/%s" % (
-            self._get_language_domain(domain), self.urls[type])
+            self._get_language_domain(domain), self.urls[url_type])
 
     def _get_ws_auth(self):
         """
@@ -404,14 +404,14 @@ class _Network(object):
         return seq
 
     def get_geo_events(
-            self, long=None, lat=None, location=None, distance=None,
+            self, longitude=None, latitude=None, location=None, distance=None,
             tag=None, festivalsonly=None, limit=None, cacheable=True):
         """
         Returns all events in a specific location by country or city name.
         Parameters:
-        long (Optional) : Specifies a longitude value to retrieve events for
-            (service returns nearby events by default)
-        lat (Optional) : Specifies a latitude value to retrieve events for
+        longitude (Optional) : Specifies a longitude value to retrieve events
+            for (service returns nearby events by default)
+        latitude (Optional) : Specifies a latitude value to retrieve events for
             (service returns nearby events by default)
         location (Optional) : Specifies a location to retrieve events for
             (service returns nearby events by default)
@@ -426,10 +426,10 @@ class _Network(object):
 
         params = {}
 
-        if long:
-            params["long"] = long
-        if lat:
-            params["lat"] = lat
+        if longitude:
+            params["long"] = longlongitude
+        if latitude:
+            params["lat"] = latitude
         if location:
             params["location"] = location
         if limit:
@@ -768,17 +768,17 @@ class _Network(object):
         if remaining_tracks:
             self.scrobble_many(remaining_tracks)
 
-    def get_play_links(self, type, things, cacheable=True):
+    def get_play_links(self, link_type, things, cacheable=True):
         method = type + ".getPlaylinks"
         params = {}
 
         for i, thing in enumerate(things):
-            if type == "artist":
+            if link_type == "artist":
                 params['artist[' + str(i) + ']'] = thing
-            elif type == "album":
+            elif link_type == "album":
                 params['artist[' + str(i) + ']'] = thing.artist
                 params['album[' + str(i) + ']'] = thing.title
-            elif type == "track":
+            elif link_type == "track":
                 params['artist[' + str(i) + ']'] = thing.artist
                 params['track[' + str(i) + ']'] = thing.title
 
@@ -793,13 +793,13 @@ class _Network(object):
         return seq
 
     def get_artist_play_links(self, artists, cacheable=True):
-        return self.get_play_links("artist", artists)
+        return self.get_play_links("artist", artists, cacheable)
 
     def get_album_play_links(self, albums, cacheable=True):
-        return self.get_play_links("album", albums)
+        return self.get_play_links("album", albums, cacheable)
 
     def get_track_play_links(self, tracks, cacheable=True):
-        return self.get_play_links("track", tracks)
+        return self.get_play_links("track", tracks, cacheable)
 
 
 class LastFMNetwork(_Network):
@@ -2089,6 +2089,8 @@ class Artist(_BaseObject, _Taggable):
         """
         The artist.getImages method has been deprecated by Last.fm.
         """
+        assert order  # silence warnings
+        assert limit  # silence warnings
         raise WSError(
             self.network, "27",
             "The artist.getImages method has been deprecated by Last.fm.")
@@ -2717,7 +2719,7 @@ class Playlist(_BaseObject):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, user, id, network):
+    def __init__(self, user, playlist_id, network):
         _BaseObject.__init__(self, network, "playlist")
 
         if isinstance(user, User):
@@ -2725,7 +2727,7 @@ class Playlist(_BaseObject):
         else:
             self.user = User(user, self.network)
 
-        self.id = id
+        self.id = playlist_id
 
     @_string_output
     def __str__(self):
@@ -3897,10 +3899,10 @@ class Venue(_BaseObject):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, id, network, venue_element=None):
+    def __init__(self, netword_id, network, venue_element=None):
         _BaseObject.__init__(self, network, "venue")
 
-        self.id = _number(id)
+        self.id = _number(netword_id)
         if venue_element is not None:
             self.info = _extract_element_tree(venue_element)
             self.name = self.info.get('name')
@@ -4213,7 +4215,7 @@ class _ScrobblerRequest(object):
     def __init__(self, url, params, network, type="POST"):
 
         for key in params:
-                params[key] = str(params[key])
+            params[key] = str(params[key])
 
         self.params = params
         self.type = type
