@@ -2089,8 +2089,6 @@ class Artist(_BaseObject, _Taggable):
         """
         The artist.getImages method has been deprecated by Last.fm.
         """
-        assert order  # silence warnings
-        assert limit  # silence warnings
         raise WSError(
             self.network, "27",
             "The artist.getImages method has been deprecated by Last.fm.")
