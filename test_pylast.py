@@ -422,7 +422,7 @@ class TestPyLast(unittest.TestCase):
     def test_playlist_is_hashable(self):
         # Arrange
         playlist = pylast.Playlist(
-            user="RJ", id="1k1qp_doglist", network=self.network)
+            user="RJ", playlist_id="1k1qp_doglist", network=self.network)
 
         # Act/Assert
         self.helper_is_thing_hashable(playlist)
