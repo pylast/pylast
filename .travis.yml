@@ -13,7 +13,7 @@ install:
 - travis_retry pip install -r test_requirements.txt
 - travis_retry pip install coveralls
 
-script: coverage run --source=pylast ./test_pylast.py
+script: coverage run --source=pylast ./tests/test_pylast.py
 
 after_success:
 - coveralls
@@ -24,7 +24,7 @@ after_script:
 - coverage report
 - ./check.sh
 - pip install clonedigger
-- clonedigger pylast.py
+- clonedigger pylast
 - grep "Clones detected" output.html
 - grep "lines are duplicates" output.html
 

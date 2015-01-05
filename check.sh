@@ -1,10 +1,10 @@
-pyflakes pylast.py
+pyflakes pylast
 echo ---
-pyflakes test_pylast.py
+pyflakes tests
 echo ---
-pep8 test_pylast.py
+pep8 pylast
 echo ---
-pep8 pylast.py
+pep8 tests
 # echo ---
 # clonedigger pylast.py
 # grep "Clones detected" output.html

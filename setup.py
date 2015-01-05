@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+import os
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 setup(
     name="pylast",
     version="1.0.0",
     author="Amr Hassan <amr.hassan@gmail.com>",
+    tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
     description=("A Python interface to Last.fm "
                  "(and other API compatible social networks)"),
     author_email="amr.hassan@gmail.com",
@@ -24,8 +26,8 @@ setup(
         "Programming Language :: Python :: 3.4",
         ],
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
-    py_modules=("pylast",),
+    packages=find_packages(exclude=('tests*')),
     license="Apache2"
-    )
+)
 
 # End of file
