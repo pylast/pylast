@@ -1180,7 +1180,7 @@ class SessionKeyGenerator(object):
         d. session_key = SessionKeyGenerator(network).get_session_key(username,
             password_hash)
 
-    A session key's lifetime is infinite, unless the user provokes the rights
+    A session key's lifetime is infinite, unless the user revokes the rights
     of the given API Key.
 
     If you create a Network object with just a API_KEY and API_SECRET and a
