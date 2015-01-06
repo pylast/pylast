@@ -5,17 +5,20 @@ python:
 - "3.3"
 - "3.4"
 - "pypy"
+- "pypy3"
 
 sudo: false
 
 install:
-- pip install -r test_requirements.txt
-- pip install coveralls
+- travis_retry pip install -r test_requirements.txt
+- travis_retry pip install coveralls
 
 script: coverage run --source=pylast ./test_pylast.py
 
 after_success:
-  coveralls
+- coveralls
+- travis_retry pip install scrutinizer-ocular
+- ocular
 
 after_script:
 - coverage report
@@ -36,4 +39,5 @@ matrix:
   allow_failures:
     - python: "3.4"
     - python: "pypy"
+    - python: "pypy3"
   fast_finish: true

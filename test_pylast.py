@@ -422,7 +422,7 @@ class TestPyLast(unittest.TestCase):
     def test_playlist_is_hashable(self):
         # Arrange
         playlist = pylast.Playlist(
-            user="RJ", id="1k1qp_doglist", network=self.network)
+            user="RJ", playlist_id="1k1qp_doglist", network=self.network)
 
         # Act/Assert
         self.helper_is_thing_hashable(playlist)
@@ -870,7 +870,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         # Act
         events = self.network.get_geo_events(
-            lat=53.466667, long=-2.233333, distance=5, limit=1)
+            latitude=53.466667, longitude=-2.233333, distance=5, limit=1)
 
         # Assert
         self.assertEqual(len(events), 1)
