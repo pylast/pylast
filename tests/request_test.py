@@ -11,8 +11,11 @@ def mock_network():
     )
 
 
-@pytest.mark.parametrize('unicode_artist', [u'\xe9lafdasfdsafdsa', u'ééééééé'])
-def test_get_cache_key(unicode_artist):
+@pytest.mark.parametrize('troublesome_artist', [
+    u'\xe9lafdasfdsafdsa', u'ééééééé',
+    pylast.Artist(u'B\xe9l', mock_network())
+])
+def test_get_cache_key(troublesome_artist):
     request = pylast._Request(mock_network(), 'some_method',
-                              params={'artist': unicode_artist})
+                              params={'artist': troublesome_artist})
     request._get_cache_key()
