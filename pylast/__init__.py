@@ -20,7 +20,7 @@
 #
 # http://code.google.com/p/pylast/
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
 __license__ = "apache2"
