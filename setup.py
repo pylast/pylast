@@ -8,6 +8,7 @@ setup(
     name="pylast",
     version="1.0.0",
     author="Amr Hassan <amr.hassan@gmail.com>",
+    install_requires=['six'],
     tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
     description=("A Python interface to Last.fm "
                  "(and other API compatible social networks)"),

@@ -37,6 +37,8 @@ import collections
 import warnings
 import re
 
+import six
+
 
 def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
@@ -1910,9 +1912,12 @@ class Artist(_BaseObject, _Taggable):
         return "pylast.Artist(%s, %s)" % (
             repr(self.get_name()), repr(self.network))
 
+    def __unicode__(self):
+        return six.text_type(self.get_name())
+
     @_string_output
     def __str__(self):
-        return self.get_name()
+        return self.__unicode__()
 
     def __eq__(self, other):
         if type(self) is type(other):
@@ -3966,40 +3971,22 @@ def md5(text):
 
 
 def _unicode(text):
-    if sys.version_info[0] == 3:
-        if type(text) in (bytes, bytearray):
-            return str(text, "utf-8")
-        elif type(text) == str:
-            return text
-        else:
-            return str(text)
-
-    elif sys.version_info[0] == 2:
-        if type(text) in (str,):
-            return unicode(text, "utf-8")
-        elif type(text) == unicode:
-            return text
-        else:
-            return unicode(text)
+    if isinstance(text, six.binary_type):
+        return six.text_type(text, "utf-8")
+    elif isinstance(text, six.text_type):
+        return text
+    else:
+        return six.text_type(text)
 
 
-def _string(text):
+def _string(string):
     """For Python2 routines that can only process str type."""
-
-    if sys.version_info[0] == 3:
-        if type(text) != str:
-            return str(text)
-        else:
-            return text
-
-    elif sys.version_info[0] == 2:
-        if type(text) == str:
-            return text
-
-        if type(text) == int:
-            return str(text)
-
-        return text.encode("utf-8")
+    if isinstance(string, str):
+        return string
+    casted = six.text_type(string)
+    if sys.version_info[0] == 2:
+        casted = casted.encode("utf-8")
+    return casted
 
 
 def _collect_nodes(limit, sender, method_name, cacheable, params=None):
