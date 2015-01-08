@@ -1,35 +1,35 @@
 language: python
-
 env:
   global:
-    - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
-    - secure: gDWNEYA1EUv4G230/KzcTgcmEST0nf2FeW/z/prsoQBu+TWw1rKKSJAJeMLvuI1z4aYqqNYdmqjWyNhhVK3p5wmFP2lxbhaBT1jDsxxFpePc0nUkdAQOOD0yBpbBGkqkjjxU34HjTX2NFNEbcM3izVVE9oQmS5r4oFFNJgdL91c=
-    - secure: RpsZblHFU7a5dnkO/JUgi70RkNJwoUh3jJqVo1oOLjL+lvuAmPXhI8MDk2diUk43X+XCBFBEnm7UCGnjUF+hDnobO4T+VrIFuVJWg3C7iKIT+YWvgG6A+CSeo/P0I0dAeUscTr5z4ylOq3EDx4MFSa8DmoWMmjKTAG1GAeTlY2k=
-    - secure: T5OKyd5Bs0nZbUr+YICbThC5GrFq/kUjX8FokzCv7NWsYaUWIwEmMXXzoYALoB3A+rAglOx6GABaupoNKKg3tFQyxXphuMKpZ8MasMAMFjFW0d7wsgGy0ylhVwrgoKzDbCQ5FKbohC+9ltLs+kKMCQ0L+MI70a/zTfF4/dVWO/o=
+  - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
+  - secure: gDWNEYA1EUv4G230/KzcTgcmEST0nf2FeW/z/prsoQBu+TWw1rKKSJAJeMLvuI1z4aYqqNYdmqjWyNhhVK3p5wmFP2lxbhaBT1jDsxxFpePc0nUkdAQOOD0yBpbBGkqkjjxU34HjTX2NFNEbcM3izVVE9oQmS5r4oFFNJgdL91c=
+  - secure: RpsZblHFU7a5dnkO/JUgi70RkNJwoUh3jJqVo1oOLjL+lvuAmPXhI8MDk2diUk43X+XCBFBEnm7UCGnjUF+hDnobO4T+VrIFuVJWg3C7iKIT+YWvgG6A+CSeo/P0I0dAeUscTr5z4ylOq3EDx4MFSa8DmoWMmjKTAG1GAeTlY2k=
+  - secure: T5OKyd5Bs0nZbUr+YICbThC5GrFq/kUjX8FokzCv7NWsYaUWIwEmMXXzoYALoB3A+rAglOx6GABaupoNKKg3tFQyxXphuMKpZ8MasMAMFjFW0d7wsgGy0ylhVwrgoKzDbCQ5FKbohC+9ltLs+kKMCQ0L+MI70a/zTfF4/dVWO/o=
+  - secure: DxBvGGoIgbAeuuU3A6+J1HBbmUAEvqdmK73etw+yNKDLGvvukgTL33dNCr8CZXLKRRvfhrjU7Q01GUpOTxrVQ9nJgsD55kwx0wPtuBWIF80M2m4SPsiVLlwP/LFYD5JMDTDWjFTlVahma8P7qoLjCc7b/RgigWLidH19snQmjdY=
+  - secure: VPARlWNg/0Nit7a924vJlDfv7yiuTDtrcGZNFrZ6yN3dl8ZjVPizQXQNKA3yq0y2jW25nwjRwZYj3eY5MdM9F7Sw51d+/8AjFtdCuRgDvwlQFR/pCoyzqgJATkXKo7mlejvnA+5EKUzAmu3drIbboFgbLgRTMrG7b/ot9tazTHs=
+  - secure: CQYL7MH6tSVrCcluIfWfDSTo4E/p+9pF0eI7Vtf0oaZBzyulODHK8h/mzJp4HwezyfOu0RCedq6sloGQr1/29CvWWESaYyoGoGz9Mz2ZS+MpIcjGISfZa+x4vSp6QPFvd4i/1Z/1j2gJVVyswkrIVUwZIDJtfAKzZI5iHx2gH8Y=
+  - secure: SsKJoJwtDVWrL5xxl9C/gTRy6FhfRQQNNAFOogl9mTs/WeI2t9QTYoKsxLPXOdoRdu4MvT3h/B2sjwggt7zP81fBVxQRTkg4nq0zSHlj0NqclbFa6I5lUYdGwH9gPk/HWJJwXhKRDsqn/iRw2v+qBDs/j3kIgPQ0yjM58LEPXic=
   matrix:
-    - TOXENV=py27
-    - TOXENV=py33
-    - TOXENV=py34
-    - TOXENV=pypy
-    - TOXENV=pypy3
-    - TOXENV=lint
-
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=pypy
+  - TOXENV=pypy3
+  - TOXENV=lint
 sudo: false
-
 install:
 - travis_retry pip install tox
 - travis_retry pip install coveralls
-
 script: tox
-
 after_success:
-- "if [ $TOXENV == 'py27' ]; then pip install coveralls; coveralls; fi"
-- "if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular; fi"
-- "if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular; fi"
-
+- if [ $TOXENV == 'py27' ]; then pip install coveralls; coveralls; fi
+- if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular;
+  fi
+- if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular;
+  fi
 matrix:
   allow_failures:
-    - python: "3.4"
-    - python: "pypy"
-    - python: "pypy3"
+  - python: '3.4'
+  - python: pypy
+  - python: pypy3
   fast_finish: true
