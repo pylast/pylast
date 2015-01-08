@@ -11,6 +11,7 @@ env:
 sudo: false
 
 install:
+- travis_retry pip install tox
 - travis_retry pip install coveralls
 
 script: tox
