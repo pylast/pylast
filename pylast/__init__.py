@@ -1070,7 +1070,7 @@ class _Request(object):
 
         for key in keys:
             if key != "api_sig" and key != "api_key" and key != "sk":
-                cache_key += key + _string(self.params[key])
+                cache_key += key + self.params[key]
 
         return hashlib.sha1(cache_key.encode("utf-8")).hexdigest()
 

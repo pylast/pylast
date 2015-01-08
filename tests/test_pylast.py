@@ -2,7 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import argparse
 import os
 from random import choice
 import sys
@@ -1911,52 +1910,4 @@ class TestPyLast(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description="Integration (not unit) tests for pylast.py",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        '-1', '--single',
-        help="Run a single test")
-    parser.add_argument(
-        '-r', '--repeat',
-        help="Repeat a single test (100 times) until failure")
-    parser.add_argument(
-        '-m', '--matching',
-        help="Run tests with this in the name")
-    args = parser.parse_args()
-
-    if args.single:
-        suite = unittest.TestSuite()
-
-        suite.addTest(TestPyLast(args.single))
-        unittest.TextTestRunner().run(suite)
-
-    elif args.repeat:
-        suite = unittest.TestSuite()
-
-        suite.addTest(TestPyLast(args.repeat))
-        for i in range(100):
-            print("Attempt " + str(i+1))
-            result = unittest.TextTestRunner().run(suite)
-            problems = len(result.errors) + len(result.failures)
-            if problems:
-                break
-
-    elif args.matching:
-        suite = unittest.TestSuite()
-
-        import inspect
-        methods = inspect.getmembers(TestPyLast, predicate=inspect.ismethod)
-
-        tests = []
-        for method, _ in methods:
-            if method.startswith("test_") and args.matching in method:
-                print(method)
-                suite.addTest(TestPyLast(method))
-
-        unittest.TextTestRunner().run(suite)
-
-    else:
-        unittest.main(failfast=True)
-
-# End of file
+    unittest.main(failfast=True)
