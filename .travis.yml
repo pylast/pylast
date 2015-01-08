@@ -22,11 +22,8 @@ install:
 - travis_retry pip install coveralls
 script: tox
 after_success:
-- if [ $TOXENV == 'py27' ]; then pip install coveralls; coveralls; fi
-- if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular;
-  fi
-- if [ $TOXENV == 'py27' ]; then travis_retry pip install scrutinizer-ocular; ocular;
-  fi
+- travis_retry pip install coveralls && coveralls
+- travis_retry pip install scrutinizer-ocular && ocular
 matrix:
   allow_failures:
   - python: '3.4'

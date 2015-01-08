@@ -1908,4 +1908,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(tracks[0].track.artist), "Johnny Cash")
         self.assertEqual(str(tracks[0].track.title), "Ring of Fire")
 
-# End of file
+
+if __name__ == '__main__':
+    unittest.main(failfast=True)
