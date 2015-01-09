@@ -11,11 +11,9 @@ Try using the pydoc utility for help on usage or see [test_pylast.py](test_pylas
 Installation
 ------------
 
-The easiest way is via pip:
+Install via pip:
 
     pip install pylast
-
-Or copy [pylast.py](pylast.py) to somewhere your Python can see it. No other dependencies are needed.
 
 
 Features
@@ -27,7 +25,6 @@ Features
  * Full object-oriented design.
  * Proxy support.
  * Internal caching support for some web services calls (disabled by default).
- * No extra dependencies but Python itself.
  * Support for other API-compatible networks like Libre.fm.
  * Python 3-friendly (Starting from 0.5).
 
@@ -70,9 +67,9 @@ More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-
 Testing
 -------
 
-[test_pylast.py](test_pylast.py) contains integration tests with Last.fm, and plenty of code examples.
+[tests/test_pylast.py](tests/test_pylast.py) contains integration tests with Last.fm, and plenty of code examples. Unit tests are also in the [tests/](tests/) directory.
 
-You need a test account at Last.fm that will be cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
+For integration tests you need a test account at Last.fm that will be cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
 ```sh
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
@@ -81,31 +78,21 @@ export PYLAST_API_KEY=TODO_ENTER_YOURS_HERE
 export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 ```
 
-To run all:
+To run all unit and integration tests:
 ```sh
-pip install -r test_requirements.txt
-./test_pylast.py
+pip install pytest
+py.test
 ```
 
-Or run just one:
+Or run just one test case:
 ```sh
-./test_pylast.py -1 test_scrobble
-```
-
-Or all those tests matching a term:
-```sh
-./test_pylast.py -m geo
+py.test -k test_scrobble
 ```
 
 To run with coverage:
 ```sh
-coverage run --source=pylast ./test_pylast.py
+py.test -v --cov pylast --cov-report term-missing
 coverage report # for command-line report
 coverage html   # for HTML report
 open htmlcov/index.html
-```
-
-To perform some static analysis:
-```sh
-./check.sh
 ```
