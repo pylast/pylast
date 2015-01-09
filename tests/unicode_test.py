@@ -24,5 +24,6 @@ def test_get_cache_key(artist):
 
 
 @pytest.mark.parametrize('obj', [pylast.Artist(u'B\xe9l', mock_network())])
-def test_cast(obj):
+def test_cast_and_hash(obj):
     assert type(six.text_type(obj)) is six.text_type
+    assert isinstance(hash(obj), int)

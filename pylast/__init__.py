@@ -1328,9 +1328,9 @@ class _BaseObject(object):
 
     def __hash__(self):
         # Convert any ints (or whatever) into strings
-        values = map(str, self._get_params().values())
+        values = map(six.text_type, self._get_params().values())
 
-        return hash(self.network) + hash(str(type(self)) + "".join(
+        return hash(self.network) + hash(six.text_type(type(self)) + "".join(
             list(self._get_params().keys()) + list(values)
         ).lower())
 
