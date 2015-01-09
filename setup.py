@@ -6,8 +6,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="pylast",
-    version="1.0.0",
+    version="1.0.1",
     author="Amr Hassan <amr.hassan@gmail.com>",
+    install_requires=['six'],
     tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
     description=("A Python interface to Last.fm "
                  "(and other API compatible social networks)"),
@@ -24,9 +25,9 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
-        ],
+    ],
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
-    packages=find_packages(exclude=('tests*')),
+    packages=find_packages(exclude=('tests*',)),
     license="Apache2"
 )
 
