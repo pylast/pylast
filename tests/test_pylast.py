@@ -3,6 +3,7 @@
 Integration (not unit) tests for pylast.py
 """
 import os
+import pytest
 from random import choice
 import sys
 import time
@@ -19,10 +20,13 @@ def load_secrets():
             doc = yaml.load(f)
     else:
         doc = {}
-        doc["username"] = os.environ['PYLAST_USERNAME'].strip()
-        doc["password_hash"] = os.environ['PYLAST_PASSWORD_HASH'].strip()
-        doc["api_key"] = os.environ['PYLAST_API_KEY'].strip()
-        doc["api_secret"] = os.environ['PYLAST_API_SECRET'].strip()
+        try:
+            doc["username"] = os.environ['PYLAST_USERNAME'].strip()
+            doc["password_hash"] = os.environ['PYLAST_PASSWORD_HASH'].strip()
+            doc["api_key"] = os.environ['PYLAST_API_KEY'].strip()
+            doc["api_secret"] = os.environ['PYLAST_API_SECRET'].strip()
+        except KeyError:
+            pytest.skip("Missing environment variables: PYLAST_USERNAME etc.")
     return doc
 
 

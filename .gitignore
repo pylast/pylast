@@ -58,3 +58,5 @@ docs/_build/
 test_pylast.yaml
 lastfm.txt.pkl
 secrets.sh
+
+.dir-locals.el
