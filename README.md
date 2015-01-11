@@ -6,7 +6,7 @@ pyLast
 
 A Python interface to [Last.fm](http://www.last.fm/) and other api-compatible websites such as [Libre.fm](http://libre.fm/).
 
-Try using the pydoc utility for help on usage or see [test_pylast.py](test_pylast.py) for examples.
+Try using the pydoc utility for help on usage or see [test_pylast.py](tests/test_pylast.py) for examples.
 
 Installation
 ------------
