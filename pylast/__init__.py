@@ -431,7 +431,7 @@ class _Network(object):
         return seq
 
 
-  get_geo_events(
+    def get_geo_events(
             self, longitude=None, latitude=None, location=None, distance=None,
             tag=None, festivalsonly=None, limit=None, cacheable=True):
         """
