@@ -80,7 +80,7 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 
 To run all unit and integration tests:
 ```sh
-pip install pytest
+pip install pytest flaky
 py.test
 ```
 
