@@ -983,6 +983,17 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(tracks[0], pylast.TopItem)
         self.assertIsInstance(tracks[0].item, pylast.Track)
 
+    def test_tag_get_top_tracks(self):
+        # Arrange
+        # Act
+        tags = self.network.get_top_tracks_by_tag(
+            tag="happy", limit=1)
+
+        # Assert
+        self.assertEqual(len(tags), 1)
+        self.assertIsInstance(tags[0], pylast.TopItem)
+        self.assertIsInstance(tags[0].item, pylast.Track)
+
     def test_metro_class(self):
         # Arrange
         # Act
