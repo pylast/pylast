@@ -20,12 +20,6 @@
 #
 # http://code.google.com/p/pylast/
 
-__version__ = '1.1.0'
-__author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
-__license__ = "apache2"
-__email__ = 'amr.hassan@gmail.com'
-
 import hashlib
 from xml.dom import minidom
 import xml.dom
@@ -36,8 +30,13 @@ import sys
 import collections
 import warnings
 import re
-
 import six
+
+__version__ = '1.1.0'
+__author__ = 'Amr Hassan, hugovk'
+__copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
+__license__ = "apache2"
+__email__ = 'amr.hassan@gmail.com'
 
 
 def _deprecation_warning(message):
@@ -834,13 +833,13 @@ class LastFMNetwork(_Network):
             name="Last.fm",
             homepage="http://last.fm",
             ws_server=("ws.audioscrobbler.com", "/2.0/"),
-            api_key = api_key,
-            api_secret = api_secret,
-            session_key = session_key,
-            submission_server = "http://post.audioscrobbler.com:80/",
-            username = username,
-            password_hash = password_hash,
-            domain_names = {
+            api_key=api_key,
+            api_secret=api_secret,
+            session_key=session_key,
+            submission_server="http://post.audioscrobbler.com:80/",
+            username=username,
+            password_hash=password_hash,
+            domain_names={
                 DOMAIN_ENGLISH: 'www.last.fm',
                 DOMAIN_GERMAN: 'www.lastfm.de',
                 DOMAIN_SPANISH: 'www.lastfm.es',
@@ -854,7 +853,7 @@ class LastFMNetwork(_Network):
                 DOMAIN_JAPANESE: 'www.lastfm.jp',
                 DOMAIN_CHINESE: 'cn.last.fm',
             },
-            urls = {
+            urls={
                 "album": "music/%(artist)s/%(album)s",
                 "artist": "music/%(artist)s",
                 "event": "event/%(id)s",
@@ -930,13 +929,13 @@ class LibreFMNetwork(_Network):
             name="Libre.fm",
             homepage="http://alpha.libre.fm",
             ws_server=("alpha.libre.fm", "/2.0/"),
-            api_key = api_key,
-            api_secret = api_secret,
-            session_key = session_key,
-            submission_server = "http://turtle.libre.fm:80/",
-            username = username,
-            password_hash = password_hash,
-            domain_names = {
+            api_key=api_key,
+            api_secret=api_secret,
+            session_key=session_key,
+            submission_server="http://turtle.libre.fm:80/",
+            username=username,
+            password_hash=password_hash,
+            domain_names={
                 DOMAIN_ENGLISH: "alpha.libre.fm",
                 DOMAIN_GERMAN: "alpha.libre.fm",
                 DOMAIN_SPANISH: "alpha.libre.fm",
@@ -950,7 +949,7 @@ class LibreFMNetwork(_Network):
                 DOMAIN_JAPANESE: "alpha.libre.fm",
                 DOMAIN_CHINESE: "alpha.libre.fm",
             },
-            urls = {
+            urls={
                 "album": "artist/%(artist)s/album/%(album)s",
                 "artist": "artist/%(artist)s",
                 "event": "event/%(id)s",

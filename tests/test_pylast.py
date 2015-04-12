@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+from flaky import flaky
 import os
 import pytest
 from random import choice
@@ -30,6 +31,7 @@ def load_secrets():
     return doc
 
 
+@flaky
 class TestPyLast(unittest.TestCase):
 
     secrets = None
