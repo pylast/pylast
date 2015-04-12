@@ -446,7 +446,6 @@ class _Network(object):
         distance (Optional) : Find events within a specified radius
             (in kilometres)
         tag (Optional) : Specifies a tag to filter by.
-        pTracks
         festivalsonly[0|1] (Optional) : Whether only festivals should be
             returned, or all events.
         limit (Optional) : The number of results to fetch per page.
