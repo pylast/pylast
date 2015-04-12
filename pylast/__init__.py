@@ -4038,7 +4038,7 @@ def _extract(node, name, index=0):
         return None
 
 
-def _extract_element_tree(node, index=0):
+def _extract_element_tree(node):
     """Extract an element tree into a multi-level dictionary
 
     NB: If any elements have text nodes as well as nested
