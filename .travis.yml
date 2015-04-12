@@ -10,12 +10,12 @@ env:
   - secure: CQYL7MH6tSVrCcluIfWfDSTo4E/p+9pF0eI7Vtf0oaZBzyulODHK8h/mzJp4HwezyfOu0RCedq6sloGQr1/29CvWWESaYyoGoGz9Mz2ZS+MpIcjGISfZa+x4vSp6QPFvd4i/1Z/1j2gJVVyswkrIVUwZIDJtfAKzZI5iHx2gH8Y=
   - secure: SsKJoJwtDVWrL5xxl9C/gTRy6FhfRQQNNAFOogl9mTs/WeI2t9QTYoKsxLPXOdoRdu4MvT3h/B2sjwggt7zP81fBVxQRTkg4nq0zSHlj0NqclbFa6I5lUYdGwH9gPk/HWJJwXhKRDsqn/iRw2v+qBDs/j3kIgPQ0yjM58LEPXic=
   matrix:
+  - TOXENV=lint
   - TOXENV=py27
   - TOXENV=py33
   - TOXENV=py34
   - TOXENV=pypy
   - TOXENV=pypy3
-  - TOXENV=lint
 sudo: false
 install:
 - travis_retry pip install tox
