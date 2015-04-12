@@ -404,6 +404,32 @@ class _Network(object):
 
         return seq
 
+    def get_top_tracks_by_tag(self, tag, limit=None, cacheable=True):
+        """Returns the top tracks by tag as a sequence of TopItem objects.
+        Parameters:
+            tag (Required) : A country name, as defined by the ISO 3166-1
+            limit (Optional) : The number of results to fetch per page.Defaults to 50.
+        """
+
+        params = {"tag":tag}
+
+        if limit:
+            params["limit"] = limit
+
+        doc = _Request(self,"tag.getTopTracks",params).execute(cacheable)
+        seq = []
+                        
+        for node in doc.getElementsByTagName("track"):
+            title = _extract(node,"name")
+            artist = _extract(node,"name",1)
+            track = Track(artist,title,self)
+            weight = _number(_extract(node, "playcount"))
+            
+            seq.append(TopItem(track,weight))
+
+        return seq
+
+
     def get_geo_events(
             self, longitude=None, latitude=None, location=None, distance=None,
             tag=None, festivalsonly=None, limit=None, cacheable=True):
