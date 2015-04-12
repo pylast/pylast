@@ -4197,13 +4197,13 @@ class BadSessionError(ScrobblingError):
 
 class _ScrobblerRequest(object):
 
-    def __init__(self, url, params, network, type="POST"):
+    def __init__(self, url, params, network, request_type="POST"):
 
         for key in params:
             params[key] = str(params[key])
 
         self.params = params
-        self.type = type
+        self.type = request_type
         (self.hostname, self.subdir) = url_split_host(url[len("http:"):])
         self.network = network
 
