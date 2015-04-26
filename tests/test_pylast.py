@@ -1236,7 +1236,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(lastfm_user, dates[1])
+        self.helper_get_assert_charts(lastfm_user, dates[0])
 
     def test_track_top_fans(self):
         # Arrange
