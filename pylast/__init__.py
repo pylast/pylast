@@ -396,7 +396,7 @@ class _Network(object):
 
         seq = []
         for node in doc.getElementsByTagName("tag"):
-            if len(seq) >= limit:
+            if limit and len(seq) >= limit:
                 break
             tag = Tag(_extract(node, "name"), self)
             weight = _number(_extract(node, "count"))
