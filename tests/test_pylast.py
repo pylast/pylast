@@ -31,7 +31,7 @@ def load_secrets():
     return doc
 
 
-@flaky
+@flaky(max_runs=5, min_passes=1)
 class TestPyLast(unittest.TestCase):
 
     secrets = None
@@ -1101,6 +1101,14 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
+    def test_network_get_top_tags_with_no_limit(self):
+        # Arrange
+        # Act
+        tags = self.network.get_top_tags()
+
+        # Assert
+        self.helper_at_least_one_thing_in_top_list(tags, pylast.Tag)
+
     def test_network_get_top_tracks_with_limit(self):
         # Arrange
         # Act
@@ -1228,7 +1236,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(lastfm_user, dates[1])
+        self.helper_get_assert_charts(lastfm_user, dates[0])
 
     def test_track_top_fans(self):
         # Arrange

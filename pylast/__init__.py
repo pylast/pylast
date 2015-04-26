@@ -4,7 +4,7 @@
 #     A Python interface to Last.fm (and other API compatible social networks)
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2014 hugovk
+# Copyright 2013-2015 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import six
 
 __version__ = '1.1.0'
 __author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
@@ -396,7 +396,7 @@ class _Network(object):
 
         seq = []
         for node in doc.getElementsByTagName("tag"):
-            if len(seq) >= limit:
+            if limit and len(seq) >= limit:
                 break
             tag = Tag(_extract(node, "name"), self)
             weight = _number(_extract(node, "count"))
@@ -4038,7 +4038,7 @@ def _extract(node, name, index=0):
         return None
 
 
-def _extract_element_tree(node, index=0):
+def _extract_element_tree(node):
     """Extract an element tree into a multi-level dictionary
 
     NB: If any elements have text nodes as well as nested
@@ -4197,13 +4197,13 @@ class BadSessionError(ScrobblingError):
 
 class _ScrobblerRequest(object):
 
-    def __init__(self, url, params, network, type="POST"):
+    def __init__(self, url, params, network, request_type="POST"):
 
         for key in params:
             params[key] = str(params[key])
 
         self.params = params
-        self.type = type
+        self.type = request_type
         (self.hostname, self.subdir) = url_split_host(url[len("http:"):])
         self.network = network
 
