@@ -31,7 +31,7 @@ def load_secrets():
     return doc
 
 
-@flaky
+@flaky(max_runs=5, min_passes=1)
 class TestPyLast(unittest.TestCase):
 
     secrets = None
