@@ -1101,6 +1101,14 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
+    def test_network_get_top_tags_with_no_limit(self):
+        # Arrange
+        # Act
+        tags = self.network.get_top_tags()
+
+        # Assert
+        self.helper_at_least_one_thing_in_top_list(tags, pylast.Tag)
+
     def test_network_get_top_tracks_with_limit(self):
         # Arrange
         # Act
