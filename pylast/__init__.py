@@ -192,19 +192,6 @@ class _Network(object):
             self.session_key = sk_gen.get_session_key(
                 self.username, self.password_hash)
 
-    """def __repr__(self):
-        attributes = ("name", "homepage", "ws_server", "api_key", "api_secret",
-            "session_key", "submission_server", "username", "password_hash",
-            "domain_names", "urls")
-
-        text = "pylast._Network(%s)"
-        args = []
-        for attr in attributes:
-            args.append("=".join((attr, repr(getattr(self, attr)))))
-
-        return text % ", ".join(args)
-    """
-
     def __str__(self):
         return "%s Network" % self.name
 
