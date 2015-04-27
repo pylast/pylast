@@ -36,11 +36,6 @@ class TestPyLast(unittest.TestCase):
 
     secrets = None
 
-    # To remove Python 3's
-    # "DeprecationWarning: Please use assertRaisesRegex instead"
-    if sys.version_info[0] == 2:
-        assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
-
     def unix_timestamp(self):
         return int(time.time())
 
@@ -761,14 +756,6 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(name, "Last.fm Network")
-
-    def test_artist_get_images_deprecated(self):
-        # Arrange
-        artist = self.network.get_artist("Test Artist")
-
-        # Act/Assert
-        with self.assertRaisesRegex(pylast.WSError, 'deprecated'):
-            artist.get_images()
 
     def helper_validate_results(self, a, b, c):
         # Assert

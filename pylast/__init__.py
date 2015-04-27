@@ -2077,14 +2077,6 @@ class Artist(_BaseObject, _Taggable):
         return self.network._get_url(
             domain_name, "artist") % {'artist': artist}
 
-    def get_images(self, order=IMAGES_ORDER_POPULARITY, limit=None):
-        """
-        The artist.getImages method has been deprecated by Last.fm.
-        """
-        raise WSError(
-            self.network, "27",
-            "The artist.getImages method has been deprecated by Last.fm.")
-
     def shout(self, message):
         """
             Post a shout
