@@ -6,7 +6,6 @@ from flaky import flaky
 import os
 import pytest
 from random import choice
-import sys
 import time
 import unittest
 
