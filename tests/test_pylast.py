@@ -2,10 +2,10 @@
 """
 Integration (not unit) tests for pylast.py
 """
+from flaky import flaky
 import os
 import pytest
 from random import choice
-import sys
 import time
 import unittest
 
@@ -30,14 +30,10 @@ def load_secrets():
     return doc
 
 
+@flaky(max_runs=5, min_passes=1)
 class TestPyLast(unittest.TestCase):
 
     secrets = None
-
-    # To remove Python 3's
-    # "DeprecationWarning: Please use assertRaisesRegex instead"
-    if sys.version_info[0] == 2:
-        assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
 
     def unix_timestamp(self):
         return int(time.time())
@@ -760,14 +756,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(name, "Last.fm Network")
 
-    def test_artist_get_images_deprecated(self):
-        # Arrange
-        artist = self.network.get_artist("Test Artist")
-
-        # Act/Assert
-        with self.assertRaisesRegex(pylast.WSError, 'deprecated'):
-            artist.get_images()
-
     def helper_validate_results(self, a, b, c):
         # Assert
         self.assertIsNotNone(a)
@@ -1099,6 +1087,14 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
+    def test_network_get_top_tags_with_no_limit(self):
+        # Arrange
+        # Act
+        tags = self.network.get_top_tags()
+
+        # Assert
+        self.helper_at_least_one_thing_in_top_list(tags, pylast.Tag)
+
     def test_network_get_top_tracks_with_limit(self):
         # Arrange
         # Act
@@ -1226,7 +1222,7 @@ class TestPyLast(unittest.TestCase):
         self.helper_dates_valid(dates)
 
         # Act/Assert
-        self.helper_get_assert_charts(lastfm_user, dates[1])
+        self.helper_get_assert_charts(lastfm_user, dates[0])
 
     def test_track_top_fans(self):
         # Arrange

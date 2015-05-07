@@ -4,7 +4,7 @@
 #     A Python interface to Last.fm (and other API compatible social networks)
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2014 hugovk
+# Copyright 2013-2015 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,12 +20,6 @@
 #
 # http://code.google.com/p/pylast/
 
-__version__ = '1.1.0'
-__author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010  Amr Hassan, 2013-2014 hugovk"
-__license__ = "apache2"
-__email__ = 'amr.hassan@gmail.com'
-
 import hashlib
 from xml.dom import minidom
 import xml.dom
@@ -36,8 +30,13 @@ import sys
 import collections
 import warnings
 import re
-
 import six
+
+__version__ = '1.1.0'
+__author__ = 'Amr Hassan, hugovk'
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
+__license__ = "apache2"
+__email__ = 'amr.hassan@gmail.com'
 
 
 def _deprecation_warning(message):
@@ -192,19 +191,6 @@ class _Network(object):
             sk_gen = SessionKeyGenerator(self)
             self.session_key = sk_gen.get_session_key(
                 self.username, self.password_hash)
-
-    """def __repr__(self):
-        attributes = ("name", "homepage", "ws_server", "api_key", "api_secret",
-            "session_key", "submission_server", "username", "password_hash",
-            "domain_names", "urls")
-
-        text = "pylast._Network(%s)"
-        args = []
-        for attr in attributes:
-            args.append("=".join((attr, repr(getattr(self, attr)))))
-
-        return text % ", ".join(args)
-    """
 
     def __str__(self):
         return "%s Network" % self.name
@@ -397,7 +383,7 @@ class _Network(object):
 
         seq = []
         for node in doc.getElementsByTagName("tag"):
-            if len(seq) >= limit:
+            if limit and len(seq) >= limit:
                 break
             tag = Tag(_extract(node, "name"), self)
             weight = _number(_extract(node, "count"))
@@ -834,13 +820,13 @@ class LastFMNetwork(_Network):
             name="Last.fm",
             homepage="http://last.fm",
             ws_server=("ws.audioscrobbler.com", "/2.0/"),
-            api_key = api_key,
-            api_secret = api_secret,
-            session_key = session_key,
-            submission_server = "http://post.audioscrobbler.com:80/",
-            username = username,
-            password_hash = password_hash,
-            domain_names = {
+            api_key=api_key,
+            api_secret=api_secret,
+            session_key=session_key,
+            submission_server="http://post.audioscrobbler.com:80/",
+            username=username,
+            password_hash=password_hash,
+            domain_names={
                 DOMAIN_ENGLISH: 'www.last.fm',
                 DOMAIN_GERMAN: 'www.lastfm.de',
                 DOMAIN_SPANISH: 'www.lastfm.es',
@@ -854,7 +840,7 @@ class LastFMNetwork(_Network):
                 DOMAIN_JAPANESE: 'www.lastfm.jp',
                 DOMAIN_CHINESE: 'cn.last.fm',
             },
-            urls = {
+            urls={
                 "album": "music/%(artist)s/%(album)s",
                 "artist": "music/%(artist)s",
                 "event": "event/%(id)s",
@@ -930,13 +916,13 @@ class LibreFMNetwork(_Network):
             name="Libre.fm",
             homepage="http://alpha.libre.fm",
             ws_server=("alpha.libre.fm", "/2.0/"),
-            api_key = api_key,
-            api_secret = api_secret,
-            session_key = session_key,
-            submission_server = "http://turtle.libre.fm:80/",
-            username = username,
-            password_hash = password_hash,
-            domain_names = {
+            api_key=api_key,
+            api_secret=api_secret,
+            session_key=session_key,
+            submission_server="http://turtle.libre.fm:80/",
+            username=username,
+            password_hash=password_hash,
+            domain_names={
                 DOMAIN_ENGLISH: "alpha.libre.fm",
                 DOMAIN_GERMAN: "alpha.libre.fm",
                 DOMAIN_SPANISH: "alpha.libre.fm",
@@ -950,7 +936,7 @@ class LibreFMNetwork(_Network):
                 DOMAIN_JAPANESE: "alpha.libre.fm",
                 DOMAIN_CHINESE: "alpha.libre.fm",
             },
-            urls = {
+            urls={
                 "album": "artist/%(artist)s/album/%(album)s",
                 "artist": "artist/%(artist)s",
                 "event": "event/%(id)s",
@@ -2090,14 +2076,6 @@ class Artist(_BaseObject, _Taggable):
 
         return self.network._get_url(
             domain_name, "artist") % {'artist': artist}
-
-    def get_images(self, order=IMAGES_ORDER_POPULARITY, limit=None):
-        """
-        The artist.getImages method has been deprecated by Last.fm.
-        """
-        raise WSError(
-            self.network, "27",
-            "The artist.getImages method has been deprecated by Last.fm.")
 
     def shout(self, message):
         """
@@ -4039,7 +4017,7 @@ def _extract(node, name, index=0):
         return None
 
 
-def _extract_element_tree(node, index=0):
+def _extract_element_tree(node):
     """Extract an element tree into a multi-level dictionary
 
     NB: If any elements have text nodes as well as nested
@@ -4198,13 +4176,13 @@ class BadSessionError(ScrobblingError):
 
 class _ScrobblerRequest(object):
 
-    def __init__(self, url, params, network, type="POST"):
+    def __init__(self, url, params, network, request_type="POST"):
 
         for key in params:
             params[key] = str(params[key])
 
         self.params = params
-        self.type = type
+        self.type = request_type
         (self.hostname, self.subdir) = url_split_host(url[len("http:"):])
         self.network = network
 
