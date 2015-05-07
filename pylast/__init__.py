@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # pylast -
-#     A Python interface to Last.fm (and other API compatible social networks)
+#     A Python interface to Last.fm and Libre.fm
 #
 # Copyright 2008-2010 Amr Hassan
 # Copyright 2013-2015 hugovk
@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# http://code.google.com/p/pylast/
+# https://github.com/pylast/pylast
 
 import hashlib
 from xml.dom import minidom
@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
 __license__ = "apache2"

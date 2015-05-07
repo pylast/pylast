@@ -4,12 +4,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="pylast",
-    version="1.1.0",
+    version="1.2.0",
     author="Amr Hassan <amr.hassan@gmail.com>",
     install_requires=['six'],
     tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
-    description=("A Python interface to Last.fm "
-                 "(and other API compatible social networks)"),
+    description=("A Python interface to Last.fm and Libre.fm"),
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
     classifiers=[
