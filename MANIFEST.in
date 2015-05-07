@@ -1,5 +1,5 @@
-include pylast.py
+include pylast/__init__.py
 include setup.py
-include README
+include README.md
 include COPYING
 include INSTALL
