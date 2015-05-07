@@ -3,6 +3,8 @@
 * [ ] Get master to the appropriate code release state. [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for all merges to master.
 * [ ] Update version in `pylast/__init__.py` and `setup.py` and commit:
 ```bash
+git checkout master
+edit pylast/__init__.py setup.py
 git add pylast/__init__.py setup.py
 git commit -m "Release 1.3.0"
 ```
