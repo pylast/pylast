@@ -4,11 +4,11 @@
 * [ ] Update version in `pylast/__init__.py` and `setup.py` and commit:
 ```bash
 git add pylast/__init__.py setup.py
-git commit -m "Release 1.1.0"
+git commit -m "Release 1.3.0"
 ```
 * [ ] Tag the last commit with the version number:
 ```bash
-git tag -a 1.1.0
+git tag -a 1.3.0 -m "Release 1.3.0"
 ```
 * [ ] Release on PyPI:
 ```bash
