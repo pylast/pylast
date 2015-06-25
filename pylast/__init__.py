@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
 __license__ = "apache2"
@@ -3504,6 +3504,43 @@ class User(_BaseObject, _Chartable):
 
         return doc.getElementsByTagName(
             "registered")[0].getAttribute("unixtime")
+
+    def get_tagged_albums(self, tag, limit=None, cacheable=True):
+        """Returns the albums tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'album'
+        if limit:
+            params['limit'] = limit
+
+        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable, params)
+
+        return _extract_top_albums(doc, self.network)
+
+    def get_tagged_artists(self, tag, limit=None):
+        """Returns the albums artists tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'artist'
+        if limit:
+            params["limit"] = limit
+
+        doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
+
+        return _extract_top_artists(doc, self.network)
+            
+    def get_tagged_tracks(self, tag, limit=None, cacheable=True):
+        """Returns the tracks tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'track'
+        if limit:
+            params['limit'] = limit
+
+        return self._get_things("getpersonaltags", "track", Track, params, cacheable)
 
     def get_top_albums(
             self, period=PERIOD_OVERALL, limit=None, cacheable=True):
