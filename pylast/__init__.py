@@ -3730,7 +3730,7 @@ class AuthenticatedUser(User):
 
     def get_recommended_artists(self, limit=50, cacheable=False):
         """
-        Returns a sequence of Event objects
+        Returns a sequence of Artist objects
         if limit==None it will return all
         """
 
