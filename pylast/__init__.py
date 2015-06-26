@@ -3513,9 +3513,7 @@ class User(_BaseObject, _Chartable):
         params['taggingtype'] = 'album'
         if limit:
             params['limit'] = limit
-
         doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable, params)
-
         return _extract_albums(doc, self.network)
 
     def get_tagged_artists(self, tag, limit=None):
@@ -3526,9 +3524,7 @@ class User(_BaseObject, _Chartable):
         params['taggingtype'] = 'artist'
         if limit:
             params["limit"] = limit
-
         doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
-
         return _extract_artists(doc, self.network)
             
     def get_tagged_tracks(self, tag, limit=None, cacheable=True):
@@ -3539,7 +3535,7 @@ class User(_BaseObject, _Chartable):
         params['taggingtype'] = 'track'
         if limit:
             params['limit'] = limit
-
+        doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
         return _extract_tracks(doc, self.network)
 
     def get_top_albums(
