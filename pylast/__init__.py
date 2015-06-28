@@ -3517,7 +3517,7 @@ class User(_BaseObject, _Chartable):
         return _extract_albums(doc, self.network)
 
     def get_tagged_artists(self, tag, limit=None):
-        """Returns the albums artists tagged by a user."""
+        """Returns the artists tagged by a user."""
 
         params = self._get_params()
         params['tag'] = tag
