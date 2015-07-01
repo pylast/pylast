@@ -2952,6 +2952,12 @@ class Track(_Opus):
 
     def __init__(self, artist, title, network, username=None):
         super(Track, self).__init__(artist, title, network, "track", username)
+        
+    def get_correction(self):
+        """Returns the corrected track name."""
+        
+        return _extract(
+            self._request(self.ws_prefix + ".getCorrection"), "name") 
 
     def get_duration(self):
         """Returns the track duration."""
