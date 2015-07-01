@@ -1928,6 +1928,12 @@ class Artist(_BaseObject, _Taggable):
 
         return self.name
 
+    def get_correction(self):
+        """Returns the corrected artist name."""
+        
+        return _extract(
+            self._request(self.ws_prefix + ".getCorrection"), "name")
+
     def get_cover_image(self, size=COVER_MEGA):
         """
         Returns a uri to the cover image
