@@ -1917,6 +1917,16 @@ class TestPyLast(unittest.TestCase):
         
         # Assert
         self.assertEqual(corrected_artist_name, "Guns N' Roses")
+        
+    def test_track_get_correction(self):
+        # Arrange
+        track = pylast.Track("Guns N' Roses", "mrbrownstone", self.network)
+        
+        # Act
+        corrected_track_name = track.get_correction()
+        
+        # Assert
+        self.assertEqual(corrected_track_name, "Mr. Brownstone")
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
