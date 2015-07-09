@@ -1907,24 +1907,24 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(len(tracks), 1)
         self.assertEqual(str(tracks[0].track.artist), "Johnny Cash")
         self.assertEqual(str(tracks[0].track.title), "Ring of Fire")
-        
+
     def test_artist_get_correction(self):
         # Arrange
         artist = pylast.Artist("guns and roses", self.network)
-        
+
         # Act
         corrected_artist_name = artist.get_correction()
-        
+
         # Assert
         self.assertEqual(corrected_artist_name, "Guns N' Roses")
-        
+
     def test_track_get_correction(self):
         # Arrange
         track = pylast.Track("Guns N' Roses", "mrbrownstone", self.network)
-        
+
         # Act
         corrected_track_name = track.get_correction()
-        
+
         # Assert
         self.assertEqual(corrected_track_name, "Mr. Brownstone")
 
