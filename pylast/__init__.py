@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
 __license__ = "apache2"
@@ -3517,6 +3517,41 @@ class User(_BaseObject, _Chartable):
         return doc.getElementsByTagName(
             "registered")[0].getAttribute("unixtime")
 
+    def get_tagged_albums(self, tag, limit=None, cacheable=True):
+        """Returns the albums tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'album'
+        if limit:
+            params['limit'] = limit
+        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable,
+                            params)
+        return _extract_albums(doc, self.network)
+
+    def get_tagged_artists(self, tag, limit=None):
+        """Returns the artists tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'artist'
+        if limit:
+            params["limit"] = limit
+        doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
+        return _extract_artists(doc, self.network)
+
+    def get_tagged_tracks(self, tag, limit=None, cacheable=True):
+        """Returns the tracks tagged by a user."""
+
+        params = self._get_params()
+        params['tag'] = tag
+        params['taggingtype'] = 'track'
+        if limit:
+            params['limit'] = limit
+        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable,
+                            params)
+        return _extract_tracks(doc, self.network)
+
     def get_top_albums(
             self, period=PERIOD_OVERALL, limit=None, cacheable=True):
         """Returns the top albums played by a user.
@@ -3705,7 +3740,7 @@ class AuthenticatedUser(User):
 
     def get_recommended_artists(self, limit=50, cacheable=False):
         """
-        Returns a sequence of Event objects
+        Returns a sequence of Artist objects
         if limit==None it will return all
         """
 
@@ -4096,6 +4131,31 @@ def _extract_top_albums(doc, network):
 
         seq.append(TopItem(Album(artist, name, network), playcount))
 
+    return seq
+
+
+def _extract_artists(doc, network):
+    seq = []
+    for node in doc.getElementsByTagName("artist"):
+        seq.append(Artist(_extract(node, "name"), network))
+    return seq
+
+
+def _extract_albums(doc, network):
+    seq = []
+    for node in doc.getElementsByTagName("album"):
+        name = _extract(node, "name")
+        artist = _extract(node, "name", 1)
+        seq.append(Album(artist, name, network))
+    return seq
+
+
+def _extract_tracks(doc, network):
+    seq = []
+    for node in doc.getElementsByTagName("track"):
+        name = _extract(node, "name")
+        artist = _extract(node, "name", 1)
+        seq.append(Track(artist, name, network))
     return seq
 
 
