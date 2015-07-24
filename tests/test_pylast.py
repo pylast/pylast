@@ -1040,13 +1040,13 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(things, list)
         self.assertIsInstance(things[0], pylast.TopItem)
         self.assertIsInstance(things[0].item, expected_type)
-        
+
     def helper_only_one_thing_in_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 1)
         self.assertIsInstance(things, list)
         self.assertIsInstance(things[0], expected_type)
-        
+
     def helper_two_different_things_in_top_list(self, things, expected_type):
         # Assert
         self.assertEqual(len(things), 2)
@@ -1405,17 +1405,17 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.helper_only_one_thing_in_top_list(albums, pylast.Album)
-    
+
     def test_user_tagged_artists(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
         tags = ["artisttagola"]
         artist = self.network.get_artist("Test Artist")
         artist.add_tags(tags)
-        
+
         # Act
         artists = lastfm_user.get_tagged_artists('artisttagola', limit=1)
-        
+
         # Assert
         self.helper_only_one_thing_in_list(artists, pylast.Artist)
 
@@ -1425,10 +1425,10 @@ class TestPyLast(unittest.TestCase):
         tags = ["albumtagola"]
         album = self.network.get_album("Test Artist", "Test Album")
         album.add_tags(tags)
-        
+
         # Act
         albums = lastfm_user.get_tagged_albums('albumtagola', limit=1)
-        
+
         # Assert
         self.helper_only_one_thing_in_list(albums, pylast.Album)
 
@@ -1440,10 +1440,10 @@ class TestPyLast(unittest.TestCase):
         track.add_tags(tags)
         # Act
         tracks = lastfm_user.get_tagged_tracks('tracktagola', limit=1)
-        
+
         # Assert
         self.helper_only_one_thing_in_list(tracks, pylast.Track)
-        
+
     def test_caching(self):
         # Arrange
         user = self.network.get_user("RJ")
