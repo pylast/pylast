@@ -3536,7 +3536,8 @@ class User(_BaseObject, _Chartable):
         params['taggingtype'] = 'track'
         if limit:
             params['limit'] = limit
-        doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
+        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable,
+                            params)
         return _extract_tracks(doc, self.network)
 
     def get_top_albums(
