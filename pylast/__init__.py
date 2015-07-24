@@ -3513,7 +3513,8 @@ class User(_BaseObject, _Chartable):
         params['taggingtype'] = 'album'
         if limit:
             params['limit'] = limit
-        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable, params)
+        doc = self._request(self.ws_prefix + '.getpersonaltags', cacheable,
+                            params)
         return _extract_albums(doc, self.network)
 
     def get_tagged_artists(self, tag, limit=None):
@@ -3526,7 +3527,7 @@ class User(_BaseObject, _Chartable):
             params["limit"] = limit
         doc = self._request(self.ws_prefix + '.getpersonaltags', True, params)
         return _extract_artists(doc, self.network)
-            
+
     def get_tagged_tracks(self, tag, limit=None, cacheable=True):
         """Returns the tracks tagged by a user."""
 
@@ -4119,6 +4120,7 @@ def _extract_top_albums(doc, network):
 
     return seq
 
+
 def _extract_artists(doc, network):
     seq = []
     for node in doc.getElementsByTagName("artist"):
@@ -4134,6 +4136,7 @@ def _extract_albums(doc, network):
         seq.append(Album(artist, name, network))
     return seq
 
+
 def _extract_tracks(doc, network):
     seq = []
     for node in doc.getElementsByTagName("track"):
@@ -4141,8 +4144,8 @@ def _extract_tracks(doc, network):
         artist = _extract(node, "name", 1)
         seq.append(Track(artist, name, network))
     return seq
-    
-    
+
+
 def _extract_events_from_doc(doc, network):
     events = []
     for node in doc.getElementsByTagName("event"):
