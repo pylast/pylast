@@ -4030,7 +4030,7 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
         params["page"] = str(page)
         doc = sender._request(method_name, cacheable, params)
 
-        main = doc.documentElement.childNodes[1]
+        main = doc.documentElement.childNodes[0]
 
         if main.hasAttribute("totalPages"):
             total_pages = _number(main.getAttribute("totalPages"))
