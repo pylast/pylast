@@ -21,7 +21,7 @@
 # https://github.com/pylast/pylast
 
 import hashlib
-from xml.dom import minidom
+from xml.dom import minidom, Node
 import xml.dom
 import time
 import shelve
@@ -4014,6 +4014,16 @@ def _string(string):
     return casted
 
 
+def cleanup_nodes(doc):
+    """
+    Remove text nodes containing only whitespace
+    """
+    for node in doc.documentElement.childNodes:
+        if node.nodeType == Node.TEXT_NODE and node.nodeValue.isspace():
+            doc.documentElement.removeChild(node)
+    return doc
+
+
 def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     """
     Returns a sequence of dom.Node objects about as close to limit as possible
@@ -4029,8 +4039,9 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
     while not end_of_pages and (not limit or (limit and len(nodes) < limit)):
         params["page"] = str(page)
         doc = sender._request(method_name, cacheable, params)
+        doc = cleanup_nodes(doc)
 
-        main = doc.documentElement.childNodes[1]
+        main = doc.documentElement.childNodes[0]
 
         if main.hasAttribute("totalPages"):
             total_pages = _number(main.getAttribute("totalPages"))
