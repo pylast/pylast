@@ -1809,8 +1809,21 @@ class _Opus(_BaseObject, _Taggable):
     def get_mbid(self):
         """Returns the MusicBrainz ID of the album or track."""
 
-        return _extract(
-            self._request(self.ws_prefix + ".getInfo", cacheable=True), "mbid")
+        doc = self._request(self.ws_prefix + ".getInfo", cacheable=True)
+
+        try:
+            lfm = doc.getElementsByTagName('lfm')[0]
+            opus = self._get_children_by_tag_name(lfm, self.ws_prefix).next()
+            mbid = self._get_children_by_tag_name(opus, "mbid").next()
+            return mbid.firstChild.nodeValue
+        except StopIteration:
+            return None
+
+    def _get_children_by_tag_name(self, node, tag_name):
+        for child in node.childNodes:
+            if (child.nodeType == child.ELEMENT_NODE and
+               (tag_name == '*' or child.tagName == tag_name)):
+                yield child
 
 
 class Album(_Opus):
