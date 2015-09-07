@@ -17,6 +17,7 @@ git tag -a 1.5.0 -m "Release 1.5.0"
 python setup.py register
 python setup.py sdist --format=gztar upload
 ```
+* [ ] Check installation: `pip install -U pylast`
 * [ ] Push: `git push`
 * [ ] Push tags: `git push --tags`
 * [ ] Create new GitHub release: https://github.com/pylast/pylast/releases/new
@@ -28,4 +29,4 @@ git checkout develop
 git merge master --ff-only
 git push
 ```
- * [ ] Check installation: `pip install -U pylast`
+ 
