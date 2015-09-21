@@ -1135,13 +1135,13 @@ class _Request(object):
         else:
             response = self._download_response()
 
-        return minidom.parseString(_string(response))
+        return minidom.parseString(_string(response).replace("opensearch:", ""))
 
     def _check_response_for_errors(self, response):
         """Checks the response for errors and raises one if any exists."""
 
         try:
-            doc = minidom.parseString(_string(response))
+            doc = minidom.parseString(_string(response).replace("opensearch:", ""))
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
