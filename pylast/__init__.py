@@ -1857,9 +1857,9 @@ class Album(_Opus):
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
 
-        uri = 'lastfm://playlist/album/%s' % self.get_id()
-
-        return XSPF(uri, self.network).get_tracks()
+        return _extract_tracks(
+            self._request(
+                self.ws_prefix + ".getInfo", cacheable=True), "tracks")
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the album or track page on the network.
