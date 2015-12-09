@@ -18,7 +18,7 @@ env:
   - TOXENV=pypy3
 sudo: false
 install:
-- travis_retry pip install tox
+- travis_retry pip install tox==2.1.1
 - travis_retry pip install coveralls
 script: tox
 after_success:
