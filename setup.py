@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pylast",
-    version="1.5.0",
+    version="1.5.1",
     author="Amr Hassan <amr.hassan@gmail.com>",
     install_requires=['six'],
     tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
