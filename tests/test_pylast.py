@@ -1972,5 +1972,15 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(corrected_track_name, "Mr. Brownstone")
 
+    def test_track_with_no_mbid(self):
+        # Arrange
+        track = pylast.Track("Static-X", "Set It Off", self.network)
+
+        # Act
+        mbid = track.get_mbid()
+
+        # Assert
+        self.assertEqual(mbid, None)
+
 if __name__ == '__main__':
     unittest.main(failfast=True)
