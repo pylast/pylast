@@ -1,4 +1,4 @@
-# top-most EditorConfig file
+# Top-most EditorConfig file
 root = true
 
 # Unix-style newlines with a newline ending every file
@@ -7,7 +7,13 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 
-# 4 space indentation
+# Four-space indentation
 [*.py]
 indent_size = 4
 indent_style = space
+
+trim_trailing_whitespace = true
+
+# Two-space indentation
+[*.yml]
+indent_size = 2
