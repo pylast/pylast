@@ -77,7 +77,7 @@ EVENT_NOT_ATTENDING = '2'
 
 PERIOD_OVERALL = 'overall'
 PERIOD_7DAYS = '7day'
-PERIOD_1MONTHS = '1month'
+PERIOD_1MONTH = '1month'
 PERIOD_3MONTHS = '3month'
 PERIOD_6MONTHS = '6month'
 PERIOD_12MONTHS = '12month'
@@ -3572,7 +3572,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
-          o PERIOD_1MONTHS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3593,7 +3593,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
-          o PERIOD_1MONTHS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3636,7 +3636,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
-          o PERIOD_1MONTHS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
