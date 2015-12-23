@@ -3572,6 +3572,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTHS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3592,6 +3593,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTHS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3634,6 +3636,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTHS
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
