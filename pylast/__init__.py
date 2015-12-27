@@ -1814,8 +1814,8 @@ class _Opus(_BaseObject, _Taggable):
 
         try:
             lfm = doc.getElementsByTagName('lfm')[0]
-            opus = self._get_children_by_tag_name(lfm, self.ws_prefix).next()
-            mbid = self._get_children_by_tag_name(opus, "mbid").next()
+            opus = next(self._get_children_by_tag_name(lfm, self.ws_prefix))
+            mbid = next(self._get_children_by_tag_name(opus, "mbid"))
             return mbid.firstChild.nodeValue
         except StopIteration:
             return None
