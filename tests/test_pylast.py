@@ -30,6 +30,21 @@ def load_secrets():
     return doc
 
 
+def handle_lastfm_exceptions(f):
+    def wrapper(*args, **kw):
+        try:
+            return f(*args, **kw)
+        except pylast.WSError as e:
+            if (str(e) == "Invalid Method - "
+                          "No method with that name in this package"):
+                msg = "Ignore broken Last.fm API: " + str(e)
+                print(msg)
+                pytest.skip(msg)
+            else:
+                raise(e)
+    return wrapper
+
+
 @flaky(max_runs=5, min_passes=1)
 class TestPyLast(unittest.TestCase):
 
@@ -87,6 +102,7 @@ class TestPyLast(unittest.TestCase):
         last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
         self.assertNotEqual(str(last_scrobble.timestamp), str(timestamp))
 
+    @handle_lastfm_exceptions
     def test_add_album(self):
         # Arrange
         library = pylast.Library(user=self.username, network=self.network)
