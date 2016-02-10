@@ -4,7 +4,7 @@
 #     A Python interface to Last.fm and Libre.fm
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2015 hugovk
+# Copyright 2013-2016 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import six
 
 __version__ = '1.5.1'
 __author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2016 hugovk"
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
