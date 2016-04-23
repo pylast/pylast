@@ -68,6 +68,11 @@ class TestPyLast(unittest.TestCase):
             api_key=API_KEY, api_secret=API_SECRET,
             username=self.username, password_hash=password_hash)
 
+    def skip_if_lastfm_api_broken(self, value):
+        """Skip things not yet restored in Last.fm's broken API"""
+        if value is None:
+            pytest.skip("Last.fm API is broken.")
+
     @handle_lastfm_exceptions
     def test_scrobble(self):
         # Arrange
@@ -530,6 +535,7 @@ class TestPyLast(unittest.TestCase):
         total = search.get_total_result_count()
 
         # Assert
+        self.skip_if_lastfm_api_broken(total)
         self.assertGreaterEqual(int(total), 0)
 
     @handle_lastfm_exceptions
@@ -1846,6 +1852,7 @@ class TestPyLast(unittest.TestCase):
         id = track.get_id()
 
         # Assert
+        self.skip_if_lastfm_api_broken(id)
         self.assertEqual(id, "14053327")
 
     @handle_lastfm_exceptions
@@ -1879,6 +1886,7 @@ class TestPyLast(unittest.TestCase):
         date = album.get_release_date()
 
         # Assert
+        self.skip_if_lastfm_api_broken(date)
         self.assertIn("2011", date)
 
     @handle_lastfm_exceptions
@@ -2083,6 +2091,7 @@ class TestPyLast(unittest.TestCase):
         band_members = artist.get_band_members()
 
         # Assert
+        self.skip_if_lastfm_api_broken(band_members)
         self.assertGreaterEqual(len(band_members), 4)
 
     @handle_lastfm_exceptions
