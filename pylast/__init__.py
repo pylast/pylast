@@ -4,7 +4,7 @@
 #     A Python interface to Last.fm and Libre.fm
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2015 hugovk
+# Copyright 2013-2016 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import six
 
 __version__ = '1.5.1'
 __author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2015 hugovk"
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2016 hugovk"
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
@@ -76,7 +76,8 @@ EVENT_MAYBE_ATTENDING = '1'
 EVENT_NOT_ATTENDING = '2'
 
 PERIOD_OVERALL = 'overall'
-PERIOD_7DAYS = "7day"
+PERIOD_7DAYS = '7day'
+PERIOD_1MONTH = '1month'
 PERIOD_3MONTHS = '3month'
 PERIOD_6MONTHS = '6month'
 PERIOD_12MONTHS = '12month'
@@ -1135,13 +1136,15 @@ class _Request(object):
         else:
             response = self._download_response()
 
-        return minidom.parseString(_string(response))
+        return minidom.parseString(_string(response).replace(
+            "opensearch:", ""))
 
     def _check_response_for_errors(self, response):
         """Checks the response for errors and raises one if any exists."""
 
         try:
-            doc = minidom.parseString(_string(response))
+            doc = minidom.parseString(_string(response).replace(
+                "opensearch:", ""))
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
@@ -1813,8 +1816,8 @@ class _Opus(_BaseObject, _Taggable):
 
         try:
             lfm = doc.getElementsByTagName('lfm')[0]
-            opus = self._get_children_by_tag_name(lfm, self.ws_prefix).next()
-            mbid = self._get_children_by_tag_name(opus, "mbid").next()
+            opus = next(self._get_children_by_tag_name(lfm, self.ws_prefix))
+            mbid = next(self._get_children_by_tag_name(opus, "mbid"))
             return mbid.firstChild.nodeValue
         except StopIteration:
             return None
@@ -3571,6 +3574,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3591,6 +3595,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
@@ -3633,6 +3638,7 @@ class User(_BaseObject, _Chartable):
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
           o PERIOD_7DAYS
+          o PERIOD_1MONTH
           o PERIOD_3MONTHS
           o PERIOD_6MONTHS
           o PERIOD_12MONTHS
