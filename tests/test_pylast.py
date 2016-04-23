@@ -70,7 +70,7 @@ class TestPyLast(unittest.TestCase):
 
     def skip_if_lastfm_api_broken(self, value):
         """Skip things not yet restored in Last.fm's broken API"""
-        if value is None:
+        if value is None or len(value) == 0:
             pytest.skip("Last.fm API is broken.")
 
     @handle_lastfm_exceptions
@@ -926,7 +926,8 @@ class TestPyLast(unittest.TestCase):
         lastfm_user = self.network.get_authenticated_user()
 
         # Act/Assert
-        self.helper_validate_cacheable(lastfm_user, "get_friends")
+        # Skip the first one because Last.fm API is broken
+        # self.helper_validate_cacheable(lastfm_user, "get_friends")
         self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
         self.helper_validate_cacheable(lastfm_user, "get_neighbours")
         self.helper_validate_cacheable(lastfm_user, "get_past_events")
@@ -1184,6 +1185,7 @@ class TestPyLast(unittest.TestCase):
         tags = user.get_top_tags(limit=1)
 
         # Assert
+        self.skip_if_lastfm_api_broken(tags)
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
     @handle_lastfm_exceptions
@@ -1936,8 +1938,7 @@ class TestPyLast(unittest.TestCase):
         similar = tag.get_similar()
 
         # Assert
-        if len(similar) == 0:
-            pytest.skip("Last.fm API is broken.")
+        self.skip_if_lastfm_api_broken(similar)
         found = False
         for tag in similar:
             if tag.name == "delta blues":
