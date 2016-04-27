@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-
 setup(
     name="pylast",
     version="1.6.0",
