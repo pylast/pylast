@@ -43,7 +43,7 @@ def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
 
 if sys.version_info[0] == 3:
-    from http.client import HTTPConnection
+    from http.client import HTTPSConnection
     import html.entities as htmlentitydefs
     from urllib.parse import splithost as url_split_host
     from urllib.parse import quote_plus as url_quote_plus
@@ -51,7 +51,7 @@ if sys.version_info[0] == 3:
     unichr = chr
 
 elif sys.version_info[0] == 2:
-    from httplib import HTTPConnection
+    from httplib import HTTPSConnection
     import htmlentitydefs
     from urllib import splithost as url_split_host
     from urllib import quote_plus as url_quote_plus
@@ -1098,7 +1098,7 @@ class _Request(object):
         (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
 
         if self.network.is_proxy_enabled():
-            conn = HTTPConnection(
+            conn = HTTPSConnection(
                 host=self.network._get_proxy()[0],
                 port=self.network._get_proxy()[1])
 
@@ -1110,7 +1110,7 @@ class _Request(object):
                 raise NetworkError(self.network, e)
 
         else:
-            conn = HTTPConnection(host=HOST_NAME)
+            conn = HTTPSConnection(host=HOST_NAME)
 
             try:
                 conn.request(
@@ -4291,7 +4291,7 @@ class _ScrobblerRequest(object):
     def execute(self):
         """Returns a string response of this request."""
 
-        connection = HTTPConnection(self.hostname)
+        connection = HTTPSConnection(self.hostname)
 
         data = []
         for name in self.params.keys():
