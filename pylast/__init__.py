@@ -1681,15 +1681,15 @@ class WSError(Exception):
 
 
 class MalformedResponseError(Exception):
-    """Exception conveying a malformed response from Last.fm."""
+    """Exception conveying a malformed response from the music network."""
 
     def __init__(self, network, underlying_error):
         self.network = network
         self.underlying_error = underlying_error
 
     def __str__(self):
-        return "Malformed response from Last.fm. Underlying error: %s" % str(
-            self.underlying_error)
+        return "Malformed response from {}. Underlying error: {}".format(
+            self.network.name, str(self.underlying_error))
 
 
 class NetworkError(Exception):
