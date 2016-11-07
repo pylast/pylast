@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pylast",
-    version="1.6.0",
+    version="1.6.1",
     author="Amr Hassan <amr.hassan@gmail.com>",
     install_requires=['six'],
     # FIXME This can be removed after 2017-09 when 3.3 is no longer supported

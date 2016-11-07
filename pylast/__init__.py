@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.6.0'
+__version__ = '1.6.1'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2016 hugovk"
 __license__ = "apache2"
@@ -1918,9 +1918,12 @@ class Album(_Opus):
     """An album."""
 
     __hash__ = _Opus.__hash__
-
-    def __init__(self, artist, title, network, username=None):
+    cover_url = None
+    
+    def __init__(self, artist, title, network, username=None, url=None):
         super(Album, self).__init__(artist, title, network, "album", username)
+        if url:
+            self.cover_url = url
 
     def get_release_date(self):
         """Returns the release date of the album."""
@@ -1937,10 +1940,12 @@ class Album(_Opus):
             COVER_MEDIUM
             COVER_SMALL
         """
-
-        return _extract_all(
-            self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+        if self.cover_url:
+            return self.cover_url
+        else:
+            return _extract_all(
+                self._request(
+                    self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -4243,8 +4248,9 @@ def _extract_top_albums(doc, network):
         name = _extract(node, "name")
         artist = _extract(node, "name", 1)
         playcount = _extract(node, "playcount")
+        cover_url = _extract_all(node, "image")[COVER_EXTRA_LARGE]
 
-        seq.append(TopItem(Album(artist, name, network), playcount))
+        seq.append(TopItem(Album(artist, name, network, url=cover_url), playcount))
 
     return seq
 
