@@ -1833,9 +1833,12 @@ class Album(_Opus):
     """An album."""
 
     __hash__ = _Opus.__hash__
-
-    def __init__(self, artist, title, network, username=None):
+    cover_image = None
+    
+    def __init__(self, artist, title, network, username=None, url=None):
         super(Album, self).__init__(artist, title, network, "album", username)
+        if url:
+            self.cover_image = url
 
     def get_release_date(self):
         """Returns the release date of the album."""
@@ -1852,10 +1855,12 @@ class Album(_Opus):
             COVER_MEDIUM
             COVER_SMALL
         """
-
-        return _extract_all(
-            self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+        if self.cover_image:
+            return self.cover_image
+        else:
+            return _extract_all(
+                self._request(
+                    self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
