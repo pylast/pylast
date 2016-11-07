@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.6.0'
+__version__ = '1.6.1'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2016 hugovk"
 __license__ = "apache2"
@@ -1833,12 +1833,12 @@ class Album(_Opus):
     """An album."""
 
     __hash__ = _Opus.__hash__
-    cover_image = None
+    cover_url = None
     
     def __init__(self, artist, title, network, username=None, url=None):
         super(Album, self).__init__(artist, title, network, "album", username)
         if url:
-            self.cover_image = url
+            self.cover_url = url
 
     def get_release_date(self):
         """Returns the release date of the album."""
@@ -1855,8 +1855,8 @@ class Album(_Opus):
             COVER_MEDIUM
             COVER_SMALL
         """
-        if self.cover_image:
-            return self.cover_image
+        if self.cover_url:
+            return self.cover_url
         else:
             return _extract_all(
                 self._request(
