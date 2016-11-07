@@ -4163,8 +4163,9 @@ def _extract_top_albums(doc, network):
         name = _extract(node, "name")
         artist = _extract(node, "name", 1)
         playcount = _extract(node, "playcount")
+        cover_url = _extract_all(node, "image")[COVER_EXTRA_LARGE]
 
-        seq.append(TopItem(Album(artist, name, network), playcount))
+        seq.append(TopItem(Album(artist, name, network, url=cover_url), playcount))
 
     return seq
 
