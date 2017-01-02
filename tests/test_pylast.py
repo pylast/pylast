@@ -2174,11 +2174,11 @@ class TestPyLastWithLibreFm(unittest.TestCase):
         # Act
         network = pylast.LibreFMNetwork(
             password_hash=password_hash, username=username)
-        tags = network.get_top_tags(limit=1)
+        artist = network.get_artist("Radiohead")
+        name = artist.get_name()
 
         # Assert
-        self.assertGreater(len(tags), 0)
-        self.assertIsInstance(tags[0], pylast.TopItem)
+        self.assertEqual(name, "Radiohead")
 
 
 if __name__ == '__main__':
