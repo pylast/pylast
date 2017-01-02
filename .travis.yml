@@ -1,4 +1,8 @@
 language: python
+
+python:
+  - 3.5
+
 env:
   global:
   - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
@@ -16,14 +20,19 @@ env:
   - TOXENV=py34
   - TOXENV=pypy
   - TOXENV=pypy3
+
 sudo: false
+
 install:
 - travis_retry pip install tox==2.1.1
 - travis_retry pip install coveralls
+
 script: tox
+
 after_success:
 - travis_retry pip install coveralls && coveralls
 - travis_retry pip install scrutinizer-ocular && ocular
+
 matrix:
   allow_failures:
   - python: '3.4'
