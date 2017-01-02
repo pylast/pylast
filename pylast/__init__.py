@@ -986,8 +986,8 @@ class LibreFMNetwork(_Network):
         _Network.__init__(
             self,
             name="Libre.fm",
-            homepage="http://alpha.libre.fm",
-            ws_server=("alpha.libre.fm", "/2.0/"),
+            homepage="http://libre.fm",
+            ws_server=("libre.fm", "/2.0/"),
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
@@ -995,18 +995,18 @@ class LibreFMNetwork(_Network):
             username=username,
             password_hash=password_hash,
             domain_names={
-                DOMAIN_ENGLISH: "alpha.libre.fm",
-                DOMAIN_GERMAN: "alpha.libre.fm",
-                DOMAIN_SPANISH: "alpha.libre.fm",
-                DOMAIN_FRENCH: "alpha.libre.fm",
-                DOMAIN_ITALIAN: "alpha.libre.fm",
-                DOMAIN_POLISH: "alpha.libre.fm",
-                DOMAIN_PORTUGUESE: "alpha.libre.fm",
-                DOMAIN_SWEDISH: "alpha.libre.fm",
-                DOMAIN_TURKISH: "alpha.libre.fm",
-                DOMAIN_RUSSIAN: "alpha.libre.fm",
-                DOMAIN_JAPANESE: "alpha.libre.fm",
-                DOMAIN_CHINESE: "alpha.libre.fm",
+                DOMAIN_ENGLISH: "libre.fm",
+                DOMAIN_GERMAN: "libre.fm",
+                DOMAIN_SPANISH: "libre.fm",
+                DOMAIN_FRENCH: "libre.fm",
+                DOMAIN_ITALIAN: "libre.fm",
+                DOMAIN_POLISH: "libre.fm",
+                DOMAIN_PORTUGUESE: "libre.fm",
+                DOMAIN_SWEDISH: "libre.fm",
+                DOMAIN_TURKISH: "libre.fm",
+                DOMAIN_RUSSIAN: "libre.fm",
+                DOMAIN_JAPANESE: "libre.fm",
+                DOMAIN_CHINESE: "libre.fm",
             },
             urls={
                 "album": "artist/%(artist)s/album/%(album)s",
@@ -1766,15 +1766,15 @@ class WSError(Exception):
 
 
 class MalformedResponseError(Exception):
-    """Exception conveying a malformed response from Last.fm."""
+    """Exception conveying a malformed response from the music network."""
 
     def __init__(self, network, underlying_error):
         self.network = network
         self.underlying_error = underlying_error
 
     def __str__(self):
-        return "Malformed response from Last.fm. Underlying error: %s" % str(
-            self.underlying_error)
+        return "Malformed response from {}. Underlying error: {}".format(
+            self.network.name, str(self.underlying_error))
 
 
 class NetworkError(Exception):
