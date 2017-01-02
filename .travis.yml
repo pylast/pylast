@@ -30,8 +30,6 @@ matrix:
     - python: pypy
       env: TOXENV=pypy
   allow_failures:
-    - env: TOXENV=py35
-    - env: TOXENV=py36
     - env: TOXENV=pypy
     - env: TOXENV=pypy3
   fast_finish: true
