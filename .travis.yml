@@ -1,4 +1,5 @@
 language: python
+
 env:
   global:
   - secure: ivg6II471E9HV8xyqnawLIuP/sZ0J63Y+BC0BQcRVKtLn/K3zmD1ozM3TFL9S549Nxd0FqDKHXJvXsgaTGIDpK8sxE2AMKV5IojyM0iAVuN7YjPK9vwSlRw1u0EysPMFqxOZVQnoDyHrSGIUrP/VMdnhBu6dbUX0FyEkvZshXhY=
@@ -9,24 +10,39 @@ env:
   - secure: VPARlWNg/0Nit7a924vJlDfv7yiuTDtrcGZNFrZ6yN3dl8ZjVPizQXQNKA3yq0y2jW25nwjRwZYj3eY5MdM9F7Sw51d+/8AjFtdCuRgDvwlQFR/pCoyzqgJATkXKo7mlejvnA+5EKUzAmu3drIbboFgbLgRTMrG7b/ot9tazTHs=
   - secure: CQYL7MH6tSVrCcluIfWfDSTo4E/p+9pF0eI7Vtf0oaZBzyulODHK8h/mzJp4HwezyfOu0RCedq6sloGQr1/29CvWWESaYyoGoGz9Mz2ZS+MpIcjGISfZa+x4vSp6QPFvd4i/1Z/1j2gJVVyswkrIVUwZIDJtfAKzZI5iHx2gH8Y=
   - secure: SsKJoJwtDVWrL5xxl9C/gTRy6FhfRQQNNAFOogl9mTs/WeI2t9QTYoKsxLPXOdoRdu4MvT3h/B2sjwggt7zP81fBVxQRTkg4nq0zSHlj0NqclbFa6I5lUYdGwH9gPk/HWJJwXhKRDsqn/iRw2v+qBDs/j3kIgPQ0yjM58LEPXic=
-  matrix:
-  - TOXENV=lint
-  - TOXENV=py27
-  - TOXENV=py33
-  - TOXENV=py34
-  - TOXENV=pypy
-  - TOXENV=pypy3
+
+matrix:
+  include:
+    - python: 2.7
+      env: TOXENV=lint
+    - python: 2.7
+      env: TOXENV=py27
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.4
+      env: TOXENV=py34
+    - python: 3.3
+      env: TOXENV=py33
+    - python: pypy3
+      env: TOXENV=pypy3
+    - python: pypy
+      env: TOXENV=pypy
+  allow_failures:
+    - env: TOXENV=pypy
+    - env: TOXENV=pypy3
+  fast_finish: true
+
 sudo: false
+
 install:
 - travis_retry pip install tox==2.1.1
 - travis_retry pip install coveralls
+
 script: tox
+
 after_success:
 - travis_retry pip install coveralls && coveralls
 - travis_retry pip install scrutinizer-ocular && ocular
-matrix:
-  allow_failures:
-  - python: '3.4'
-  - python: pypy
-  - python: pypy3
-  fast_finish: true
+
