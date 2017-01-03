@@ -376,21 +376,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(current_track.artist), "Test Artist")
 
     @handle_lastfm_exceptions
-    def test_libre_fm(self):
-        # Arrange
-        username = self.__class__.secrets["username"]
-        password_hash = self.__class__.secrets["password_hash"]
-
-        # Act
-        network = pylast.LibreFMNetwork(
-            password_hash=password_hash, username=username)
-        tags = network.get_top_tags(limit=1)
-
-        # Assert
-        self.assertGreater(len(tags), 0)
-        self.assertIsInstance(tags[0], pylast.TopItem)
-
-    @handle_lastfm_exceptions
     def test_album_tags_are_topitems(self):
         # Arrange
         albums = self.network.get_user('RJ').get_top_albums()
@@ -2174,6 +2159,27 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertEqual(mbid, None)
+
+
+@flaky(max_runs=5, min_passes=1)
+class TestPyLastWithLibreFm(unittest.TestCase):
+    """Own class for Libre.fm because we don't need the Last.fm setUp"""
+
+    def test_libre_fm(self):
+        # Arrange
+        secrets = load_secrets()
+        username = secrets["username"]
+        password_hash = secrets["password_hash"]
+
+        # Act
+        network = pylast.LibreFMNetwork(
+            password_hash=password_hash, username=username)
+        artist = network.get_artist("Radiohead")
+        name = artist.get_name()
+
+        # Assert
+        self.assertEqual(name, "Radiohead")
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

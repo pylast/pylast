@@ -42,8 +42,23 @@ __email__ = 'amr.hassan@gmail.com'
 def _deprecation_warning(message):
     warnings.warn(message, DeprecationWarning)
 
+
+def _can_use_ssl_securely():
+    # Python 3.3 doesn't support create_default_context() but can be made to
+    # work sanely.
+    # <2.7.9 and <3.2 never did any SSL verification so don't do SSL there.
+    # >3.4 and >2.7.9 has sane defaults so use SSL there.
+    v = sys.version_info
+    return v > (3, 3) or ((2, 7, 9) < v < (3, 0))
+
+if _can_use_ssl_securely():
+    import ssl
+
 if sys.version_info[0] == 3:
-    from http.client import HTTPConnection
+    if _can_use_ssl_securely():
+        from http.client import HTTPSConnection
+    else:
+        from http.client import HTTPConnection
     import html.entities as htmlentitydefs
     from urllib.parse import splithost as url_split_host
     from urllib.parse import quote_plus as url_quote_plus
@@ -51,7 +66,10 @@ if sys.version_info[0] == 3:
     unichr = chr
 
 elif sys.version_info[0] == 2:
-    from httplib import HTTPConnection
+    if _can_use_ssl_securely():
+        from httplib import HTTPSConnection
+    else:
+        from httplib import HTTPConnection
     import htmlentitydefs
     from urllib import splithost as url_split_host
     from urllib import quote_plus as url_quote_plus
@@ -130,6 +148,59 @@ RE_XML_ILLEGAL = (u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' +
                    unichr(0xdbff), unichr(0xdc00), unichr(0xdfff)))
 
 XML_ILLEGAL = re.compile(RE_XML_ILLEGAL)
+
+# Python <=3.3 doesn't support create_default_context()
+# <2.7.9 and <3.2 never did any SSL verification
+# FIXME This can be removed after 2017-09 when 3.3 is no longer supported and
+# pypy3 uses 3.4 or later, see
+# https://en.wikipedia.org/wiki/CPython#Version_history
+if sys.version_info[0] == 3 and sys.version_info[1] == 3:
+    import certifi
+    SSL_CONTEXT = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    SSL_CONTEXT.verify_mode = ssl.CERT_REQUIRED
+    SSL_CONTEXT.options |= ssl.OP_NO_COMPRESSION
+    # Intermediate from https://wiki.mozilla.org/Security/Server_Side_TLS
+    # Create the cipher string
+    cipher_string = """
+    ECDHE-ECDSA-CHACHA20-POLY1305
+    ECDHE-RSA-CHACHA20-POLY1305
+    ECDHE-ECDSA-AES128-GCM-SHA256
+    ECDHE-RSA-AES128-GCM-SHA256
+    ECDHE-ECDSA-AES256-GCM-SHA384
+    ECDHE-RSA-AES256-GCM-SHA384
+    DHE-RSA-AES128-GCM-SHA256
+    DHE-RSA-AES256-GCM-SHA384
+    ECDHE-ECDSA-AES128-SHA256
+    ECDHE-RSA-AES128-SHA256
+    ECDHE-ECDSA-AES128-SHA
+    ECDHE-RSA-AES256-SHA384
+    ECDHE-RSA-AES128-SHA
+    ECDHE-ECDSA-AES256-SHA384
+    ECDHE-ECDSA-AES256-SHA
+    ECDHE-RSA-AES256-SHA
+    DHE-RSA-AES128-SHA256
+    DHE-RSA-AES128-SHA
+    DHE-RSA-AES256-SHA256
+    DHE-RSA-AES256-SHA
+    ECDHE-ECDSA-DES-CBC3-SHA
+    ECDHE-RSA-DES-CBC3-SHA
+    EDH-RSA-DES-CBC3-SHA
+    AES128-GCM-SHA256
+    AES256-GCM-SHA384
+    AES128-SHA256
+    AES256-SHA256
+    AES128-SHA
+    AES256-SHA
+    DES-CBC3-SHA
+    !DSS
+    """
+    cipher_string = ' '.join(cipher_string.split())
+    SSL_CONTEXT.set_ciphers(cipher_string)
+    SSL_CONTEXT.load_verify_locations(certifi.where())
+
+# Python >3.4 and >2.7.9 has sane defaults
+elif sys.version_info > (3, 4) or ((2, 7, 9) < sys.version_info < (3, 0)):
+    SSL_CONTEXT = ssl.create_default_context()
 
 
 class _Network(object):
@@ -915,8 +986,8 @@ class LibreFMNetwork(_Network):
         _Network.__init__(
             self,
             name="Libre.fm",
-            homepage="http://alpha.libre.fm",
-            ws_server=("alpha.libre.fm", "/2.0/"),
+            homepage="http://libre.fm",
+            ws_server=("libre.fm", "/2.0/"),
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
@@ -924,18 +995,18 @@ class LibreFMNetwork(_Network):
             username=username,
             password_hash=password_hash,
             domain_names={
-                DOMAIN_ENGLISH: "alpha.libre.fm",
-                DOMAIN_GERMAN: "alpha.libre.fm",
-                DOMAIN_SPANISH: "alpha.libre.fm",
-                DOMAIN_FRENCH: "alpha.libre.fm",
-                DOMAIN_ITALIAN: "alpha.libre.fm",
-                DOMAIN_POLISH: "alpha.libre.fm",
-                DOMAIN_PORTUGUESE: "alpha.libre.fm",
-                DOMAIN_SWEDISH: "alpha.libre.fm",
-                DOMAIN_TURKISH: "alpha.libre.fm",
-                DOMAIN_RUSSIAN: "alpha.libre.fm",
-                DOMAIN_JAPANESE: "alpha.libre.fm",
-                DOMAIN_CHINESE: "alpha.libre.fm",
+                DOMAIN_ENGLISH: "libre.fm",
+                DOMAIN_GERMAN: "libre.fm",
+                DOMAIN_SPANISH: "libre.fm",
+                DOMAIN_FRENCH: "libre.fm",
+                DOMAIN_ITALIAN: "libre.fm",
+                DOMAIN_POLISH: "libre.fm",
+                DOMAIN_PORTUGUESE: "libre.fm",
+                DOMAIN_SWEDISH: "libre.fm",
+                DOMAIN_TURKISH: "libre.fm",
+                DOMAIN_RUSSIAN: "libre.fm",
+                DOMAIN_JAPANESE: "libre.fm",
+                DOMAIN_CHINESE: "libre.fm",
             },
             urls={
                 "album": "artist/%(artist)s/album/%(album)s",
@@ -1098,9 +1169,15 @@ class _Request(object):
         (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
 
         if self.network.is_proxy_enabled():
-            conn = HTTPConnection(
-                host=self.network._get_proxy()[0],
-                port=self.network._get_proxy()[1])
+            if _can_use_ssl_securely():
+                conn = HTTPSConnection(
+                    context=SSL_CONTEXT,
+                    host=self.network._get_proxy()[0],
+                    port=self.network._get_proxy()[1])
+            else:
+                conn = HTTPConnection(
+                    host=self.network._get_proxy()[0],
+                    port=self.network._get_proxy()[1])
 
             try:
                 conn.request(
@@ -1110,7 +1187,15 @@ class _Request(object):
                 raise NetworkError(self.network, e)
 
         else:
-            conn = HTTPConnection(host=HOST_NAME)
+            if _can_use_ssl_securely():
+                conn = HTTPSConnection(
+                    context=SSL_CONTEXT,
+                    host=HOST_NAME
+                )
+            else:
+                conn = HTTPConnection(
+                    host=HOST_NAME
+                )
 
             try:
                 conn.request(
@@ -1681,15 +1766,15 @@ class WSError(Exception):
 
 
 class MalformedResponseError(Exception):
-    """Exception conveying a malformed response from Last.fm."""
+    """Exception conveying a malformed response from the music network."""
 
     def __init__(self, network, underlying_error):
         self.network = network
         self.underlying_error = underlying_error
 
     def __str__(self):
-        return "Malformed response from Last.fm. Underlying error: %s" % str(
-            self.underlying_error)
+        return "Malformed response from {}. Underlying error: {}".format(
+            self.network.name, str(self.underlying_error))
 
 
 class NetworkError(Exception):
@@ -4291,7 +4376,15 @@ class _ScrobblerRequest(object):
     def execute(self):
         """Returns a string response of this request."""
 
-        connection = HTTPConnection(self.hostname)
+        if _can_use_ssl_securely():
+            connection = HTTPSConnection(
+                context=SSL_CONTEXT,
+                host=self.hostname
+            )
+        else:
+            connection = HTTPConnection(
+                host=self.hostname
+            )
 
         data = []
         for name in self.params.keys():

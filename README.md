@@ -4,7 +4,7 @@ pyLast
 [![Build Status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![Coverage Status](https://coveralls.io/repos/pylast/pylast/badge.png?branch=develop)](https://coveralls.io/r/pylast/pylast?branch=develop) [![Code Health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
 
 
-A Python interface to [Last.fm](http://www.last.fm/) and other api-compatible websites such as [Libre.fm](http://libre.fm/).
+A Python interface to [Last.fm](http://www.last.fm/) and other API-compatible websites such as [Libre.fm](http://libre.fm/).
 
 Try using the pydoc utility for help on usage or see [test_pylast.py](tests/test_pylast.py) for examples.
 
@@ -32,7 +32,7 @@ Features
 Getting Started
 ---------------
 
-Here's a simple code example to get you started. In order to create any object from pyLast, you need a Network object which represents a social music network that is Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm and use it as follows:
+Here's some simple code example to get you started. In order to create any object from pyLast, you need a `Network` object which represents a social music network that is Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm and use it as follows:
 
 ```python
 import pylast
@@ -49,7 +49,7 @@ password_hash = pylast.md5("your_password")
 network = pylast.LastFMNetwork(api_key = API_KEY, api_secret =
     API_SECRET, username = username, password_hash = password_hash)
 
-# now you can use that object everywhere
+# Now you can use that object everywhere
 artist = network.get_artist("System of a Down")
 artist.shout("<3")
 
@@ -58,7 +58,7 @@ track = network.get_track("Iron Maiden", "The Nomad")
 track.love()
 track.add_tags(("awesome", "favorite"))
 
-# type help(pylast.LastFMNetwork) or help(pylast) in a Python interpreter to get more help
+# Type help(pylast.LastFMNetwork) or help(pylast) in a Python interpreter to get more help
 # about anything and see examples of how it works
 ```
 
@@ -69,7 +69,7 @@ Testing
 
 [tests/test_pylast.py](tests/test_pylast.py) contains integration tests with Last.fm, and plenty of code examples. Unit tests are also in the [tests/](tests/) directory.
 
-For integration tests you need a test account at Last.fm that will be cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
+For integration tests you need a test account at Last.fm that will become cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
 ```sh
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
@@ -80,7 +80,7 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 
 To run all unit and integration tests:
 ```sh
-pip install pytest flaky
+pip install pytest flaky mock
 py.test
 ```
 
