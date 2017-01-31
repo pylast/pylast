@@ -2160,6 +2160,20 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertEqual(mbid, None)
 
+    def test_init_with_token(self):
+        # Arrange/Act
+        try:
+            pylast.LastFMNetwork(
+                api_key=self.__class__.secrets["api_key"],
+                api_secret=self.__class__.secrets["api_secret"],
+                token="invalid",
+            )
+        except pylast.WSError as exc:
+            msg = str(exc)
+
+        # Assert
+        self.assertEqual(msg, "Invalid authentication token supplied")
+
 
 @flaky(max_runs=5, min_passes=1)
 class TestPyLastWithLibreFm(unittest.TestCase):
