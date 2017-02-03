@@ -38,11 +38,12 @@ sudo: false
 
 install:
 - travis_retry pip install tox==2.1.1
-- travis_retry pip install coveralls
+- travis_retry pip install coverage
 
 script: tox
 
 after_success:
 - travis_retry pip install coveralls && coveralls
+- travis_retry pip install codecov && codecov
 - travis_retry pip install scrutinizer-ocular && ocular
 
