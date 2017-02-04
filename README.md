@@ -1,7 +1,11 @@
 pyLast
 ======
 
-[![Build Status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![Coverage Status](https://coveralls.io/repos/pylast/pylast/badge.png?branch=develop)](https://coveralls.io/r/pylast/pylast?branch=develop) [![Code Health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
+[![Build Status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) 
+[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) 
+[![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/) 
+[![Coverage Status](https://coveralls.io/repos/pylast/pylast/badge.png?branch=develop)](https://coveralls.io/r/pylast/pylast?branch=develop) 
+[![Code Health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
 
 
 A Python interface to [Last.fm](http://www.last.fm/) and other API-compatible websites such as [Libre.fm](http://libre.fm/).
