@@ -211,7 +211,8 @@ class _Network(object):
 
     def __init__(
             self, name, homepage, ws_server, api_key, api_secret, session_key,
-            submission_server, username, password_hash, domain_names, urls):
+            submission_server, username, password_hash, domain_names, urls,
+            token=None):
         """
             name: the name of the network
             homepage: the homepage URL
@@ -227,6 +228,7 @@ class _Network(object):
             domain_names: a dict mapping each DOMAIN_* value to a string domain
                 name
             urls: a dict mapping types to URLs
+            token: an authentication token to retrieve a session
 
             if username and password_hash were provided and not session_key,
             session_key will be generated automatically when needed.
@@ -256,6 +258,12 @@ class _Network(object):
         self.proxy = None
         self.last_call_time = 0
         self.limit_rate = False
+
+        # Load session_key from authentication token if provided
+        if token and not self.session_key:
+            sk_gen = SessionKeyGenerator(self)
+            self.session_key = sk_gen.get_web_auth_session_key(
+                url=None, token=token)
 
         # Generate a session_key if necessary
         if ((self.api_key and self.api_secret) and not self.session_key and
@@ -886,7 +894,7 @@ class LastFMNetwork(_Network):
 
     def __init__(
             self, api_key="", api_secret="", session_key="", username="",
-            password_hash=""):
+            password_hash="", token=""):
         _Network.__init__(
             self,
             name="Last.fm",
@@ -898,6 +906,7 @@ class LastFMNetwork(_Network):
             submission_server="http://post.audioscrobbler.com:80/",
             username=username,
             password_hash=password_hash,
+            token=token,
             domain_names={
                 DOMAIN_ENGLISH: 'www.last.fm',
                 DOMAIN_GERMAN: 'www.lastfm.de',
@@ -936,7 +945,7 @@ class LastFMNetwork(_Network):
 
 def get_lastfm_network(
         api_key="", api_secret="", session_key="", username="",
-        password_hash=""):
+        password_hash="", token=""):
     """
     Returns a preconfigured _Network object for Last.fm
 
@@ -946,12 +955,13 @@ def get_lastfm_network(
     username: a username of a valid user
     password_hash: the output of pylast.md5(password) where password is the
         user's password
+    token: an authentication token to retrieve a session
 
     if username and password_hash were provided and not session_key,
     session_key will be generated automatically when needed.
 
-    Either a valid session_key or a combination of username and password_hash
-    must be present for scrobbling.
+    Either a valid session_key, a combination of username and password_hash,
+    or token must be present for scrobbling.
 
     Most read-only webservices only require an api_key and an api_secret, see
     about obtaining them from:
@@ -961,7 +971,7 @@ def get_lastfm_network(
     _deprecation_warning("Create a LastFMNetwork object instead")
 
     return LastFMNetwork(
-        api_key, api_secret, session_key, username, password_hash)
+        api_key, api_secret, session_key, username, password_hash, token)
 
 
 class LibreFMNetwork(_Network):
@@ -1304,7 +1314,7 @@ class SessionKeyGenerator(object):
 
         return url
 
-    def get_web_auth_session_key(self, url):
+    def get_web_auth_session_key(self, url, token=""):
         """
         Retrieves the session key of a web authorization process by its url.
         """
@@ -1312,9 +1322,8 @@ class SessionKeyGenerator(object):
         if url in self.web_auth_tokens.keys():
             token = self.web_auth_tokens[url]
         else:
-            # That's going to raise a WSError of an unauthorized token when the
-            # request is executed.
-            token = ""
+            # This will raise a WSError if token is blank or unauthorized
+            token = token
 
         request = _Request(self.network, 'auth.getSession', {'token': token})
 
@@ -1343,6 +1352,7 @@ class SessionKeyGenerator(object):
         doc = request.execute()
 
         return _extract(doc, "key")
+
 
 TopItem = collections.namedtuple("TopItem", ["item", "weight"])
 SimilarItem = collections.namedtuple("SimilarItem", ["item", "match"])

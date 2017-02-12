@@ -1,7 +1,12 @@
 pyLast
 ======
 
-[![Build Status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/) [![Coverage Status](https://coveralls.io/repos/pylast/pylast/badge.png?branch=develop)](https://coveralls.io/r/pylast/pylast?branch=develop) [![Code Health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
+[![Build status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) 
+[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) 
+[![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/) 
+[![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/develop/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
+[![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=develop)](https://coveralls.io/github/pylast/pylast?branch=develop)
+[![Code health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
 
 
 A Python interface to [Last.fm](http://www.last.fm/) and other API-compatible websites such as [Libre.fm](http://libre.fm/).
@@ -38,16 +43,16 @@ Here's some simple code example to get you started. In order to create any objec
 import pylast
 
 # You have to have your own unique two values for API_KEY and API_SECRET
-# Obtain yours from http://www.last.fm/api/account for Last.fm
-API_KEY = "b25b959554ed76058ac220b7b2e0a026" # this is a sample key
+# Obtain yours from http://www.last.fm/api/account/create for Last.fm
+API_KEY = "b25b959554ed76058ac220b7b2e0a026"  # this is a sample key
 API_SECRET = "425b55975eed76058ac220b7b4e8a054"
 
 # In order to perform a write operation you need to authenticate yourself
 username = "your_user_name"
 password_hash = pylast.md5("your_password")
 
-network = pylast.LastFMNetwork(api_key = API_KEY, api_secret =
-    API_SECRET, username = username, password_hash = password_hash)
+network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET,
+                               username=username, password_hash=password_hash)
 
 # Now you can use that object everywhere
 artist = network.get_artist("System of a Down")
@@ -58,8 +63,8 @@ track = network.get_track("Iron Maiden", "The Nomad")
 track.love()
 track.add_tags(("awesome", "favorite"))
 
-# Type help(pylast.LastFMNetwork) or help(pylast) in a Python interpreter to get more help
-# about anything and see examples of how it works
+# Type help(pylast.LastFMNetwork) or help(pylast) in a Python interpreter
+# to get more help about anything and see examples of how it works
 ```
 
 More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [test_pylast.py](test_pylast.py).
