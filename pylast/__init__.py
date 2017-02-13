@@ -32,7 +32,7 @@ import warnings
 import re
 import six
 
-__version__ = '1.7.0'
+__version__ = '1.8.0'
 __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk"
 __license__ = "apache2"
