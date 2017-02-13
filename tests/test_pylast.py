@@ -2172,7 +2172,8 @@ class TestPyLast(unittest.TestCase):
             msg = str(exc)
 
         # Assert
-        self.assertEqual(msg, "Unauthorized Token - This token has not been issued")
+        self.assertEqual(msg,
+                         "Unauthorized Token - This token has not been issued")
 
 
 @flaky(max_runs=5, min_passes=1)

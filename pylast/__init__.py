@@ -51,6 +51,7 @@ def _can_use_ssl_securely():
     v = sys.version_info
     return v > (3, 3) or ((2, 7, 9) < v < (3, 0))
 
+
 if _can_use_ssl_securely():
     import ssl
 
