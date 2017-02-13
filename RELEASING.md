@@ -12,15 +12,16 @@ git commit -m "Release 1.8.0"
 ```bash
 git tag -a 1.8.0 -m "Release 1.8.0"
 ```
-* [ ] Release on PyPI:
+* [ ] Create a distribution and release on PyPI:
 ```bash
+python setup.py sdist --format=gztar
 twine upload dist/pylast-1.8.0.tar.gz
 ```
 * [ ] Check installation: `pip install -U pylast`
 * [ ] Push: `git push`
 * [ ] Push tags: `git push --tags`
 * [ ] Create new GitHub release: https://github.com/pylast/pylast/releases/new
-  * Tag: Pick existing tag "1.8.0" 
+  * Tag: Pick existing tag "1.8.0"
   * Title: "Release 1.8.0"
 * [ ] Update develop branch from master:
 ```bash
