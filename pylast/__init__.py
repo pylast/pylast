@@ -4156,6 +4156,9 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
         doc = sender._request(method_name, cacheable, params)
         doc = cleanup_nodes(doc)
 
+        # break if there are no child nodes
+        if not doc.documentElement.childNodes:
+            break
         main = doc.documentElement.childNodes[0]
 
         if main.hasAttribute("totalPages"):
