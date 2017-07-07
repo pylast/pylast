@@ -1449,7 +1449,7 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
         self.assertEqual(
-            "http://www.last.fm/music/test%2bartist/test%2balbum", url)
+            "https://www.last.fm/music/test%2bartist/test%2balbum", url)
 
     @handle_lastfm_exceptions
     def test_track_data(self):
@@ -1472,7 +1472,7 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
         self.assertEqual(
-            "http://www.lastfm.fr/music/test%2bartist/_/test%2btitle", url)
+            "https://www.last.fm/fr/music/test%2bartist/_/test%2btitle", url)
 
     @handle_lastfm_exceptions
     def test_tag_top_artists(self):
@@ -1625,7 +1625,7 @@ class TestPyLast(unittest.TestCase):
         playlist = pylast.Playlist(user, id, self.network)
         self.assertEqual(
             playlist.get_url(),
-            "http://www.last.fm/user/kaxior/library/"
+            "https://www.last.fm/user/kaxior/library/"
             "playlists/67ajb_top_100_classick_rock_songs")
 
         # Act
@@ -1912,7 +1912,7 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual("blues", name)
         self.assertTrue(tag1 == tag1)
         self.assertTrue(tag1 != tag2)
-        self.assertEqual(url, "http://www.last.fm/tag/blues")
+        self.assertEqual(url, "https://www.last.fm/tag/blues")
 
     @handle_lastfm_exceptions
     def test_tags_similar(self):
@@ -1951,7 +1951,7 @@ class TestPyLast(unittest.TestCase):
         self.assertGreater(playcount, 1)
         self.assertTrue(artist1 != artist2)
         self.assertEqual(name.lower(), name_cap.lower())
-        self.assertEqual(url, "http://www.last.fm/music/radiohead")
+        self.assertEqual(url, "https://www.last.fm/music/radiohead")
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
         self.assertIsInstance(streamable, bool)
 
@@ -2007,7 +2007,7 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(text, "Italy")
         self.assertTrue(country1 == country1)
         self.assertTrue(country1 != country2)
-        self.assertEqual(url, "http://www.last.fm/place/italy")
+        self.assertEqual(url, "https://www.last.fm/place/italy")
 
     @handle_lastfm_exceptions
     def test_track_eq_none_is_false(self):
