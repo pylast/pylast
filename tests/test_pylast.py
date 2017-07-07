@@ -77,7 +77,7 @@ class TestPyLast(unittest.TestCase):
     def test_scrobble(self):
         # Arrange
         artist = "Test Artist"
-        title = "Test Title"
+        title = "test title"
         timestamp = self.unix_timestamp()
         lastfm_user = self.network.get_user(self.username)
 
@@ -258,7 +258,7 @@ class TestPyLast(unittest.TestCase):
     def test_love(self):
         # Arrange
         artist = "Test Artist"
-        title = "Test Title"
+        title = "test title"
         track = self.network.get_track(artist, title)
         lastfm_user = self.network.get_user(self.username)
 
@@ -268,13 +268,13 @@ class TestPyLast(unittest.TestCase):
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
         self.assertEqual(str(loved[0].track.artist), "Test Artist")
-        self.assertEqual(str(loved[0].track.title), "Test Title")
+        self.assertEqual(str(loved[0].track.title), "test title")
 
     @handle_lastfm_exceptions
     def test_unlove(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
-        title = "Test Title"
+        title = "test title"
         track = pylast.Track(artist, title, self.network)
         lastfm_user = self.network.get_user(self.username)
         track.love()
@@ -286,7 +286,7 @@ class TestPyLast(unittest.TestCase):
         loved = lastfm_user.get_loved_tracks(limit=1)
         if len(loved):  # OK to be empty but if not:
             self.assertNotEqual(str(loved.track.artist), "Test Artist")
-            self.assertNotEqual(str(loved.track.title), "Test Title")
+            self.assertNotEqual(str(loved.track.title), "test title")
 
     @handle_lastfm_exceptions
     def test_get_100_albums(self):
@@ -360,7 +360,7 @@ class TestPyLast(unittest.TestCase):
     def test_update_now_playing(self):
         # Arrange
         artist = "Test Artist"
-        title = "Test Title"
+        title = "test title"
         album = "Test Album"
         track_number = 1
         lastfm_user = self.network.get_user(self.username)
@@ -372,7 +372,7 @@ class TestPyLast(unittest.TestCase):
         # Assert
         current_track = lastfm_user.get_now_playing()
         self.assertIsNotNone(current_track)
-        self.assertEqual(str(current_track.title), "Test Title")
+        self.assertEqual(str(current_track.title), "test title")
         self.assertEqual(str(current_track.artist), "Test Artist")
 
     @handle_lastfm_exceptions
@@ -531,7 +531,7 @@ class TestPyLast(unittest.TestCase):
     def test_user_play_count_in_track_info(self):
         # Arrange
         artist = "Test Artist"
-        title = "Test Title"
+        title = "test title"
         track = pylast.Track(
             artist=artist, title=title,
             network=self.network, username=self.username)
@@ -546,7 +546,7 @@ class TestPyLast(unittest.TestCase):
     def test_user_loved_in_track_info(self):
         # Arrange
         artist = "Test Artist"
-        title = "Test Title"
+        title = "test title"
         track = pylast.Track(
             artist=artist, title=title,
             network=self.network, username=self.username)
@@ -796,7 +796,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_track_wiki_content(self):
         # Arrange
-        track = pylast.Track("Test Artist", "Test Title", self.network)
+        track = pylast.Track("Test Artist", "test title", self.network)
 
         # Act
         wiki = track.get_wiki_content()
@@ -808,7 +808,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_track_wiki_summary(self):
         # Arrange
-        track = pylast.Track("Test Artist", "Test Title", self.network)
+        track = pylast.Track("Test Artist", "test title", self.network)
 
         # Act
         wiki = track.get_wiki_summary()
@@ -1454,7 +1454,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_track_data(self):
         # Arrange
-        thing = self.network.get_track("Test Artist", "Test Title")
+        thing = self.network.get_track("Test Artist", "test title")
 
         # Act
         stringed = str(thing)
@@ -1465,9 +1465,9 @@ class TestPyLast(unittest.TestCase):
         url = thing.get_url(pylast.DOMAIN_FRENCH)
 
         # Assert
-        self.assertEqual(stringed, "Test Artist - Test Title")
-        self.assertIn("pylast.Track('Test Artist', 'Test Title',", repr)
-        self.assertEqual(title, "Test Title")
+        self.assertEqual(stringed, "Test Artist - test title")
+        self.assertIn("pylast.Track('Test Artist', 'test title',", repr)
+        self.assertEqual(title, "test title")
         self.assertEqual(title, name)
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
@@ -1562,7 +1562,7 @@ class TestPyLast(unittest.TestCase):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
         tags = ["tracktagola"]
-        track = self.network.get_track("Test Artist", "Test Title")
+        track = self.network.get_track("Test Artist", "test title")
         track.add_tags(tags)
         # Act
         tracks = lastfm_user.get_tagged_tracks('tracktagola', limit=1)
@@ -1643,7 +1643,7 @@ class TestPyLast(unittest.TestCase):
         title = "One track playlist"
         description = "Testing"
         playlist = self.network.create_new_playlist(title, description)
-        track = pylast.Track("Test Artist", "Test Title", self.network)
+        track = pylast.Track("Test Artist", "test title", self.network)
 
         # Act
         playlist.add_track(track)
@@ -1827,7 +1827,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_tracks_notequal(self):
         # Arrange
-        track1 = pylast.Track("Test Artist", "Test Title", self.network)
+        track1 = pylast.Track("Test Artist", "test title", self.network)
         track2 = pylast.Track("Test Artist", "Test Track", self.network)
 
         # Act
@@ -1837,7 +1837,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_track_id(self):
         # Arrange
-        track = pylast.Track("Test Artist", "Test Title", self.network)
+        track = pylast.Track("Test Artist", "test title", self.network)
 
         # Act
         id = track.get_id()
@@ -1855,7 +1855,7 @@ class TestPyLast(unittest.TestCase):
         title = track.get_title(properly_capitalized=True)
 
         # Assert
-        self.assertEqual(title, "Test Title")
+        self.assertEqual(title, "test title")
 
     @handle_lastfm_exceptions
     def test_track_listener_count(self):
@@ -2013,7 +2013,7 @@ class TestPyLast(unittest.TestCase):
     def test_track_eq_none_is_false(self):
         # Arrange
         track1 = None
-        track2 = pylast.Track("Test Artist", "Test Title", self.network)
+        track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
         self.assertFalse(track1 == track2)
@@ -2022,7 +2022,7 @@ class TestPyLast(unittest.TestCase):
     def test_track_ne_none_is_true(self):
         # Arrange
         track1 = None
-        track2 = pylast.Track("Test Artist", "Test Title", self.network)
+        track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
         self.assertTrue(track1 != track2)
