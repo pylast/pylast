@@ -33,9 +33,10 @@ import re
 import six
 
 __version__ = '1.8.0'
-__author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk"
-__license__ = "apache2"
+__author__ = 'Amr Hassan, hugovk, Mice Pápai'
+__copyright__ = ('Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk, '
+                 '2017 Mice Pápai')
+__license__ = 'apache2'
 __email__ = 'amr.hassan@gmail.com'
 
 
@@ -708,7 +709,7 @@ class _Network(object):
         return Track(_extract(doc, "name", 1), _extract(doc, "name"), self)
 
     def get_artist_by_mbid(self, mbid):
-        """Loooks up an artist by its MusicBrainz ID"""
+        """Looks up an artist by its MusicBrainz ID"""
 
         params = {"mbid": mbid}
 
@@ -1069,6 +1070,10 @@ class _ShelfCacheBackend(object):
     """Used as a backend for caching cacheable requests."""
     def __init__(self, file_path=None):
         self.shelf = shelve.open(file_path)
+        self.cache_keys = set(self.shelf.keys())
+
+    def __contains__(self, key):
+        return key in self.cache_keys
 
     def __iter__(self):
         return iter(self.shelf.keys())
@@ -1077,6 +1082,7 @@ class _ShelfCacheBackend(object):
         return self.shelf[key]
 
     def set_xml(self, key, xml_string):
+        self.cache_keys.add(key)
         self.shelf[key] = xml_string
 
 
@@ -1222,6 +1228,7 @@ class _Request(object):
         response_text = XML_ILLEGAL.sub("?", response_text)
 
         self._check_response_for_errors(response_text)
+        conn.close()
         return response_text
 
     def execute(self, cacheable=False):
@@ -1373,9 +1380,9 @@ Shout = collections.namedtuple(
     "Shout", ["body", "author", "date"])
 
 
-def _string_output(funct):
+def _string_output(func):
     def r(*args):
-        return _string(funct(*args))
+        return _string(func(*args))
 
     return r
 
@@ -1478,20 +1485,20 @@ class _BaseObject(object):
         """
 
         # Last.fm currently accepts a max of 10 recipient at a time
-        while(len(users) > 10):
+        while len(users) > 10:
             section = users[0:9]
             users = users[9:]
             self.share(section, message)
 
-        nusers = []
+        user_names = []
         for user in users:
             if isinstance(user, User):
-                nusers.append(user.get_name())
+                user_names.append(user.get_name())
             else:
-                nusers.append(user)
+                user_names.append(user)
 
         params = self._get_params()
-        recipients = ','.join(nusers)
+        recipients = ','.join(user_names)
         params['recipient'] = recipients
         if message:
             params['message'] = message
@@ -1958,7 +1965,7 @@ class Album(_Opus):
 
         return _extract_tracks(
             self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), "tracks")
+                self.ws_prefix + ".getInfo", cacheable=True), self.network)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the album or track page on the network.
@@ -3004,7 +3011,7 @@ class Tag(_BaseObject, _Chartable):
         return seq
 
     def get_top_albums(self, limit=None, cacheable=True):
-        """Retuns a list of the top albums."""
+        """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
             params['limit'] = limit
@@ -3098,7 +3105,7 @@ class Track(_Opus):
         return _extract(doc, "streamable") == "1"
 
     def is_fulltrack_available(self):
-        """Returns True if the fulltrack is available for streaming."""
+        """Returns True if the full track is available for streaming."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
         return doc.getElementsByTagName(
@@ -4156,6 +4163,9 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
         doc = sender._request(method_name, cacheable, params)
         doc = cleanup_nodes(doc)
 
+        # break if there are no child nodes
+        if not doc.documentElement.childNodes:
+            break
         main = doc.documentElement.childNodes[0]
 
         if main.hasAttribute("totalPages"):
@@ -4326,14 +4336,14 @@ def _unescape_htmlentity(string):
     return string
 
 
-def extract_items(topitems_or_libraryitems):
+def extract_items(top_items_or_library_items):
     """
     Extracts a sequence of items from a sequence of TopItem or
     LibraryItem objects.
     """
 
     seq = []
-    for i in topitems_or_libraryitems:
+    for i in top_items_or_library_items:
         seq.append(i.item)
 
     return seq
