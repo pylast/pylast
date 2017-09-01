@@ -2905,7 +2905,7 @@ class Tag(_BaseObject, _Chartable):
         return seq
 
     def get_top_albums(self, limit=None, cacheable=True):
-        """Retuns a list of the top albums."""
+        """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
             params['limit'] = limit
