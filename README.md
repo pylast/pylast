@@ -20,7 +20,13 @@ Install via pip:
 
     pip install pylast
 
-pyLast >= 2.0.0 supports Python 2.7.9+ and 3.4+.
+Note:
+
+* pyLast >= 2.0.0 supports Python 2.7.10+ and 3.4, 3.5, 3.6.
+* pyLast >= 1.7.0 < 2.0.0 supports Python 2.7, 3.3, 3.4, 3.5, 3.6.
+* pyLast >= 1.0.0 < 1.7.0 supports Python 2.7, 3.3, 3.4.
+* pyLast >= 0.5 < 1.0.0 supports Python 2, 3.
+* pyLast < 0.5 supports Python 2.
 
 Features
 --------
