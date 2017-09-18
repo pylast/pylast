@@ -20,17 +20,16 @@
 #
 # https://github.com/pylast/pylast
 
-import hashlib
 from xml.dom import minidom, Node
 import collections
 import re
+import hashlib
 import shelve
 import six
 import ssl
 import sys
 import tempfile
 import time
-import warnings
 import xml.dom
 
 __version__ = '1.9.0'
@@ -38,10 +37,6 @@ __author__ = 'Amr Hassan, hugovk'
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk"
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
-
-
-def _deprecation_warning(message):
-    warnings.warn(message, DeprecationWarning)
 
 
 if sys.version_info[0] == 3:
@@ -271,40 +266,6 @@ class _Network(object):
         """
 
         return Tag(name, self)
-
-    def get_scrobbler(self, client_id, client_version):
-        """
-            Returns a Scrobbler object used for submitting tracks to the server
-
-            Quote from https://www.last.fm/api/submissions:
-            ========
-            Client identifiers are used to provide a centrally managed database
-            of the client versions, allowing clients to be banned if they are
-            found to be behaving undesirably. The client ID is associated with
-            a version number on the server, however these are only incremented
-            if a client is banned and do not have to reflect the version of the
-            actual client application.
-
-            During development, clients which have not been allocated an
-            identifier should use the identifier tst, with a version number of
-            1.0. Do not distribute code or client implementations which use
-            this test identifier. Do not use the identifiers used by other
-            clients.
-            =========
-
-            To obtain a new client identifier please contact:
-                * Last.fm: submissions@last.fm
-                * # TODO: list others
-
-            ...and provide us with the name of your client and its homepage
-            address.
-        """
-
-        _deprecation_warning(
-            "Use _Network.scrobble(...), _Network.scrobble_many(...),"
-            " and Network.update_now_playing(...) instead")
-
-        return Scrobbler(self, client_id, client_version)
 
     def _get_language_domain(self, domain_language):
         """
@@ -877,37 +838,6 @@ class LastFMNetwork(_Network):
              "'%s'" % self.password_hash)))
 
 
-def get_lastfm_network(
-        api_key="", api_secret="", session_key="", username="",
-        password_hash="", token=""):
-    """
-    Returns a preconfigured _Network object for Last.fm
-
-    api_key: a provided API_KEY
-    api_secret: a provided API_SECRET
-    session_key: a generated session_key or None
-    username: a username of a valid user
-    password_hash: the output of pylast.md5(password) where password is the
-        user's password
-    token: an authentication token to retrieve a session
-
-    if username and password_hash were provided and not session_key,
-    session_key will be generated automatically when needed.
-
-    Either a valid session_key, a combination of username and password_hash,
-    or token must be present for scrobbling.
-
-    Most read-only webservices only require an api_key and an api_secret, see
-    about obtaining them from:
-    https://www.last.fm/api/account
-    """
-
-    _deprecation_warning("Create a LastFMNetwork object instead")
-
-    return LastFMNetwork(
-        api_key, api_secret, session_key, username, password_hash, token)
-
-
 class LibreFMNetwork(_Network):
     """
     A preconfigured _Network object for Libre.fm
@@ -972,30 +902,6 @@ class LibreFMNetwork(_Network):
              "'%s'" % self.session_key,
              "'%s'" % self.username,
              "'%s'" % self.password_hash)))
-
-
-def get_librefm_network(
-        api_key="", api_secret="", session_key="", username="",
-        password_hash=""):
-    """
-    Returns a preconfigured _Network object for Libre.fm
-
-    api_key: a provided API_KEY
-    api_secret: a provided API_SECRET
-    session_key: a generated session_key or None
-    username: a username of a valid user
-    password_hash: the output of pylast.md5(password) where password is the
-        user's password
-
-    if username and password_hash were provided and not session_key,
-    session_key will be generated automatically when needed.
-    """
-
-    _deprecation_warning(
-        "DeprecationWarning: Create a LibreFMNetwork object instead")
-
-    return LibreFMNetwork(
-        api_key, api_secret, session_key, username, password_hash)
 
 
 class _ShelfCacheBackend(object):
@@ -4412,115 +4318,5 @@ class Scrobbler(object):
             self._do_handshake()
 
         return self.session_id
-
-    def report_now_playing(
-            self, artist, title, album="", duration="", track_number="",
-            mbid=""):
-
-        _deprecation_warning(
-            "DeprecationWarning: Use Network.update_now_playing(...) instead")
-
-        params = {
-            "s": self._get_session_id(), "a": artist, "t": title,
-            "b": album, "l": duration, "n": track_number, "m": mbid}
-
-        try:
-            _ScrobblerRequest(
-                self.nowplaying_url, params, self.network
-            ).execute()
-        except BadSessionError:
-            self._do_handshake()
-            self.report_now_playing(
-                artist, title, album, duration, track_number, mbid)
-
-    def scrobble(
-            self, artist, title, time_started, source, mode, duration,
-            album="", track_number="", mbid=""):
-        """Scrobble a track. parameters:
-            artist: Artist name.
-            title: Track title.
-            time_started: UTC timestamp of when the track started playing.
-            source: The source of the track
-                SCROBBLE_SOURCE_USER: Chosen by the user
-                    (the most common value, unless you have a reason for
-                    choosing otherwise, use this).
-                SCROBBLE_SOURCE_NON_PERSONALIZED_BROADCAST: Non-personalised
-                    broadcast (e.g. Shoutcast, BBC Radio 1).
-                SCROBBLE_SOURCE_PERSONALIZED_BROADCAST: Personalised
-                    recommendation except Last.fm (e.g. Pandora, Launchcast).
-                SCROBBLE_SOURCE_LASTFM: ast.fm (any mode). In this case, the
-                    5-digit recommendation_key value must be set.
-                SCROBBLE_SOURCE_UNKNOWN: Source unknown.
-            mode: The submission mode
-                SCROBBLE_MODE_PLAYED: The track was played.
-                SCROBBLE_MODE_LOVED: The user manually loved the track
-                    (implies a listen)
-                SCROBBLE_MODE_SKIPPED: The track was skipped
-                    (Only if source was Last.fm)
-                SCROBBLE_MODE_BANNED: The track was banned
-                    (Only if source was Last.fm)
-            duration: Track duration in seconds.
-            album: The album name.
-            track_number: The track number on the album.
-            mbid: MusicBrainz ID.
-        """
-
-        _deprecation_warning(
-            "DeprecationWarning: Use Network.scrobble(...) instead")
-
-        params = {
-            "s": self._get_session_id(),
-            "a[0]": _string(artist),
-            "t[0]": _string(title),
-            "i[0]": str(time_started),
-            "o[0]": source,
-            "r[0]": mode,
-            "l[0]": str(duration),
-            "b[0]": _string(album),
-            "n[0]": track_number,
-            "m[0]": mbid
-        }
-
-        _ScrobblerRequest(self.submissions_url, params, self.network).execute()
-
-    def scrobble_many(self, tracks):
-        """
-            Scrobble several tracks at once.
-
-            tracks: A sequence of a sequence of parameters for each track.
-                The order of parameters is the same as if passed to the
-                scrobble() method.
-        """
-
-        _deprecation_warning(
-            "DeprecationWarning: Use Network.scrobble_many(...) instead")
-
-        remainder = []
-
-        if len(tracks) > 50:
-            remainder = tracks[50:]
-            tracks = tracks[:50]
-
-        params = {"s": self._get_session_id()}
-
-        i = 0
-        for t in tracks:
-            _pad_list(t, 9, "")
-            params["a[%s]" % str(i)] = _string(t[0])
-            params["t[%s]" % str(i)] = _string(t[1])
-            params["i[%s]" % str(i)] = str(t[2])
-            params["o[%s]" % str(i)] = t[3]
-            params["r[%s]" % str(i)] = t[4]
-            params["l[%s]" % str(i)] = str(t[5])
-            params["b[%s]" % str(i)] = _string(t[6])
-            params["n[%s]" % str(i)] = t[7]
-            params["m[%s]" % str(i)] = t[8]
-
-            i += 1
-
-        _ScrobblerRequest(self.submissions_url, params, self.network).execute()
-
-        if remainder:
-            self.scrobble_many(remainder)
 
 # End of file
