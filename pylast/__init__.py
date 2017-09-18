@@ -1784,7 +1784,7 @@ class Album(_Opus):
 
         return _extract_tracks(
             self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), "tracks")
+                self.ws_prefix + ".getInfo", cacheable=True), self.network)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the album or track page on the network.

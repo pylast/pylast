@@ -1887,11 +1887,13 @@ class TestPyLast(unittest.TestCase):
 
         # Act
         tracks = album.get_tracks()
+        url = tracks[0].get_url()
 
         # Assert
         self.assertIsInstance(tracks, list)
         self.assertIsInstance(tracks[0], pylast.Track)
         self.assertEqual(len(tracks), 4)
+        self.assertTrue(url.startswith("https://www.last.fm/music/test"))
 
     @handle_lastfm_exceptions
     def test_tags(self):
