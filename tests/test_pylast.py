@@ -1803,7 +1803,7 @@ class TestPyLast(unittest.TestCase):
     def test_set_tags(self):
         # Arrange
         tags = ["sometag1", "sometag2"]
-        artist = self.network.get_artist("Test Artist")
+        artist = self.network.get_artist("Test Artist 2")
         artist.add_tags(tags)
         tags_before = artist.get_tags()
         new_tags = ["settag1", "settag2"]

@@ -33,8 +33,9 @@ import time
 import xml.dom
 
 __version__ = '1.9.0'
-__author__ = 'Amr Hassan, hugovk'
-__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk"
+__author__ = 'Amr Hassan, hugovk, Mice Pápai'
+__copyright__ = ('Copyright (C) 2008-2010 Amr Hassan, 2013-2017 hugovk, '
+                 '2017 Mice Pápai')
 __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
@@ -1048,6 +1049,7 @@ class _Request(object):
         response_text = XML_ILLEGAL.sub("?", response_text)
 
         self._check_response_for_errors(response_text)
+        conn.close()
         return response_text
 
     def execute(self, cacheable=False):
