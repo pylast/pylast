@@ -39,7 +39,7 @@ matrix:
 sudo: false
 
 install:
-- travis_retry pip install tox==2.1.1
+- travis_retry pip install tox
 - travis_retry pip install coverage
 
 script: tox
