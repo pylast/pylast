@@ -1243,7 +1243,7 @@ class _BaseObject(object):
         # Convert any ints (or whatever) into strings
         values = map(six.text_type, self._get_params().values())
 
-        return hash(self.network) + hash(six.text_type(type(self)) + casefold(
+        return hash(self.network) + hash(six.text_type(type(self)) + _casefold(
             "".join(list(self._get_params().keys()) + list(values))))
 
     def _extract_cdata_from_request(self, method_name, tag_name, params):
@@ -1443,7 +1443,7 @@ class _Chartable(object):
             self.ws_prefix + method, True, params)
 
         seq = []
-        for node in doc.getElementsByTagName(casefold(chart_kind)):
+        for node in doc.getElementsByTagName(_casefold(chart_kind)):
             item = chart_type(
                 _extract(node, "artist"), _extract(node, "name"), self.network)
             weight = _number(_extract(node, "playcount"))
@@ -1533,11 +1533,11 @@ class _Taggable(object):
         tags_on_server = self.get_tags()
 
         for tag in tags_on_server:
-            c_old_tags.append(casefold(tag.get_name()))
+            c_old_tags.append(_casefold(tag.get_name()))
             old_tags.append(tag.get_name())
 
         for tag in tags:
-            c_new_tags.append(casefold(tag))
+            c_new_tags.append(_casefold(tag))
             new_tags.append(tag)
 
         for i in range(0, len(old_tags)):
@@ -1668,11 +1668,10 @@ class _Opus(_BaseObject, _Taggable):
     def __eq__(self, other):
         if type(self) != type(other):
             return False
-        a = casefold(self.get_title())
-        b = casefold(other.get_title())
-        c = casefold(self.get_artist().get_name())
-        d = casefold(other.get_artist().get_name())
-        return (a == b) and (c == d)
+        return (_casefold_equal(self.get_title(),
+                                other.get_title()) and
+                _casefold_equal(self.get_artist().get_name(),
+                                other.get_artist().get_name()))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -1846,7 +1845,7 @@ class Artist(_BaseObject, _Taggable):
 
     def __eq__(self, other):
         if type(self) is type(other):
-            return casefold(self.get_name()) == casefold(other.get_name())
+            return _casefold_equal(self.get_name(), other.get_name())
         else:
             return False
 
@@ -2236,9 +2235,10 @@ class Country(_BaseObject):
         return self.get_name()
 
     def __eq__(self, other):
-        return casefold(self.get_name()) == casefold(other.get_name())
+        return _casefold_equal(self.get_name(), other.get_name())
 
     def __ne__(self, other):
+        # TODO _casefold name?
         return self.get_name() != other.get_name()
 
     def _get_params(self):  # TODO can move to _BaseObject
@@ -2320,13 +2320,13 @@ class Metro(_BaseObject):
         return self.get_name() + ", " + self.get_country()
 
     def __eq__(self, other):
-        return (casefold(self.get_name()) == casefold(other.get_name()) and
-                casefold(self.get_country()) == casefold(other.get_country()))
+        return (_casefold_equal(self.get_name(), other.get_name()) and
+                _casefold_equal(self.get_country(), other.get_country()))
 
     def __ne__(self, other):
-        # TODO casefold name?
+        # TODO _casefold name?
         return (self.get_name() != other.get_name() or
-                casefold(self.get_country()) != casefold(other.get_country()))
+                _casefold_not_equal(self.get_country(), other.get_country()))
 
     def _get_params(self):
         return {'metro': self.get_name(), 'country': self.get_country()}
@@ -2802,10 +2802,10 @@ class Tag(_BaseObject, _Chartable):
         return self.get_name()
 
     def __eq__(self, other):
-        return casefold(self.get_name()) == casefold(other.get_name())
+        return _casefold_equal(self.get_name(), other.get_name())
 
     def __ne__(self, other):
-        return casefold(self.get_name()) != casefold(other.get_name())
+        return _casefold_not_equal(self.get_name(), other.get_name())
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -3026,9 +3026,10 @@ class Group(_BaseObject, _Chartable):
         return self.get_name()
 
     def __eq__(self, other):
-        return casefold(self.get_name()) == casefold(other.get_name())
+        return _casefold_equal(self.get_name(), other.get_name())
 
     def __ne__(self, other):
+        # TODO _casefold name?
         return self.get_name() != other.get_name()
 
     def _get_params(self):
@@ -4123,7 +4124,7 @@ def _extract_events_from_doc(doc, network):
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a url."""
 
-    return casefold(url_quote_plus(url_quote_plus(_string(text))))
+    return _casefold(url_quote_plus(url_quote_plus(_string(text))))
 
 
 def _number(string):
@@ -4154,13 +4155,23 @@ def _unescape_htmlentity(string):
     return string
 
 
-def casefold(s):
-    """Casefold or lower a string"""
+def _casefold(s):
+    """Casefold or lower text for caseless comparison"""
     try:
         # casefold new in Python 3.3
-        return s.casefold()
+        return s._casefold()
     except AttributeError:
         return s.lower()
+
+
+def _casefold_equal(a, b):
+    """Casefolded comparison"""
+    return _casefold(a) == _casefold(b)
+
+
+def _casefold_not_equal(a, b):
+    """Casefolded comparison"""
+    return _casefold(a) != _casefold(b)
 
 
 def extract_items(top_items_or_library_items):
