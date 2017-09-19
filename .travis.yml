@@ -16,11 +16,11 @@ env:
 matrix:
   include:
     - python: 2.7
-      env: TOXENV=lint
+      env: TOXENV=py2lint
     - python: 2.7
       env: TOXENV=py27
     - python: 3.6
-      env: TOXENV=lint
+      env: TOXENV=py3lint
     - python: 3.6
       env: TOXENV=py36
     - python: 3.5
