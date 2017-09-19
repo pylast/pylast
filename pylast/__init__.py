@@ -43,7 +43,6 @@ __email__ = 'amr.hassan@gmail.com'
 if sys.version_info[0] == 3:
     import html.entities as htmlentitydefs
     from http.client import HTTPSConnection
-    from urllib.parse import splithost as url_split_host
     from urllib.parse import quote_plus as url_quote_plus
 
     unichr = chr
@@ -51,7 +50,6 @@ if sys.version_info[0] == 3:
 elif sys.version_info[0] == 2:
     import htmlentitydefs
     from httplib import HTTPSConnection
-    from urllib import splithost as url_split_host
     from urllib import quote_plus as url_quote_plus
 
 STATUS_INVALID_SERVICE = 2
@@ -4165,104 +4163,6 @@ def extract_items(top_items_or_library_items):
         seq.append(i.item)
 
     return seq
-
-
-class ScrobblingError(Exception):
-    def __init__(self, message):
-        Exception.__init__(self)
-        self.message = message
-
-    @_string_output
-    def __str__(self):
-        return self.message
-
-
-class BannedClientError(ScrobblingError):
-    def __init__(self):
-        ScrobblingError.__init__(
-            self, "This version of the client has been banned")
-
-
-class BadAuthenticationError(ScrobblingError):
-    def __init__(self):
-        ScrobblingError.__init__(self, "Bad authentication token")
-
-
-class BadTimeError(ScrobblingError):
-    def __init__(self):
-        ScrobblingError.__init__(
-            self, "Time provided is not close enough to current time")
-
-
-class BadSessionError(ScrobblingError):
-    def __init__(self):
-        ScrobblingError.__init__(
-            self, "Bad session id, consider re-handshaking")
-
-
-class _ScrobblerRequest(object):
-
-    def __init__(self, url, params, network, request_type="POST"):
-
-        for key in params:
-            params[key] = str(params[key])
-
-        self.params = params
-        self.type = request_type
-        (self.hostname, self.subdir) = url_split_host(url[len("http:"):])
-        self.network = network
-
-    def execute(self):
-        """Returns a string response of this request."""
-
-        connection = HTTPSConnection(context=SSL_CONTEXT, host=self.hostname)
-
-        data = []
-        for name in self.params.keys():
-            value = url_quote_plus(self.params[name])
-            data.append('='.join((name, value)))
-        data = "&".join(data)
-
-        headers = {
-            "Content-type": "application/x-www-form-urlencoded",
-            "Accept-Charset": "utf-8",
-            "User-Agent": "pylast" + "/" + __version__,
-            "HOST": self.hostname
-        }
-
-        if self.type == "GET":
-            connection.request(
-                "GET", self.subdir + "?" + data, headers=headers)
-        else:
-            connection.request("POST", self.subdir, data, headers)
-        response = _unicode(connection.getresponse().read())
-
-        self._check_response_for_errors(response)
-
-        return response
-
-    def _check_response_for_errors(self, response):
-        """
-        When passed a string response it checks for errors, raising any
-        exceptions as necessary.
-        """
-
-        lines = response.split("\n")
-        status_line = lines[0]
-
-        if status_line == "OK":
-            return
-        elif status_line == "BANNED":
-            raise BannedClientError()
-        elif status_line == "BADAUTH":
-            raise BadAuthenticationError()
-        elif status_line == "BADTIME":
-            raise BadTimeError()
-        elif status_line == "BADSESSION":
-            raise BadSessionError()
-        elif status_line.startswith("FAILED "):
-            reason = status_line[status_line.find("FAILED ") + len("FAILED "):]
-            raise ScrobblingError(reason)
 
 
 # End of file
