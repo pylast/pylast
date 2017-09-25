@@ -1880,18 +1880,6 @@ class TestPyLast(unittest.TestCase):
         self.assertGreater(count, 21)
 
     @handle_lastfm_exceptions
-    def test_album_rel_date(self):
-        # Arrange
-        album = pylast.Album("Test Artist", "Test Release", self.network)
-
-        # Act
-        date = album.get_release_date()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(date)
-        self.assertIn("2011", date)
-
-    @handle_lastfm_exceptions
     def test_album_tracks(self):
         # Arrange
         album = pylast.Album("Test Artist", "Test Release", self.network)

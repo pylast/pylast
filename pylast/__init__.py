@@ -1718,12 +1718,6 @@ class Album(_Opus):
     def __init__(self, artist, title, network, username=None):
         super(Album, self).__init__(artist, title, network, "album", username)
 
-    def get_release_date(self):
-        """Returns the release date of the album."""
-
-        return _extract(self._request(
-            self.ws_prefix + ".getInfo", cacheable=True), "releasedate")
-
     def get_cover_image(self, size=COVER_EXTRA_LARGE):
         """
         Returns a uri to the cover image
