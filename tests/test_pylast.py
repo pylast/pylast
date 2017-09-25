@@ -487,9 +487,7 @@ class TestPyLast(unittest.TestCase):
     @handle_lastfm_exceptions
     def test_user_is_hashable(self):
         # Arrange
-        artist = self.network.get_artist("Test Artist")
-        user = artist.get_top_fans(limit=1)[0].item
-        self.assertIsInstance(user, pylast.User)
+        user = self.network.get_user(self.username)
 
         # Act/Assert
         self.helper_is_thing_hashable(user)
@@ -1233,18 +1231,6 @@ class TestPyLast(unittest.TestCase):
         self.helper_two_different_things_in_top_list(things, pylast.Album)
 
     @handle_lastfm_exceptions
-    def test_artist_top_fans(self):
-        # Arrange
-        # Pick an artist with plenty of plays
-        artist = self.network.get_top_artists(limit=1)[0].item
-
-        # Act
-        things = artist.get_top_fans(limit=2)
-
-        # Assert
-        self.helper_two_different_things_in_top_list(things, pylast.User)
-
-    @handle_lastfm_exceptions
     def test_country_top_tracks(self):
         # Arrange
         country = self.network.get_country("Croatia")
@@ -1338,17 +1324,6 @@ class TestPyLast(unittest.TestCase):
 
         # Act/Assert
         self.helper_get_assert_charts(lastfm_user, dates[0])
-
-    @handle_lastfm_exceptions
-    def test_track_top_fans(self):
-        # Arrange
-        track = self.network.get_track("The Cinematic Orchestra", "Postlude")
-
-        # Act
-        fans = track.get_top_fans()
-
-        # Assert
-        self.helper_at_least_one_thing_in_top_list(fans, pylast.User)
 
     # Commented out to avoid spamming
     # def test_share_spam(self):

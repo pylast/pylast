@@ -1252,30 +1252,6 @@ class _BaseObject(object):
 
         return seq
 
-    def get_top_fans(self, limit=None, cacheable=True):
-        """Returns a list of the Users who played this the most.
-        # Parameters:
-            * limit int: Max elements.
-        # For Artist/Track
-        """
-
-        doc = self._request(self.ws_prefix + '.getTopFans', cacheable)
-
-        seq = []
-
-        elements = doc.getElementsByTagName('user')
-
-        for element in elements:
-            if limit and len(seq) >= limit:
-                break
-
-            name = _extract(element, 'name')
-            weight = _number(_extract(element, 'weight'))
-
-            seq.append(TopItem(User(name, self.network), weight))
-
-        return seq
-
     def share(self, users, message=None):
         """
         Shares this (sends out recommendations).
