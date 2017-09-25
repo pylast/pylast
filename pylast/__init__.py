@@ -2462,10 +2462,6 @@ class Library(_BaseObject):
         else:
             self.user = User(user, self.network)
 
-        self._albums_index = 0
-        self._artists_index = 0
-        self._tracks_index = 0
-
     def __repr__(self):
         return "pylast.Library(%s, %s)" % (repr(self.user), repr(self.network))
 
@@ -3119,10 +3115,6 @@ class User(_BaseObject, _Chartable):
         _Chartable.__init__(self, 'user')
 
         self.name = user_name
-
-        self._past_events_index = 0
-        self._recommended_events_index = 0
-        self._recommended_artists_index = 0
 
     def __repr__(self):
         return "pylast.User(%s, %s)" % (repr(self.name), repr(self.network))
