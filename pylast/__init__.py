@@ -2237,12 +2237,6 @@ class Country(_BaseObject):
     def _get_params(self):  # TODO can move to _BaseObject
         return {'country': self.get_name()}
 
-    def _get_name_from_code(self, alpha2code):
-        # TODO: Have this function lookup the alpha-2 code and return the
-        # country name.
-
-        return alpha2code
-
     def get_name(self):
         """Returns the country name. """
 
