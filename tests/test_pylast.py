@@ -5,7 +5,6 @@ Integration (not unit) tests for pylast.py
 from flaky import flaky
 import os
 import pytest
-from random import choice
 import time
 import unittest
 
@@ -302,14 +301,6 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_is_thing_hashable(library)
 
-    def test_playlist_is_hashable(self):
-        # Arrange
-        playlist = pylast.Playlist(
-            user="RJ", playlist_id="1k1qp_doglist", network=self.network)
-
-        # Act/Assert
-        self.helper_is_thing_hashable(playlist)
-
     def test_tag_is_hashable(self):
         # Arrange
         tag = self.network.get_top_tags(limit=1)[0]
@@ -340,14 +331,6 @@ class TestPyLast(unittest.TestCase):
 
         # Act/Assert
         self.helper_is_thing_hashable(venue)
-
-    def test_xspf_is_hashable(self):
-        # Arrange
-        xspf = pylast.XSPF(
-            uri="lastfm://playlist/1k1qp_doglist", network=self.network)
-
-        # Act/Assert
-        self.helper_is_thing_hashable(xspf)
 
     def test_invalid_xml(self):
         # Arrange
@@ -1355,69 +1338,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(shouts1, shouts2)
         self.network.disable_caching()
         self.assertFalse(self.network.is_caching_enabled())
-
-    def test_create_playlist(self):
-        # Arrange
-        title = "Test playlist"
-        description = "Testing"
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act
-        playlist = self.network.create_new_playlist(title, description)
-
-        # Assert
-        self.assertIsInstance(playlist, pylast.Playlist)
-        self.assertEqual(playlist.get_title(), "Test playlist")
-        self.assertEqual(playlist.get_description(), "Testing")
-        self.assertEqual(playlist.get_user(), lastfm_user)
-
-    def test_empty_playlist_unstreamable(self):
-        # Arrange
-        title = "Empty playlist"
-        description = "Unstreamable"
-
-        # Act
-        playlist = self.network.create_new_playlist(title, description)
-
-        # Assert
-        self.assertEqual(playlist.get_size(), 0)
-        self.assertEqual(playlist.get_duration(), 0)
-        self.assertFalse(playlist.is_streamable())
-
-    def test_big_playlist_is_streamable(self):
-        # Arrange
-        # Find a big playlist on Last.fm, eg "top 100 classick rock songs"
-        user = "kaxior"
-        id = 10417943
-        playlist = pylast.Playlist(user, id, self.network)
-        self.assertEqual(
-            playlist.get_url(),
-            "https://www.last.fm/user/kaxior/library/"
-            "playlists/67ajb_top_100_classick_rock_songs")
-
-        # Act
-        # Nothing
-
-        # Assert
-        self.assertIsInstance(playlist, pylast.Playlist)
-        self.assertGreaterEqual(playlist.get_size(), 45)
-        self.assertGreater(playlist.get_duration(), 0)
-        self.assertTrue(playlist.is_streamable())
-
-    def test_add_track_to_playlist(self):
-        # Arrange
-        title = "One track playlist"
-        description = "Testing"
-        playlist = self.network.create_new_playlist(title, description)
-        track = pylast.Track("Test Artist", "test title", self.network)
-
-        # Act
-        playlist.add_track(track)
-
-        # Assert
-        self.assertEqual(playlist.get_size(), 1)
-        self.assertEqual(len(playlist.get_tracks()), 1)
-        self.assertTrue(playlist.has_track(track))
 
     def test_album_mbid(self):
         # Arrange

@@ -296,24 +296,6 @@ class _Network(object):
 
         self.last_call_time = now
 
-    def create_new_playlist(self, title, description):
-        """
-            Creates a playlist for the authenticated user and returns it
-                title: The title of the new playlist.
-                description: The description of the new playlist.
-        """
-
-        params = {}
-        params['title'] = title
-        params['description'] = description
-
-        doc = _Request(self, 'playlist.create', params).execute(False)
-
-        e_id = doc.getElementsByTagName("id")[0].firstChild.data
-        user = doc.getElementsByTagName('playlists')[0].getAttribute('user')
-
-        return Playlist(user, e_id, self)
-
     def get_top_artists(self, limit=None, cacheable=True):
         """Returns the most played artists as a sequence of TopItem objects."""
 
@@ -815,7 +797,6 @@ class LastFMNetwork(_Network):
                 "artist": "music/%(artist)s",
                 "event": "event/%(id)s",
                 "country": "place/%(country_name)s",
-                "playlist": "user/%(user)s/library/playlists/%(appendix)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
                 "group": "group/%(name)s",
@@ -880,7 +861,6 @@ class LibreFMNetwork(_Network):
                 "artist": "artist/%(artist)s",
                 "event": "event/%(id)s",
                 "country": "place/%(country_name)s",
-                "playlist": "user/%(user)s/library/playlists/%(appendix)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
                 "group": "group/%(name)s",
@@ -2458,148 +2438,6 @@ class Library(_BaseObject):
         return seq
 
 
-class Playlist(_BaseObject):
-    """A Last.fm user playlist."""
-
-    id = None
-    user = None
-
-    __hash__ = _BaseObject.__hash__
-
-    def __init__(self, user, playlist_id, network):
-        _BaseObject.__init__(self, network, "playlist")
-
-        if isinstance(user, User):
-            self.user = user
-        else:
-            self.user = User(user, self.network)
-
-        self.id = playlist_id
-
-    @_string_output
-    def __str__(self):
-        return repr(self.user) + "'s playlist # " + repr(self.id)
-
-    def _get_info_node(self):
-        """
-        Returns the node from user.getPlaylists where this playlist's info is.
-        """
-
-        doc = self._request("user.getPlaylists", True)
-
-        for node in doc.getElementsByTagName("playlist"):
-            if _extract(node, "id") == str(self.get_id()):
-                return node
-
-    def _get_params(self):
-        return {'user': self.user.get_name(), 'playlistID': self.get_id()}
-
-    def get_id(self):
-        """Returns the playlist ID."""
-
-        return self.id
-
-    def get_user(self):
-        """Returns the owner user of this playlist."""
-
-        return self.user
-
-    def get_tracks(self):
-        """Returns a list of the tracks on this user playlist."""
-
-        uri = _unicode('lastfm://playlist/%s') % self.get_id()
-
-        return XSPF(uri, self.network).get_tracks()
-
-    def add_track(self, track):
-        """Adds a Track to this Playlist."""
-
-        params = self._get_params()
-        params['artist'] = track.get_artist().get_name()
-        params['track'] = track.get_title()
-
-        self._request('playlist.addTrack', False, params)
-
-    def get_title(self):
-        """Returns the title of this playlist."""
-
-        return _extract(self._get_info_node(), "title")
-
-    def get_creation_date(self):
-        """Returns the creation date of this playlist."""
-
-        return _extract(self._get_info_node(), "date")
-
-    def get_size(self):
-        """Returns the number of tracks in this playlist."""
-
-        return _number(_extract(self._get_info_node(), "size"))
-
-    def get_description(self):
-        """Returns the description of this playlist."""
-
-        return _extract(self._get_info_node(), "description")
-
-    def get_duration(self):
-        """Returns the duration of this playlist in milliseconds."""
-
-        return _number(_extract(self._get_info_node(), "duration"))
-
-    def is_streamable(self):
-        """
-        Returns True if the playlist is streamable.
-        For a playlist to be streamable, it needs at least 45 tracks by 15
-        different artists."""
-
-        if _extract(self._get_info_node(), "streamable") == '1':
-            return True
-        else:
-            return False
-
-    def has_track(self, track):
-        """Checks to see if track is already in the playlist.
-        * track: Any Track object.
-        """
-
-        return track in self.get_tracks()
-
-    def get_cover_image(self, size=COVER_EXTRA_LARGE):
-        """
-        Returns a uri to the cover image
-        size can be one of:
-            COVER_MEGA
-            COVER_EXTRA_LARGE
-            COVER_LARGE
-            COVER_MEDIUM
-            COVER_SMALL
-        """
-
-        return _extract(self._get_info_node(), "image")[size]
-
-    def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the playlist on the network.
-        * domain_name: The network's language domain. Possible values:
-          o DOMAIN_ENGLISH
-          o DOMAIN_GERMAN
-          o DOMAIN_SPANISH
-          o DOMAIN_FRENCH
-          o DOMAIN_ITALIAN
-          o DOMAIN_POLISH
-          o DOMAIN_PORTUGUESE
-          o DOMAIN_SWEDISH
-          o DOMAIN_TURKISH
-          o DOMAIN_RUSSIAN
-          o DOMAIN_JAPANESE
-          o DOMAIN_CHINESE
-        """
-
-        english_url = _extract(self._get_info_node(), "url")
-        appendix = english_url[english_url.rfind("/") + 1:]
-
-        return self.network._get_url(domain_name, "playlist") % {
-            'appendix': appendix, "user": self.get_user().get_name()}
-
-
 class Tag(_BaseObject, _Chartable):
     """A Last.fm object tag."""
 
@@ -2895,51 +2733,6 @@ class Group(_BaseObject, _Chartable):
         return users
 
 
-class XSPF(_BaseObject):
-    "A Last.fm XSPF playlist."""
-
-    uri = None
-
-    __hash__ = _BaseObject.__hash__
-
-    def __init__(self, uri, network):
-        _BaseObject.__init__(self, network, None)
-
-        self.uri = uri
-
-    def _get_params(self):
-        return {'playlistURL': self.get_uri()}
-
-    @_string_output
-    def __str__(self):
-        return self.get_uri()
-
-    def __eq__(self, other):
-        return self.get_uri() == other.get_uri()
-
-    def __ne__(self, other):
-        return self.get_uri() != other.get_uri()
-
-    def get_uri(self):
-        """Returns the Last.fm playlist URI. """
-
-        return self.uri
-
-    def get_tracks(self):
-        """Returns the tracks on this playlist."""
-
-        doc = self._request('playlist.fetch', True)
-
-        seq = []
-        for node in doc.getElementsByTagName('track'):
-            title = _extract(node, 'title')
-            artist = _extract(node, 'creator')
-
-            seq.append(Track(artist, title, self.network))
-
-        return seq
-
-
 class User(_BaseObject, _Chartable):
     """A Last.fm user."""
 
@@ -3100,18 +2893,6 @@ class User(_BaseObject, _Chartable):
             seq.append(Event(_extract(node, "id"), self.network))
 
         return seq
-
-    def get_playlists(self):
-        """Returns a list of Playlists that this user owns."""
-
-        doc = self._request(self.ws_prefix + ".getPlaylists", True)
-
-        playlists = []
-        for playlist_id in _extract_all(doc, "id"):
-            playlists.append(
-                Playlist(self.get_name(), playlist_id, self.network))
-
-        return playlists
 
     def get_now_playing(self):
         """
