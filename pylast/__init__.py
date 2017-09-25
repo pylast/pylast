@@ -139,8 +139,7 @@ class _Network(object):
 
     def __init__(
             self, name, homepage, ws_server, api_key, api_secret, session_key,
-            submission_server, username, password_hash, domain_names, urls,
-            token=None):
+            username, password_hash, domain_names, urls, token=None):
         """
             name: the name of the network
             homepage: the homepage URL
@@ -148,8 +147,6 @@ class _Network(object):
             api_key: a provided API_KEY
             api_secret: a provided API_SECRET
             session_key: a generated session_key or None
-            submission_server: the URL of the server to which tracks are
-                submitted (scrobbled)
             username: a username of a valid user
             password_hash: the output of pylast.md5(password) where password is
                 the user's password
@@ -175,7 +172,6 @@ class _Network(object):
         self.api_key = api_key
         self.api_secret = api_secret
         self.session_key = session_key
-        self.submission_server = submission_server
         self.username = username
         self.password_hash = password_hash
         self.domain_names = domain_names
@@ -797,7 +793,6 @@ class LastFMNetwork(_Network):
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
-            submission_server="http://post.audioscrobbler.com:80/",
             username=username,
             password_hash=password_hash,
             token=token,
@@ -864,7 +859,6 @@ class LibreFMNetwork(_Network):
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
-            submission_server="http://turtle.libre.fm:80/",
             username=username,
             password_hash=password_hash,
             domain_names={
