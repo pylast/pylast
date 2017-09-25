@@ -3195,9 +3195,6 @@ class User(_BaseObject, _Chartable):
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
-
-        Use extract_items() with the return of this function to
-        get only a sequence of Track objects with no playback dates.
         """
 
         params = self._get_params()
@@ -3312,9 +3309,6 @@ class User(_BaseObject, _Chartable):
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
-
-        Use extract_items() with the return of this function to
-        get only a sequence of Track objects with no playback dates.
         """
 
         params = self._get_params()
@@ -4119,19 +4113,6 @@ def _unescape_htmlentity(string):
         string = string.replace("&%s;" % key, unichr(mapping[key]))
 
     return string
-
-
-def extract_items(top_items_or_library_items):
-    """
-    Extracts a sequence of items from a sequence of TopItem or
-    LibraryItem objects.
-    """
-
-    seq = []
-    for i in top_items_or_library_items:
-        seq.append(i.item)
-
-    return seq
 
 
 # End of file
