@@ -911,8 +911,7 @@ class TestPyLast(unittest.TestCase):
         lastfm_user = self.network.get_authenticated_user()
 
         # Act/Assert
-        # Skip the first one because Last.fm API is broken
-        # self.helper_validate_cacheable(lastfm_user, "get_friends")
+        self.helper_validate_cacheable(lastfm_user, "get_friends")
         self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
         self.helper_validate_cacheable(lastfm_user, "get_neighbours")
         self.helper_validate_cacheable(lastfm_user, "get_past_events")
