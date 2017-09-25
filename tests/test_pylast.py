@@ -637,9 +637,7 @@ class TestPyLast(unittest.TestCase):
         library = pylast.Library(self.username, self.network)
 
         # Act/Assert
-        self.helper_validate_cacheable(library, "get_albums")
         self.helper_validate_cacheable(library, "get_artists")
-        self.helper_validate_cacheable(library, "get_tracks")
 
     def test_cacheable_user_artist_tracks(self):
         # Arrange
@@ -660,11 +658,7 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_validate_cacheable(lastfm_user, "get_friends")
         self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
-        self.helper_validate_cacheable(lastfm_user, "get_neighbours")
-        self.helper_validate_cacheable(lastfm_user, "get_past_events")
         self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
-        self.helper_validate_cacheable(lastfm_user, "get_recommended_artists")
-        self.helper_validate_cacheable(lastfm_user, "get_recommended_events")
 
     def test_geo_get_events_in_location(self):
         # Arrange
