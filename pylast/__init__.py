@@ -708,39 +708,6 @@ class _Network(object):
         if remaining_tracks:
             self.scrobble_many(remaining_tracks)
 
-    def get_play_links(self, link_type, things, cacheable=True):
-        method = link_type + ".getPlaylinks"
-        params = {}
-
-        for i, thing in enumerate(things):
-            if link_type == "artist":
-                params['artist[' + str(i) + ']'] = thing
-            elif link_type == "album":
-                params['artist[' + str(i) + ']'] = thing.artist
-                params['album[' + str(i) + ']'] = thing.title
-            elif link_type == "track":
-                params['artist[' + str(i) + ']'] = thing.artist
-                params['track[' + str(i) + ']'] = thing.title
-
-        doc = _Request(self, method, params).execute(cacheable)
-
-        seq = []
-
-        for node in doc.getElementsByTagName("externalids"):
-            spotify = _extract(node, "spotify")
-            seq.append(spotify)
-
-        return seq
-
-    def get_artist_play_links(self, artists, cacheable=True):
-        return self.get_play_links("artist", artists, cacheable)
-
-    def get_album_play_links(self, albums, cacheable=True):
-        return self.get_play_links("album", albums, cacheable)
-
-    def get_track_play_links(self, tracks, cacheable=True):
-        return self.get_play_links("track", tracks, cacheable)
-
 
 class LastFMNetwork(_Network):
 
@@ -1169,8 +1136,6 @@ ImageSizes = collections.namedtuple(
 Image = collections.namedtuple(
     "Image", [
         "title", "url", "dateadded", "format", "owner", "sizes", "votes"])
-Shout = collections.namedtuple(
-    "Shout", ["body", "author", "date"])
 
 
 def _string_output(func):
@@ -1300,26 +1265,6 @@ class _BaseObject(object):
         node = doc.getElementsByTagName("wiki")[0]
 
         return _extract(node, section)
-
-    def get_shouts(self, limit=50, cacheable=False):
-        """
-            Returns a sequence of Shout objects
-        """
-
-        shouts = []
-        for node in _collect_nodes(
-                limit,
-                self,
-                self.ws_prefix + ".getShouts",
-                cacheable):
-            shouts.append(
-                Shout(
-                    _extract(node, "body"),
-                    User(_extract(node, "author"), self.network),
-                    _extract(node, "date")
-                )
-            )
-        return shouts
 
 
 class _Chartable(object):
@@ -1887,13 +1832,6 @@ class Artist(_BaseObject, _Taggable):
         """Returns the content of the artist's biography."""
         return self.get_bio("content", language)
 
-    def get_upcoming_events(self):
-        """Returns a list of the upcoming Events for this artist."""
-
-        doc = self._request(self.ws_prefix + '.getEvents', True)
-
-        return _extract_events_from_doc(doc, self.network)
-
     def get_similar(self, limit=None):
         """Returns the similar artists on the network."""
 
@@ -1953,16 +1891,6 @@ class Artist(_BaseObject, _Taggable):
 
         return self.network._get_url(
             domain_name, "artist") % {'artist': artist}
-
-    def shout(self, message):
-        """
-            Post a shout
-        """
-
-        params = self._get_params()
-        params["message"] = message
-
-        self._request("artist.Shout", False, params)
 
     def get_band_members(self):
         """Returns a list of band members or None if unknown."""
@@ -2136,16 +2064,6 @@ class Event(_BaseObject):
 
         return self.network._get_url(
             domain_name, "event") % {'id': self.get_id()}
-
-    def shout(self, message):
-        """
-            Post a shout
-        """
-
-        params = self._get_params()
-        params["message"] = message
-
-        self._request("event.Shout", False, params)
 
 
 class Country(_BaseObject):
@@ -3231,16 +3149,6 @@ class User(_BaseObject, _Chartable):
         """Returns the associated Library object. """
 
         return Library(self, self.network)
-
-    def shout(self, message):
-        """
-            Post a shout
-        """
-
-        params = self._get_params()
-        params["message"] = message
-
-        self._request(self.ws_prefix + ".Shout", False, params)
 
 
 class AuthenticatedUser(User):

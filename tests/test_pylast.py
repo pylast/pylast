@@ -464,13 +464,6 @@ class TestPyLast(unittest.TestCase):
         for event in events[:2]:  # checking first two should be enough
             self.assertIsInstance(event.get_headliner(), pylast.Artist)
 
-    def test_artist_upcoming_events_returns_valid_ids(self):
-        # Arrange
-        artist = pylast.Artist("Test Artist", self.network)
-
-        # Act/Assert
-        self.helper_upcoming_events_have_valid_ids(artist)
-
     def test_user_past_events_returns_valid_ids(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
@@ -646,28 +639,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_validate_results(result1, result2, result3)
 
-    def test_cacheable_artist_get_shouts(self):
-        # Arrange
-        artist = self.network.get_artist("Test Artist")
-
-        # Act/Assert
-        self.helper_validate_cacheable(artist, "get_shouts")
-
-    def test_cacheable_event_get_shouts(self):
-        # Arrange
-        user = self.network.get_user("RJ")
-        event = user.get_past_events(limit=1)[0]
-
-        # Act/Assert
-        self.helper_validate_cacheable(event, "get_shouts")
-
-    def test_cacheable_track_get_shouts(self):
-        # Arrange
-        track = self.network.get_top_tracks()[0].item
-
-        # Act/Assert
-        self.helper_validate_cacheable(track, "get_shouts")
-
     def test_cacheable_group_get_members(self):
         # Arrange
         group = self.network.get_group("Audioscrobbler Beta")
@@ -708,7 +679,6 @@ class TestPyLast(unittest.TestCase):
         self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
         self.helper_validate_cacheable(lastfm_user, "get_recommended_artists")
         self.helper_validate_cacheable(lastfm_user, "get_recommended_events")
-        self.helper_validate_cacheable(lastfm_user, "get_shouts")
 
     def test_geo_get_events_in_location(self):
         # Arrange
@@ -850,48 +820,6 @@ class TestPyLast(unittest.TestCase):
         self.assertNotEqual(
             metro,
             pylast.Metro("Wellington", "New Zealand", self.network))
-
-    def test_get_album_play_links(self):
-        # Arrange
-        album1 = self.network.get_album("Portishead", "Dummy")
-        album2 = self.network.get_album("Radiohead", "OK Computer")
-        albums = [album1, album2]
-
-        # Act
-        links = self.network.get_album_play_links(albums)
-
-        # Assert
-        self.assertIsInstance(links, list)
-        self.assertEqual(len(links), 2)
-        self.assertIn("spotify:album:", links[0])
-        self.assertIn("spotify:album:", links[1])
-
-    def test_get_artist_play_links(self):
-        # Arrange
-        artists = ["Portishead", "Radiohead"]
-        # Act
-        links = self.network.get_artist_play_links(artists)
-
-        # Assert
-        self.assertIsInstance(links, list)
-        self.assertEqual(len(links), 2)
-        self.assertIn("spotify:artist:", links[0])
-        self.assertIn("spotify:artist:", links[1])
-
-    def test_get_track_play_links(self):
-        # Arrange
-        track1 = self.network.get_track(artist="Portishead", title="Mysterons")
-        track2 = self.network.get_track(artist="Radiohead", title="Creep")
-        tracks = [track1, track2]
-
-        # Act
-        links = self.network.get_track_play_links(tracks)
-
-        # Assert
-        self.assertIsInstance(links, list)
-        self.assertEqual(len(links), 2)
-        self.assertIn("spotify:track:", links[0])
-        self.assertIn("spotify:track:", links[1])
 
     def helper_at_least_one_thing_in_top_list(self, things, expected_type):
         # Assert
@@ -1105,60 +1033,6 @@ class TestPyLast(unittest.TestCase):
 
         # album/artist/event/track/user
 
-    def test_album_shouts(self):
-        # Arrange
-        # Pick an artist with plenty of plays
-        artist = self.network.get_top_artists(limit=1)[0].item
-        album = artist.get_top_albums(limit=1)[0].item
-
-        # Act
-        shouts = album.get_shouts(limit=2)
-
-        # Assert
-        self.helper_two_things_in_list(shouts, pylast.Shout)
-
-    def test_artist_shouts(self):
-        # Arrange
-        # Pick an artist with plenty of plays
-        artist = self.network.get_top_artists(limit=1)[0].item
-
-        # Act
-        shouts = artist.get_shouts(limit=2)
-
-        # Assert
-        self.helper_two_things_in_list(shouts, pylast.Shout)
-
-    def test_event_shouts(self):
-        # Arrange
-        event_id = 3478520  # Glasto 2014
-        event = pylast.Event(event_id, self.network)
-
-        # Act
-        shouts = event.get_shouts(limit=2)
-
-        # Assert
-        self.helper_two_things_in_list(shouts, pylast.Shout)
-
-    def test_track_shouts(self):
-        # Arrange
-        track = self.network.get_track("The Cinematic Orchestra", "Postlude")
-
-        # Act
-        shouts = track.get_shouts(limit=2)
-
-        # Assert
-        self.helper_two_things_in_list(shouts, pylast.Shout)
-
-    def test_user_shouts(self):
-        # Arrange
-        user = self.network.get_user("RJ")
-
-        # Act
-        shouts = user.get_shouts(limit=2)
-
-        # Assert
-        self.helper_two_things_in_list(shouts, pylast.Shout)
-
     def test_album_data(self):
         # Arrange
         thing = self.network.get_album("Test Artist", "Test Album")
@@ -1323,21 +1197,6 @@ class TestPyLast(unittest.TestCase):
 
         # Assert
         self.assertIsInstance(library, pylast.Library)
-
-    def test_caching(self):
-        # Arrange
-        user = self.network.get_user("RJ")
-
-        # Act
-        self.network.enable_caching()
-        shouts1 = user.get_shouts(limit=1, cacheable=True)
-        shouts2 = user.get_shouts(limit=1, cacheable=True)
-
-        # Assert
-        self.assertTrue(self.network.is_caching_enabled())
-        self.assertEqual(shouts1, shouts2)
-        self.network.disable_caching()
-        self.assertFalse(self.network.is_caching_enabled())
 
     def test_album_mbid(self):
         # Arrange
