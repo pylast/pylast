@@ -1200,17 +1200,6 @@ def _string_output(func):
     return r
 
 
-def _pad_list(given_list, desired_length, padding=None):
-    """
-        Pads a list to be of the desired_length.
-    """
-
-    while len(given_list) < desired_length:
-        given_list.append(padding)
-
-    return given_list
-
-
 class _BaseObject(object):
     """An abstract webservices object."""
 
