@@ -1564,11 +1564,48 @@ class TestPyLast(unittest.TestCase):
         tags = ["tracktagola"]
         track = self.network.get_track("Test Artist", "test title")
         track.add_tags(tags)
+
         # Act
         tracks = lastfm_user.get_tagged_tracks('tracktagola', limit=1)
 
         # Assert
         self.helper_only_one_thing_in_list(tracks, pylast.Track)
+
+    @handle_lastfm_exceptions
+    def test_user_subscriber(self):
+        # Arrange
+        subscriber = self.network.get_user("RJ")
+        non_subscriber = self.network.get_user("Test User")
+
+        # Act
+        subscriber_is_subscriber = subscriber.is_subscriber()
+        non_subscriber_is_subscriber = non_subscriber.is_subscriber()
+
+        # Assert
+        self.assertTrue(subscriber_is_subscriber)
+        self.assertFalse(non_subscriber_is_subscriber)
+
+    @handle_lastfm_exceptions
+    def test_user_get_image(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        url = user.get_image()
+
+        # Assert
+        self.assertTrue(url.startswith("https://"))
+
+    @handle_lastfm_exceptions
+    def test_user_get_library(self):
+        # Arrange
+        user = self.network.get_user(self.username)
+
+        # Act
+        library = user.get_library()
+
+        # Assert
+        self.assertIsInstance(library, pylast.Library)
 
     @handle_lastfm_exceptions
     def test_caching(self):

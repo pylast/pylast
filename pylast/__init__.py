@@ -139,8 +139,7 @@ class _Network(object):
 
     def __init__(
             self, name, homepage, ws_server, api_key, api_secret, session_key,
-            submission_server, username, password_hash, domain_names, urls,
-            token=None):
+            username, password_hash, domain_names, urls, token=None):
         """
             name: the name of the network
             homepage: the homepage URL
@@ -148,8 +147,6 @@ class _Network(object):
             api_key: a provided API_KEY
             api_secret: a provided API_SECRET
             session_key: a generated session_key or None
-            submission_server: the URL of the server to which tracks are
-                submitted (scrobbled)
             username: a username of a valid user
             password_hash: the output of pylast.md5(password) where password is
                 the user's password
@@ -175,7 +172,6 @@ class _Network(object):
         self.api_key = api_key
         self.api_secret = api_secret
         self.session_key = session_key
-        self.submission_server = submission_server
         self.username = username
         self.password_hash = password_hash
         self.domain_names = domain_names
@@ -797,7 +793,6 @@ class LastFMNetwork(_Network):
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
-            submission_server="http://post.audioscrobbler.com:80/",
             username=username,
             password_hash=password_hash,
             token=token,
@@ -864,7 +859,6 @@ class LibreFMNetwork(_Network):
             api_key=api_key,
             api_secret=api_secret,
             session_key=session_key,
-            submission_server="http://turtle.libre.fm:80/",
             username=username,
             password_hash=password_hash,
             domain_names={
@@ -1204,17 +1198,6 @@ def _string_output(func):
         return _string(func(*args))
 
     return r
-
-
-def _pad_list(given_list, desired_length, padding=None):
-    """
-        Pads a list to be of the desired_length.
-    """
-
-    while len(given_list) < desired_length:
-        given_list.append(padding)
-
-    return given_list
 
 
 class _BaseObject(object):
@@ -2243,12 +2226,6 @@ class Country(_BaseObject):
     def _get_params(self):  # TODO can move to _BaseObject
         return {'country': self.get_name()}
 
-    def _get_name_from_code(self, alpha2code):
-        # TODO: Have this function lookup the alpha-2 code and return the
-        # country name.
-
-        return alpha2code
-
     def get_name(self):
         """Returns the country name. """
 
@@ -2473,10 +2450,6 @@ class Library(_BaseObject):
             self.user = user
         else:
             self.user = User(user, self.network)
-
-        self._albums_index = 0
-        self._artists_index = 0
-        self._tracks_index = 0
 
     def __repr__(self):
         return "pylast.Library(%s, %s)" % (repr(self.user), repr(self.network))
@@ -3132,10 +3105,6 @@ class User(_BaseObject, _Chartable):
 
         self.name = user_name
 
-        self._past_events_index = 0
-        self._recommended_events_index = 0
-        self._recommended_artists_index = 0
-
     def __repr__(self):
         return "pylast.User(%s, %s)" % (repr(self.name), repr(self.network))
 
@@ -3226,9 +3195,6 @@ class User(_BaseObject, _Chartable):
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
-
-        Use extract_items() with the return of this function to
-        get only a sequence of Track objects with no playback dates.
         """
 
         params = self._get_params()
@@ -3343,9 +3309,6 @@ class User(_BaseObject, _Chartable):
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
-
-        Use extract_items() with the return of this function to
-        get only a sequence of Track objects with no playback dates.
         """
 
         params = self._get_params()
@@ -4150,19 +4113,6 @@ def _unescape_htmlentity(string):
         string = string.replace("&%s;" % key, unichr(mapping[key]))
 
     return string
-
-
-def extract_items(top_items_or_library_items):
-    """
-    Extracts a sequence of items from a sequence of TopItem or
-    LibraryItem objects.
-    """
-
-    seq = []
-    for i in top_items_or_library_items:
-        seq.append(i.item)
-
-    return seq
 
 
 # End of file
