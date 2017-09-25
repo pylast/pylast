@@ -287,13 +287,6 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_is_thing_hashable(event)
 
-    def test_group_is_hashable(self):
-        # Arrange
-        group = self.network.get_group("Audioscrobbler Beta")
-
-        # Act/Assert
-        self.helper_is_thing_hashable(group)
-
     def test_library_is_hashable(self):
         # Arrange
         library = pylast.Library(user=self.username, network=self.network)
@@ -639,13 +632,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.helper_validate_results(result1, result2, result3)
 
-    def test_cacheable_group_get_members(self):
-        # Arrange
-        group = self.network.get_group("Audioscrobbler Beta")
-
-        # Act/Assert
-        self.helper_validate_cacheable(group, "get_members")
-
     def test_cacheable_library(self):
         # Arrange
         library = pylast.Library(self.username, self.network)
@@ -986,15 +972,6 @@ class TestPyLast(unittest.TestCase):
         if type(thing) is not pylast.Tag:
             self.helper_assert_chart(album_chart, pylast.Album)
             self.helper_assert_chart(track_chart, pylast.Track)
-
-    def test_group_charts(self):
-        # Arrange
-        group = self.network.get_group("mnml")
-        dates = group.get_weekly_chart_dates()
-        self.helper_dates_valid(dates)
-
-        # Act/Assert
-        self.helper_get_assert_charts(group, dates[-2])
 
     def test_tag_charts(self):
         # Arrange

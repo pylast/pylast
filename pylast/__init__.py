@@ -241,13 +241,6 @@ class _Network(object):
 
         return Metro(metro_name, country_name, self)
 
-    def get_group(self, name):
-        """
-            Returns a Group object
-        """
-
-        return Group(name, self)
-
     def get_user(self, username):
         """
             Returns a user object
@@ -766,7 +759,6 @@ class LastFMNetwork(_Network):
                 "country": "place/%(country_name)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
-                "group": "group/%(name)s",
                 "user": "user/%(name)s",
             }
         )
@@ -830,7 +822,6 @@ class LibreFMNetwork(_Network):
                 "country": "place/%(country_name)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
-                "group": "group/%(name)s",
                 "user": "user/%(name)s",
             }
         )
@@ -1288,7 +1279,7 @@ class _Chartable(object):
         """
         Returns the weekly album charts for the week starting from the
         from_date value to the to_date value.
-        Only for Group or User.
+        Only for User.
         """
         return self.get_weekly_charts("album", from_date, to_date)
 
@@ -1296,7 +1287,7 @@ class _Chartable(object):
         """
         Returns the weekly artist charts for the week starting from the
         from_date value to the to_date value.
-        Only for Group, Tag or User.
+        Only for Tag or User.
         """
         return self.get_weekly_charts("artist", from_date, to_date)
 
@@ -1304,7 +1295,7 @@ class _Chartable(object):
         """
         Returns the weekly track charts for the week starting from the
         from_date value to the to_date value.
-        Only for Group or User.
+        Only for User.
         """
         return self.get_weekly_charts("track", from_date, to_date)
 
@@ -2578,77 +2569,6 @@ class Track(_Opus):
         return self.network._get_url(
             domain_name, self.ws_prefix) % {
             'artist': artist, 'title': title}
-
-
-class Group(_BaseObject, _Chartable):
-    """A Last.fm group."""
-
-    name = None
-
-    __hash__ = _BaseObject.__hash__
-
-    def __init__(self, name, network):
-        _BaseObject.__init__(self, network, 'group')
-        _Chartable.__init__(self, 'group')
-
-        self.name = name
-
-    def __repr__(self):
-        return "pylast.Group(%s, %s)" % (repr(self.name), repr(self.network))
-
-    @_string_output
-    def __str__(self):
-        return self.get_name()
-
-    def __eq__(self, other):
-        return self.get_name().lower() == other.get_name().lower()
-
-    def __ne__(self, other):
-        return self.get_name() != other.get_name()
-
-    def _get_params(self):
-        return {self.ws_prefix: self.get_name()}
-
-    def get_name(self):
-        """Returns the group name. """
-        return self.name
-
-    def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the group page on the network.
-        * domain_name: The network's language domain. Possible values:
-          o DOMAIN_ENGLISH
-          o DOMAIN_GERMAN
-          o DOMAIN_SPANISH
-          o DOMAIN_FRENCH
-          o DOMAIN_ITALIAN
-          o DOMAIN_POLISH
-          o DOMAIN_PORTUGUESE
-          o DOMAIN_SWEDISH
-          o DOMAIN_TURKISH
-          o DOMAIN_RUSSIAN
-          o DOMAIN_JAPANESE
-          o DOMAIN_CHINESE
-        """
-
-        name = _url_safe(self.get_name())
-
-        return self.network._get_url(domain_name, "group") % {'name': name}
-
-    def get_members(self, limit=50, cacheable=False):
-        """
-            Returns a sequence of User objects
-            if limit==None it will return all
-        """
-
-        nodes = _collect_nodes(
-            limit, self, self.ws_prefix + ".getMembers", cacheable)
-
-        users = []
-
-        for node in nodes:
-            users.append(User(_extract(node, "name"), self.network))
-
-        return users
 
 
 class User(_BaseObject, _Chartable):
