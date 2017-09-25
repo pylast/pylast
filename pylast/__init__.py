@@ -2433,85 +2433,7 @@ class Library(_BaseObject):
 
     def get_user(self):
         """Returns the user who owns this library."""
-
         return self.user
-
-    def add_album(self, album):
-        """Add an album to this library."""
-
-        params = self._get_params()
-        params["artist"] = album.get_artist().get_name()
-        params["album"] = album.get_name()
-
-        self._request("library.addAlbum", False, params)
-
-    def remove_album(self, album):
-        """Remove an album from this library."""
-
-        params = self._get_params()
-        params["artist"] = album.get_artist().get_name()
-        params["album"] = album.get_name()
-
-        self._request(self.ws_prefix + ".removeAlbum", False, params)
-
-    def add_artist(self, artist):
-        """Add an artist to this library."""
-
-        params = self._get_params()
-        if type(artist) == str:
-            params["artist"] = artist
-        else:
-            params["artist"] = artist.get_name()
-
-        self._request(self.ws_prefix + ".addArtist", False, params)
-
-    def remove_artist(self, artist):
-        """Remove an artist from this library."""
-
-        params = self._get_params()
-        if type(artist) == str:
-            params["artist"] = artist
-        else:
-            params["artist"] = artist.get_name()
-
-        self._request(self.ws_prefix + ".removeArtist", False, params)
-
-    def add_track(self, track):
-        """Add a track to this library."""
-
-        params = self._get_params()
-        params["track"] = track.get_title()
-
-        self._request(self.ws_prefix + ".addTrack", False, params)
-
-    def get_albums(self, artist=None, limit=50, cacheable=True):
-        """
-        Returns a sequence of Album objects
-        If no artist is specified, it will return all, sorted by decreasing
-        play count.
-        If limit==None it will return all (may take a while)
-        """
-
-        params = self._get_params()
-        if artist:
-            params["artist"] = artist
-
-        seq = []
-        for node in _collect_nodes(
-                limit,
-                self,
-                self.ws_prefix + ".getAlbums",
-                cacheable,
-                params):
-            name = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            playcount = _number(_extract(node, "playcount"))
-            tagcount = _number(_extract(node, "tagcount"))
-
-            seq.append(LibraryItem(
-                Album(artist, name, self.network), playcount, tagcount))
-
-        return seq
 
     def get_artists(self, limit=50, cacheable=True):
         """
@@ -2534,50 +2456,6 @@ class Library(_BaseObject):
                 Artist(name, self.network), playcount, tagcount))
 
         return seq
-
-    def get_tracks(self, artist=None, album=None, limit=50, cacheable=True):
-        """
-        Returns a sequence of Album objects
-        If limit==None it will return all (may take a while)
-        """
-
-        params = self._get_params()
-        if artist:
-            params["artist"] = artist
-        if album:
-            params["album"] = album
-
-        seq = []
-        for node in _collect_nodes(
-                limit,
-                self,
-                self.ws_prefix + ".getTracks",
-                cacheable,
-                params):
-            name = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            playcount = _number(_extract(node, "playcount"))
-            tagcount = _number(_extract(node, "tagcount"))
-
-            seq.append(LibraryItem(
-                Track(artist, name, self.network), playcount, tagcount))
-
-        return seq
-
-    def remove_scrobble(self, artist, title, timestamp):
-        """Remove a scrobble from a user's Last.fm library. Parameters:
-            artist (Required) : The artist that composed the track
-            title (Required) : The name of the track
-            timestamp (Required) : The unix timestamp of the scrobble
-                                   that you wish to remove
-        """
-
-        params = self._get_params()
-        params["artist"] = artist
-        params["track"] = title
-        params["timestamp"] = timestamp
-
-        self._request(self.ws_prefix + ".removeScrobble", False, params)
 
 
 class Playlist(_BaseObject):

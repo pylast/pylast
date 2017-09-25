@@ -74,97 +74,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(last_scrobble.track.title),  str(title))
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
 
-    def test_unscrobble(self):
-        # Arrange
-        artist = "Test Artist 2"
-        title = "Test Title 2"
-        timestamp = self.unix_timestamp()
-        library = pylast.Library(user=self.username, network=self.network)
-        self.network.scrobble(artist=artist, title=title, timestamp=timestamp)
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act
-        library.remove_scrobble(
-            artist=artist, title=title, timestamp=timestamp)
-
-        # Assert
-        # limit=2 to ignore now-playing:
-        last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
-        self.assertNotEqual(str(last_scrobble.timestamp), str(timestamp))
-
-    def test_add_album(self):
-        # Arrange
-        library = pylast.Library(user=self.username, network=self.network)
-        album = self.network.get_album("Test Artist", "Test Album")
-
-        # Act
-        library.add_album(album)
-
-        # Assert
-        my_albums = library.get_albums()
-        for my_album in my_albums:
-            value = (album == my_album[0])
-            if value:
-                break
-        self.assertTrue(value)
-
-    def test_remove_album(self):
-        # Arrange
-        library = pylast.Library(user=self.username, network=self.network)
-        # Pick an artist with plenty of albums
-        artist = self.network.get_top_artists(limit=1)[0].item
-        albums = artist.get_top_albums()
-        # Pick a random one to avoid problems running concurrent tests
-        album = choice(albums)[0]
-        library.add_album(album)
-
-        # Act
-        library.remove_album(album)
-
-        # Assert
-        my_albums = library.get_albums()
-        for my_album in my_albums:
-            value = (album == my_album[0])
-            if value:
-                break
-        self.assertFalse(value)
-
-    def test_add_artist(self):
-        # Arrange
-        artist = "Test Artist 2"
-        library = pylast.Library(user=self.username, network=self.network)
-
-        # Act
-        library.add_artist(artist)
-
-        # Assert
-        artists = library.get_artists()
-        for artist in artists:
-            value = (str(artist[0]) == "Test Artist 2")
-            if value:
-                break
-        self.assertTrue(value)
-
-    def test_remove_artist(self):
-        # Arrange
-        # Get plenty of artists
-        artists = self.network.get_top_artists()
-        # Pick a random one to avoid problems running concurrent tests
-        my_artist = choice(artists).item
-        library = pylast.Library(user=self.username, network=self.network)
-        library.add_artist(my_artist)
-
-        # Act
-        library.remove_artist(my_artist)
-
-        # Assert
-        artists = library.get_artists()
-        for artist in artists:
-            value = (artist[0] == my_artist)
-            if value:
-                break
-        self.assertFalse(value)
-
     def test_get_venue(self):
         # Arrange
         venue_name = "Last.fm Office"
@@ -258,26 +167,6 @@ class TestPyLast(unittest.TestCase):
         if len(loved):  # OK to be empty but if not:
             self.assertNotEqual(str(loved.track.artist), "Test Artist")
             self.assertNotEqual(str(loved.track.title), "test title")
-
-    def test_get_100_albums(self):
-        # Arrange
-        library = pylast.Library(user=self.username, network=self.network)
-
-        # Act
-        albums = library.get_albums(limit=100)
-
-        # Assert
-        self.assertGreaterEqual(len(albums), 0)
-
-    def test_get_limitless_albums(self):
-        # Arrange
-        library = pylast.Library(user=self.username, network=self.network)
-
-        # Act
-        albums = library.get_albums(limit=None)
-
-        # Assert
-        self.assertGreaterEqual(len(albums), 0)
 
     def test_user_equals_none(self):
         # Arrange
