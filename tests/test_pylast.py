@@ -941,6 +941,21 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsInstance(library, pylast.Library)
 
+    def test_caching(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        self.network.enable_caching()
+        tags1 = user.get_top_tags(limit=1, cacheable=True)
+        tags2 = user.get_top_tags(limit=1, cacheable=True)
+
+        # Assert
+        self.assertTrue(self.network.is_caching_enabled())
+        self.assertEqual(tags1, tags2)
+        self.network.disable_caching()
+        self.assertFalse(self.network.is_caching_enabled())
+
     def test_album_mbid(self):
         # Arrange
         mbid = "a6a265bf-9f81-4055-8224-f7ac0aa6b937"
