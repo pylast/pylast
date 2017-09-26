@@ -73,18 +73,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(last_scrobble.track.title),  str(title))
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
 
-    def test_get_venue(self):
-        # Arrange
-        venue_name = "Last.fm Office"
-        country_name = "United Kingdom"
-
-        # Act
-        venue_search = self.network.search_for_venue(venue_name, country_name)
-        venue = venue_search.get_next_page()[0]
-
-        # Assert
-        self.assertEqual(str(venue.id), "8778225")
-
     def test_get_user_registration(self):
         # Arrange
         username = "RJ"
@@ -279,14 +267,6 @@ class TestPyLast(unittest.TestCase):
         # Act/Assert
         self.helper_is_thing_hashable(metro)
 
-    def test_event_is_hashable(self):
-        # Arrange
-        user = self.network.get_user("RJ")
-        event = user.get_past_events(limit=1)[0]
-
-        # Act/Assert
-        self.helper_is_thing_hashable(event)
-
     def test_library_is_hashable(self):
         # Arrange
         library = pylast.Library(user=self.username, network=self.network)
@@ -316,14 +296,6 @@ class TestPyLast(unittest.TestCase):
 
         # Act/Assert
         self.helper_is_thing_hashable(user)
-
-    def test_venue_is_hashable(self):
-        # Arrange
-        venue_id = "8778225"  # Last.fm office
-        venue = pylast.Venue(venue_id, self.network)
-
-        # Act/Assert
-        self.helper_is_thing_hashable(venue)
 
     def test_invalid_xml(self):
         # Arrange
@@ -435,67 +407,6 @@ class TestPyLast(unittest.TestCase):
 
         # # Assert
         # self.assertGreaterEqual(len(tracks), 0)
-
-    def helper_past_events_have_valid_ids(self, thing):
-        # Act
-        events = thing.get_past_events()
-
-        # Assert
-        self.helper_assert_events_have_valid_ids(events)
-
-    def helper_upcoming_events_have_valid_ids(self, thing):
-        # Act
-        events = thing.get_upcoming_events()
-
-        # Assert
-        self.helper_assert_events_have_valid_ids(events)
-
-    def helper_assert_events_have_valid_ids(self, events):
-        # Assert
-        # If fails, add past/future event for user/Test Artist:
-        self.assertGreaterEqual(len(events), 1)
-        for event in events[:2]:  # checking first two should be enough
-            self.assertIsInstance(event.get_headliner(), pylast.Artist)
-
-    def test_user_past_events_returns_valid_ids(self):
-        # Arrange
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act/Assert
-        self.helper_past_events_have_valid_ids(lastfm_user)
-
-    def test_user_recommended_events_returns_valid_ids(self):
-        # Arrange
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act
-        events = lastfm_user.get_upcoming_events()
-
-        # Assert
-        self.helper_assert_events_have_valid_ids(events)
-
-    def test_user_upcoming_events_returns_valid_ids(self):
-        # Arrange
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act/Assert
-        self.helper_upcoming_events_have_valid_ids(lastfm_user)
-
-    def test_venue_past_events_returns_valid_ids(self):
-        # Arrange
-        venue_id = "8778225"  # Last.fm office
-        venue = pylast.Venue(venue_id, self.network)
-
-        # Act/Assert
-        self.helper_past_events_have_valid_ids(venue)
-
-    def test_venue_upcoming_events_returns_valid_ids(self):
-        # Arrange
-        venue_id = "8778225"  # Last.fm office
-        venue = pylast.Venue(venue_id, self.network)
-
-        # Act/Assert
-        self.helper_upcoming_events_have_valid_ids(venue)
 
     def test_pickle(self):
         # Arrange
@@ -659,43 +570,6 @@ class TestPyLast(unittest.TestCase):
         self.helper_validate_cacheable(lastfm_user, "get_friends")
         self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
         self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
-
-    def test_geo_get_events_in_location(self):
-        # Arrange
-        # Act
-        events = self.network.get_geo_events(
-            location="London", tag="blues", limit=1)
-
-        # Assert
-        self.assertEqual(len(events), 1)
-        event = events[0]
-        self.assertIsInstance(event, pylast.Event)
-        self.assertIn(event.get_venue().location['city'],
-                      ["London", "Camden"])
-
-    def test_geo_get_events_in_latlong(self):
-        # Arrange
-        # Act
-        events = self.network.get_geo_events(
-            latitude=53.466667, longitude=-2.233333, distance=5, limit=1)
-
-        # Assert
-        self.assertEqual(len(events), 1)
-        event = events[0]
-        self.assertIsInstance(event, pylast.Event)
-        self.assertEqual(event.get_venue().location['city'], "Manchester")
-
-    def test_geo_get_events_festival(self):
-        # Arrange
-        # Act
-        events = self.network.get_geo_events(
-            location="Reading", festivalsonly=True, limit=1)
-
-        # Assert
-        self.assertEqual(len(events), 1)
-        event = events[0]
-        self.assertIsInstance(event, pylast.Event)
-        self.assertEqual(event.get_venue().location['city'], "Reading")
 
     def helper_dates_valid(self, dates):
         # Assert
@@ -992,17 +866,15 @@ class TestPyLast(unittest.TestCase):
         # spam_message = "Dig the krazee sound!"
         # artist = self.network.get_top_artists(limit=1)[0].item
         # track = artist.get_top_tracks(limit=1)[0].item
-        # event = artist.get_upcoming_events()[0]
 
         # # Act
         # artist.share(users_to_spam, spam_message)
         # track.share(users_to_spam, spam_message)
-        # event.share(users_to_spam, spam_message)
 
         # Assert
         # Check inbox for spam!
 
-        # album/artist/event/track/user
+        # album/artist/track/user
 
     def test_album_data(self):
         # Arrange
@@ -1216,18 +1088,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsInstance(count, int)
         self.assertGreater(count, 0)
-
-    def test_event_attendees(self):
-        # Arrange
-        user = self.network.get_user("RJ")
-        event = user.get_past_events(limit=1)[0]
-
-        # Act
-        users = event.get_attendees()
-
-        # Assert
-        self.assertIsInstance(users, list)
-        self.assertIsInstance(users[0], pylast.User)
 
     def test_tag_artist(self):
         # Arrange
@@ -1443,40 +1303,6 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
         self.assertIsInstance(streamable, bool)
 
-    def test_events(self):
-        # Arrange
-        event_id_1 = 3162700  # Glasto 2013
-        event_id_2 = 3478520  # Glasto 2014
-        event1 = pylast.Event(event_id_1, self.network)
-        event2 = pylast.Event(event_id_2, self.network)
-
-        # Act
-        text = str(event1)
-        rep = repr(event1)
-        title = event1.get_title()
-        artists = event1.get_artists()
-        start = event1.get_start_date()
-        description = event1.get_description()
-        review_count = event1.get_review_count()
-        attendance_count = event1.get_attendance_count()
-
-        # Assert
-        self.assertIn("3162700", rep)
-        self.assertIn("pylast.Event", rep)
-        self.assertEqual(text, "Event #3162700")
-        self.assertTrue(event1 != event2)
-        self.assertIn("Glastonbury", title)
-        found = False
-        for artist in artists:
-            if artist.name == "The Rolling Stones":
-                found = True
-                break
-        self.assertTrue(found)
-        self.assertIn("Wed, 26 Jun 2013", start)
-        self.assertIn("astonishing bundle", description)
-        self.assertGreater(review_count, 0)
-        self.assertGreater(attendance_count, 100)
-
     def test_countries(self):
         # Arrange
         country1 = pylast.Country("Italy", self.network)
@@ -1542,24 +1368,6 @@ class TestPyLast(unittest.TestCase):
 
         # Act / Assert
         self.assertTrue(album1 != album2)
-
-    def test_event_eq_none_is_false(self):
-        # Arrange
-        event1 = None
-        event_id = 3478520  # Glasto 2014
-        event2 = pylast.Event(event_id, self.network)
-
-        # Act / Assert
-        self.assertFalse(event1 == event2)
-
-    def test_event_ne_none_is_true(self):
-        # Arrange
-        event1 = None
-        event_id = 3478520  # Glasto 2014
-        event2 = pylast.Event(event_id, self.network)
-
-        # Act / Assert
-        self.assertTrue(event1 != event2)
 
     def test_band_members(self):
         # Arrange

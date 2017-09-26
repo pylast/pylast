@@ -67,10 +67,6 @@ STATUS_INVALID_SIGNATURE = 13
 STATUS_TOKEN_UNAUTHORIZED = 14
 STATUS_TOKEN_EXPIRED = 15
 
-EVENT_ATTENDING = '0'
-EVENT_MAYBE_ATTENDING = '1'
-EVENT_NOT_ATTENDING = '2'
-
 PERIOD_OVERALL = 'overall'
 PERIOD_7DAYS = '7day'
 PERIOD_1MONTH = '1month'
@@ -336,50 +332,6 @@ class _Network(object):
 
         return seq
 
-    def get_geo_events(
-            self, longitude=None, latitude=None, location=None, distance=None,
-            tag=None, festivalsonly=None, limit=None, cacheable=True):
-        """
-        Returns all events in a specific location by country or city name.
-        Parameters:
-        longitude (Optional) : Specifies a longitude value to retrieve events
-            for (service returns nearby events by default)
-        latitude (Optional) : Specifies a latitude value to retrieve events for
-            (service returns nearby events by default)
-        location (Optional) : Specifies a location to retrieve events for
-            (service returns nearby events by default)
-        distance (Optional) : Find events within a specified radius
-            (in kilometres)
-        tag (Optional) : Specifies a tag to filter by.
-        festivalsonly[0|1] (Optional) : Whether only festivals should be
-            returned, or all events.
-        limit (Optional) : The number of results to fetch per page.
-            Defaults to 10.
-        """
-
-        params = {}
-
-        if longitude:
-            params["long"] = longitude
-        if latitude:
-            params["lat"] = latitude
-        if location:
-            params["location"] = location
-        if limit:
-            params["limit"] = limit
-        if distance:
-            params["distance"] = distance
-        if tag:
-            params["tag"] = tag
-        if festivalsonly:
-            params["festivalsonly"] = 1
-        elif not festivalsonly:
-            params["festivalsonly"] = 0
-
-        doc = _Request(self, "geo.getEvents", params).execute(cacheable)
-
-        return _extract_events_from_doc(doc, self)
-
     def get_metro_weekly_chart_dates(self, cacheable=True):
         """
         Returns a list of From and To tuples for the available metro charts.
@@ -553,14 +505,6 @@ class _Network(object):
         Use get_next_page() to retrieve sequences of results."""
 
         return TrackSearch(artist_name, track_name, self)
-
-    def search_for_venue(self, venue_name, country_name):
-        """Searches of a venue by its name and its country. Set country_name to
-        an empty string if not available.
-        Returns a VenueSearch object.
-        Use get_next_page() to retrieve sequences of results."""
-
-        return VenueSearch(venue_name, country_name, self)
 
     def get_track_by_mbid(self, mbid):
         """Looks up a track by its MusicBrainz ID"""
@@ -755,7 +699,6 @@ class LastFMNetwork(_Network):
             urls={
                 "album": "music/%(artist)s/%(album)s",
                 "artist": "music/%(artist)s",
-                "event": "event/%(id)s",
                 "country": "place/%(country_name)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
@@ -818,7 +761,6 @@ class LibreFMNetwork(_Network):
             urls={
                 "album": "artist/%(artist)s/album/%(album)s",
                 "artist": "artist/%(artist)s",
-                "event": "event/%(id)s",
                 "country": "place/%(country_name)s",
                 "tag": "tag/%(name)s",
                 "track": "music/%(artist)s/_/%(title)s",
@@ -1195,7 +1137,7 @@ class _BaseObject(object):
             * users [User|str,]: A list that can contain usernames, emails,
             User objects, or all of them.
             * message str: A message to include in the recommendation message.
-        Only for Artist/Event/Track.
+        Only for Artist/Track.
         """
 
         # Last.fm currently accepts a max of 10 recipient at a time
@@ -1895,168 +1837,6 @@ class Artist(_BaseObject, _Taggable):
         return names
 
 
-class Event(_BaseObject):
-    """An event."""
-
-    id = None
-
-    __hash__ = _BaseObject.__hash__
-
-    def __init__(self, event_id, network):
-        _BaseObject.__init__(self, network, 'event')
-
-        self.id = event_id
-
-    def __repr__(self):
-        return "pylast.Event(%s, %s)" % (repr(self.id), repr(self.network))
-
-    @_string_output
-    def __str__(self):
-        return "Event #" + str(self.get_id())
-
-    def __eq__(self, other):
-        if type(self) is type(other):
-            return self.get_id() == other.get_id()
-        else:
-            return False
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-    def _get_params(self):
-        return {'event': self.get_id()}
-
-    def attend(self, attending_status):
-        """Sets the attending status.
-        * attending_status: The attending status. Possible values:
-          o EVENT_ATTENDING
-          o EVENT_MAYBE_ATTENDING
-          o EVENT_NOT_ATTENDING
-        """
-
-        params = self._get_params()
-        params['status'] = attending_status
-
-        self._request('event.attend', False, params)
-
-    def get_attendees(self):
-        """
-            Get a list of attendees for an event
-        """
-
-        doc = self._request("event.getAttendees", False)
-
-        users = []
-        for name in _extract_all(doc, "name"):
-            users.append(User(name, self.network))
-
-        return users
-
-    def get_id(self):
-        """Returns the id of the event on the network. """
-
-        return self.id
-
-    def get_title(self):
-        """Returns the title of the event. """
-
-        doc = self._request("event.getInfo", True)
-
-        return _extract(doc, "title")
-
-    def get_headliner(self):
-        """Returns the headliner of the event. """
-
-        doc = self._request("event.getInfo", True)
-
-        return Artist(_extract(doc, "headliner"), self.network)
-
-    def get_artists(self):
-        """Returns a list of the participating Artists. """
-
-        doc = self._request("event.getInfo", True)
-        names = _extract_all(doc, "artist")
-
-        artists = []
-        for name in names:
-            artists.append(Artist(name, self.network))
-
-        return artists
-
-    def get_venue(self):
-        """Returns the venue where the event is held."""
-
-        doc = self._request("event.getInfo", True)
-
-        v = doc.getElementsByTagName("venue")[0]
-        venue_id = _number(_extract(v, "id"))
-
-        return Venue(venue_id, self.network, venue_element=v)
-
-    def get_start_date(self):
-        """Returns the date when the event starts."""
-
-        doc = self._request("event.getInfo", True)
-
-        return _extract(doc, "startDate")
-
-    def get_description(self):
-        """Returns the description of the event. """
-
-        doc = self._request("event.getInfo", True)
-
-        return _extract(doc, "description")
-
-    def get_cover_image(self, size=COVER_MEGA):
-        """
-        Returns a uri to the cover image
-        size can be one of:
-            COVER_MEGA
-            COVER_EXTRA_LARGE
-            COVER_LARGE
-            COVER_MEDIUM
-            COVER_SMALL
-        """
-
-        doc = self._request("event.getInfo", True)
-
-        return _extract_all(doc, "image")[size]
-
-    def get_attendance_count(self):
-        """Returns the number of attending people. """
-
-        doc = self._request("event.getInfo", True)
-
-        return _number(_extract(doc, "attendance"))
-
-    def get_review_count(self):
-        """Returns the number of available reviews for this event. """
-
-        doc = self._request("event.getInfo", True)
-
-        return _number(_extract(doc, "reviews"))
-
-    def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the event page on the network.
-        * domain_name: The network's language domain. Possible values:
-          o DOMAIN_ENGLISH
-          o DOMAIN_GERMAN
-          o DOMAIN_SPANISH
-          o DOMAIN_FRENCH
-          o DOMAIN_ITALIAN
-          o DOMAIN_POLISH
-          o DOMAIN_PORTUGUESE
-          o DOMAIN_SWEDISH
-          o DOMAIN_TURKISH
-          o DOMAIN_RUSSIAN
-          o DOMAIN_JAPANESE
-          o DOMAIN_CHINESE
-        """
-
-        return self.network._get_url(
-            domain_name, "event") % {'id': self.get_id()}
-
-
 class Country(_BaseObject):
     """A country at Last.fm."""
 
@@ -2110,7 +1890,7 @@ class Country(_BaseObject):
             "getTopTracks", "track", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the event page on the network.
+        """Returns the url of the country page on the network.
         * domain_name: The network's language domain. Possible values:
           o DOMAIN_ENGLISH
           o DOMAIN_GERMAN
@@ -2615,13 +2395,6 @@ class User(_BaseObject, _Chartable):
 
         return self.name
 
-    def get_upcoming_events(self):
-        """Returns all the upcoming events for this user."""
-
-        doc = self._request(self.ws_prefix + '.getEvents', True)
-
-        return _extract_events_from_doc(doc, self.network)
-
     def get_artist_tracks(self, artist, cacheable=False):
         """
         Get a list of tracks by a given artist scrobbled by this user,
@@ -2713,22 +2486,6 @@ class User(_BaseObject, _Chartable):
 
         for name in names:
             seq.append(User(name, self.network))
-
-        return seq
-
-    def get_past_events(self, limit=50, cacheable=False):
-        """
-        Returns a sequence of Event objects
-        if limit==None it will return all
-        """
-
-        seq = []
-        for node in _collect_nodes(
-                limit,
-                self,
-                self.ws_prefix + ".getPastEvents",
-                cacheable):
-            seq.append(Event(_extract(node, "id"), self.network))
 
         return seq
 
@@ -3086,19 +2843,6 @@ class AuthenticatedUser(User):
         self.name = _extract(doc, "name")
         return self.name
 
-    def get_recommended_events(self, limit=50, cacheable=False):
-        """
-        Returns a sequence of Event objects
-        if limit==None it will return all
-        """
-
-        seq = []
-        for node in _collect_nodes(
-                limit, self, "user.getRecommendedEvents", cacheable):
-            seq.append(Event(_extract(node, "id"), self.network))
-
-        return seq
-
     def get_recommended_artists(self, limit=50, cacheable=False):
         """
         Returns a sequence of Artist objects
@@ -3245,106 +2989,6 @@ class TrackSearch(_Search):
             seq.append(track)
 
         return seq
-
-
-class VenueSearch(_Search):
-    """
-    Search for a venue by its name. If you don't want to narrow the results
-    down by specifying a country, set it to empty string.
-    """
-
-    def __init__(self, venue_name, country_name, network):
-
-        _Search.__init__(
-            self,
-            "venue",
-            {"venue": venue_name, "country": country_name},
-            network)
-
-    def get_next_page(self):
-        """Returns the next page of results as a sequence of Track objects."""
-
-        master_node = self._retrieve_next_page()
-
-        seq = []
-        for node in master_node.getElementsByTagName("venue"):
-            seq.append(Venue(_extract(node, "id"), self.network))
-
-        return seq
-
-
-class Venue(_BaseObject):
-    """A venue where events are held."""
-
-    # TODO: waiting for a venue.getInfo web service to use.
-    # TODO: As an intermediate use case, can pass the venue DOM element when
-    # using Event.get_venue() to populate the venue info, if the venue.getInfo
-    # API call becomes available this workaround should be removed
-
-    id = None
-    info = None
-    name = None
-    location = None
-    url = None
-
-    __hash__ = _BaseObject.__hash__
-
-    def __init__(self, netword_id, network, venue_element=None):
-        _BaseObject.__init__(self, network, "venue")
-
-        self.id = _number(netword_id)
-        if venue_element is not None:
-            self.info = _extract_element_tree(venue_element)
-            self.name = self.info.get('name')
-            self.url = self.info.get('url')
-            self.location = self.info.get('location')
-
-    def __repr__(self):
-        return "pylast.Venue(%s, %s)" % (repr(self.id), repr(self.network))
-
-    @_string_output
-    def __str__(self):
-        return "Venue #" + str(self.id)
-
-    def __eq__(self, other):
-        return self.get_id() == other.get_id()
-
-    def _get_params(self):
-        return {self.ws_prefix: self.get_id()}
-
-    def get_id(self):
-        """Returns the id of the venue."""
-
-        return self.id
-
-    def get_name(self):
-        """Returns the name of the venue."""
-
-        return self.name
-
-    def get_url(self):
-        """Returns the URL of the venue page."""
-
-        return self.url
-
-    def get_location(self):
-        """Returns the location of the venue (dictionary)."""
-
-        return self.location
-
-    def get_upcoming_events(self):
-        """Returns the upcoming events in this venue."""
-
-        doc = self._request(self.ws_prefix + ".getEvents", True)
-
-        return _extract_events_from_doc(doc, self.network)
-
-    def get_past_events(self):
-        """Returns the past events held in this venue."""
-
-        doc = self._request(self.ws_prefix + ".getEvents", True)
-
-        return _extract_events_from_doc(doc, self.network)
 
 
 def md5(text):
@@ -3532,13 +3176,6 @@ def _extract_tracks(doc, network):
         artist = _extract(node, "name", 1)
         seq.append(Track(artist, name, network))
     return seq
-
-
-def _extract_events_from_doc(doc, network):
-    events = []
-    for node in doc.getElementsByTagName("event"):
-        events.append(Event(_extract(node, "id"), network))
-    return events
 
 
 def _url_safe(text):
