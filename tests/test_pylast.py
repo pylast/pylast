@@ -30,7 +30,7 @@ def load_secrets():
 
 
 @flaky(max_runs=5, min_passes=1)
-class TestPyLast(unittest.TestCase):
+class PyLastTestCase(unittest.TestCase):
 
     secrets = None
 
@@ -56,6 +56,23 @@ class TestPyLast(unittest.TestCase):
         if value is None or len(value) == 0:
             pytest.skip("Last.fm API is broken.")
 
+
+class TestPyLastAlbum(PyLastTestCase):
+
+    def test_album_tags_are_topitems(self):
+        # Arrange
+        albums = self.network.get_user('RJ').get_top_albums()
+
+        # Act
+        tags = albums[0].item.get_top_tags(limit=1)
+
+        # Assert
+        self.assertGreater(len(tags), 0)
+        self.assertIsInstance(tags[0], pylast.TopItem)
+
+
+class TestPyLastNetwork(PyLastTestCase):
+
     def test_scrobble(self):
         # Arrange
         artist = "Test Artist"
@@ -72,6 +89,62 @@ class TestPyLast(unittest.TestCase):
         self.assertEqual(str(last_scrobble.track.artist), str(artist))
         self.assertEqual(str(last_scrobble.track.title),  str(title))
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
+
+    def test_update_now_playing(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "test title"
+        album = "Test Album"
+        track_number = 1
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        self.network.update_now_playing(
+            artist=artist, title=title, album=album, track_number=track_number)
+
+        # Assert
+        current_track = lastfm_user.get_now_playing()
+        self.assertIsNotNone(current_track)
+        self.assertEqual(str(current_track.title), "test title")
+        self.assertEqual(str(current_track.artist), "Test Artist")
+
+
+class TestPyLastTrack(PyLastTestCase):
+
+    def test_love(self):
+        # Arrange
+        artist = "Test Artist"
+        title = "test title"
+        track = self.network.get_track(artist, title)
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act
+        track.love()
+
+        # Assert
+        loved = lastfm_user.get_loved_tracks(limit=1)
+        self.assertEqual(str(loved[0].track.artist), "Test Artist")
+        self.assertEqual(str(loved[0].track.title), "test title")
+
+    def test_unlove(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+        title = "test title"
+        track = pylast.Track(artist, title, self.network)
+        lastfm_user = self.network.get_user(self.username)
+        track.love()
+
+        # Act
+        track.unlove()
+
+        # Assert
+        loved = lastfm_user.get_loved_tracks(limit=1)
+        if len(loved):  # OK to be empty but if not:
+            self.assertNotEqual(str(loved.track.artist), "Test Artist")
+            self.assertNotEqual(str(loved.track.title), "test title")
+
+
+class TestPyLastUser(PyLastTestCase):
 
     def test_get_user_registration(self):
         # Arrange
@@ -123,38 +196,6 @@ class TestPyLast(unittest.TestCase):
         # Assert
         self.assertIsNone(country)
 
-    def test_love(self):
-        # Arrange
-        artist = "Test Artist"
-        title = "test title"
-        track = self.network.get_track(artist, title)
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act
-        track.love()
-
-        # Assert
-        loved = lastfm_user.get_loved_tracks(limit=1)
-        self.assertEqual(str(loved[0].track.artist), "Test Artist")
-        self.assertEqual(str(loved[0].track.title), "test title")
-
-    def test_unlove(self):
-        # Arrange
-        artist = pylast.Artist("Test Artist", self.network)
-        title = "test title"
-        track = pylast.Track(artist, title, self.network)
-        lastfm_user = self.network.get_user(self.username)
-        track.love()
-
-        # Act
-        track.unlove()
-
-        # Assert
-        loved = lastfm_user.get_loved_tracks(limit=1)
-        if len(loved):  # OK to be empty but if not:
-            self.assertNotEqual(str(loved.track.artist), "Test Artist")
-            self.assertNotEqual(str(loved.track.title), "test title")
-
     def test_user_equals_none(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
@@ -197,34 +238,8 @@ class TestPyLast(unittest.TestCase):
         self.assertGreaterEqual(len(user.get_loved_tracks(limit=None)), 23)
         self.assertGreaterEqual(len(user.get_loved_tracks(limit=0)), 23)
 
-    def test_update_now_playing(self):
-        # Arrange
-        artist = "Test Artist"
-        title = "test title"
-        album = "Test Album"
-        track_number = 1
-        lastfm_user = self.network.get_user(self.username)
 
-        # Act
-        self.network.update_now_playing(
-            artist=artist, title=title, album=album, track_number=track_number)
-
-        # Assert
-        current_track = lastfm_user.get_now_playing()
-        self.assertIsNotNone(current_track)
-        self.assertEqual(str(current_track.title), "test title")
-        self.assertEqual(str(current_track.artist), "Test Artist")
-
-    def test_album_tags_are_topitems(self):
-        # Arrange
-        albums = self.network.get_user('RJ').get_top_albums()
-
-        # Act
-        tags = albums[0].item.get_top_tags(limit=1)
-
-        # Assert
-        self.assertGreater(len(tags), 0)
-        self.assertIsInstance(tags[0], pylast.TopItem)
+class TestPyLast(PyLastTestCase):
 
     def helper_is_thing_hashable(self, thing):
         # Arrange
