@@ -759,15 +759,6 @@ class TestPyLast(unittest.TestCase):
             self.helper_assert_chart(album_chart, pylast.Album)
             self.helper_assert_chart(track_chart, pylast.Track)
 
-    def test_tag_charts(self):
-        # Arrange
-        tag = self.network.get_tag("rock")
-        dates = tag.get_weekly_chart_dates()
-        self.helper_dates_valid(dates)
-
-        # Act/Assert
-        self.helper_get_assert_charts(tag, dates[-2])
-
     def test_user_charts(self):
         # Arrange
         lastfm_user = self.network.get_user("RJ")
