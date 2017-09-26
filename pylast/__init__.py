@@ -2873,37 +2873,6 @@ def _extract(node, name, index=0):
         return None
 
 
-def _extract_element_tree(node):
-    """Extract an element tree into a multi-level dictionary
-
-    NB: If any elements have text nodes as well as nested
-    elements this will ignore the text nodes"""
-
-    def _recurse_build_tree(rootNode, targetDict):
-        """Recursively build a multi-level dict"""
-
-        def _has_child_elements(rootNode):
-            """Check if an element has any nested (child) elements"""
-
-            for node in rootNode.childNodes:
-                if node.nodeType == node.ELEMENT_NODE:
-                    return True
-            return False
-
-        for node in rootNode.childNodes:
-            if node.nodeType == node.ELEMENT_NODE:
-                if _has_child_elements(node):
-                    targetDict[node.tagName] = {}
-                    _recurse_build_tree(node, targetDict[node.tagName])
-                else:
-                    val = None if node.firstChild is None else \
-                        _unescape_htmlentity(node.firstChild.data.strip())
-                    targetDict[node.tagName] = val
-        return targetDict
-
-    return _recurse_build_tree(node, {})
-
-
 def _extract_all(node, name, limit_count=None):
     """Extracts all the values from the xml string. returning a list."""
 

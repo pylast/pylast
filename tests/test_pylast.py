@@ -624,15 +624,6 @@ class TestPyLast(unittest.TestCase):
         self.assertIsInstance(thing2.item, expected_type)
         self.assertNotEqual(thing1, thing2)
 
-    def helper_two_things_in_list(self, things, expected_type):
-        # Assert
-        self.assertEqual(len(things), 2)
-        self.assertIsInstance(things, list)
-        thing1 = things[0]
-        thing2 = things[1]
-        self.assertIsInstance(thing1, expected_type)
-        self.assertIsInstance(thing2, expected_type)
-
     def test_user_get_top_tags_with_limit(self):
         # Arrange
         user = self.network.get_user("RJ")
