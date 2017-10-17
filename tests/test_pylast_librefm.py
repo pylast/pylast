@@ -7,6 +7,7 @@ import unittest
 from flaky import flaky
 
 import pylast
+
 from .test_pylast import load_secrets
 
 
