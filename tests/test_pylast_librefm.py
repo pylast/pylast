@@ -7,7 +7,7 @@ import unittest
 from flaky import flaky
 
 import pylast
-from test_pylast import load_secrets
+from .test_pylast import load_secrets
 
 
 @flaky(max_runs=5, min_passes=1)
