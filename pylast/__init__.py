@@ -97,9 +97,6 @@ IMAGES_ORDER_POPULARITY = "popularity"
 IMAGES_ORDER_DATE = "dateadded"
 
 
-USER_MALE = 'Male'
-USER_FEMALE = 'Female'
-
 SCROBBLE_SOURCE_USER = "P"
 SCROBBLE_SOURCE_NON_PERSONALIZED_BROADCAST = "R"
 SCROBBLE_SOURCE_PERSONALIZED_BROADCAST = "E"
@@ -2255,24 +2252,6 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_neighbours(self, limit=50, cacheable=True):
-        """Returns a list of the user's friends."""
-
-        params = self._get_params()
-        if limit:
-            params['limit'] = limit
-
-        doc = self._request(
-            self.ws_prefix + '.getNeighbours', cacheable, params)
-
-        seq = []
-        names = _extract_all(doc, 'name')
-
-        for name in names:
-            seq.append(User(name, self.network))
-
-        return seq
-
     def get_now_playing(self):
         """
         Returns the currently playing track, or None if nothing is playing.
@@ -2350,20 +2329,6 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_id(self):
-        """Returns the user ID."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "id")
-
-    def get_language(self):
-        """Returns the language code of the language used by the user."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "lang")
-
     def get_country(self):
         """Returns the name of the country of the user."""
 
@@ -2375,27 +2340,6 @@ class User(_BaseObject, _Chartable):
             return None
         else:
             return Country(country, self.network)
-
-    def get_age(self):
-        """Returns the user's age."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _number(_extract(doc, "age"))
-
-    def get_gender(self):
-        """Returns the user's gender. Either USER_MALE or USER_FEMALE."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        value = _extract(doc, "gender")
-
-        if value == 'm':
-            return USER_MALE
-        elif value == 'f':
-            return USER_FEMALE
-
-        return None
 
     def is_subscriber(self):
         """Returns whether the user is a subscriber or not. True or False."""
