@@ -302,6 +302,69 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertEqual(msg,
                          "Unauthorized Token - This token has not been issued")
 
+    def test_proxy(self):
+        # Arrange
+        host = "https://example.com"
+        port = 1234
+
+        # Act / Assert
+        self.network.enable_proxy(host, port)
+        self.assertTrue(self.network.is_proxy_enabled())
+        self.assertEqual(self.network._get_proxy(),
+                         ["https://example.com", 1234])
+
+        self.network.disable_proxy()
+        self.assertFalse(self.network.is_proxy_enabled())
+
+    def test_album_search(self):
+        # Arrange
+        album = "Nevermind"
+
+        # Act
+        search = self.network.search_for_album(album)
+        results = search.get_next_page()
+
+        # Assert
+        self.assertIsInstance(results, list)
+        self.assertIsInstance(results[0], pylast.Album)
+
+    def test_artist_search(self):
+        # Arrange
+        artist = "Nirvana"
+
+        # Act
+        search = self.network.search_for_artist(artist)
+        results = search.get_next_page()
+
+        # Assert
+        self.assertIsInstance(results, list)
+        self.assertIsInstance(results[0], pylast.Artist)
+
+    def test_tag_search(self):
+        # Arrange
+        tag = "rock"
+
+        # Act
+        search = self.network.search_for_tag(tag)
+        results = search.get_next_page()
+
+        # Assert
+        self.assertIsInstance(results, list)
+        self.assertIsInstance(results[0], pylast.Tag)
+
+    def test_track_search(self):
+        # Arrange
+        artist = "Nirvana"
+        track = "Smells Like Teen Spirit"
+
+        # Act
+        search = self.network.search_for_track(artist, track)
+        results = search.get_next_page()
+
+        # Assert
+        self.assertIsInstance(results, list)
+        self.assertIsInstance(results[0], pylast.Track)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
