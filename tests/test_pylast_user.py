@@ -16,20 +16,17 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_repr(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         representation = repr(user)
 
         # Assert
-        self.assertTrue(
-            representation.startswith(representation), "pylast.User('RJ',")
+        self.assertTrue(representation.startswith("pylast.User('RJ',"))
 
     def test_str(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         string = str(user)
@@ -39,17 +36,27 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_equality(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user_1a = self.network.get_user("RJ")
+        user_1b = self.network.get_user("RJ")
+        user_2 = self.network.get_user("Test User")
         not_a_user = self.network
 
         # Act / Assert
-        self.assertNotEqual(user, not_a_user)
+        self.assertEqual(user_1a, user_1b)
+        self.assertTrue(user_1a == user_1b)
+        self.assertFalse(user_1a != user_1b)
+
+        self.assertNotEqual(user_1a, user_2)
+        self.assertTrue(user_1a != user_2)
+        self.assertFalse(user_1a == user_2)
+
+        self.assertNotEqual(user_1a, not_a_user)
+        self.assertTrue(user_1a != not_a_user)
+        self.assertFalse(user_1a == not_a_user)
 
     def test_get_name(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         name = user.get_name(properly_capitalized=True)
@@ -59,8 +66,7 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_get_user_registration(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         registered = user.get_registered()
@@ -75,8 +81,7 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_get_user_unixtime_registration(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         unixtime_registered = user.get_unixtime_registered()
@@ -457,6 +462,35 @@ class TestPyLastUser(PyLastTestCase):
 
         # Assert
         self.assertEqual(mbid, None)
+
+    def test_get_playcount(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        playcount = user.get_playcount()
+
+        # Assert
+        self.assertGreaterEqual(playcount, 128387)
+
+    def test_get_image(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act / Assert
+        image = user.get_image()
+
+        self.assertTrue(image.startswith("https://"))
+        self.assertTrue(image.endswith(".png"))
+
+    def test_get_url(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act / Assert
+        url = user.get_url()
+
+        self.assertEqual(url, "https://www.last.fm/user/rj")
 
 
 if __name__ == '__main__':

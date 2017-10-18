@@ -11,6 +11,17 @@ from .test_pylast import PyLastTestCase
 
 class TestPyLastArtist(PyLastTestCase):
 
+    def test_repr(self):
+        # Arrange
+        artist = pylast.Artist("Test Artist", self.network)
+
+        # Act
+        representation = repr(artist)
+
+        # Assert
+        self.assertTrue(
+            representation.startswith("pylast.Artist('Test Artist',"))
+
     def test_artist_is_hashable(self):
         # Arrange
         test_artist = self.network.get_artist("Test Artist")
