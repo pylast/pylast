@@ -1074,37 +1074,6 @@ class _BaseObject(object):
 
         return seq
 
-    def share(self, users, message=None):
-        """
-        Shares this (sends out recommendations).
-        Parameters:
-            * users [User|str,]: A list that can contain usernames, emails,
-            User objects, or all of them.
-            * message str: A message to include in the recommendation message.
-        Only for Artist/Track.
-        """
-
-        # Last.fm currently accepts a max of 10 recipient at a time
-        while len(users) > 10:
-            section = users[0:9]
-            users = users[9:]
-            self.share(section, message)
-
-        user_names = []
-        for user in users:
-            if isinstance(user, User):
-                user_names.append(user.get_name())
-            else:
-                user_names.append(user)
-
-        params = self._get_params()
-        recipients = ','.join(user_names)
-        params['recipient'] = recipients
-        if message:
-            params['message'] = message
-
-        self._request(self.ws_prefix + '.share', False, params)
-
     def get_wiki_published_date(self):
         """
         Returns the summary of the wiki.
@@ -2537,19 +2506,6 @@ class AuthenticatedUser(User):
 
         self.name = _extract(doc, "name")
         return self.name
-
-    def get_recommended_artists(self, limit=50, cacheable=False):
-        """
-        Returns a sequence of Artist objects
-        if limit==None it will return all
-        """
-
-        seq = []
-        for node in _collect_nodes(
-                limit, self, "user.getRecommendedArtists", cacheable):
-            seq.append(Artist(_extract(node, "name"), self.network))
-
-        return seq
 
 
 class _Search(_BaseObject):
