@@ -14,6 +14,49 @@ from .test_pylast import PyLastTestCase
 
 class TestPyLastUser(PyLastTestCase):
 
+    def test_repr(self):
+        # Arrange
+        username = "RJ"
+        user = self.network.get_user(username)
+
+        # Act
+        representation = repr(user)
+
+        # Assert
+        self.assertTrue(
+            representation.startswith(representation), "pylast.User('RJ',")
+
+    def test_str(self):
+        # Arrange
+        username = "RJ"
+        user = self.network.get_user(username)
+
+        # Act
+        string = str(user)
+
+        # Assert
+        self.assertEqual(string, "RJ")
+
+    def test_equality(self):
+        # Arrange
+        username = "RJ"
+        user = self.network.get_user(username)
+        not_a_user = self.network
+
+        # Act / Assert
+        self.assertNotEqual(user, not_a_user)
+
+    def test_get_name(self):
+        # Arrange
+        username = "RJ"
+        user = self.network.get_user(username)
+
+        # Act
+        name = user.get_name(properly_capitalized=True)
+
+        # Assert
+        self.assertEqual(name, "RJ")
+
     def test_get_user_registration(self):
         # Arrange
         username = "RJ"
