@@ -340,18 +340,6 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertIsInstance(results, list)
         self.assertIsInstance(results[0], pylast.Artist)
 
-    def test_tag_search(self):
-        # Arrange
-        tag = "rock"
-
-        # Act
-        search = self.network.search_for_tag(tag)
-        results = search.get_next_page()
-
-        # Assert
-        self.assertIsInstance(results, list)
-        self.assertIsInstance(results[0], pylast.Tag)
-
     def test_track_search(self):
         # Arrange
         artist = "Nirvana"

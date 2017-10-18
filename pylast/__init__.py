@@ -445,12 +445,6 @@ class _Network(object):
 
         return ArtistSearch(artist_name, self)
 
-    def search_for_tag(self, tag_name):
-        """Searches of a tag by its name. Returns a TagSearch object.
-        Use get_next_page() to retrieve sequences of results."""
-
-        return TagSearch(tag_name, self)
-
     def search_for_track(self, artist_name, track_name):
         """Searches of a track by its name and its artist. Set artist to an
         empty string if not available.
@@ -2725,27 +2719,6 @@ class ArtistSearch(_Search):
             artist = Artist(_extract(node, "name"), self.network)
             artist.listener_count = _number(_extract(node, "listeners"))
             seq.append(artist)
-
-        return seq
-
-
-class TagSearch(_Search):
-    """Search for a tag by tag name."""
-
-    def __init__(self, tag_name, network):
-
-        _Search.__init__(self, "tag", {"tag": tag_name}, network)
-
-    def get_next_page(self):
-        """Returns the next page of results as a sequence of Tag objects."""
-
-        master_node = self._retrieve_next_page()
-
-        seq = []
-        for node in master_node.getElementsByTagName("tag"):
-            tag = Tag(_extract(node, "name"), self.network)
-            tag.tag_count = _number(_extract(node, "count"))
-            seq.append(tag)
 
         return seq
 
