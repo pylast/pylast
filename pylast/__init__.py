@@ -2489,39 +2489,6 @@ class User(_BaseObject, _Chartable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def compare_with_user(self, user, shared_artists_limit=None):
-        """
-        Compare this user with another Last.fm user.
-        Returns a sequence:
-            (tasteometer_score, (shared_artist1, shared_artist2, ...))
-        user: A User object or a username string/unicode object.
-        """
-
-        if isinstance(user, User):
-            user = user.get_name()
-
-        params = self._get_params()
-        if shared_artists_limit:
-            params['limit'] = shared_artists_limit
-        params['type1'] = 'user'
-        params['type2'] = 'user'
-        params['value1'] = self.get_name()
-        params['value2'] = user
-
-        doc = self._request('tasteometer.compare', False, params)
-
-        score = _extract(doc, 'score')
-
-        artists = doc.getElementsByTagName('artists')[0]
-        shared_artists_names = _extract_all(artists, 'name')
-
-        shared_artists_seq = []
-
-        for name in shared_artists_names:
-            shared_artists_seq.append(Artist(name, self.network))
-
-        return (score, shared_artists_seq)
-
     def get_image(self):
         """Returns the user's avatar."""
 

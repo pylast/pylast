@@ -85,17 +85,6 @@ class TestPyLastUser(PyLastTestCase):
         # Just check date because of timezones
         self.assertEqual(unixtime_registered, u"1037793040")
 
-    def test_get_genderless_user(self):
-        # Arrange
-        # Currently test_user has no gender set:
-        lastfm_user = self.network.get_user("test_user")
-
-        # Act
-        gender = lastfm_user.get_gender()
-
-        # Assert
-        self.assertIsNone(gender)
-
     def test_get_countryless_user(self):
         # Arrange
         # Currently test_user has no country set:
