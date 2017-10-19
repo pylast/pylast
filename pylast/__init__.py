@@ -2052,11 +2052,6 @@ class Track(_Opus):
 
         self._request(self.ws_prefix + '.unlove')
 
-    def ban(self):
-        """Ban this track from ever playing on the radio. """
-
-        self._request(self.ws_prefix + '.ban')
-
     def get_similar(self):
         """
         Returns similar tracks for this track on the network,
