@@ -58,22 +58,6 @@ class TestPyLastTag(PyLastTestCase):
         self.assertTrue(tag1 != tag2)
         self.assertEqual(url, "https://www.last.fm/tag/blues")
 
-    def test_tags_similar(self):
-        # Arrange
-        tag = self.network.get_tag("blues")
-
-        # Act
-        similar = tag.get_similar()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(similar)
-        found = False
-        for tag in similar:
-            if tag.name == "delta blues":
-                found = True
-                break
-        self.assertTrue(found)
-
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

@@ -237,27 +237,6 @@ class TestPyLastArtist(PyLastTestCase):
         # Act / Assert
         self.assertTrue(artist1 != artist2)
 
-    def test_band_members(self):
-        # Arrange
-        artist = pylast.Artist("The Beatles", self.network)
-
-        # Act
-        band_members = artist.get_band_members()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(band_members)
-        self.assertGreaterEqual(len(band_members), 4)
-
-    def test_no_band_members(self):
-        # Arrange
-        artist = pylast.Artist("John Lennon", self.network)
-
-        # Act
-        band_members = artist.get_band_members()
-
-        # Assert
-        self.assertIsNone(band_members)
-
     def test_artist_get_correction(self):
         # Arrange
         artist = pylast.Artist("guns and roses", self.network)

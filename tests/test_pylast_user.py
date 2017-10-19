@@ -5,8 +5,6 @@ Integration (not unit) tests for pylast.py
 import os
 import unittest
 
-import pytest
-
 import pylast
 
 from .test_pylast import PyLastTestCase
@@ -72,12 +70,13 @@ class TestPyLastUser(PyLastTestCase):
         registered = user.get_registered()
 
         # Assert
-        # Last.fm API broken? Should be yyyy-mm-dd not Unix timestamp
         if int(registered):
-            pytest.skip("Last.fm API is broken.")
-
-        # Just check date because of timezones
-        self.assertIn(u"2002-11-20 ", registered)
+            # Last.fm API broken? Used to be yyyy-mm-dd not Unix timestamp
+            self.assertEqual(registered, "1037793040")
+        else:
+            # Old way
+            # Just check date because of timezones
+            self.assertIn(u"2002-11-20 ", registered)
 
     def test_get_user_unixtime_registration(self):
         # Arrange
@@ -219,7 +218,6 @@ class TestPyLastUser(PyLastTestCase):
         tags = user.get_top_tags(limit=1)
 
         # Assert
-        self.skip_if_lastfm_api_broken(tags)
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
     def test_user_top_tracks(self):
@@ -391,17 +389,6 @@ class TestPyLastUser(PyLastTestCase):
         # Act
         # Assert
         self.assertNotEqual(track1, track2)
-
-    def test_track_id(self):
-        # Arrange
-        track = pylast.Track("Test Artist", "test title", self.network)
-
-        # Act
-        id = track.get_id()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(id)
-        self.assertEqual(id, "14053327")
 
     def test_track_title_prop_caps(self):
         # Arrange

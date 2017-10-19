@@ -22,7 +22,6 @@
 
 from xml.dom import minidom, Node
 import collections
-import re
 import hashlib
 import shelve
 import six
@@ -107,18 +106,6 @@ SCROBBLE_MODE_PLAYED = ""
 SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
-
-# From http://boodebr.org/main/python/all-about-python-and-unicode#UNI_XML
-RE_XML_ILLEGAL = (u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' +
-                  u'|' +
-                  u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])'
-                  %
-                  (unichr(0xd800), unichr(0xdbff), unichr(0xdc00),
-                   unichr(0xdfff), unichr(0xd800), unichr(0xdbff),
-                   unichr(0xdc00), unichr(0xdfff), unichr(0xd800),
-                   unichr(0xdbff), unichr(0xdc00), unichr(0xdfff)))
-
-XML_ILLEGAL = re.compile(RE_XML_ILLEGAL)
 
 # Python >3.4 and >2.7.9 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
@@ -862,8 +849,6 @@ class _Request(object):
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
-        response_text = XML_ILLEGAL.sub("?", response_text)
-
         self._check_response_for_errors(response_text)
         conn.close()
         return response_text
@@ -1429,12 +1414,6 @@ class _Opus(_BaseObject, _Taggable):
 
         return self.get_title(properly_capitalized)
 
-    def get_id(self):
-        """Returns the ID on the network."""
-
-        return _extract(
-            self._request(self.ws_prefix + ".getInfo", cacheable=True), "id")
-
     def get_playcount(self):
         """Returns the number of plays on the network"""
 
@@ -1738,17 +1717,6 @@ class Artist(_BaseObject, _Taggable):
         return self.network._get_url(
             domain_name, "artist") % {'artist': artist}
 
-    def get_band_members(self):
-        """Returns a list of band members or None if unknown."""
-
-        names = None
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        for node in doc.getElementsByTagName("bandmembers"):
-            names = _extract_all(node, "name")
-
-        return names
-
 
 class Country(_BaseObject):
     """A country at Last.fm."""
@@ -1914,18 +1882,6 @@ class Tag(_BaseObject, _Chartable):
                 self._request(self.ws_prefix + ".getInfo", True), "name")
 
         return self.name
-
-    def get_similar(self):
-        """Returns the tags similar to this one, ordered by similarity. """
-
-        doc = self._request(self.ws_prefix + '.getSimilar', True)
-
-        seq = []
-        names = _extract_all(doc, 'name')
-        for name in names:
-            seq.append(Tag(name, self.network))
-
-        return seq
 
     def get_top_albums(self, limit=None, cacheable=True):
         """Returns a list of the top albums."""
