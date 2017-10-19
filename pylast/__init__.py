@@ -97,9 +97,6 @@ IMAGES_ORDER_POPULARITY = "popularity"
 IMAGES_ORDER_DATE = "dateadded"
 
 
-USER_MALE = 'Male'
-USER_FEMALE = 'Female'
-
 SCROBBLE_SOURCE_USER = "P"
 SCROBBLE_SOURCE_NON_PERSONALIZED_BROADCAST = "R"
 SCROBBLE_SOURCE_PERSONALIZED_BROADCAST = "E"
@@ -444,12 +441,6 @@ class _Network(object):
         Use get_next_page() to retrieve sequences of results."""
 
         return ArtistSearch(artist_name, self)
-
-    def search_for_tag(self, tag_name):
-        """Searches of a tag by its name. Returns a TagSearch object.
-        Use get_next_page() to retrieve sequences of results."""
-
-        return TagSearch(tag_name, self)
 
     def search_for_track(self, artist_name, track_name):
         """Searches of a track by its name and its artist. Set artist to an
@@ -1082,37 +1073,6 @@ class _BaseObject(object):
                 thing_type(artist, title, self.network), playcount))
 
         return seq
-
-    def share(self, users, message=None):
-        """
-        Shares this (sends out recommendations).
-        Parameters:
-            * users [User|str,]: A list that can contain usernames, emails,
-            User objects, or all of them.
-            * message str: A message to include in the recommendation message.
-        Only for Artist/Track.
-        """
-
-        # Last.fm currently accepts a max of 10 recipient at a time
-        while len(users) > 10:
-            section = users[0:9]
-            users = users[9:]
-            self.share(section, message)
-
-        user_names = []
-        for user in users:
-            if isinstance(user, User):
-                user_names.append(user.get_name())
-            else:
-                user_names.append(user)
-
-        params = self._get_params()
-        recipients = ','.join(user_names)
-        params['recipient'] = recipients
-        if message:
-            params['message'] = message
-
-        self._request(self.ws_prefix + '.share', False, params)
 
     def get_wiki_published_date(self):
         """
@@ -2092,11 +2052,6 @@ class Track(_Opus):
 
         self._request(self.ws_prefix + '.unlove')
 
-    def ban(self):
-        """Ban this track from ever playing on the radio. """
-
-        self._request(self.ws_prefix + '.ban')
-
     def get_similar(self):
         """
         Returns similar tracks for this track on the network,
@@ -2261,24 +2216,6 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_neighbours(self, limit=50, cacheable=True):
-        """Returns a list of the user's friends."""
-
-        params = self._get_params()
-        if limit:
-            params['limit'] = limit
-
-        doc = self._request(
-            self.ws_prefix + '.getNeighbours', cacheable, params)
-
-        seq = []
-        names = _extract_all(doc, 'name')
-
-        for name in names:
-            seq.append(User(name, self.network))
-
-        return seq
-
     def get_now_playing(self):
         """
         Returns the currently playing track, or None if nothing is playing.
@@ -2356,20 +2293,6 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_id(self):
-        """Returns the user ID."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "id")
-
-    def get_language(self):
-        """Returns the language code of the language used by the user."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _extract(doc, "lang")
-
     def get_country(self):
         """Returns the name of the country of the user."""
 
@@ -2381,27 +2304,6 @@ class User(_BaseObject, _Chartable):
             return None
         else:
             return Country(country, self.network)
-
-    def get_age(self):
-        """Returns the user's age."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        return _number(_extract(doc, "age"))
-
-    def get_gender(self):
-        """Returns the user's gender. Either USER_MALE or USER_FEMALE."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        value = _extract(doc, "gender")
-
-        if value == 'm':
-            return USER_MALE
-        elif value == 'f':
-            return USER_FEMALE
-
-        return None
 
     def is_subscriber(self):
         """Returns whether the user is a subscriber or not. True or False."""
@@ -2551,39 +2453,6 @@ class User(_BaseObject, _Chartable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def compare_with_user(self, user, shared_artists_limit=None):
-        """
-        Compare this user with another Last.fm user.
-        Returns a sequence:
-            (tasteometer_score, (shared_artist1, shared_artist2, ...))
-        user: A User object or a username string/unicode object.
-        """
-
-        if isinstance(user, User):
-            user = user.get_name()
-
-        params = self._get_params()
-        if shared_artists_limit:
-            params['limit'] = shared_artists_limit
-        params['type1'] = 'user'
-        params['type2'] = 'user'
-        params['value1'] = self.get_name()
-        params['value2'] = user
-
-        doc = self._request('tasteometer.compare', False, params)
-
-        score = _extract(doc, 'score')
-
-        artists = doc.getElementsByTagName('artists')[0]
-        shared_artists_names = _extract_all(artists, 'name')
-
-        shared_artists_seq = []
-
-        for name in shared_artists_names:
-            shared_artists_seq.append(Artist(name, self.network))
-
-        return (score, shared_artists_seq)
-
     def get_image(self):
         """Returns the user's avatar."""
 
@@ -2632,19 +2501,6 @@ class AuthenticatedUser(User):
 
         self.name = _extract(doc, "name")
         return self.name
-
-    def get_recommended_artists(self, limit=50, cacheable=False):
-        """
-        Returns a sequence of Artist objects
-        if limit==None it will return all
-        """
-
-        seq = []
-        for node in _collect_nodes(
-                limit, self, "user.getRecommendedArtists", cacheable):
-            seq.append(Artist(_extract(node, "name"), self.network))
-
-        return seq
 
 
 class _Search(_BaseObject):
@@ -2725,27 +2581,6 @@ class ArtistSearch(_Search):
             artist = Artist(_extract(node, "name"), self.network)
             artist.listener_count = _number(_extract(node, "listeners"))
             seq.append(artist)
-
-        return seq
-
-
-class TagSearch(_Search):
-    """Search for a tag by tag name."""
-
-    def __init__(self, tag_name, network):
-
-        _Search.__init__(self, "tag", {"tag": tag_name}, network)
-
-    def get_next_page(self):
-        """Returns the next page of results as a sequence of Tag objects."""
-
-        master_node = self._retrieve_next_page()
-
-        seq = []
-        for node in master_node.getElementsByTagName("tag"):
-            tag = Tag(_extract(node, "name"), self.network)
-            tag.tag_count = _number(_extract(node, "count"))
-            seq.append(tag)
 
         return seq
 

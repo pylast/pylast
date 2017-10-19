@@ -104,6 +104,62 @@ class TestPyLastTrack(PyLastTestCase):
         self.assertIsNotNone(wiki)
         self.assertGreaterEqual(len(wiki), 1)
 
+    def test_track_get_duration(self):
+        # Arrange
+        track = pylast.Track("Nirvana", "Lithium", self.network)
+
+        # Act
+        duration = track.get_duration()
+
+        # Assert
+        self.assertGreaterEqual(duration, 200000)
+
+    def test_track_is_streamable(self):
+        # Arrange
+        track = pylast.Track("Nirvana", "Lithium", self.network)
+
+        # Act
+        streamable = track.is_streamable()
+
+        # Assert
+        self.assertFalse(streamable)
+
+    def test_track_is_fulltrack_available(self):
+        # Arrange
+        track = pylast.Track("Nirvana", "Lithium", self.network)
+
+        # Act
+        fulltrack_available = track.is_fulltrack_available()
+
+        # Assert
+        self.assertFalse(fulltrack_available)
+
+    def test_track_get_album(self):
+        # Arrange
+        track = pylast.Track("Nirvana", "Lithium", self.network)
+
+        # Act
+        album = track.get_album()
+        print(album)
+
+        # Assert
+        self.assertEqual(str(album), "Nirvana - Nevermind")
+
+    def test_track_get_similar(self):
+        # Arrange
+        track = pylast.Track("Cher", "Believe", self.network)
+
+        # Act
+        similar = track.get_similar()
+
+        # Assert
+        found = False
+        for track in similar:
+            if str(track.item) == "Madonna - Vogue":
+                found = True
+                break
+        self.assertTrue(found)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

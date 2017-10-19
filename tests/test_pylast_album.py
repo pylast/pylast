@@ -99,6 +99,17 @@ class TestPyLastAlbum(PyLastTestCase):
         # Act / Assert
         self.assertTrue(album1 != album2)
 
+    def test_get_cover_image(self):
+        # Arrange
+        album = self.network.get_album("Test Artist", "Test Album")
+
+        # Act
+        image = album.get_cover_image()
+
+        # Assert
+        self.assertTrue(image.startswith("https://"))
+        self.assertTrue(image.endswith(".png"))
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

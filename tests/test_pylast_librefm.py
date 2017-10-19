@@ -30,6 +30,20 @@ class TestPyLastWithLibreFm(unittest.TestCase):
         # Assert
         self.assertEqual(name, "Radiohead")
 
+    def test_repr(self):
+        # Arrange
+        secrets = load_secrets()
+        username = secrets["username"]
+        password_hash = secrets["password_hash"]
+        network = pylast.LibreFMNetwork(
+            password_hash=password_hash, username=username)
+
+        # Act
+        representation = repr(network)
+
+        # Assert
+        self.assertTrue(representation.startswith("pylast.LibreFMNetwork("))
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

@@ -14,10 +14,59 @@ from .test_pylast import PyLastTestCase
 
 class TestPyLastUser(PyLastTestCase):
 
+    def test_repr(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        representation = repr(user)
+
+        # Assert
+        self.assertTrue(representation.startswith("pylast.User('RJ',"))
+
+    def test_str(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        string = str(user)
+
+        # Assert
+        self.assertEqual(string, "RJ")
+
+    def test_equality(self):
+        # Arrange
+        user_1a = self.network.get_user("RJ")
+        user_1b = self.network.get_user("RJ")
+        user_2 = self.network.get_user("Test User")
+        not_a_user = self.network
+
+        # Act / Assert
+        self.assertEqual(user_1a, user_1b)
+        self.assertTrue(user_1a == user_1b)
+        self.assertFalse(user_1a != user_1b)
+
+        self.assertNotEqual(user_1a, user_2)
+        self.assertTrue(user_1a != user_2)
+        self.assertFalse(user_1a == user_2)
+
+        self.assertNotEqual(user_1a, not_a_user)
+        self.assertTrue(user_1a != not_a_user)
+        self.assertFalse(user_1a == not_a_user)
+
+    def test_get_name(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        name = user.get_name(properly_capitalized=True)
+
+        # Assert
+        self.assertEqual(name, "RJ")
+
     def test_get_user_registration(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         registered = user.get_registered()
@@ -32,8 +81,7 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_get_user_unixtime_registration(self):
         # Arrange
-        username = "RJ"
-        user = self.network.get_user(username)
+        user = self.network.get_user("RJ")
 
         # Act
         unixtime_registered = user.get_unixtime_registered()
@@ -41,17 +89,6 @@ class TestPyLastUser(PyLastTestCase):
         # Assert
         # Just check date because of timezones
         self.assertEqual(unixtime_registered, u"1037793040")
-
-    def test_get_genderless_user(self):
-        # Arrange
-        # Currently test_user has no gender set:
-        lastfm_user = self.network.get_user("test_user")
-
-        # Act
-        gender = lastfm_user.get_gender()
-
-        # Assert
-        self.assertIsNone(gender)
 
     def test_get_countryless_user(self):
         # Arrange
@@ -63,6 +100,16 @@ class TestPyLastUser(PyLastTestCase):
 
         # Assert
         self.assertIsNone(country)
+
+    def test_user_get_country(self):
+        # Arrange
+        lastfm_user = self.network.get_user("RJ")
+
+        # Act
+        country = lastfm_user.get_country()
+
+        # Assert
+        self.assertEqual(str(country), "United Kingdom")
 
     def test_user_equals_none(self):
         # Arrange
@@ -223,23 +270,6 @@ class TestPyLastUser(PyLastTestCase):
 
         # Act/Assert
         self.helper_get_assert_charts(lastfm_user, dates[0])
-
-    # Commented out to avoid spamming
-    # def test_share_spam(self):
-        # # Arrange
-        # users_to_spam = [TODO_ENTER_SPAMEES_HERE]
-        # spam_message = "Dig the krazee sound!"
-        # artist = self.network.get_top_artists(limit=1)[0].item
-        # track = artist.get_top_tracks(limit=1)[0].item
-
-        # # Act
-        # artist.share(users_to_spam, spam_message)
-        # track.share(users_to_spam, spam_message)
-
-        # Assert
-        # Check inbox for spam!
-
-        # album/artist/track/user
 
     def test_user_top_artists(self):
         # Arrange
@@ -442,6 +472,35 @@ class TestPyLastUser(PyLastTestCase):
 
         # Assert
         self.assertEqual(mbid, None)
+
+    def test_get_playcount(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act
+        playcount = user.get_playcount()
+
+        # Assert
+        self.assertGreaterEqual(playcount, 128387)
+
+    def test_get_image(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act / Assert
+        image = user.get_image()
+
+        self.assertTrue(image.startswith("https://"))
+        self.assertTrue(image.endswith(".png"))
+
+    def test_get_url(self):
+        # Arrange
+        user = self.network.get_user("RJ")
+
+        # Act / Assert
+        url = user.get_url()
+
+        self.assertEqual(url, "https://www.last.fm/user/rj")
 
 
 if __name__ == '__main__':
