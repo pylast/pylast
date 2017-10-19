@@ -268,6 +268,17 @@ class TestPyLastArtist(PyLastTestCase):
         # Assert
         self.assertEqual(corrected_artist_name, "Guns N' Roses")
 
+    def test_get_userplaycount(self):
+        # Arrange
+        artist = pylast.Artist("John Lennon", self.network,
+                               username=self.username)
+
+        # Act
+        playcount = artist.get_userplaycount()
+
+        # Assert
+        self.assertGreaterEqual(playcount, 0)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)

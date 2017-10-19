@@ -101,6 +101,16 @@ class TestPyLastUser(PyLastTestCase):
         # Assert
         self.assertIsNone(country)
 
+    def test_user_get_country(self):
+        # Arrange
+        lastfm_user = self.network.get_user("RJ")
+
+        # Act
+        country = lastfm_user.get_country()
+
+        # Assert
+        self.assertEqual(str(country), "United Kingdom")
+
     def test_user_equals_none(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
