@@ -5,8 +5,6 @@ Integration (not unit) tests for pylast.py
 import os
 import unittest
 
-import pytest
-
 import pylast
 
 from .test_pylast import PyLastTestCase
@@ -392,17 +390,6 @@ class TestPyLastUser(PyLastTestCase):
         # Act
         # Assert
         self.assertNotEqual(track1, track2)
-
-    def test_track_id(self):
-        # Arrange
-        track = pylast.Track("Test Artist", "test title", self.network)
-
-        # Act
-        id = track.get_id()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(id)
-        self.assertEqual(id, "14053327")
 
     def test_track_title_prop_caps(self):
         # Arrange

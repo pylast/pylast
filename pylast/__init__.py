@@ -1429,12 +1429,6 @@ class _Opus(_BaseObject, _Taggable):
 
         return self.get_title(properly_capitalized)
 
-    def get_id(self):
-        """Returns the ID on the network."""
-
-        return _extract(
-            self._request(self.ws_prefix + ".getInfo", cacheable=True), "id")
-
     def get_playcount(self):
         """Returns the number of plays on the network"""
 
