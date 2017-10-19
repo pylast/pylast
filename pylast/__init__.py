@@ -1738,17 +1738,6 @@ class Artist(_BaseObject, _Taggable):
         return self.network._get_url(
             domain_name, "artist") % {'artist': artist}
 
-    def get_band_members(self):
-        """Returns a list of band members or None if unknown."""
-
-        names = None
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-
-        for node in doc.getElementsByTagName("bandmembers"):
-            names = _extract_all(node, "name")
-
-        return names
-
 
 class Country(_BaseObject):
     """A country at Last.fm."""
