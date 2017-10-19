@@ -47,20 +47,6 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertEqual(str(current_track.title), "test title")
         self.assertEqual(str(current_track.artist), "Test Artist")
 
-    def test_invalid_xml(self):
-        # Arrange
-        # Currently causes PCDATA invalid Char value 25
-        artist = "Blind Willie Johnson"
-        title = "It's nobody's fault but mine"
-
-        # Act
-        search = self.network.search_for_track(artist, title)
-        total = search.get_total_result_count()
-
-        # Assert
-        self.skip_if_lastfm_api_broken(total)
-        self.assertGreaterEqual(int(total), 0)
-
     def test_enable_rate_limiting(self):
         # Arrange
         self.assertFalse(self.network.is_rate_limited())

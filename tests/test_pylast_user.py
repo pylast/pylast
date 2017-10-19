@@ -218,7 +218,6 @@ class TestPyLastUser(PyLastTestCase):
         tags = user.get_top_tags(limit=1)
 
         # Assert
-        self.skip_if_lastfm_api_broken(tags)
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
     def test_user_top_tracks(self):

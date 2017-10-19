@@ -52,11 +52,6 @@ class PyLastTestCase(unittest.TestCase):
             api_key=API_KEY, api_secret=API_SECRET,
             username=self.username, password_hash=password_hash)
 
-    def skip_if_lastfm_api_broken(self, value):
-        """Skip things not yet restored in Last.fm's broken API"""
-        if value is None or len(value) == 0:
-            pytest.skip("Last.fm API is broken.")
-
     def helper_is_thing_hashable(self, thing):
         # Arrange
         things = set()

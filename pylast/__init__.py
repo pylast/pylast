@@ -22,7 +22,6 @@
 
 from xml.dom import minidom, Node
 import collections
-import re
 import hashlib
 import shelve
 import six
@@ -107,18 +106,6 @@ SCROBBLE_MODE_PLAYED = ""
 SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
-
-# From http://boodebr.org/main/python/all-about-python-and-unicode#UNI_XML
-RE_XML_ILLEGAL = (u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' +
-                  u'|' +
-                  u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])'
-                  %
-                  (unichr(0xd800), unichr(0xdbff), unichr(0xdc00),
-                   unichr(0xdfff), unichr(0xd800), unichr(0xdbff),
-                   unichr(0xdc00), unichr(0xdfff), unichr(0xd800),
-                   unichr(0xdbff), unichr(0xdc00), unichr(0xdfff)))
-
-XML_ILLEGAL = re.compile(RE_XML_ILLEGAL)
 
 # Python >3.4 and >2.7.9 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
@@ -861,8 +848,6 @@ class _Request(object):
             response_text = _unicode(conn.getresponse().read())
         except Exception as e:
             raise MalformedResponseError(self.network, e)
-
-        response_text = XML_ILLEGAL.sub("?", response_text)
 
         self._check_response_for_errors(response_text)
         conn.close()
