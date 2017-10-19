@@ -1904,18 +1904,6 @@ class Tag(_BaseObject, _Chartable):
 
         return self.name
 
-    def get_similar(self):
-        """Returns the tags similar to this one, ordered by similarity. """
-
-        doc = self._request(self.ws_prefix + '.getSimilar', True)
-
-        seq = []
-        names = _extract_all(doc, 'name')
-        for name in names:
-            seq.append(Tag(name, self.network))
-
-        return seq
-
     def get_top_albums(self, limit=None, cacheable=True):
         """Returns a list of the top albums."""
         params = self._get_params()
