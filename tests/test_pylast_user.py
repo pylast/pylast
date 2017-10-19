@@ -72,12 +72,13 @@ class TestPyLastUser(PyLastTestCase):
         registered = user.get_registered()
 
         # Assert
-        # Last.fm API broken? Should be yyyy-mm-dd not Unix timestamp
         if int(registered):
-            pytest.skip("Last.fm API is broken.")
-
-        # Just check date because of timezones
-        self.assertIn(u"2002-11-20 ", registered)
+            # Last.fm API broken? Used to be yyyy-mm-dd not Unix timestamp
+            self.assertEqual(registered, "1037793040")
+        else:
+            # Old way
+            # Just check date because of timezones
+            self.assertIn(u"2002-11-20 ", registered)
 
     def test_get_user_unixtime_registration(self):
         # Arrange
