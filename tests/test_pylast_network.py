@@ -339,6 +339,18 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertIsInstance(results, list)
         self.assertIsInstance(results[0], pylast.Track)
 
+    def test_search_get_total_result_count(self):
+        # Arrange
+        artist = "Nirvana"
+        track = "Smells Like Teen Spirit"
+        search = self.network.search_for_track(artist, track)
+
+        # Act
+        total = search.get_total_result_count()
+
+        # Assert
+        self.assertGreater(int(total), 10000)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
