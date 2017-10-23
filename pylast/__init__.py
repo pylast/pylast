@@ -2483,7 +2483,7 @@ class _Search(_BaseObject):
 
         doc = self._request(self._ws_prefix + ".search", True)
 
-        return _extract(doc, "opensearch:totalResults")
+        return _extract(doc, "totalResults")
 
     def _retrieve_page(self, page_index):
         """Returns the node of matches to be processed"""
