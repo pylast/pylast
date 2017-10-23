@@ -830,7 +830,7 @@ class _Request(object):
 
             try:
                 conn.request(
-                    method='POST', url="http://" + HOST_NAME + HOST_SUBDIR,
+                    method='POST', url="https://" + HOST_NAME + HOST_SUBDIR,
                     body=data, headers=headers)
             except Exception as e:
                 raise NetworkError(self.network, e)

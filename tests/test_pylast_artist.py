@@ -213,7 +213,7 @@ class TestPyLastArtist(PyLastTestCase):
         name_cap = artist1.get_name(properly_capitalized=True)
 
         # Assert
-        self.assertIn("http", image)
+        self.assertIn("https", image)
         self.assertGreater(playcount, 1)
         self.assertTrue(artist1 != artist2)
         self.assertEqual(name.lower(), name_cap.lower())
