@@ -8,8 +8,8 @@ setup(
     author="Amr Hassan <amr.hassan@gmail.com>",
     install_requires=['six'],
     tests_require=['mock', 'pytest', 'coverage', 'pycodestyle', 'pyyaml',
-                   'pyflakes'],
-    description=("A Python interface to Last.fm and Libre.fm"),
+                   'pyflakes', 'flaky'],
+    description="A Python interface to Last.fm and Libre.fm",
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
     classifiers=[

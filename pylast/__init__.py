@@ -244,7 +244,7 @@ class _Network(object):
         """
             Returns an (API_KEY, API_SECRET, SESSION_KEY) tuple.
         """
-        return (self.api_key, self.api_secret, self.session_key)
+        return self.api_key, self.api_secret, self.session_key
 
     def _delay_call(self):
         """

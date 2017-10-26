@@ -239,6 +239,7 @@ class TestPyLastUser(PyLastTestCase):
 
     def helper_get_assert_charts(self, thing, date):
         # Arrange
+        album_chart, track_chart = None, None
         (from_date, to_date) = date
 
         # Act

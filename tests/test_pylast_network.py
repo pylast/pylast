@@ -174,7 +174,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Act
         stringed = str(thing)
-        repr = thing.__repr__()
+        rep = thing.__repr__()
         title = thing.get_title()
         name = thing.get_name()
         playcount = thing.get_playcount()
@@ -182,7 +182,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Assert
         self.assertEqual(stringed, "Test Artist - Test Album")
-        self.assertIn("pylast.Album('Test Artist', 'Test Album',", repr)
+        self.assertIn("pylast.Album('Test Artist', 'Test Album',", rep)
         self.assertEqual(title, name)
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
@@ -195,7 +195,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Act
         stringed = str(thing)
-        repr = thing.__repr__()
+        rep = thing.__repr__()
         title = thing.get_title()
         name = thing.get_name()
         playcount = thing.get_playcount()
@@ -203,7 +203,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Assert
         self.assertEqual(stringed, "Test Artist - test title")
-        self.assertIn("pylast.Track('Test Artist', 'test title',", repr)
+        self.assertIn("pylast.Track('Test Artist', 'test title',", rep)
         self.assertEqual(title, "test title")
         self.assertEqual(title, name)
         self.assertIsInstance(playcount, int)
@@ -275,6 +275,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
     def test_init_with_token(self):
         # Arrange/Act
+        msg = None
         try:
             pylast.LastFMNetwork(
                 api_key=self.__class__.secrets["api_key"],
