@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 
 setup(
@@ -7,14 +7,9 @@ setup(
     version="1.9.0",
     author="Amr Hassan <amr.hassan@gmail.com>",
     install_requires=['six'],
-    # FIXME This can be removed after 2017-09 when 3.3 is no longer supported
-    # and pypy3 uses 3.4 or later, see
-    # https://en.wikipedia.org/wiki/CPython#Version_history
-    extras_require={
-        ':python_version=="3.3"': ["certifi"],
-    },
-    tests_require=['mock', 'pytest', 'coverage', 'pep8', 'pyyaml', 'pyflakes'],
-    description=("A Python interface to Last.fm and Libre.fm"),
+    tests_require=['mock', 'pytest', 'coverage', 'pycodestyle', 'pyyaml',
+                   'pyflakes', 'flaky'],
+    description="A Python interface to Last.fm and Libre.fm",
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
     classifiers=[
@@ -26,10 +21,11 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
     ],
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
     packages=find_packages(exclude=('tests*',)),

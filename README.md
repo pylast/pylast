@@ -1,17 +1,17 @@
 pyLast
 ======
 
-[![Build status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast) 
-[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/) 
-<!--[![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypi.python.org/pypi/pylast/)-->
+[![Build status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast)
+[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.python.org/pypi/pylast/)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/develop/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
 [![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=develop)](https://coveralls.io/github/pylast/pylast?branch=develop)
 [![Code health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
 
 
-A Python interface to [Last.fm](http://www.last.fm/) and other API-compatible websites such as [Libre.fm](http://libre.fm/).
+A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).
 
-Try using the pydoc utility for help on usage or see [test_pylast.py](tests/test_pylast.py) for examples.
+Use the pydoc utility for help on usage or see [tests/](tests/) for examples.
 
 Installation
 ------------
@@ -20,6 +20,13 @@ Install via pip:
 
     pip install pylast
 
+Note:
+
+* pyLast >= 2.0.0 supports Python 2.7.10+ and 3.4, 3.5, 3.6.
+* pyLast >= 1.7.0 < 2.0.0 supports Python 2.7, 3.3, 3.4, 3.5, 3.6.
+* pyLast >= 1.0.0 < 1.7.0 supports Python 2.7, 3.3, 3.4.
+* pyLast >= 0.5 < 1.0.0 supports Python 2, 3.
+* pyLast < 0.5 supports Python 2.
 
 Features
 --------
@@ -43,7 +50,7 @@ Here's some simple code example to get you started. In order to create any objec
 import pylast
 
 # You have to have your own unique two values for API_KEY and API_SECRET
-# Obtain yours from http://www.last.fm/api/account/create for Last.fm
+# Obtain yours from https://www.last.fm/api/account/create for Last.fm
 API_KEY = "b25b959554ed76058ac220b7b2e0a026"  # this is a sample key
 API_SECRET = "425b55975eed76058ac220b7b4e8a054"
 
@@ -67,12 +74,12 @@ track.add_tags(("awesome", "favorite"))
 # to get more help about anything and see examples of how it works
 ```
 
-More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [test_pylast.py](test_pylast.py).
+More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [tests/](tests/).
 
 Testing
 -------
 
-[tests/test_pylast.py](tests/test_pylast.py) contains integration tests with Last.fm, and plenty of code examples. Unit tests are also in the [tests/](tests/) directory.
+The [tests/](tests/) directory contains integration and unit tests with Last.fm, and plenty of code examples.
 
 For integration tests you need a test account at Last.fm that will become cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
@@ -86,17 +93,17 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 To run all unit and integration tests:
 ```sh
 pip install pytest flaky mock
-py.test
+pytest
 ```
 
 Or run just one test case:
 ```sh
-py.test -k test_scrobble
+pytest -k test_scrobble
 ```
 
 To run with coverage:
 ```sh
-py.test -v --cov pylast --cov-report term-missing
+pytest -v --cov pylast --cov-report term-missing
 coverage report # for command-line report
 coverage html   # for HTML report
 open htmlcov/index.html
