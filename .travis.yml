@@ -31,6 +31,8 @@ matrix:
       env: TOXENV=pypy3
     - python: pypy
       env: TOXENV=pypy
+    - python: 3.6-dev
+      env: TOXENV=py36dev
   allow_failures:
     - env: TOXENV=pypy
     - env: TOXENV=pypy3
