@@ -3,6 +3,7 @@ pyLast
 
 [![Build status](https://travis-ci.org/pylast/pylast.svg?branch=develop)](https://travis-ci.org/pylast/pylast)
 [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.python.org/pypi/pylast/)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/develop/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
 [![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=develop)](https://coveralls.io/github/pylast/pylast?branch=develop)
 [![Code health](https://landscape.io/github/pylast/pylast/develop/landscape.svg)](https://landscape.io/github/hugovk/pylast/develop)
