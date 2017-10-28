@@ -93,17 +93,17 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 To run all unit and integration tests:
 ```sh
 pip install pytest flaky mock
-py.test
+pytest
 ```
 
 Or run just one test case:
 ```sh
-py.test -k test_scrobble
+pytest -k test_scrobble
 ```
 
 To run with coverage:
 ```sh
-py.test -v --cov pylast --cov-report term-missing
+pytest -v --cov pylast --cov-report term-missing
 coverage report # for command-line report
 coverage html   # for HTML report
 open htmlcov/index.html
