@@ -11,7 +11,7 @@ pyLast
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).
 
-Try using the pydoc utility for help on usage or see [test_pylast.py](tests/test_pylast.py) for examples.
+Use the pydoc utility for help on usage or see [tests/](tests/) for examples.
 
 Installation
 ------------
@@ -74,12 +74,12 @@ track.add_tags(("awesome", "favorite"))
 # to get more help about anything and see examples of how it works
 ```
 
-More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [test_pylast.py](test_pylast.py).
+More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [tests/](tests/).
 
 Testing
 -------
 
-[tests/test_pylast.py](tests/test_pylast.py) contains integration tests with Last.fm, and plenty of code examples. Unit tests are also in the [tests/](tests/) directory.
+The [tests/](tests/) directory contains integration and unit tests with Last.fm, and plenty of code examples.
 
 For integration tests you need a test account at Last.fm that will become cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
 
