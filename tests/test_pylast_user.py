@@ -87,7 +87,7 @@ class TestPyLastUser(PyLastTestCase):
 
         # Assert
         # Just check date because of timezones
-        self.assertEqual(unixtime_registered, u"1037793040")
+        self.assertEqual(unixtime_registered, 1037793040)
 
     def test_get_countryless_user(self):
         # Arrange
