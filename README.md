@@ -19,6 +19,14 @@ Installation
 Install via pip:
 
     pip install pylast
+    
+Install latest development version:
+
+    pip install -U git+https://github.com/pylast/pylast.git
+
+Or from requirements.txt:
+
+    -e git://github.com/pylast/pylast.git#egg=pylast
 
 Note:
 
