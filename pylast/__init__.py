@@ -2409,12 +2409,19 @@ class User(_BaseObject, _Chartable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def get_image(self):
-        """Returns the user's avatar."""
+    def get_image(self, size=COVER_EXTRA_LARGE):
+        """
+        Returns the user's avatar
+        size can be one of:
+            COVER_EXTRA_LARGE
+            COVER_LARGE
+            COVER_MEDIUM
+            COVER_SMALL
+        """
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
-        return _extract(doc, "image")
+        return _extract_all(doc, "image")[size]
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the user page on the network.
