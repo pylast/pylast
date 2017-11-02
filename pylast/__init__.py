@@ -86,6 +86,7 @@ DOMAIN_RUSSIAN = 9
 DOMAIN_JAPANESE = 10
 DOMAIN_CHINESE = 11
 
+# COVER_X is deprecated since 2.1.0 and will be removed in a future version
 SIZE_SMALL = COVER_SMALL = 0
 SIZE_MEDIUM = COVER_MEDIUM = 1
 SIZE_LARGE = COVER_LARGE = 2
@@ -1575,7 +1576,7 @@ class Artist(_BaseObject, _Taggable):
         return _extract(
             self._request(self.ws_prefix + ".getCorrection"), "name")
 
-    def get_cover_image(self, size=SIZE_MEGA):
+    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
         Returns a uri to the cover image
         size can be one of:
