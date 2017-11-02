@@ -2288,8 +2288,8 @@ class User(_BaseObject, _Chartable):
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
-        return doc.getElementsByTagName(
-            "registered")[0].getAttribute("unixtime")
+        return int(doc.getElementsByTagName(
+            "registered")[0].getAttribute("unixtime"))
 
     def get_tagged_albums(self, tag, limit=None, cacheable=True):
         """Returns the albums tagged by a user."""
