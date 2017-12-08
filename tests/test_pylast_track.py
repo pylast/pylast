@@ -23,8 +23,8 @@ class TestPyLastTrack(PyLastTestCase):
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
-        self.assertEqual(str(loved[0].track.artist), "Test Artist")
-        self.assertEqual(str(loved[0].track.title), "test title")
+        self.assertEqual(str(loved[0].track.artist).lower(), "test artist")
+        self.assertEqual(str(loved[0].track.title).lower(), "test title")
 
     def test_unlove(self):
         # Arrange

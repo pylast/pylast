@@ -86,11 +86,12 @@ DOMAIN_RUSSIAN = 9
 DOMAIN_JAPANESE = 10
 DOMAIN_CHINESE = 11
 
-COVER_SMALL = 0
-COVER_MEDIUM = 1
-COVER_LARGE = 2
-COVER_EXTRA_LARGE = 3
-COVER_MEGA = 4
+# COVER_X is deprecated since 2.1.0 and will be removed in a future version
+SIZE_SMALL = COVER_SMALL = 0
+SIZE_MEDIUM = COVER_MEDIUM = 1
+SIZE_LARGE = COVER_LARGE = 2
+SIZE_EXTRA_LARGE = COVER_EXTRA_LARGE = 3
+SIZE_MEGA = COVER_MEGA = 4
 
 IMAGES_ORDER_POPULARITY = "popularity"
 IMAGES_ORDER_DATE = "dateadded"
@@ -1468,14 +1469,14 @@ class Album(_Opus):
     def __init__(self, artist, title, network, username=None):
         super(Album, self).__init__(artist, title, network, "album", username)
 
-    def get_cover_image(self, size=COVER_EXTRA_LARGE):
+    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
         Returns a uri to the cover image
         size can be one of:
-            COVER_EXTRA_LARGE
-            COVER_LARGE
-            COVER_MEDIUM
-            COVER_SMALL
+            SIZE_EXTRA_LARGE
+            SIZE_LARGE
+            SIZE_MEDIUM
+            SIZE_SMALL
         """
 
         return _extract_all(
@@ -1575,15 +1576,15 @@ class Artist(_BaseObject, _Taggable):
         return _extract(
             self._request(self.ws_prefix + ".getCorrection"), "name")
 
-    def get_cover_image(self, size=COVER_MEGA):
+    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
         Returns a uri to the cover image
         size can be one of:
-            COVER_MEGA
-            COVER_EXTRA_LARGE
-            COVER_LARGE
-            COVER_MEDIUM
-            COVER_SMALL
+            SIZE_MEGA
+            SIZE_EXTRA_LARGE
+            SIZE_LARGE
+            SIZE_MEDIUM
+            SIZE_SMALL
         """
 
         return _extract_all(
@@ -2287,8 +2288,8 @@ class User(_BaseObject, _Chartable):
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
-        return doc.getElementsByTagName(
-            "registered")[0].getAttribute("unixtime")
+        return int(doc.getElementsByTagName(
+            "registered")[0].getAttribute("unixtime"))
 
     def get_tagged_albums(self, tag, limit=None, cacheable=True):
         """Returns the albums tagged by a user."""
@@ -2409,12 +2410,19 @@ class User(_BaseObject, _Chartable):
         return self._get_things(
             "getTopTracks", "track", Track, params, cacheable)
 
-    def get_image(self):
-        """Returns the user's avatar."""
+    def get_image(self, size=SIZE_EXTRA_LARGE):
+        """
+        Returns the user's avatar
+        size can be one of:
+            SIZE_EXTRA_LARGE
+            SIZE_LARGE
+            SIZE_MEDIUM
+            SIZE_SMALL
+        """
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
-        return _extract(doc, "image")
+        return _extract_all(doc, "image")[size]
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the url of the user page on the network.

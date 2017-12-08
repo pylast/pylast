@@ -87,7 +87,7 @@ class TestPyLastUser(PyLastTestCase):
 
         # Assert
         # Just check date because of timezones
-        self.assertEqual(unixtime_registered, u"1037793040")
+        self.assertEqual(unixtime_registered, 1037793040)
 
     def test_get_countryless_user(self):
         # Arrange
@@ -399,7 +399,7 @@ class TestPyLastUser(PyLastTestCase):
         title = track.get_title(properly_capitalized=True)
 
         # Assert
-        self.assertEqual(title, "test title")
+        self.assertEqual(title, "Test Title")
 
     def test_track_listener_count(self):
         # Arrange
