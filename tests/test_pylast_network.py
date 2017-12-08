@@ -14,7 +14,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
     def test_scrobble(self):
         # Arrange
-        artist = "Test Artist"
+        artist = "test artist"
         title = "test title"
         timestamp = self.unix_timestamp()
         lastfm_user = self.network.get_user(self.username)
@@ -25,8 +25,8 @@ class TestPyLastNetwork(PyLastTestCase):
         # Assert
         # limit=2 to ignore now-playing:
         last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
-        self.assertEqual(str(last_scrobble.track.artist), str(artist))
-        self.assertEqual(str(last_scrobble.track.title),  str(title))
+        self.assertEqual(str(last_scrobble.track.artist).lower(), artist)
+        self.assertEqual(str(last_scrobble.track.title).lower(),  title)
         self.assertEqual(str(last_scrobble.timestamp),    str(timestamp))
 
     def test_update_now_playing(self):
@@ -44,8 +44,8 @@ class TestPyLastNetwork(PyLastTestCase):
         # Assert
         current_track = lastfm_user.get_now_playing()
         self.assertIsNotNone(current_track)
-        self.assertEqual(str(current_track.title), "test title")
-        self.assertEqual(str(current_track.artist), "Test Artist")
+        self.assertEqual(str(current_track.title).lower(), "test title")
+        self.assertEqual(str(current_track.artist).lower(), "test artist")
 
     def test_enable_rate_limiting(self):
         # Arrange

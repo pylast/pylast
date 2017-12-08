@@ -399,7 +399,7 @@ class TestPyLastUser(PyLastTestCase):
         title = track.get_title(properly_capitalized=True)
 
         # Assert
-        self.assertEqual(title, "test title")
+        self.assertEqual(title, "Test Title")
 
     def test_track_listener_count(self):
         # Arrange
