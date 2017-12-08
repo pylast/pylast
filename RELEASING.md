@@ -1,6 +1,6 @@
 # Release Checklist
 
-* [ ] Get [master to the appropriate code release state](https://github.com/pylast/pylast/compare/master...develop?expand=1&title=Merge%20develop%20into%20master). [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for all merges to master.
+* [ ] Get master to the appropriate code release state. [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for all merges to master.
 * [ ] Remove `.dev0` suffix from version in `pylast/__init__.py` and `setup.py` and commit:
 ```bash
 git checkout master
@@ -31,11 +31,5 @@ git checkout master
 edit pylast/__init__.py setup.py
 git add pylast/__init__.py setup.py
 git commit -m "Start new release cycle"
-git push
-```
-* [ ] Update develop branch from master:
-```bash
-git checkout develop
-git merge master --ff-only
 git push
 ```
