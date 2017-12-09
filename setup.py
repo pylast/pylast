@@ -27,7 +27,7 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+    python_requires='>=2.7.10, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
     packages=find_packages(exclude=('tests*',)),
     license="Apache2"
