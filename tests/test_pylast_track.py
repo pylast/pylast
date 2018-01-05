@@ -163,12 +163,13 @@ class TestPyLastTrack(PyLastTestCase):
     def test_track_get_similar_with_limit(self):
         # Arrange
         track = pylast.Track("Cher", "Believe", self.network)
-         
+
         # Act
         similar = track.get_similar(limit=5)
-         
+
         # Assert
-        self.assertEqual(len(similar),5)
+        self.assertEqual(len(similar), 5)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
