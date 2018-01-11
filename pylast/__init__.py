@@ -1046,11 +1046,14 @@ class _BaseObject(object):
             self, method, thing, thing_type, params=None, cacheable=True):
         """Returns a list of the most played thing_types by this thing."""
 
-        doc = self._request(
-            self.ws_prefix + "." + method, cacheable, params)
-
+        limit = params.get("limit", 1)
         seq = []
-        for node in doc.getElementsByTagName(thing):
+        for node in _collect_nodes(
+                limit,
+                self,
+                self.ws_prefix + "." + method,
+                cacheable,
+                params):
             title = _extract(node, "name")
             artist = _extract(node, "name", 1)
             playcount = _number(_extract(node, "playcount"))

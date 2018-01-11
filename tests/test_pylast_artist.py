@@ -86,6 +86,42 @@ class TestPyLastArtist(PyLastTestCase):
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Album)
 
+    def test_artist_top_albums_limit_1(self):
+        # Arrange
+        limit = 1
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_albums(limit=limit)
+
+        # Assert
+        self.assertEqual(len(things), 1)
+
+    def test_artist_top_albums_limit_50(self):
+        # Arrange
+        limit = 50
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_albums(limit=limit)
+
+        # Assert
+        self.assertEqual(len(things), 50)
+
+    def test_artist_top_albums_limit_100(self):
+        # Arrange
+        limit = 100
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_albums(limit=limit)
+
+        # Assert
+        self.assertEqual(len(things), 100)
+
     def test_artist_listener_count(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
