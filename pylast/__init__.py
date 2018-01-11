@@ -713,6 +713,10 @@ class _ShelfCacheBackend(object):
     """Used as a backend for caching cacheable requests."""
     def __init__(self, file_path=None):
         self.shelf = shelve.open(file_path)
+        self.cache_keys = set(self.shelf.keys())
+
+    def __contains__(self, key):
+        return key in self.cache_keys
 
     def __iter__(self):
         return iter(self.shelf.keys())
@@ -721,6 +725,7 @@ class _ShelfCacheBackend(object):
         return self.shelf[key]
 
     def set_xml(self, key, xml_string):
+        self.cache_keys.add(key)
         self.shelf[key] = xml_string
 
 
