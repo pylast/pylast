@@ -65,3 +65,6 @@ target/
 
 # JetBrains
 .idea/
+
+# Clone Digger
+output.html
