@@ -251,7 +251,7 @@ class TestPyLastArtist(PyLastTestCase):
         # Assert
         self.assertIn("https", image)
         self.assertGreater(playcount, 1)
-        self.assertTrue(artist1 != artist2)
+        self.assertNotEqual(artist1, artist2)
         self.assertEqual(name.lower(), name_cap.lower())
         self.assertEqual(url, "https://www.last.fm/music/radiohead")
         self.assertEqual(mbid, "a74b1b7f-71a5-4011-9441-d0b5e4122711")
@@ -263,7 +263,7 @@ class TestPyLastArtist(PyLastTestCase):
         artist2 = pylast.Artist("Test Artist", self.network)
 
         # Act / Assert
-        self.assertFalse(artist1 == artist2)
+        self.assertNotEqual(artist1, artist2)
 
     def test_artist_ne_none_is_true(self):
         # Arrange
@@ -271,7 +271,7 @@ class TestPyLastArtist(PyLastTestCase):
         artist2 = pylast.Artist("Test Artist", self.network)
 
         # Act / Assert
-        self.assertTrue(artist1 != artist2)
+        self.assertNotEqual(artist1, artist2)
 
     def test_artist_get_correction(self):
         # Arrange

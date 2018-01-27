@@ -54,8 +54,8 @@ class TestPyLastTag(PyLastTestCase):
         self.assertIn("pylast.Tag", tag_repr)
         self.assertIn("blues", tag_repr)
         self.assertEqual("blues", name)
-        self.assertTrue(tag1 == tag1)
-        self.assertTrue(tag1 != tag2)
+        self.assertEqual(tag1, tag1)
+        self.assertNotEqual(tag1, tag2)
         self.assertEqual(url, "https://www.last.fm/tag/blues")
 
 
