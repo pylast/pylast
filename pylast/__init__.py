@@ -1398,7 +1398,7 @@ class _Opus(_BaseObject, _Taggable):
         return (a == b) and (c == d)
 
     def __ne__(self, other):
-        return not self.__eq__(other)
+        return not self == other
 
     def _get_params(self):
         return {
@@ -1562,7 +1562,7 @@ class Artist(_BaseObject, _Taggable):
             return False
 
     def __ne__(self, other):
-        return not self.__eq__(other)
+        return not self == other
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -1750,7 +1750,7 @@ class Country(_BaseObject):
         return self.get_name().lower() == other.get_name().lower()
 
     def __ne__(self, other):
-        return self.get_name() != other.get_name()
+        return not self == other
 
     def _get_params(self):  # TODO can move to _BaseObject
         return {'country': self.get_name()}
@@ -1878,7 +1878,7 @@ class Tag(_BaseObject, _Chartable):
         return self.get_name().lower() == other.get_name().lower()
 
     def __ne__(self, other):
-        return self.get_name().lower() != other.get_name().lower()
+        return not self == other
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -2081,17 +2081,14 @@ class User(_BaseObject, _Chartable):
     def __str__(self):
         return self.get_name()
 
-    def __eq__(self, another):
-        if isinstance(another, User):
-            return self.get_name() == another.get_name()
+    def __eq__(self, other):
+        if isinstance(other, User):
+            return self.get_name() == other.get_name()
         else:
             return False
 
-    def __ne__(self, another):
-        if isinstance(another, User):
-            return self.get_name() != another.get_name()
-        else:
-            return True
+    def __ne__(self, other):
+        return not self == other
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}

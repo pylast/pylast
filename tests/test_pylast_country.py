@@ -32,8 +32,8 @@ class TestPyLastCountry(PyLastTestCase):
         self.assertIn("Italy", rep)
         self.assertIn("pylast.Country", rep)
         self.assertEqual(text, "Italy")
-        self.assertTrue(country1 == country1)
-        self.assertTrue(country1 != country2)
+        self.assertEqual(country1, country1)
+        self.assertNotEqual(country1, country2)
         self.assertEqual(url, "https://www.last.fm/place/italy")
 
 

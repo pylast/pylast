@@ -41,16 +41,8 @@ class TestPyLastUser(PyLastTestCase):
 
         # Act / Assert
         self.assertEqual(user_1a, user_1b)
-        self.assertTrue(user_1a == user_1b)
-        self.assertFalse(user_1a != user_1b)
-
         self.assertNotEqual(user_1a, user_2)
-        self.assertTrue(user_1a != user_2)
-        self.assertFalse(user_1a == user_2)
-
         self.assertNotEqual(user_1a, not_a_user)
-        self.assertTrue(user_1a != not_a_user)
-        self.assertFalse(user_1a == not_a_user)
 
     def test_get_name(self):
         # Arrange
@@ -431,7 +423,7 @@ class TestPyLastUser(PyLastTestCase):
         track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
-        self.assertFalse(track1 == track2)
+        self.assertNotEqual(track1, track2)
 
     def test_track_ne_none_is_true(self):
         # Arrange
@@ -439,7 +431,7 @@ class TestPyLastUser(PyLastTestCase):
         track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
-        self.assertTrue(track1 != track2)
+        self.assertNotEqual(track1, track2)
 
     def test_track_get_correction(self):
         # Arrange
@@ -459,7 +451,7 @@ class TestPyLastUser(PyLastTestCase):
         mbid = track.get_mbid()
 
         # Assert
-        self.assertEqual(mbid, None)
+        self.assertIsNone(mbid)
 
     def test_get_playcount(self):
         # Arrange

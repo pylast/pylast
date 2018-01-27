@@ -89,7 +89,7 @@ class TestPyLastAlbum(PyLastTestCase):
         album2 = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act / Assert
-        self.assertFalse(album1 == album2)
+        self.assertNotEqual(album1, album2)
 
     def test_album_ne_none_is_true(self):
         # Arrange
@@ -97,7 +97,7 @@ class TestPyLastAlbum(PyLastTestCase):
         album2 = pylast.Album("Test Artist", "Test Album", self.network)
 
         # Act / Assert
-        self.assertTrue(album1 != album2)
+        self.assertNotEqual(album1, album2)
 
     def test_get_cover_image(self):
         # Arrange
