@@ -39,17 +39,16 @@ __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
 
-if sys.version_info.major == 3:
-    import html.entities as htmlentitydefs
-    from http.client import HTTPSConnection
-    from urllib.parse import quote_plus as url_quote_plus
-
-    unichr = chr
-
-elif sys.version_info.major == 2:
+if sys.version_info.major == 2:
     import htmlentitydefs
     from httplib import HTTPSConnection
     from urllib import quote_plus as url_quote_plus
+else:
+    import html.entities as htmlentitydefs
+    from http.client import HTTPSConnection
+    from urllib.parse import quote_plus as url_quote_plus
+    unichr = chr
+
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
