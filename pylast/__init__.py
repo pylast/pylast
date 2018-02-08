@@ -39,17 +39,16 @@ __license__ = "apache2"
 __email__ = 'amr.hassan@gmail.com'
 
 
-if sys.version_info[0] == 3:
-    import html.entities as htmlentitydefs
-    from http.client import HTTPSConnection
-    from urllib.parse import quote_plus as url_quote_plus
-
-    unichr = chr
-
-elif sys.version_info[0] == 2:
+if sys.version_info.major == 2:
     import htmlentitydefs
     from httplib import HTTPSConnection
     from urllib import quote_plus as url_quote_plus
+else:
+    import html.entities as htmlentitydefs
+    from http.client import HTTPSConnection
+    from urllib.parse import quote_plus as url_quote_plus
+    unichr = chr
+
 
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
@@ -2608,7 +2607,7 @@ def _string(string):
     if isinstance(string, str):
         return string
     casted = six.text_type(string)
-    if sys.version_info[0] == 2:
+    if sys.version_info.major == 2:
         casted = casted.encode("utf-8")
     return casted
 
