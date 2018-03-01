@@ -201,7 +201,7 @@ class TestPyLastTrack(PyLastTestCase):
 
     def test_album_tracks(self):
         # Arrange
-        album = pylast.Album("Test Artist", "Test Release", self.network)
+        album = pylast.Album("Test Artist", "Test", self.network)
 
         # Act
         tracks = album.get_tracks()
@@ -210,7 +210,7 @@ class TestPyLastTrack(PyLastTestCase):
         # Assert
         self.assertIsInstance(tracks, list)
         self.assertIsInstance(tracks[0], pylast.Track)
-        self.assertEqual(len(tracks), 4)
+        self.assertEqual(len(tracks), 1)
         self.assertTrue(url.startswith("https://www.last.fm/music/test"))
 
     def test_track_eq_none_is_false(self):
