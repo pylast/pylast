@@ -170,6 +170,85 @@ class TestPyLastTrack(PyLastTestCase):
         self.assertGreaterEqual(len(track.get_similar(limit=None)), 23)
         self.assertGreaterEqual(len(track.get_similar(limit=0)), 23)
 
+    def test_tracks_notequal(self):
+        # Arrange
+        track1 = pylast.Track("Test Artist", "test title", self.network)
+        track2 = pylast.Track("Test Artist", "Test Track", self.network)
+
+        # Act
+        # Assert
+        self.assertNotEqual(track1, track2)
+
+    def test_track_title_prop_caps(self):
+        # Arrange
+        track = pylast.Track("test artist", "test title", self.network)
+
+        # Act
+        title = track.get_title(properly_capitalized=True)
+
+        # Assert
+        self.assertEqual(title, "Test Title")
+
+    def test_track_listener_count(self):
+        # Arrange
+        track = pylast.Track("test artist", "test title", self.network)
+
+        # Act
+        count = track.get_listener_count()
+
+        # Assert
+        self.assertGreater(count, 21)
+
+    def test_album_tracks(self):
+        # Arrange
+        album = pylast.Album("Test Artist", "Test", self.network)
+
+        # Act
+        tracks = album.get_tracks()
+        url = tracks[0].get_url()
+
+        # Assert
+        self.assertIsInstance(tracks, list)
+        self.assertIsInstance(tracks[0], pylast.Track)
+        self.assertEqual(len(tracks), 1)
+        self.assertTrue(url.startswith("https://www.last.fm/music/test"))
+
+    def test_track_eq_none_is_false(self):
+        # Arrange
+        track1 = None
+        track2 = pylast.Track("Test Artist", "test title", self.network)
+
+        # Act / Assert
+        self.assertNotEqual(track1, track2)
+
+    def test_track_ne_none_is_true(self):
+        # Arrange
+        track1 = None
+        track2 = pylast.Track("Test Artist", "test title", self.network)
+
+        # Act / Assert
+        self.assertNotEqual(track1, track2)
+
+    def test_track_get_correction(self):
+        # Arrange
+        track = pylast.Track("Guns N' Roses", "mrbrownstone", self.network)
+
+        # Act
+        corrected_track_name = track.get_correction()
+
+        # Assert
+        self.assertEqual(corrected_track_name, "Mr. Brownstone")
+
+    def test_track_with_no_mbid(self):
+        # Arrange
+        track = pylast.Track("Static-X", "Set It Off", self.network)
+
+        # Act
+        mbid = track.get_mbid()
+
+        # Assert
+        self.assertIsNone(mbid)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
