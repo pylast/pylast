@@ -2016,13 +2016,17 @@ class Track(_Opus):
 
         self._request(self.ws_prefix + '.unlove')
 
-    def get_similar(self):
+    def get_similar(self, limit=None):
         """
         Returns similar tracks for this track on the network,
         based on listening data.
         """
 
-        doc = self._request(self.ws_prefix + '.getSimilar', True)
+        params = self._get_params()
+        if limit:
+            params['limit'] = limit
+
+        doc = self._request(self.ws_prefix + '.getSimilar', True, params)
 
         seq = []
         for node in doc.getElementsByTagName(self.ws_prefix):
