@@ -160,6 +160,16 @@ class TestPyLastTrack(PyLastTestCase):
                 break
         self.assertTrue(found)
 
+    def test_track_get_similar_limits(self):
+        # Arrange
+        track = pylast.Track("Cher", "Believe", self.network)
+
+        # Act/Assert
+        self.assertEqual(len(track.get_similar(limit=20)), 20)
+        self.assertLessEqual(len(track.get_similar(limit=10)), 10)
+        self.assertGreaterEqual(len(track.get_similar(limit=None)), 23)
+        self.assertGreaterEqual(len(track.get_similar(limit=0)), 23)
+
 
 if __name__ == '__main__':
     unittest.main(failfast=True)
