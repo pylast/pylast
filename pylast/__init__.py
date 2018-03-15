@@ -731,7 +731,10 @@ class _ShelfCacheBackend(object):
 class _Request(object):
     """Representing an abstract web service operation."""
 
-    def __init__(self, network, method_name, params={}):
+    def __init__(self, network, method_name, params=None):
+
+        if params is None:
+            params = {}
 
         self.network = network
         self.params = {}
