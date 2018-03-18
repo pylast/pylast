@@ -214,7 +214,7 @@ class TestPyLastUser(PyLastTestCase):
 
     def test_user_top_tracks(self):
         # Arrange
-        lastfm_user = self.network.get_user(self.username)
+        lastfm_user = self.network.get_user("RJ")
 
         # Act
         things = lastfm_user.get_top_tracks(limit=2)
