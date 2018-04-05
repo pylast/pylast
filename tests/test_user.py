@@ -388,9 +388,10 @@ class TestPyLastUser(PyLastTestCase):
         # Arrange
         user = self.network.get_user("RJ")
 
-        # Act / Assert
+        # Act
         image = user.get_image()
 
+        # Assert
         self.assertTrue(image.startswith("https://"))
         self.assertTrue(image.endswith(".png"))
 
@@ -398,10 +399,35 @@ class TestPyLastUser(PyLastTestCase):
         # Arrange
         user = self.network.get_user("RJ")
 
-        # Act / Assert
+        # Act
         url = user.get_url()
 
+        # Assert
         self.assertEqual(url, "https://www.last.fm/user/rj")
+
+    def test_get_weekly_artist_charts(self):
+        # Arrange
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        charts = user.get_weekly_artist_charts()
+        artist, weight = charts[0]
+
+        # Assert
+        self.assertIsNotNone(artist)
+        self.assertIsInstance(artist.network, pylast.LastFMNetwork)
+
+    def test_get_weekly_track_charts(self):
+        # Arrange
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        charts = user.get_weekly_track_charts()
+        track, weight = charts[0]
+
+        # Assert
+        self.assertIsNotNone(track)
+        self.assertIsInstance(track.network, pylast.LastFMNetwork)
 
 
 if __name__ == '__main__':
