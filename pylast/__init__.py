@@ -1169,8 +1169,15 @@ class _Chartable(object):
 
         seq = []
         for node in doc.getElementsByTagName(chart_kind.lower()):
-            item = chart_type(
-                _extract(node, "artist"), _extract(node, "name"), self.network)
+            if chart_kind == "artist":
+                item = chart_type(
+                    _extract(node, "name"),
+                    self.network)
+            else:
+                item = chart_type(
+                    _extract(node, "artist"),
+                    _extract(node, "name"),
+                    self.network)
             weight = _number(_extract(node, "playcount"))
             seq.append(TopItem(item, weight))
 
