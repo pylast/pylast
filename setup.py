@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 from setuptools import find_packages, setup
 
+with open("README.md") as f:
+    long_description = f.read()
 
 setup(
     name="pylast",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     version="2.2.0.dev0",
     author="Amr Hassan <amr.hassan@gmail.com> and Contributors",
     install_requires=['six'],
