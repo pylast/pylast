@@ -1,8 +1,8 @@
 pyLast
 ======
 
-[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.python.org/pypi/pylast/)
-[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.python.org/pypi/pylast/)
+[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.org/project/pylast/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
 [![Build status](https://travis-ci.org/pylast/pylast.svg?branch=master)](https://travis-ci.org/pylast/pylast)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/master/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
 [![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=master)](https://coveralls.io/github/pylast/pylast?branch=master)
