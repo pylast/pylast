@@ -32,14 +32,15 @@ import tempfile
 import time
 import xml.dom
 
-__version__ = "2.4.0.dev0"
+from . import version
+
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = (
     "Copyright (C) 2008-2010 Amr Hassan, 2013-2018 hugovk, " "2017 Mice Pápai"
 )
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
-
+__version__ = version.__version__
 
 if sys.version_info.major == 2:
     import htmlentitydefs
