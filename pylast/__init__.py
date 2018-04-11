@@ -857,8 +857,10 @@ class _Request(object):
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
-        self._check_response_for_errors(response_text)
-        conn.close()
+        try:
+            self._check_response_for_errors(response_text)
+        finally:
+            conn.close()
         return response_text
 
     def execute(self, cacheable=False):
