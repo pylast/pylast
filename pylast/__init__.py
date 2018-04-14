@@ -1369,7 +1369,8 @@ class _Opus(_BaseObject, _Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, artist, title, network, ws_prefix, username=None, images=None):
+    def __init__(self, artist, title, network, ws_prefix, username=None,
+                 images=None):
         """
         Create an opus instance.
         # Parameters:
@@ -1487,7 +1488,8 @@ class Album(_Opus):
     __hash__ = _Opus.__hash__
 
     def __init__(self, artist, title, network, username=None, images=None):
-        super(Album, self).__init__(artist, title, network, "album", username, images)
+        super(Album, self).__init__(artist, title, network, "album", username,
+                                    images)
 
     def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
@@ -1500,8 +1502,8 @@ class Album(_Opus):
         """
         if not self.images:
             return _extract_all(
-                self._request(
-                    self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+                self._request(self.ws_prefix + ".getInfo", cacheable=True),
+                'image')[size]
         else:
             return self.images[size]
 
