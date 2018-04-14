@@ -732,6 +732,7 @@ class _Request(object):
     """Representing an abstract web service operation."""
 
     def __init__(self, network, method_name, params=None):
+        print(method_name)
 
         if params is None:
             params = {}
@@ -1501,11 +1502,10 @@ class Album(_Opus):
             SIZE_SMALL
         """
         if not self.images:
-            return _extract_all(
+            self.images = _extract_all(
                 self._request(self.ws_prefix + ".getInfo", cacheable=True),
-                'image')[size]
-        else:
-            return self.images[size]
+                'image')
+        return self.images[size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
