@@ -903,7 +903,7 @@ class SessionKeyGenerator(object):
         a. network = get_*_network(API_KEY, API_SECRET)
         b. sg = SessionKeyGenerator(network)
         c. url = sg.get_web_auth_url()
-        d. Ask the user to open the url and authorize you, and wait for it.
+        d. Ask the user to open the URL and authorize you, and wait for it.
         e. session_key = sg.get_web_auth_session_key(url)
     2) Username and Password Authentication:
         a. network = get_*_network(API_KEY, API_SECRET)
@@ -961,7 +961,7 @@ class SessionKeyGenerator(object):
 
     def get_web_auth_session_key(self, url, token=""):
         """
-        Retrieves the session key of a web authorization process by its url.
+        Retrieves the session key of a web authorization process by its URL.
         """
 
         if url in self.web_auth_tokens.keys():
@@ -1498,7 +1498,7 @@ class Album(_Opus):
 
     def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
-        Returns a uri to the cover image
+        Returns a URI to the cover image
         size can be one of:
             SIZE_EXTRA_LARGE
             SIZE_LARGE
@@ -1606,7 +1606,7 @@ class Artist(_BaseObject, _Taggable):
 
     def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
-        Returns a uri to the cover image
+        Returns a URI to the cover image
         size can be one of:
             SIZE_MEGA
             SIZE_EXTRA_LARGE
@@ -1724,7 +1724,7 @@ class Artist(_BaseObject, _Taggable):
             "getTopTracks", "track", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the artist page on the network.
+        """Returns the URL of the artist page on the network.
         # Parameters:
         * domain_name: The network's language domain. Possible values:
           o DOMAIN_ENGLISH
@@ -1800,7 +1800,7 @@ class Country(_BaseObject):
             "getTopTracks", "track", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the country page on the network.
+        """Returns the URL of the country page on the network.
         * domain_name: The network's language domain. Possible values:
           o DOMAIN_ENGLISH
           o DOMAIN_GERMAN
@@ -1945,7 +1945,7 @@ class Tag(_BaseObject, _Chartable):
         return _extract_top_artists(doc, self.network)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the tag page on the network.
+        """Returns the URL of the tag page on the network.
         * domain_name: The network's language domain. Possible values:
           o DOMAIN_ENGLISH
           o DOMAIN_GERMAN
@@ -2454,7 +2454,7 @@ class User(_BaseObject, _Chartable):
         return _extract_all(doc, "image")[size]
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
-        """Returns the url of the user page on the network.
+        """Returns the URL of the user page on the network.
         * domain_name: The network's language domain. Possible values:
           o DOMAIN_ENGLISH
           o DOMAIN_GERMAN
@@ -2767,7 +2767,7 @@ def _extract_tracks(doc, network):
 
 
 def _url_safe(text):
-    """Does all kinds of tricks on a text to make it safe to use in a url."""
+    """Does all kinds of tricks on a text to make it safe to use in a URL."""
 
     return url_quote_plus(url_quote_plus(_string(text))).lower()
 
