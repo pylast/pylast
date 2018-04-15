@@ -133,5 +133,5 @@ network = pylast.LastFMNetwork(...)
 To enable from pytest:
 
 ```sh
-pytest -k test_album_search_images --log-cli-level debug
+pytest --log-cli-level debug -k test_album_search_images
 ```

@@ -1552,7 +1552,7 @@ class Artist(_BaseObject, _Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, name, network, username=None):
+    def __init__(self, name, network, username=None, images=None):
         """Create an artist object.
         # Parameters:
             * name str: The artist's name.
@@ -1563,6 +1563,7 @@ class Artist(_BaseObject, _Taggable):
 
         self.name = name
         self.username = username
+        self.images = images
 
     def __repr__(self):
         return "pylast.Artist(%s, %s)" % (
@@ -1615,8 +1616,11 @@ class Artist(_BaseObject, _Taggable):
             SIZE_SMALL
         """
 
-        return _extract_all(
-            self._request(self.ws_prefix + ".getInfo", True), "image")[size]
+        if not self.images:
+            self.images = _extract_all(
+                self._request(self.ws_prefix + ".getInfo", cacheable=True),
+                "image")
+        return self.images[size]
 
     def get_playcount(self):
         """Returns the number of plays on the network."""
@@ -2554,7 +2558,8 @@ class AlbumSearch(_Search):
                 _extract(node, "artist"),
                 _extract(node, "name"),
                 self.network,
-                images=_extract_all(node, 'image')))
+                images=_extract_all(node, 'image')),
+            )
 
         return seq
 
@@ -2572,7 +2577,8 @@ class ArtistSearch(_Search):
 
         seq = []
         for node in master_node.getElementsByTagName("artist"):
-            artist = Artist(_extract(node, "name"), self.network)
+            artist = Artist(_extract(node, "name"), self.network,
+                            images=_extract_all(node, "image"))
             artist.listener_count = _number(_extract(node, "listeners"))
             seq.append(artist)
 
