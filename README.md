@@ -115,3 +115,23 @@ coverage report # for command-line report
 coverage html   # for HTML report
 open htmlcov/index.html
 ```
+
+Logging
+-------
+
+To enable from your own code:
+
+```python
+import logging
+import pylast
+
+logging.basicConfig(level=logging.DEBUG)
+
+network = pylast.LastFMNetwork(...)
+```
+
+To enable from pytest:
+
+```sh
+pytest -k test_album_search_images --log-cli-level debug
+```

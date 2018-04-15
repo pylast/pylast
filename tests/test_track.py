@@ -140,7 +140,6 @@ class TestPyLastTrack(PyLastTestCase):
 
         # Act
         album = track.get_album()
-        print(album)
 
         # Assert
         self.assertEqual(str(album), "Nirvana - Nevermind")
