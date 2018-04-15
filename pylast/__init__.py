@@ -732,6 +732,7 @@ class _Request(object):
     """Representing an abstract web service operation."""
 
     def __init__(self, network, method_name, params=None):
+        print(method_name)
 
         if params is None:
             params = {}
@@ -1369,7 +1370,8 @@ class _Opus(_BaseObject, _Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, artist, title, network, ws_prefix, username=None):
+    def __init__(self, artist, title, network, ws_prefix, username=None,
+                 images=None):
         """
         Create an opus instance.
         # Parameters:
@@ -1388,6 +1390,7 @@ class _Opus(_BaseObject, _Taggable):
 
         self.title = title
         self.username = username
+        self.images = images
 
     def __repr__(self):
         return "pylast.%s(%s, %s, %s)" % (
@@ -1485,8 +1488,9 @@ class Album(_Opus):
 
     __hash__ = _Opus.__hash__
 
-    def __init__(self, artist, title, network, username=None):
-        super(Album, self).__init__(artist, title, network, "album", username)
+    def __init__(self, artist, title, network, username=None, images=None):
+        super(Album, self).__init__(artist, title, network, "album", username,
+                                    images)
 
     def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
@@ -1497,10 +1501,11 @@ class Album(_Opus):
             SIZE_MEDIUM
             SIZE_SMALL
         """
-
-        return _extract_all(
-            self._request(
-                self.ws_prefix + ".getInfo", cacheable=True), 'image')[size]
+        if not self.images:
+            self.images = _extract_all(
+                self._request(self.ws_prefix + ".getInfo", cacheable=True),
+                'image')
+        return self.images[size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -2544,7 +2549,8 @@ class AlbumSearch(_Search):
             seq.append(Album(
                 _extract(node, "artist"),
                 _extract(node, "name"),
-                self.network))
+                self.network,
+                images=_extract_all(node, 'image')))
 
         return seq
 
