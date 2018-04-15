@@ -23,6 +23,7 @@
 from xml.dom import minidom, Node
 import collections
 import hashlib
+import logging
 import shelve
 import six
 import ssl
@@ -109,6 +110,9 @@ SCROBBLE_MODE_SKIPPED = "S"
 
 # Python >3.4 and >2.7.9 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
+
+logger = logging.getLogger(__name__)
+logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
 class _Network(object):
@@ -732,7 +736,7 @@ class _Request(object):
     """Representing an abstract web service operation."""
 
     def __init__(self, network, method_name, params=None):
-        print(method_name)
+        logger.debug(method_name)
 
         if params is None:
             params = {}
