@@ -322,7 +322,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Act
         results = search.get_next_page()
-        images = results[0].images
+        images = results[0].info["image"]
 
         # Assert
         self.assertEqual(len(images), 4)
@@ -354,7 +354,7 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Act
         results = search.get_next_page()
-        images = results[0].images
+        images = results[0].info["image"]
 
         # Assert
         self.assertEqual(len(images), 5)

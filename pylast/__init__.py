@@ -1375,7 +1375,7 @@ class _Opus(_BaseObject, _Taggable):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, artist, title, network, ws_prefix, username=None,
-                 images=None):
+                 info=None):
         """
         Create an opus instance.
         # Parameters:
@@ -1383,6 +1383,9 @@ class _Opus(_BaseObject, _Taggable):
             * title: The album or track title.
             * ws_prefix: 'album' or 'track'
         """
+
+        if info is None:
+            info = {}
 
         _BaseObject.__init__(self, network, ws_prefix)
         _Taggable.__init__(self, ws_prefix)
@@ -1394,7 +1397,7 @@ class _Opus(_BaseObject, _Taggable):
 
         self.title = title
         self.username = username
-        self.images = images
+        self.info = info
 
     def __repr__(self):
         return "pylast.%s(%s, %s, %s)" % (
@@ -1492,9 +1495,9 @@ class Album(_Opus):
 
     __hash__ = _Opus.__hash__
 
-    def __init__(self, artist, title, network, username=None, images=None):
+    def __init__(self, artist, title, network, username=None, info=None):
         super(Album, self).__init__(artist, title, network, "album", username,
-                                    images)
+                                    info)
 
     def get_cover_image(self, size=SIZE_EXTRA_LARGE):
         """
@@ -1505,11 +1508,11 @@ class Album(_Opus):
             SIZE_MEDIUM
             SIZE_SMALL
         """
-        if not self.images:
-            self.images = _extract_all(
+        if "image" not in self.info:
+            self.info["image"] = _extract_all(
                 self._request(self.ws_prefix + ".getInfo", cacheable=True),
-                'image')
-        return self.images[size]
+                "image")
+        return self.info["image"][size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -1552,18 +1555,21 @@ class Artist(_BaseObject, _Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, name, network, username=None, images=None):
+    def __init__(self, name, network, username=None, info=None):
         """Create an artist object.
         # Parameters:
             * name str: The artist's name.
         """
+
+        if info is None:
+            info = {}
 
         _BaseObject.__init__(self, network, 'artist')
         _Taggable.__init__(self, 'artist')
 
         self.name = name
         self.username = username
-        self.images = images
+        self.info = info
 
     def __repr__(self):
         return "pylast.Artist(%s, %s)" % (
@@ -1616,11 +1622,11 @@ class Artist(_BaseObject, _Taggable):
             SIZE_SMALL
         """
 
-        if not self.images:
-            self.images = _extract_all(
+        if "image" not in self.info:
+            self.info["image"] = _extract_all(
                 self._request(self.ws_prefix + ".getInfo", cacheable=True),
                 "image")
-        return self.images[size]
+        return self.info["image"][size]
 
     def get_playcount(self):
         """Returns the number of plays on the network."""
@@ -2558,7 +2564,7 @@ class AlbumSearch(_Search):
                 _extract(node, "artist"),
                 _extract(node, "name"),
                 self.network,
-                images=_extract_all(node, 'image')),
+                info={"image": _extract_all(node, "image")}),
             )
 
         return seq
@@ -2578,7 +2584,7 @@ class ArtistSearch(_Search):
         seq = []
         for node in master_node.getElementsByTagName("artist"):
             artist = Artist(_extract(node, "name"), self.network,
-                            images=_extract_all(node, "image"))
+                            info={"image": _extract_all(node, "image")})
             artist.listener_count = _number(_extract(node, "listeners"))
             seq.append(artist)
 
