@@ -7,10 +7,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastNetwork(PyLastTestCase):
+class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_scrobble(self):
         # Arrange

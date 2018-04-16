@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastAlbum(PyLastTestCase):
+class TestPyLastAlbum(TestPyLastWithLastFm):
 
     def test_album_tags_are_topitems(self):
         # Arrange

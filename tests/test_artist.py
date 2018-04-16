@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastArtist(PyLastTestCase):
+class TestPyLastArtist(TestPyLastWithLastFm):
 
     def test_repr(self):
         # Arrange

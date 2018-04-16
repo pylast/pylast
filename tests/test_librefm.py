@@ -8,11 +8,11 @@ from flaky import flaky
 
 import pylast
 
-from .test_pylast import load_secrets
+from .test_pylast import PyLastTestCase, load_secrets
 
 
 @flaky(max_runs=5, min_passes=1)
-class TestPyLastWithLibreFm(unittest.TestCase):
+class TestPyLastWithLibreFm(PyLastTestCase):
     """Own class for Libre.fm because we don't need the Last.fm setUp"""
 
     def test_libre_fm(self):
