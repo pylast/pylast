@@ -52,6 +52,12 @@ class PyLastTestCase(unittest.TestCase):
             api_key=API_KEY, api_secret=API_SECRET,
             username=self.username, password_hash=password_hash)
 
+    def assert_startswith(self, str, prefix, start=None, end=None):
+        self.assertTrue(str.startswith(prefix, start, end))
+
+    def assert_endswith(self, str, suffix, start=None, end=None):
+        self.assertTrue(str.endswith(suffix, start, end))
+
     def helper_is_thing_hashable(self, thing):
         # Arrange
         things = set()

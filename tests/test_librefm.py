@@ -42,7 +42,7 @@ class TestPyLastWithLibreFm(unittest.TestCase):
         representation = repr(network)
 
         # Assert
-        self.assertTrue(representation.startswith("pylast.LibreFMNetwork("))
+        self.assert_startswith(representation, "pylast.LibreFMNetwork(")
 
 
 if __name__ == '__main__':

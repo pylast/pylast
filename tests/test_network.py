@@ -327,12 +327,12 @@ class TestPyLastNetwork(PyLastTestCase):
         # Assert
         self.assertEqual(len(images), 4)
 
-        self.assertTrue(images[pylast.SIZE_SMALL].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_SMALL].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
         self.assertIn("/34s/", images[pylast.SIZE_SMALL])
 
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
 
     def test_artist_search(self):
@@ -359,12 +359,12 @@ class TestPyLastNetwork(PyLastTestCase):
         # Assert
         self.assertEqual(len(images), 5)
 
-        self.assertTrue(images[pylast.SIZE_SMALL].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_SMALL].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
         self.assertIn("/34s/", images[pylast.SIZE_SMALL])
 
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
 
     def test_track_search(self):

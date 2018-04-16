@@ -19,7 +19,7 @@ class TestPyLastLibrary(PyLastTestCase):
         representation = repr(library)
 
         # Assert
-        self.assertTrue(representation.startswith("pylast.Library("))
+        self.assert_startswith(representation, "pylast.Library(")
 
     def test_str(self):
         # Arrange
@@ -29,7 +29,7 @@ class TestPyLastLibrary(PyLastTestCase):
         string = str(library)
 
         # Assert
-        self.assertTrue(string.endswith("'s Library"))
+        self.assert_endswith(string, "'s Library")
 
     def test_library_is_hashable(self):
         # Arrange
