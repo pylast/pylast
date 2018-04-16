@@ -380,6 +380,27 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertIsInstance(results, list)
         self.assertIsInstance(results[0], pylast.Track)
 
+    def test_track_search_images(self):
+        # Arrange
+        artist = "Nirvana"
+        track = "Smells Like Teen Spirit"
+        search = self.network.search_for_track(artist, track)
+
+        # Act
+        results = search.get_next_page()
+        images = results[0].info["image"]
+
+        # Assert
+        self.assertEqual(len(images), 4)
+
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        self.assertIn("/34s/", images[pylast.SIZE_SMALL])
+
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
+
     def test_search_get_total_result_count(self):
         # Arrange
         artist = "Nirvana"

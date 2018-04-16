@@ -1431,6 +1431,21 @@ class _Opus(_BaseObject, _Taggable):
 
         return self.artist
 
+    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
+        """
+        Returns a URI to the cover image
+        size can be one of:
+            SIZE_EXTRA_LARGE
+            SIZE_LARGE
+            SIZE_MEDIUM
+            SIZE_SMALL
+        """
+        if "image" not in self.info:
+            self.info["image"] = _extract_all(
+                self._request(self.ws_prefix + ".getInfo", cacheable=True),
+                "image")
+        return self.info["image"][size]
+
     def get_title(self, properly_capitalized=False):
         """Returns the artist or track title."""
         if properly_capitalized:
@@ -1498,21 +1513,6 @@ class Album(_Opus):
     def __init__(self, artist, title, network, username=None, info=None):
         super(Album, self).__init__(artist, title, network, "album", username,
                                     info)
-
-    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
-        """
-        Returns a URI to the cover image
-        size can be one of:
-            SIZE_EXTRA_LARGE
-            SIZE_LARGE
-            SIZE_MEDIUM
-            SIZE_SMALL
-        """
-        if "image" not in self.info:
-            self.info["image"] = _extract_all(
-                self._request(self.ws_prefix + ".getInfo", cacheable=True),
-                "image")
-        return self.info["image"][size]
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -1981,8 +1981,9 @@ class Track(_Opus):
 
     __hash__ = _Opus.__hash__
 
-    def __init__(self, artist, title, network, username=None):
-        super(Track, self).__init__(artist, title, network, "track", username)
+    def __init__(self, artist, title, network, username=None, info=None):
+        super(Track, self).__init__(artist, title, network, "track", username,
+                                    info)
 
     def get_correction(self):
         """Returns the corrected track name."""
@@ -2560,11 +2561,13 @@ class AlbumSearch(_Search):
 
         seq = []
         for node in master_node.getElementsByTagName("album"):
-            seq.append(Album(
-                _extract(node, "artist"),
-                _extract(node, "name"),
-                self.network,
-                info={"image": _extract_all(node, "image")}),
+            seq.append(
+                Album(
+                    _extract(node, "artist"),
+                    _extract(node, "name"),
+                    self.network,
+                    info={"image": _extract_all(node, "image")},
+                ),
             )
 
         return seq
@@ -2583,8 +2586,11 @@ class ArtistSearch(_Search):
 
         seq = []
         for node in master_node.getElementsByTagName("artist"):
-            artist = Artist(_extract(node, "name"), self.network,
-                            info={"image": _extract_all(node, "image")})
+            artist = Artist(
+                _extract(node, "name"),
+                self.network,
+                info={"image": _extract_all(node, "image")},
+            )
             artist.listener_count = _number(_extract(node, "listeners"))
             seq.append(artist)
 
@@ -2615,7 +2621,9 @@ class TrackSearch(_Search):
             track = Track(
                 _extract(node, "artist"),
                 _extract(node, "name"),
-                self.network)
+                self.network,
+                info={"image": _extract_all(node, "image")},
+            )
             track.listener_count = _number(_extract(node, "listeners"))
             seq.append(track)
 
