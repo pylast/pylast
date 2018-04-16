@@ -11,7 +11,7 @@ import pylast
 from .test_pylast import PyLastTestCase, load_secrets
 
 
-@flaky(max_runs=5, min_passes=1)
+@flaky(max_runs=3, min_passes=1)
 class TestPyLastWithLibreFm(PyLastTestCase):
     """Own class for Libre.fm because we don't need the Last.fm setUp"""
 

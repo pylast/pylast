@@ -39,7 +39,7 @@ class PyLastTestCase(unittest.TestCase):
         self.assertTrue(str.endswith(suffix, start, end))
 
 
-@flaky(max_runs=5, min_passes=1)
+@flaky(max_runs=3, min_passes=1)
 class TestPyLastWithLastFm(PyLastTestCase):
 
     secrets = None
