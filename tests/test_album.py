@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastAlbum(PyLastTestCase):
+class TestPyLastAlbum(TestPyLastWithLastFm):
 
     def test_album_tags_are_topitems(self):
         # Arrange
@@ -107,8 +107,8 @@ class TestPyLastAlbum(PyLastTestCase):
         image = album.get_cover_image()
 
         # Assert
-        self.assertTrue(image.startswith("https://"))
-        self.assertTrue(image.endswith(".png"))
+        self.assert_startswith(image, "https://")
+        self.assert_endswith(image, ".png")
 
 
 if __name__ == '__main__':

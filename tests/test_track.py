@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastTrack(PyLastTestCase):
+class TestPyLastTrack(TestPyLastWithLastFm):
 
     def test_love(self):
         # Arrange

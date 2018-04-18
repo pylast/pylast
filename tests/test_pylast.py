@@ -30,8 +30,17 @@ def load_secrets():
     return doc
 
 
-@flaky(max_runs=5, min_passes=1)
 class PyLastTestCase(unittest.TestCase):
+
+    def assert_startswith(self, str, prefix, start=None, end=None):
+        self.assertTrue(str.startswith(prefix, start, end))
+
+    def assert_endswith(self, str, suffix, start=None, end=None):
+        self.assertTrue(str.endswith(suffix, start, end))
+
+
+@flaky(max_runs=3, min_passes=1)
+class TestPyLastWithLastFm(PyLastTestCase):
 
     secrets = None
 

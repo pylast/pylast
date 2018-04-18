@@ -7,10 +7,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastNetwork(PyLastTestCase):
+class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_scrobble(self):
         # Arrange
@@ -322,17 +322,17 @@ class TestPyLastNetwork(PyLastTestCase):
 
         # Act
         results = search.get_next_page()
-        images = results[0].images
+        images = results[0].info["image"]
 
         # Assert
         self.assertEqual(len(images), 4)
 
-        self.assertTrue(images[pylast.SIZE_SMALL].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_SMALL].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
         self.assertIn("/34s/", images[pylast.SIZE_SMALL])
 
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].startswith("https://"))
-        self.assertTrue(images[pylast.SIZE_EXTRA_LARGE].endswith(".png"))
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
 
     def test_artist_search(self):
@@ -347,6 +347,26 @@ class TestPyLastNetwork(PyLastTestCase):
         self.assertIsInstance(results, list)
         self.assertIsInstance(results[0], pylast.Artist)
 
+    def test_artist_search_images(self):
+        # Arrange
+        artist = "Nirvana"
+        search = self.network.search_for_artist(artist)
+
+        # Act
+        results = search.get_next_page()
+        images = results[0].info["image"]
+
+        # Assert
+        self.assertEqual(len(images), 5)
+
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        self.assertIn("/34s/", images[pylast.SIZE_SMALL])
+
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
+
     def test_track_search(self):
         # Arrange
         artist = "Nirvana"
@@ -359,6 +379,27 @@ class TestPyLastNetwork(PyLastTestCase):
         # Assert
         self.assertIsInstance(results, list)
         self.assertIsInstance(results[0], pylast.Track)
+
+    def test_track_search_images(self):
+        # Arrange
+        artist = "Nirvana"
+        track = "Smells Like Teen Spirit"
+        search = self.network.search_for_track(artist, track)
+
+        # Act
+        results = search.get_next_page()
+        images = results[0].info["image"]
+
+        # Assert
+        self.assertEqual(len(images), 4)
+
+        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
+        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        self.assertIn("/34s/", images[pylast.SIZE_SMALL])
+
+        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
+        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        self.assertIn("/300x300/", images[pylast.SIZE_EXTRA_LARGE])
 
     def test_search_get_total_result_count(self):
         # Arrange

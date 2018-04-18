@@ -8,11 +8,11 @@ from flaky import flaky
 
 import pylast
 
-from .test_pylast import load_secrets
+from .test_pylast import PyLastTestCase, load_secrets
 
 
-@flaky(max_runs=5, min_passes=1)
-class TestPyLastWithLibreFm(unittest.TestCase):
+@flaky(max_runs=3, min_passes=1)
+class TestPyLastWithLibreFm(PyLastTestCase):
     """Own class for Libre.fm because we don't need the Last.fm setUp"""
 
     def test_libre_fm(self):
@@ -42,7 +42,7 @@ class TestPyLastWithLibreFm(unittest.TestCase):
         representation = repr(network)
 
         # Assert
-        self.assertTrue(representation.startswith("pylast.LibreFMNetwork("))
+        self.assert_startswith(representation, "pylast.LibreFMNetwork(")
 
 
 if __name__ == '__main__':

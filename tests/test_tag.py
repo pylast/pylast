@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastTag(PyLastTestCase):
+class TestPyLastTag(TestPyLastWithLastFm):
 
     def test_tag_is_hashable(self):
         # Arrange

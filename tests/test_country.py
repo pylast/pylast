@@ -6,10 +6,10 @@ import unittest
 
 import pylast
 
-from .test_pylast import PyLastTestCase
+from .test_pylast import TestPyLastWithLastFm
 
 
-class TestPyLastCountry(PyLastTestCase):
+class TestPyLastCountry(TestPyLastWithLastFm):
 
     def test_country_is_hashable(self):
         # Arrange
