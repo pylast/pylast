@@ -108,6 +108,9 @@ SCROBBLE_MODE_LOVED = "L"
 SCROBBLE_MODE_BANNED = "B"
 SCROBBLE_MODE_SKIPPED = "S"
 
+# Delay time in seconds from section 4.4 of https://www.last.fm/api/tos
+DELAY_TIME = 0.2
+
 # Python >3.4 and >2.7.9 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
 
@@ -254,9 +257,6 @@ class _Network(object):
         """
             Makes sure that web service calls are at least 0.2 seconds apart.
         """
-
-        # Delay time in seconds from section 4.4 of https://www.last.fm/api/tos
-        DELAY_TIME = 0.2
         now = time.time()
 
         time_since_last = now - self.last_call_time

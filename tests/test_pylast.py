@@ -54,11 +54,11 @@ class TestPyLastWithLastFm(PyLastTestCase):
         self.username = self.__class__.secrets["username"]
         password_hash = self.__class__.secrets["password_hash"]
 
-        API_KEY = self.__class__.secrets["api_key"]
-        API_SECRET = self.__class__.secrets["api_secret"]
+        api_key = self.__class__.secrets["api_key"]
+        api_secret = self.__class__.secrets["api_secret"]
 
         self.network = pylast.LastFMNetwork(
-            api_key=API_KEY, api_secret=API_SECRET,
+            api_key=api_key, api_secret=api_secret,
             username=self.username, password_hash=password_hash)
 
     def helper_is_thing_hashable(self, thing):
