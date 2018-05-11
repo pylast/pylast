@@ -2202,8 +2202,11 @@ class User(_BaseObject, _Chartable):
                 self.ws_prefix + ".getLovedTracks",
                 cacheable,
                 params):
+            try:
+                artist = _extract(track, "name", 1)
+            except IndexError:
+                continue
             title = _extract(track, "name")
-            artist = _extract(track, "name", 1)
             date = _extract(track, "date")
             timestamp = track.getElementsByTagName(
                 "date")[0].getAttribute("uts")
