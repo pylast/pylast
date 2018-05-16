@@ -2204,7 +2204,7 @@ class User(_BaseObject, _Chartable):
                 params):
             try:
                 artist = _extract(track, "name", 1)
-            except IndexError:
+            except IndexError:  # pragma: no cover
                 continue
             title = _extract(track, "name")
             date = _extract(track, "date")
