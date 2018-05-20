@@ -833,7 +833,7 @@ class _Request(object):
             'User-Agent': "pylast" + '/' + __version__
         }
 
-        (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
+        (host_name, host_subdir) = self.network.ws_server
 
         if self.network.is_proxy_enabled():
             conn = HTTPSConnection(
@@ -843,17 +843,17 @@ class _Request(object):
 
             try:
                 conn.request(
-                    method='POST', url="https://" + HOST_NAME + HOST_SUBDIR,
+                    method='POST', url="https://" + host_name + host_subdir,
                     body=data, headers=headers)
             except Exception as e:
                 raise NetworkError(self.network, e)
 
         else:
-            conn = HTTPSConnection(context=SSL_CONTEXT, host=HOST_NAME)
+            conn = HTTPSConnection(context=SSL_CONTEXT, host=host_name)
 
             try:
                 conn.request(
-                    method='POST', url=HOST_SUBDIR, body=data, headers=headers)
+                    method='POST', url=host_subdir, body=data, headers=headers)
             except Exception as e:
                 raise NetworkError(self.network, e)
 
