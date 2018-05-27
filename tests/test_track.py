@@ -40,8 +40,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
         if len(loved):  # OK to be empty but if not:
-            self.assertNotEqual(str(loved.track.artist), "Test Artist")
-            self.assertNotEqual(str(loved.track.title), "test title")
+            self.assertNotEqual(str(loved[0].track.artist), "Test Artist")
+            self.assertNotEqual(str(loved[0].track.title), "test title")
 
     def test_user_play_count_in_track_info(self):
         # Arrange
