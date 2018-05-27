@@ -889,6 +889,7 @@ class _Request(object):
             raise MalformedResponseError(self.network, e)
 
         e = doc.getElementsByTagName('lfm')[0]
+        # logger.debug(doc.toprettyxml())
 
         if e.getAttribute('status') != "ok":
             e = doc.getElementsByTagName('error')[0]
@@ -2496,17 +2497,13 @@ class User(_BaseObject, _Chartable):
 
 class AuthenticatedUser(User):
     def __init__(self, network):
-        User.__init__(self, "", network)
+        User.__init__(self, network.username, network)
 
     def _get_params(self):
         return {"user": self.get_name()}
 
     def get_name(self):
         """Returns the name of the authenticated user."""
-
-        doc = self._request("user.getInfo", True, {"user": ""})    # hack
-
-        self.name = _extract(doc, "name")
         return self.name
 
 
