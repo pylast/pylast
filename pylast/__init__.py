@@ -2300,7 +2300,7 @@ class User(_BaseObject, _Chartable):
 
         country = _extract(doc, "country")
 
-        if country is None:
+        if country is None or country == "None":
             return None
         else:
             return Country(country, self.network)
