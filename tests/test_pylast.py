@@ -16,22 +16,22 @@ def load_secrets():
     secrets_file = "test_pylast.yaml"
     if os.path.isfile(secrets_file):
         import yaml  # pip install pyyaml
+
         with open(secrets_file, "r") as f:  # see example_test_pylast.yaml
             doc = yaml.load(f)
     else:
         doc = {}
         try:
-            doc["username"] = os.environ['PYLAST_USERNAME'].strip()
-            doc["password_hash"] = os.environ['PYLAST_PASSWORD_HASH'].strip()
-            doc["api_key"] = os.environ['PYLAST_API_KEY'].strip()
-            doc["api_secret"] = os.environ['PYLAST_API_SECRET'].strip()
+            doc["username"] = os.environ["PYLAST_USERNAME"].strip()
+            doc["password_hash"] = os.environ["PYLAST_PASSWORD_HASH"].strip()
+            doc["api_key"] = os.environ["PYLAST_API_KEY"].strip()
+            doc["api_secret"] = os.environ["PYLAST_API_SECRET"].strip()
         except KeyError:
             pytest.skip("Missing environment variables: PYLAST_USERNAME etc.")
     return doc
 
 
 class PyLastTestCase(unittest.TestCase):
-
     def assert_startswith(self, str, prefix, start=None, end=None):
         self.assertTrue(str.startswith(prefix, start, end))
 
@@ -58,8 +58,11 @@ class TestPyLastWithLastFm(PyLastTestCase):
         api_secret = self.__class__.secrets["api_secret"]
 
         self.network = pylast.LastFMNetwork(
-            api_key=api_key, api_secret=api_secret,
-            username=self.username, password_hash=password_hash)
+            api_key=api_key,
+            api_secret=api_secret,
+            username=self.username,
+            password_hash=password_hash,
+        )
 
     def helper_is_thing_hashable(self, thing):
         # Arrange
@@ -128,5 +131,5 @@ class TestPyLastWithLastFm(PyLastTestCase):
         self.assertNotEqual(thing1, thing2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

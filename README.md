@@ -6,6 +6,7 @@ pyLast
 [![Build status](https://travis-ci.org/pylast/pylast.svg?branch=master)](https://travis-ci.org/pylast/pylast)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/master/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
 [![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=master)](https://coveralls.io/github/pylast/pylast?branch=master)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).
 
@@ -48,7 +49,7 @@ Features
  * Python 3-friendly (Starting from 0.5).
 
 
-Getting Started
+Getting started
 ---------------
 
 Here's some simple code example to get you started. In order to create any object from pyLast, you need a `Network` object which represents a social music network that is Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm and use it as follows:

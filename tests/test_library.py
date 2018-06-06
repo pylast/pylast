@@ -10,7 +10,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastLibrary(TestPyLastWithLastFm):
-
     def test_repr(self):
         # Arrange
         library = pylast.Library(user=self.username, network=self.network)
@@ -57,5 +56,5 @@ class TestPyLastLibrary(TestPyLastWithLastFm):
         self.assertEqual(library_user, user_to_get)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

@@ -10,10 +10,9 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastAlbum(TestPyLastWithLastFm):
-
     def test_album_tags_are_topitems(self):
         # Arrange
-        albums = self.network.get_user('RJ').get_top_albums()
+        albums = self.network.get_user("RJ").get_top_albums()
 
         # Act
         tags = albums[0].item.get_top_tags(limit=1)
@@ -38,7 +37,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         track = lastfm_user.get_recent_tracks(limit=2)[0]
 
         # Assert
-        self.assertTrue(hasattr(track, 'album'))
+        self.assertTrue(hasattr(track, "album"))
 
     def test_album_in_artist_tracks(self):
         # Arrange
@@ -48,7 +47,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
 
         # Assert
-        self.assertTrue(hasattr(track, 'album'))
+        self.assertTrue(hasattr(track, "album"))
 
     def test_album_wiki_content(self):
         # Arrange
@@ -111,5 +110,5 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         self.assert_endswith(image, ".png")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)
