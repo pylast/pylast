@@ -10,7 +10,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastCountry(TestPyLastWithLastFm):
-
     def test_country_is_hashable(self):
         # Arrange
         country = self.network.get_country("Italy")
@@ -37,5 +36,5 @@ class TestPyLastCountry(TestPyLastWithLastFm):
         self.assertEqual(url, "https://www.last.fm/place/italy")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

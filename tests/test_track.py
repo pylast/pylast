@@ -10,7 +10,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastTrack(TestPyLastWithLastFm):
-
     def test_love(self):
         # Arrange
         artist = "Test Artist"
@@ -48,8 +47,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         artist = "Test Artist"
         title = "test title"
         track = pylast.Track(
-            artist=artist, title=title,
-            network=self.network, username=self.username)
+            artist=artist, title=title, network=self.network, username=self.username
+        )
 
         # Act
         count = track.get_userplaycount()
@@ -62,8 +61,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         artist = "Test Artist"
         title = "test title"
         track = pylast.Track(
-            artist=artist, title=title,
-            network=self.network, username=self.username)
+            artist=artist, title=title, network=self.network, username=self.username
+        )
 
         # Act
         loved = track.get_userloved()
@@ -249,5 +248,5 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         self.assertIsNone(mbid)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

@@ -11,7 +11,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastUser(TestPyLastWithLastFm):
-
     def test_repr(self):
         # Arrange
         user = self.network.get_user("RJ")
@@ -107,7 +106,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
-        value = (lastfm_user is None)
+        value = lastfm_user is None
 
         # Assert
         self.assertFalse(value)
@@ -117,7 +116,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
-        value = (lastfm_user is not None)
+        value = lastfm_user is not None
 
         # Assert
         self.assertTrue(value)
@@ -125,7 +124,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def test_now_playing_user_with_no_scrobbles(self):
         # Arrange
         # Currently test-account has no scrobbles:
-        user = self.network.get_user('test-account')
+        user = self.network.get_user("test-account")
 
         # Act
         current_track = user.get_now_playing()
@@ -155,19 +154,20 @@ class TestPyLastUser(TestPyLastWithLastFm):
     # fails due Last.fm's complaining of hitting the rate limit, even when
     # limited to one call per second. The ToS allows 5 calls per second.
     # def test_get_all_scrobbles(self):
-        # # Arrange
-        # lastfm_user = self.network.get_user("RJ")
-        # self.network.enable_rate_limit() # this is going to be slow...
+    # # Arrange
+    # lastfm_user = self.network.get_user("RJ")
+    # self.network.enable_rate_limit() # this is going to be slow...
 
-        # # Act
-        # tracks = lastfm_user.get_recent_tracks(limit=None)
+    # # Act
+    # tracks = lastfm_user.get_recent_tracks(limit=None)
 
-        # # Assert
-        # self.assertGreaterEqual(len(tracks), 0)
+    # # Assert
+    # self.assertGreaterEqual(len(tracks), 0)
 
     def test_pickle(self):
         # Arrange
         import pickle
+
         lastfm_user = self.network.get_user(self.username)
         filename = str(self.unix_timestamp()) + ".pkl"
 
@@ -290,7 +290,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         artist.add_tags(tags)
 
         # Act
-        artists = lastfm_user.get_tagged_artists('artisttagola', limit=1)
+        artists = lastfm_user.get_tagged_artists("artisttagola", limit=1)
 
         # Assert
         self.helper_only_one_thing_in_list(artists, pylast.Artist)
@@ -303,7 +303,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         album.add_tags(tags)
 
         # Act
-        albums = lastfm_user.get_tagged_albums('albumtagola', limit=1)
+        albums = lastfm_user.get_tagged_albums("albumtagola", limit=1)
 
         # Assert
         self.helper_only_one_thing_in_list(albums, pylast.Album)
@@ -316,7 +316,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         track.add_tags(tags)
 
         # Act
-        tracks = lastfm_user.get_tagged_tracks('tracktagola', limit=1)
+        tracks = lastfm_user.get_tagged_tracks("tracktagola", limit=1)
 
         # Assert
         self.helper_only_one_thing_in_list(tracks, pylast.Track)
@@ -359,15 +359,16 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user("RJ")
 
         from datetime import datetime
+
         start = datetime(2011, 7, 21, 15, 10)
         end = datetime(2011, 7, 21, 15, 15)
         import calendar
+
         utc_start = calendar.timegm(start.utctimetuple())
         utc_end = calendar.timegm(end.utctimetuple())
 
         # Act
-        tracks = lastfm_user.get_recent_tracks(time_from=utc_start,
-                                               time_to=utc_end)
+        tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end)
 
         # Assert
         self.assertEqual(len(tracks), 1)
@@ -430,5 +431,5 @@ class TestPyLastUser(TestPyLastWithLastFm):
         self.assertIsInstance(track.network, pylast.LastFMNetwork)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

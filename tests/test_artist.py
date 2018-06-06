@@ -10,7 +10,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastArtist(TestPyLastWithLastFm):
-
     def test_repr(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
@@ -19,8 +18,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         representation = repr(artist)
 
         # Assert
-        self.assertTrue(
-            representation.startswith("pylast.Artist('Test Artist',"))
+        self.assertTrue(representation.startswith("pylast.Artist('Test Artist',"))
 
     def test_artist_is_hashable(self):
         # Arrange
@@ -136,7 +134,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
     def test_tag_artist(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
-#         artist.clear_tags()
+        #         artist.clear_tags()
 
         # Act
         artist.add_tag("testing")
@@ -285,8 +283,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
     def test_get_userplaycount(self):
         # Arrange
-        artist = pylast.Artist("John Lennon", self.network,
-                               username=self.username)
+        artist = pylast.Artist("John Lennon", self.network, username=self.username)
 
         # Act
         playcount = artist.get_userplaycount()
@@ -295,5 +292,5 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         self.assertGreaterEqual(playcount, 0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

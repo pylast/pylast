@@ -10,7 +10,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastTag(TestPyLastWithLastFm):
-
     def test_tag_is_hashable(self):
         # Arrange
         tag = self.network.get_top_tags(limit=1)[0]
@@ -59,5 +58,5 @@ class TestPyLastTag(TestPyLastWithLastFm):
         self.assertEqual(url, "https://www.last.fm/tag/blues")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)

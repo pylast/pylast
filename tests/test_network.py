@@ -11,7 +11,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastNetwork(TestPyLastWithLastFm):
-
     def test_scrobble(self):
         # Arrange
         artist = "test artist"
@@ -39,7 +38,8 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Act
         self.network.update_now_playing(
-            artist=artist, title=title, album=album, track_number=track_number)
+            artist=artist, title=title, album=album, track_number=track_number
+        )
 
         # Assert
         current_track = lastfm_user.get_now_playing()
@@ -89,8 +89,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
     def test_geo_get_top_artists(self):
         # Arrange
         # Act
-        artists = self.network.get_geo_top_artists(
-            country="United Kingdom", limit=1)
+        artists = self.network.get_geo_top_artists(country="United Kingdom", limit=1)
 
         # Assert
         self.assertEqual(len(artists), 1)
@@ -101,7 +100,8 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Arrange
         # Act
         tracks = self.network.get_geo_top_tracks(
-            country="United Kingdom", location="Manchester", limit=1)
+            country="United Kingdom", location="Manchester", limit=1
+        )
 
         # Assert
         self.assertEqual(len(tracks), 1)
@@ -186,8 +186,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assertEqual(title, name)
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
-        self.assertEqual(
-            "https://www.last.fm/music/test%2bartist/test%2balbum", url)
+        self.assertEqual("https://www.last.fm/music/test%2bartist/test%2balbum", url)
 
     def test_track_data(self):
         # Arrange
@@ -209,7 +208,8 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assertIsInstance(playcount, int)
         self.assertGreater(playcount, 1)
         self.assertEqual(
-            "https://www.last.fm/fr/music/test%2bartist/_/test%2btitle", url)
+            "https://www.last.fm/fr/music/test%2bartist/_/test%2btitle", url
+        )
 
     def test_country_top_artists(self):
         # Arrange
@@ -286,8 +286,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
             msg = str(exc)
 
         # Assert
-        self.assertEqual(msg,
-                         "Unauthorized Token - This token has not been issued")
+        self.assertEqual(msg, "Unauthorized Token - This token has not been issued")
 
     def test_proxy(self):
         # Arrange
@@ -297,8 +296,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Act / Assert
         self.network.enable_proxy(host, port)
         self.assertTrue(self.network.is_proxy_enabled())
-        self.assertEqual(self.network._get_proxy(),
-                         ["https://example.com", 1234])
+        self.assertEqual(self.network._get_proxy(), ["https://example.com", 1234])
 
         self.network.disable_proxy()
         self.assertFalse(self.network.is_proxy_enabled())
@@ -414,5 +412,5 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assertGreater(int(total), 10000)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(failfast=True)
