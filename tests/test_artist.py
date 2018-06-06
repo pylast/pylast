@@ -134,7 +134,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
     def test_tag_artist(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
-        #         artist.clear_tags()
+        # artist.clear_tags()
 
         # Act
         artist.add_tag("testing")

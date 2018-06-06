@@ -154,15 +154,15 @@ class TestPyLastUser(TestPyLastWithLastFm):
     # fails due Last.fm's complaining of hitting the rate limit, even when
     # limited to one call per second. The ToS allows 5 calls per second.
     # def test_get_all_scrobbles(self):
-    # # Arrange
-    # lastfm_user = self.network.get_user("RJ")
-    # self.network.enable_rate_limit() # this is going to be slow...
-
-    # # Act
-    # tracks = lastfm_user.get_recent_tracks(limit=None)
-
-    # # Assert
-    # self.assertGreaterEqual(len(tracks), 0)
+    #     # Arrange
+    #     lastfm_user = self.network.get_user("RJ")
+    #     self.network.enable_rate_limit() # this is going to be slow...
+    #
+    #     # Act
+    #     tracks = lastfm_user.get_recent_tracks(limit=None)
+    #
+    #     # Assert
+    #     self.assertGreaterEqual(len(tracks), 0)
 
     def test_pickle(self):
         # Arrange
