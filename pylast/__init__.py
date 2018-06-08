@@ -258,7 +258,7 @@ class _Network(object):
             return self.domain_names[domain_language]
 
     def _get_url(self, domain, url_type):
-        return "https://%s/%s" % (
+        return "https://{}/{}".format(
             self._get_language_domain(domain),
             self.urls[url_type],
         )
@@ -1458,7 +1458,7 @@ class _Opus(_BaseObject, _Taggable):
         self.info = info
 
     def __repr__(self):
-        return "pylast.%s(%s, %s, %s)" % (
+        return "pylast.{}({}, {}, {})".format(
             self.ws_prefix.title(),
             repr(self.artist.name),
             repr(self.title),
@@ -1639,7 +1639,7 @@ class Artist(_BaseObject, _Taggable):
         self.info = info
 
     def __repr__(self):
-        return "pylast.Artist(%s, %s)" % (repr(self.get_name()), repr(self.network))
+        return "pylast.Artist({}, {})".format(repr(self.get_name()), repr(self.network))
 
     def __unicode__(self):
         return six.text_type(self.get_name())
@@ -1840,7 +1840,7 @@ class Country(_BaseObject):
         self.name = name
 
     def __repr__(self):
-        return "pylast.Country(%s, %s)" % (repr(self.name), repr(self.network))
+        return "pylast.Country({}, {})".format(repr(self.name), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -1918,7 +1918,7 @@ class Library(_BaseObject):
             self.user = User(user, self.network)
 
     def __repr__(self):
-        return "pylast.Library(%s, %s)" % (repr(self.user), repr(self.network))
+        return "pylast.Library({}, {})".format(repr(self.user), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -1965,7 +1965,7 @@ class Tag(_BaseObject, _Chartable):
         self.name = name
 
     def __repr__(self):
-        return "pylast.Tag(%s, %s)" % (repr(self.name), repr(self.network))
+        return "pylast.Tag({}, {})".format(repr(self.name), repr(self.network))
 
     @_string_output
     def __str__(self):
@@ -2174,7 +2174,7 @@ class User(_BaseObject, _Chartable):
         self.name = user_name
 
     def __repr__(self):
-        return "pylast.User(%s, %s)" % (repr(self.name), repr(self.network))
+        return "pylast.User({}, {})".format(repr(self.name), repr(self.network))
 
     @_string_output
     def __str__(self):
