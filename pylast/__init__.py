@@ -259,8 +259,7 @@ class _Network(object):
 
     def _get_url(self, domain, url_type):
         return "https://{}/{}".format(
-            self._get_language_domain(domain),
-            self.urls[url_type],
+            self._get_language_domain(domain), self.urls[url_type]
         )
 
     def _get_ws_auth(self):
