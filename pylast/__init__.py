@@ -32,7 +32,7 @@ import tempfile
 import time
 import xml.dom
 
-__version__ = "2.3.0.dev0"
+__version__ = "2.3.0"
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = (
     "Copyright (C) 2008-2010 Amr Hassan, 2013-2018 hugovk, " "2017 Mice Pápai"
