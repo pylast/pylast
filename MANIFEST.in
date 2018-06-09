@@ -1,4 +1,4 @@
-include pylast/__init__.py
+include pylast/*.py
 include setup.py
 include README.md
 include COPYING

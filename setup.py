@@ -4,11 +4,16 @@ from setuptools import find_packages, setup
 with open("README.md") as f:
     long_description = f.read()
 
+version_dict = {}
+with open("pylast/version.py") as f:
+    exec(f.read(), version_dict)
+    version = version_dict["__version__"]
+
 setup(
     name="pylast",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version="2.4.0.dev0",
+    version=version,
     author="Amr Hassan <amr.hassan@gmail.com> and Contributors",
     install_requires=["six"],
     tests_require=[
