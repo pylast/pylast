@@ -7,7 +7,7 @@ with open("README.md") as f:
 version_dict = {}
 with open("pylast/version.py") as f:
     exec(f.read(), version_dict)
-    version = version_dict['__version__']
+    version = version_dict["__version__"]
 
 setup(
     name="pylast",
