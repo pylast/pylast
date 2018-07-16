@@ -1788,11 +1788,12 @@ class Artist(_BaseObject, _Taggable):
 
         return artists
 
-    def get_top_albums(self, limit=None, cacheable=True):
+    def get_top_albums(self, limit=None, cacheable=True, page=1):
         """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
             params["limit"] = limit
+        params["page"] = page
 
         return self._get_things("getTopAlbums", "album", Album, params, cacheable)
 
