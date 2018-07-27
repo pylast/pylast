@@ -44,10 +44,12 @@ __email__ = "amr.hassan@gmail.com"
 __version__ = version.__version__
 
 if sys.version_info < (3,):
-    warnings.warn('You are using pylast with Python 2. '
-                  'Pylast will soon be Python 3 only. '
-                  'More info: https://github.com/pylast/pylast/issues/265',
-                  UserWarning)
+    warnings.warn(
+        "You are using pylast with Python 2. "
+        "Pylast will soon be Python 3 only. "
+        "More info: https://github.com/pylast/pylast/issues/265",
+        UserWarning,
+    )
 
 if sys.version_info.major == 2:
     import htmlentitydefs
@@ -1026,9 +1028,7 @@ class SessionKeyGenerator(object):
         token = self._get_web_auth_token()
 
         url = "{homepage}/api/auth/?api_key={api}&token={token}".format(
-            homepage=self.network.homepage,
-            api=self.network.api_key,
-            token=token,
+            homepage=self.network.homepage, api=self.network.api_key, token=token
         )
 
         self.web_auth_tokens[url] = token
