@@ -8,7 +8,7 @@ edit pylast/version.py
 ```
 * [ ] Commit and tag with the version number:
 ```bash
-git add pylast/__init__.py setup.py
+git add pylast/version.py
 git commit -m "Release 2.1.0"
 git tag -a 2.1.0 -m "Release 2.1.0"
 ```
@@ -35,7 +35,7 @@ edit pylast/version.py
 ```
 * [ ] Commit and push:
 ```bash
-git add pylast/__init__.py setup.py
+git add pylast/version.py
 git commit -m "Start new release cycle"
 git push
 ```
