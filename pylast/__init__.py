@@ -25,13 +25,13 @@ import collections
 import hashlib
 import logging
 import shelve
-import six
 import ssl
 import sys
 import tempfile
 import time
-import warnings
 import xml.dom
+import html.entities
+from http.client import HTTPSConnection
 
 from . import version
 
@@ -44,23 +44,32 @@ __email__ = "amr.hassan@gmail.com"
 __version__ = version.__version__
 
 if sys.version_info < (3,):
-    warnings.warn(
-        "You are using pylast with Python 2. "
-        "Pylast will soon be Python 3 only. "
-        "More info: https://github.com/pylast/pylast/issues/265",
-        UserWarning,
+    raise ImportError(
+        """pylast 3.0 and above are no longer compatible with Python 2.
+
+This is pylast {} and you are using Python {}.
+Make sure you have pip >= 9.0 and setuptools >= 24.2 and retry:
+
+ $ pip install --upgrade pip setuptools
+
+Other choices:
+
+- Upgrade to Python 3.
+
+- Install an older version of pylast:
+
+$ pip install 'pylast<3.0'
+
+For more information:
+
+https://github.com/pylast/pylast/issues/265
+""".format(
+            version, ".".join([str(v) for v in sys.version_info[:3]])
+        )
     )
-
-if sys.version_info.major == 2:
-    import htmlentitydefs
-    from httplib import HTTPSConnection
-    from urllib import quote_plus as url_quote_plus
 else:
-    import html.entities as htmlentitydefs
-    from http.client import HTTPSConnection
+    # Keep importable on Python 2 for a while to show ImportError
     from urllib.parse import quote_plus as url_quote_plus
-
-    unichr = chr
 
 
 STATUS_INVALID_SERVICE = 2
@@ -123,7 +132,7 @@ SCROBBLE_MODE_SKIPPED = "S"
 # Delay time in seconds from section 4.4 of https://www.last.fm/api/tos
 DELAY_TIME = 0.2
 
-# Python >3.4 and >2.7.9 has sane defaults
+# Python >3.4 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
 
 logger = logging.getLogger(__name__)
@@ -1118,10 +1127,10 @@ class _BaseObject(object):
 
     def __hash__(self):
         # Convert any ints (or whatever) into strings
-        values = map(six.text_type, self._get_params().values())
+        values = map(str, self._get_params().values())
 
         return hash(self.network) + hash(
-            six.text_type(type(self))
+            str(type(self))
             + "".join(list(self._get_params().keys()) + list(values)).lower()
         )
 
@@ -1649,7 +1658,7 @@ class Artist(_BaseObject, _Taggable):
         return "pylast.Artist({}, {})".format(repr(self.get_name()), repr(self.network))
 
     def __unicode__(self):
-        return six.text_type(self.get_name())
+        return str(self.get_name())
 
     @_string_output
     def __str__(self):
@@ -2690,22 +2699,18 @@ def md5(text):
 
 
 def _unicode(text):
-    if isinstance(text, six.binary_type):
-        return six.text_type(text, "utf-8")
-    elif isinstance(text, six.text_type):
+    if isinstance(text, bytes):
+        return str(text, "utf-8")
+    elif isinstance(text, str):
         return text
     else:
-        return six.text_type(text)
+        return str(text)
 
 
 def _string(string):
-    """For Python2 routines that can only process str type."""
     if isinstance(string, str):
         return string
-    casted = six.text_type(string)
-    if sys.version_info.major == 2:
-        casted = casted.encode("utf-8")
-    return casted
+    return str(string)
 
 
 def cleanup_nodes(doc):
@@ -2864,9 +2869,9 @@ def _unescape_htmlentity(string):
 
     # string = _unicode(string)
 
-    mapping = htmlentitydefs.name2codepoint
+    mapping = html.entities.name2codepoint
     for key in mapping:
-        string = string.replace("&%s;" % key, unichr(mapping[key]))
+        string = string.replace("&%s;" % key, chr(mapping[key]))
 
     return string
 

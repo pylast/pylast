@@ -67,7 +67,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         else:
             # Old way
             # Just check date because of timezones
-            self.assertIn(u"2002-11-20 ", registered)
+            self.assertIn("2002-11-20 ", registered)
 
     def test_get_user_unixtime_registration(self):
         # Arrange

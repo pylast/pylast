@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - This changelog file ([#273])
 
+### Removed
+
+* Support for Python 2.7 ([#265])
 
 ## [2.4.0] - 2018-08-08
 ### Deprecated
