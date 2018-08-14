@@ -29,12 +29,12 @@ Or from requirements.txt:
 
 Note:
 
-* pylast >= 3.0.0 will likely only support Python 3.4+ ([#265](https://github.com/pylast/pylast/issues/265))
-* pyLast >= 2.2.0 supports Python 2.7.10+, 3.4, 3.5, 3.6, 3.7.
-* pyLast >= 2.0.0 < 2.2.0 supports Python 2.7.10+, 3.4, 3.5, 3.6.
-* pyLast >= 1.7.0 < 2.0.0 supports Python 2.7, 3.3, 3.4, 3.5, 3.6.
-* pyLast >= 1.0.0 < 1.7.0 supports Python 2.7, 3.3, 3.4.
-* pyLast >= 0.5 < 1.0.0 supports Python 2, 3.
+* pylast 3.0.0+ supports Python 3.4+ ([#265](https://github.com/pylast/pylast/issues/265))
+* pyLast 2.2.0 - 2.4.0 supports Python 2.7.10+, 3.4, 3.5, 3.6, 3.7.
+* pyLast 2.0.0 - 2.1.0 supports Python 2.7.10+, 3.4, 3.5, 3.6.
+* pyLast 1.7.0 - 1.9.0 supports Python 2.7, 3.3, 3.4, 3.5, 3.6.
+* pyLast 1.0.0 - 1.6.0 supports Python 2.7, 3.3, 3.4.
+* pyLast 0.5 supports Python 2, 3.
 * pyLast < 0.5 supports Python 2.
 
 Features
