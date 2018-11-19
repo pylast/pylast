@@ -44,8 +44,6 @@ matrix:
     - env: TOXENV=pypy3
   fast_finish: true
 
-sudo: false
-
 install:
 - travis_retry pip install tox
 - travis_retry pip install coverage
