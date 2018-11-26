@@ -37,6 +37,7 @@ matrix:
       env: TOXENV=pypy
     - python: 3.8-dev
       env: TOXENV=py38dev
+      dist: xenial
   allow_failures:
     - env: TOXENV=pypy
     - env: TOXENV=pypy3
