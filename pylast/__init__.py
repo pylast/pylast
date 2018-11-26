@@ -139,7 +139,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
-class _Network(object):
+class _Network:
     """
     A music social network website such as Last.fm or
     one with a Last.fm-compatible API.
@@ -796,7 +796,7 @@ class LibreFMNetwork(_Network):
         )
 
 
-class _ShelfCacheBackend(object):
+class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
     def __init__(self, file_path=None):
@@ -817,7 +817,7 @@ class _ShelfCacheBackend(object):
         self.shelf[key] = xml_string
 
 
-class _Request(object):
+class _Request:
     """Representing an abstract web service operation."""
 
     def __init__(self, network, method_name, params=None):
@@ -982,7 +982,7 @@ class _Request(object):
             raise WSError(self.network, status, details)
 
 
-class SessionKeyGenerator(object):
+class SessionKeyGenerator:
     """Methods of generating a session key:
     1) Web Authentication:
         a. network = get_*_network(API_KEY, API_SECRET)
@@ -1105,7 +1105,7 @@ def _string_output(func):
     return r
 
 
-class _BaseObject(object):
+class _BaseObject:
     """An abstract webservices object."""
 
     network = None
@@ -1194,7 +1194,7 @@ class _BaseObject(object):
         return _extract(node, section)
 
 
-class _Chartable(object):
+class _Chartable:
     """Common functions for classes with charts."""
 
     def __init__(self, ws_prefix):
@@ -1265,7 +1265,7 @@ class _Chartable(object):
         return seq
 
 
-class _Taggable(object):
+class _Taggable:
     """Common functions for classes with tags."""
 
     def __init__(self, ws_prefix):
@@ -1594,7 +1594,7 @@ class Album(_Opus):
     __hash__ = _Opus.__hash__
 
     def __init__(self, artist, title, network, username=None, info=None):
-        super(Album, self).__init__(artist, title, network, "album", username, info)
+        super().__init__(artist, title, network, "album", username, info)
 
     def get_tracks(self):
         """Returns the list of Tracks on this album."""
@@ -2063,7 +2063,7 @@ class Track(_Opus):
     __hash__ = _Opus.__hash__
 
     def __init__(self, artist, title, network, username=None, info=None):
-        super(Track, self).__init__(artist, title, network, "track", username, info)
+        super().__init__(artist, title, network, "track", username, info)
 
     def get_correction(self):
         """Returns the corrected track name."""
