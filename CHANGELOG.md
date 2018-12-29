@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- This changelog file ([#273])
+* This changelog file ([#273])
 
 ### Removed
 
-- Constants `COVER_SMALL`, `COVER_MEDIUM`, `COVER_LARGE`, `COVER_EXTRA_LARGE`
+* Support for Python 2.7 ([#265])
+
+* Constants `COVER_SMALL`, `COVER_MEDIUM`, `COVER_LARGE`, `COVER_EXTRA_LARGE`
   and `COVER_MEGA`. Use `SIZE_SMALL` etc. instead. ([#282])
 
 ## [2.4.0] - 2018-08-08
