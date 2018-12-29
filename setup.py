@@ -10,7 +10,7 @@ with open("pylast/version.py") as f:
     version = version_dict["__version__"]
 
 
-if sys.version_info < (3, 4):
+if sys.version_info < (3, 5):
     error = """pylast 3.0 and above are no longer compatible with Python 2.
 
 This is pylast {} and you are using Python {}.
@@ -64,7 +64,6 @@ setup(
         "Topic :: Multimedia :: Sound/Audio",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -72,7 +71,7 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    python_requires=">=3.4",
+    python_requires=">=3.5",
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
     packages=find_packages(exclude=("tests*",)),
     license="Apache2",
