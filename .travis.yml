@@ -15,12 +15,8 @@ env:
 
 matrix:
   include:
-    - python: 2.7
-      env: TOXENV=py2lint
-    - python: 2.7
-      env: TOXENV=py27
     - python: 3.6
-      env: TOXENV=py3lint
+      env: TOXENV=lint
     - python: 3.7
       env: TOXENV=py37
       dist: xenial
@@ -33,13 +29,10 @@ matrix:
       env: TOXENV=py34
     - python: pypy3
       env: TOXENV=pypy3
-    - python: pypy
-      env: TOXENV=pypy
     - python: 3.8-dev
       env: TOXENV=py38dev
       dist: xenial
   allow_failures:
-    - env: TOXENV=pypy
     - env: TOXENV=pypy3
   fast_finish: true
 
