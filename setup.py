@@ -41,10 +41,13 @@ with open("README.md") as f:
 
 setup(
     name="pylast",
+    description="A Python interface to Last.fm and Libre.fm",
     long_description=long_description,
     long_description_content_type="text/markdown",
     version=version,
     author="Amr Hassan <amr.hassan@gmail.com> and Contributors",
+    author_email="amr.hassan@gmail.com",
+    url="https://github.com/pylast/pylast",
     tests_require=[
         "coverage",
         "flaky",
@@ -54,9 +57,7 @@ setup(
         "pytest",
         "pyyaml",
     ],
-    description="A Python interface to Last.fm and Libre.fm",
-    author_email="amr.hassan@gmail.com",
-    url="https://github.com/pylast/pylast",
+    python_requires=">=3.5",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: Apache Software License",
@@ -71,7 +72,6 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    python_requires=">=3.5",
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
     packages=find_packages(exclude=("tests*",)),
     license="Apache2",
