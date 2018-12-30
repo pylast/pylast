@@ -21,7 +21,7 @@ Install via pip:
 
 Install latest development version:
 
-    pip install -U git+https://github.com/pylast/pylast.git
+    pip install -U git+https://github.com/pylast/pylast
 
 Or from requirements.txt:
 
