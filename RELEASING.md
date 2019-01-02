@@ -1,5 +1,4 @@
 # Release Checklist
-
 * [ ] Get master to the appropriate code release state. [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for all merges to master.
 * [ ] Remove `.dev0` suffix from the version and update version and date in the changelog:
 ```bash
@@ -21,7 +20,7 @@ python3 setup.py sdist --format=gztar bdist_wheel
 twine check dist/*
 twine upload -r pypi dist/pylast-3.0.0*
 ```
-* [ ] Check installation: `pip install -U pylast`
+* [ ] Check installation: `pip3 uninstall -y pylast && pip3 install -U pylast`
 * [ ] Push commits and tags:
  ```bash
 git push
