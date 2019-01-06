@@ -201,10 +201,12 @@ class _Network:
         self.last_call_time = 0
         self.limit_rate = False
 
-        # Load session_key from authentication token if provided
+        # Load session_key and username from authentication token if provided
         if token and not self.session_key:
             sk_gen = SessionKeyGenerator(self)
-            self.session_key = sk_gen.get_web_auth_session_key(url=None, token=token)
+            self.session_key, self.username = sk_gen.get_web_auth_session_key_username(
+                url=None, token=token
+            )
 
         # Generate a session_key if necessary
         if (
@@ -1043,9 +1045,9 @@ class SessionKeyGenerator:
 
         return url
 
-    def get_web_auth_session_key(self, url, token=""):
+    def get_web_auth_session_key_username(self, url, token=""):
         """
-        Retrieves the session key of a web authorization process by its URL.
+        Retrieves the session key/username of a web authorization process by its URL.
         """
 
         if url in self.web_auth_tokens.keys():
@@ -1062,7 +1064,16 @@ class SessionKeyGenerator:
 
         doc = request.execute()
 
-        return doc.getElementsByTagName("key")[0].firstChild.data
+        session_key = doc.getElementsByTagName("key")[0].firstChild.data
+        username = doc.getElementsByTagName("name")[0].firstChild.data
+        return session_key, username
+
+    def get_web_auth_session_key(self, url, token=""):
+        """
+        Retrieves the session key of a web authorization process by its URL.
+        """
+        session_key, _username = self.get_web_auth_session_key_username(url, token)
+        return session_key
 
     def get_session_key(self, username, password_hash):
         """
