@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import sys
 import time
 import unittest
 
@@ -11,6 +12,9 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastNetwork(TestPyLastWithLastFm):
+    @unittest.skipUnless(
+        sys.version_info[:2] == (3, 7), "Only run on Python 3.7 to avoid collisions"
+    )
     def test_scrobble(self):
         # Arrange
         artist = "test artist"
