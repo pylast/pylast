@@ -11,7 +11,6 @@ from .test_pylast import PY37, TestPyLastWithLastFm
 
 
 class TestPyLastTrack(TestPyLastWithLastFm):
-    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_love(self):
         # Arrange
         artist = "Test Artist"
@@ -28,6 +27,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         self.assertEqual(str(loved[0].track.artist).lower(), "test artist")
         self.assertEqual(str(loved[0].track.title).lower(), "test title")
 
+    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_unlove(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
