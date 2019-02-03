@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import time
 import unittest
 
 import pylast
@@ -20,6 +21,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Act
         track.love()
+        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
