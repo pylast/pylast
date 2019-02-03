@@ -6,10 +6,11 @@ import unittest
 
 import pylast
 
-from .test_pylast import TestPyLastWithLastFm
+from .test_pylast import PY37, TestPyLastWithLastFm
 
 
 class TestPyLastTrack(TestPyLastWithLastFm):
+    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_love(self):
         # Arrange
         artist = "Test Artist"

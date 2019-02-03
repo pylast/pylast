@@ -7,10 +7,11 @@ import unittest
 
 import pylast
 
-from .test_pylast import TestPyLastWithLastFm
+from .test_pylast import PY37, TestPyLastWithLastFm
 
 
 class TestPyLastNetwork(TestPyLastWithLastFm):
+    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_scrobble(self):
         # Arrange
         artist = "test artist"
@@ -20,6 +21,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Act
         self.network.scrobble(artist=artist, title=title, timestamp=timestamp)
+        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         # limit=2 to ignore now-playing:

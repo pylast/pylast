@@ -3,6 +3,7 @@
 Integration (not unit) tests for pylast.py
 """
 import os
+import sys
 import time
 import unittest
 
@@ -10,6 +11,9 @@ import pytest
 from flaky import flaky
 
 import pylast
+
+
+PY37 = sys.version_info[:2] == (3, 7)
 
 
 def load_secrets():
