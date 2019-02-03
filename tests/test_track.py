@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import time
 import unittest
 
 import pylast
@@ -10,7 +11,6 @@ from .test_pylast import PY37, TestPyLastWithLastFm
 
 
 class TestPyLastTrack(TestPyLastWithLastFm):
-    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_love(self):
         # Arrange
         artist = "Test Artist"
@@ -20,12 +20,14 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Act
         track.love()
+        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
         self.assertEqual(str(loved[0].track.artist).lower(), "test artist")
         self.assertEqual(str(loved[0].track.title).lower(), "test title")
 
+    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
     def test_unlove(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
