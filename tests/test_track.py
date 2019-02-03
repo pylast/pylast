@@ -20,7 +20,6 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Act
         track.love()
-        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
@@ -38,6 +37,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Act
         track.unlove()
+        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
