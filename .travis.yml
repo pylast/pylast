@@ -1,5 +1,4 @@
 language: python
-
 cache: pip
 
 env:
@@ -34,8 +33,9 @@ matrix:
   fast_finish: true
 
 install:
-- travis_retry pip install tox
-- travis_retry pip install coverage
+- travis_retry pip install --upgrade pip
+- travis_retry pip install --upgrade tox
+- travis_retry pip install --upgrade coverage
 
 script: tox
 
@@ -44,3 +44,27 @@ after_success:
 - travis_retry pip install codecov && codecov
 - travis_retry pip install scrutinizer-ocular && ocular
 
+deploy:
+  - provider: pypi
+    server: https://test.pypi.org/legacy/
+    on:
+      tags: false
+      repo: pylast/pylast
+      branch: master
+      condition: $TOXENV = py37
+    user: hugovk
+    password:
+      secure: MR3i+/8ZscMkgDlAQkbZxnAuvmHebfGqZzih2nlL8DoINx063ewqISsxhFtAIuyuFPUFu1F2urz2oXVlhc5jxulwSMkjTRGEb4NCCGcZvvPrIQw7nazRXo57o4AkVYuFMne3Bu8YU1R5gugeJenG0WdDXtjZkHrSjX2YzWUyYgdRbC5/KG3XHaVLSNtRebICxMYNj4Py22qh/B9rvXoKMAcgJHYf/FeAZhnYf25xzZBK8oiRv2ELRPogbTCDaCuFz6XDFHcx5WfV5jNfjeYaKzKPiHZhcKbyVDGFODRKa98mVhDTaVOcq4oCysGP/uz96cu67FOxk7wHRzZf8HV6WTgh2n3Zvokkm+uXb4rQlteAdYPfgeqtcgKXIj9WmGL48dw2f72oGahLDjQEXfzJzX3LaRgAd99TMFsGpbKlU9mfmfz/SOXyUA7ZAB6iEw0TsYosoffblH/q+1BjE0nIhY9xoP3KOz44TtUUSdtW4ztRQXrGzZkCiNqbSmZwqL+IhJRSHHsxggDaUI0N2c2f10IJHVUDgMjz4IjutdXgcwRTe8UCzQ/maeRI0epZAtC9UQ6ix5zKlR20IIzhP0rOinhk3vKCpINzofk46fkgKC7tM7Lchip0URQ6vnQxhG99wn7MZbOgTNp7fZduaFEfe72oIjCfDv1nTrRkr0dI5Cc=
+    distributions: sdist --format=gztar bdist_wheel
+    skip_existing: true
+  - provider: pypi
+    on:
+      tags: true
+      repo: pylast/pylast
+      branch: master
+      condition: $TOXENV = py37
+    user: hugovk
+    password:
+      secure: MR3i+/8ZscMkgDlAQkbZxnAuvmHebfGqZzih2nlL8DoINx063ewqISsxhFtAIuyuFPUFu1F2urz2oXVlhc5jxulwSMkjTRGEb4NCCGcZvvPrIQw7nazRXo57o4AkVYuFMne3Bu8YU1R5gugeJenG0WdDXtjZkHrSjX2YzWUyYgdRbC5/KG3XHaVLSNtRebICxMYNj4Py22qh/B9rvXoKMAcgJHYf/FeAZhnYf25xzZBK8oiRv2ELRPogbTCDaCuFz6XDFHcx5WfV5jNfjeYaKzKPiHZhcKbyVDGFODRKa98mVhDTaVOcq4oCysGP/uz96cu67FOxk7wHRzZf8HV6WTgh2n3Zvokkm+uXb4rQlteAdYPfgeqtcgKXIj9WmGL48dw2f72oGahLDjQEXfzJzX3LaRgAd99TMFsGpbKlU9mfmfz/SOXyUA7ZAB6iEw0TsYosoffblH/q+1BjE0nIhY9xoP3KOz44TtUUSdtW4ztRQXrGzZkCiNqbSmZwqL+IhJRSHHsxggDaUI0N2c2f10IJHVUDgMjz4IjutdXgcwRTe8UCzQ/maeRI0epZAtC9UQ6ix5zKlR20IIzhP0rOinhk3vKCpINzofk46fkgKC7tM7Lchip0URQ6vnQxhG99wn7MZbOgTNp7fZduaFEfe72oIjCfDv1nTrRkr0dI5Cc=
+    distributions: sdist --format=gztar bdist_wheel
+    skip_existing: true
