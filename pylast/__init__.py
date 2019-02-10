@@ -2776,7 +2776,29 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
 
     while not end_of_pages and (not limit or (limit and len(nodes) < limit)):
         params["page"] = str(page)
-        doc = sender._request(method_name, cacheable, params)
+
+        tries = 0
+        while True:
+            tries += 1
+            try:
+                doc = sender._request(method_name, cacheable, params)
+                break  # success
+            except MalformedResponseError as e:
+                if tries < 3:
+                    time.sleep(1)  # wait and try again
+                else:
+                    raise e
+            except WSError as e:
+                if tries < 3 and int(e.get_id()) in [
+                    # "Please try again" statuses
+                    STATUS_OPERATION_FAILED,
+                    STATUS_OFFLINE,
+                    STATUS_TEMPORARILY_UNAVAILABLE,
+                ]:
+                    time.sleep(1)  # wait and try again
+                else:
+                    raise e
+
         doc = cleanup_nodes(doc)
 
         # break if there are no child nodes
