@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Extract username from session via new
   `SessionKeyGenerator.get_web_auth_session_key_username` ([#290])
 
+### Deprecated
+
+*  `User.get_artist_tracks` ([#298])
+
 ## [3.0.0] - 2019-01-01
 ### Added
 * This changelog file ([#273])
@@ -31,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/pylast/pylast/compare/v3.0.0...HEAD
 [3.0.0]: https://github.com/pylast/pylast/compare/2.4.0...3.0.0
 [2.4.0]: https://github.com/pylast/pylast/compare/2.3.0...2.4.0
+[#298]: https://github.com/pylast/pylast/issues/298
 [#290]: https://github.com/pylast/pylast/pull/290
 [#265]: https://github.com/pylast/pylast/issues/265
 [#273]: https://github.com/pylast/pylast/issues/273

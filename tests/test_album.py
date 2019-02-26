@@ -3,6 +3,7 @@
 Integration (not unit) tests for pylast.py
 """
 import unittest
+import warnings
 
 import pylast
 
@@ -44,7 +45,9 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
-        track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
 
         # Assert
         self.assertTrue(hasattr(track, "album"))

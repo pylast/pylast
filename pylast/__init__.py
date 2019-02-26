@@ -20,18 +20,19 @@
 #
 # https://github.com/pylast/pylast
 
-from xml.dom import minidom, Node
 import collections
 import hashlib
+import html.entities
 import logging
 import shelve
 import ssl
 import sys
 import tempfile
 import time
+import warnings
 import xml.dom
-import html.entities
 from http.client import HTTPSConnection
+from xml.dom import Node, minidom
 
 from . import version
 
@@ -2235,6 +2236,13 @@ class User(_BaseObject, _Chartable):
         """
         # Not implemented:
         # "Can be limited to specific timeranges, defaults to all time."
+
+        warnings.warn(
+            "User.get_artist_tracks is deprecated and will be removed in a future "
+            "version: https://github.com/pylast/pylast/issues/298",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         params = self._get_params()
         params["artist"] = artist

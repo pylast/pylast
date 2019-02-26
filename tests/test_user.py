@@ -4,6 +4,7 @@ Integration (not unit) tests for pylast.py
 """
 import os
 import unittest
+import warnings
 
 import pylast
 
@@ -186,9 +187,11 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_authenticated_user()
 
         # Act
-        result1 = lastfm_user.get_artist_tracks("Test Artist", cacheable=False)
-        result2 = lastfm_user.get_artist_tracks("Test Artist", cacheable=True)
-        result3 = lastfm_user.get_artist_tracks("Test Artist")
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            result1 = lastfm_user.get_artist_tracks("Test Artist", cacheable=False)
+            result2 = lastfm_user.get_artist_tracks("Test Artist", cacheable=True)
+            result3 = lastfm_user.get_artist_tracks("Test Artist")
 
         # Assert
         self.helper_validate_results(result1, result2, result3)
