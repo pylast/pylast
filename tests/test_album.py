@@ -13,10 +13,10 @@ from .test_pylast import TestPyLastWithLastFm
 class TestPyLastAlbum(TestPyLastWithLastFm):
     def test_album_tags_are_topitems(self):
         # Arrange
-        albums = self.network.get_user("RJ").get_top_albums()
+        album = self.network.get_album("Test Artist", "Test Album")
 
         # Act
-        tags = albums[0].item.get_top_tags(limit=1)
+        tags = album.get_top_tags(limit=1)
 
         # Assert
         self.assertGreater(len(tags), 0)
