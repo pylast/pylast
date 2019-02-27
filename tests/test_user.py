@@ -433,6 +433,34 @@ class TestPyLastUser(TestPyLastWithLastFm):
         self.assertIsNotNone(track)
         self.assertIsInstance(track.network, pylast.LastFMNetwork)
 
+    def test_user_get_track_scrobbles(self):
+        # Arrange
+        artist = "France Gall"
+        title = "Laisse Tomber Les Filles"
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        scrobbles = user.get_track_scrobbles(artist, title)
+
+        # Assert
+        self.assertGreater(len(scrobbles), 0)
+        self.assertEqual(str(scrobbles[0].track.artist), "France Gall")
+        self.assertEqual(scrobbles[0].track.title, "Laisse Tomber Les Filles")
+
+    def test_cacheable_user_get_track_scrobbles(self):
+        # Arrange
+        artist = "France Gall"
+        title = "Laisse Tomber Les Filles"
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        result1 = user.get_track_scrobbles(artist, title, cacheable=False)
+        result2 = user.get_track_scrobbles(artist, title, cacheable=True)
+        result3 = user.get_track_scrobbles(artist, title)
+
+        # Assert
+        self.helper_validate_results(result1, result2, result3)
+
 
 if __name__ == "__main__":
     unittest.main(failfast=True)
