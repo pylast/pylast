@@ -2239,7 +2239,8 @@ class User(_BaseObject, _Chartable):
 
         warnings.warn(
             "User.get_artist_tracks is deprecated and will be removed in a future "
-            "version: https://github.com/pylast/pylast/issues/298",
+            "version. User.get_track_scrobbles is a partial replacement. "
+            "See https://github.com/pylast/pylast/issues/298",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -2535,7 +2536,7 @@ class User(_BaseObject, _Chartable):
 
     def get_track_scrobbles(self, artist, track, cacheable=False):
         """
-        Get a list of scrobbles of this tracks by this artist scrobbled by this user,
+        Get a list of this user's scrobbles of this artist's track,
         including scrobble time.
         """
 

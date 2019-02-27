@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Extract username from session via new
   `SessionKeyGenerator.get_web_auth_session_key_username` ([#290])
+* `User.get_track_scrobbles` ([#298])
 
 ### Deprecated
 
-*  `User.get_artist_tracks` ([#298])
+*  `User.get_artist_tracks`. Use `User.get_track_scrobbles` as a partial replacement.
+   ([#298])
 
 ## [3.0.0] - 2019-01-01
 ### Added
