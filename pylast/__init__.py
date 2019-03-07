@@ -20,18 +20,19 @@
 #
 # https://github.com/pylast/pylast
 
-from xml.dom import minidom, Node
 import collections
 import hashlib
+import html.entities
 import logging
 import shelve
 import ssl
 import sys
 import tempfile
 import time
+import warnings
 import xml.dom
-import html.entities
 from http.client import HTTPSConnection
+from xml.dom import Node, minidom
 
 from . import version
 
@@ -2236,6 +2237,14 @@ class User(_BaseObject, _Chartable):
         # Not implemented:
         # "Can be limited to specific timeranges, defaults to all time."
 
+        warnings.warn(
+            "User.get_artist_tracks is deprecated and will be removed in a future "
+            "version. User.get_track_scrobbles is a partial replacement. "
+            "See https://github.com/pylast/pylast/issues/298",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
         params = self._get_params()
         params["artist"] = artist
 
@@ -2524,6 +2533,32 @@ class User(_BaseObject, _Chartable):
             params["limit"] = limit
 
         return self._get_things("getTopTracks", "track", Track, params, cacheable)
+
+    def get_track_scrobbles(self, artist, track, cacheable=False):
+        """
+        Get a list of this user's scrobbles of this artist's track,
+        including scrobble time.
+        """
+
+        params = self._get_params()
+        params["artist"] = artist
+        params["track"] = track
+
+        seq = []
+        for track in _collect_nodes(
+            None, self, self.ws_prefix + ".getTrackScrobbles", cacheable, params
+        ):
+            title = _extract(track, "name")
+            artist = _extract(track, "artist")
+            date = _extract(track, "date")
+            album = _extract(track, "album")
+            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+
+            seq.append(
+                PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
+            )
+
+        return seq
 
     def get_image(self, size=SIZE_EXTRA_LARGE):
         """

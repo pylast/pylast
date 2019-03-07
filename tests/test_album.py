@@ -3,6 +3,7 @@
 Integration (not unit) tests for pylast.py
 """
 import unittest
+import warnings
 
 import pylast
 
@@ -12,10 +13,10 @@ from .test_pylast import TestPyLastWithLastFm
 class TestPyLastAlbum(TestPyLastWithLastFm):
     def test_album_tags_are_topitems(self):
         # Arrange
-        albums = self.network.get_user("RJ").get_top_albums()
+        album = self.network.get_album("Test Artist", "Test Album")
 
         # Act
-        tags = albums[0].item.get_top_tags(limit=1)
+        tags = album.get_top_tags(limit=1)
 
         # Assert
         self.assertGreater(len(tags), 0)
@@ -44,7 +45,9 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
-        track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
 
         # Assert
         self.assertTrue(hasattr(track, "album"))

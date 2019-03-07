@@ -4,6 +4,7 @@ Integration (not unit) tests for pylast.py
 """
 import os
 import unittest
+import warnings
 
 import pylast
 
@@ -186,9 +187,11 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_authenticated_user()
 
         # Act
-        result1 = lastfm_user.get_artist_tracks("Test Artist", cacheable=False)
-        result2 = lastfm_user.get_artist_tracks("Test Artist", cacheable=True)
-        result3 = lastfm_user.get_artist_tracks("Test Artist")
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            result1 = lastfm_user.get_artist_tracks("Test Artist", cacheable=False)
+            result2 = lastfm_user.get_artist_tracks("Test Artist", cacheable=True)
+            result3 = lastfm_user.get_artist_tracks("Test Artist")
 
         # Assert
         self.helper_validate_results(result1, result2, result3)
@@ -429,6 +432,34 @@ class TestPyLastUser(TestPyLastWithLastFm):
         # Assert
         self.assertIsNotNone(track)
         self.assertIsInstance(track.network, pylast.LastFMNetwork)
+
+    def test_user_get_track_scrobbles(self):
+        # Arrange
+        artist = "France Gall"
+        title = "Laisse Tomber Les Filles"
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        scrobbles = user.get_track_scrobbles(artist, title)
+
+        # Assert
+        self.assertGreater(len(scrobbles), 0)
+        self.assertEqual(str(scrobbles[0].track.artist), "France Gall")
+        self.assertEqual(scrobbles[0].track.title, "Laisse Tomber Les Filles")
+
+    def test_cacheable_user_get_track_scrobbles(self):
+        # Arrange
+        artist = "France Gall"
+        title = "Laisse Tomber Les Filles"
+        user = self.network.get_user("bbc6music")
+
+        # Act
+        result1 = user.get_track_scrobbles(artist, title, cacheable=False)
+        result2 = user.get_track_scrobbles(artist, title, cacheable=True)
+        result3 = user.get_track_scrobbles(artist, title)
+
+        # Assert
+        self.helper_validate_results(result1, result2, result3)
 
 
 if __name__ == "__main__":

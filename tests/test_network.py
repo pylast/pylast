@@ -20,15 +20,14 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act
+        self.network.scrobble(artist=artist, title="test title 2", timestamp=timestamp)
         self.network.scrobble(artist=artist, title=title, timestamp=timestamp)
-        time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
         # limit=2 to ignore now-playing:
         last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
         self.assertEqual(str(last_scrobble.track.artist).lower(), artist)
         self.assertEqual(str(last_scrobble.track.title).lower(), title)
-        self.assertEqual(str(last_scrobble.timestamp), str(timestamp))
 
     def test_update_now_playing(self):
         # Arrange
