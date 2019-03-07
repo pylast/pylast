@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.1.0] - 2019-03-07
 ### Added
 
 * Extract username from session via new
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Support for Python 2.7 ([#265])
 
 
-[Unreleased]: https://github.com/pylast/pylast/compare/v3.0.0...HEAD
+[3.1.0]: https://github.com/pylast/pylast/compare/v3.0.0...3.1.0
 [3.0.0]: https://github.com/pylast/pylast/compare/2.4.0...3.0.0
 [2.4.0]: https://github.com/pylast/pylast/compare/2.3.0...2.4.0
 [#298]: https://github.com/pylast/pylast/issues/298
