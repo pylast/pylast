@@ -4,7 +4,7 @@
 #     A Python interface to Last.fm and Libre.fm
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2018 hugovk
+# Copyright 2013-2019 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ from . import version
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = (
-    "Copyright (C) 2008-2010 Amr Hassan, 2013-2018 hugovk, " "2017 Mice Pápai"
+    "Copyright (C) 2008-2010 Amr Hassan, 2013-2019 hugovk, " "2017 Mice Pápai"
 )
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
@@ -73,13 +73,16 @@ else:
     from urllib.parse import quote_plus as url_quote_plus
 
 
+# 1 : This error does not exist
 STATUS_INVALID_SERVICE = 2
 STATUS_INVALID_METHOD = 3
 STATUS_AUTH_FAILED = 4
 STATUS_INVALID_FORMAT = 5
 STATUS_INVALID_PARAMS = 6
 STATUS_INVALID_RESOURCE = 7
-STATUS_TOKEN_ERROR = 8
+# DeprecationWarning: STATUS_TOKEN_ERROR is deprecated and will be
+# removed in a future version. Use STATUS_OPERATION_FAILED instead.
+STATUS_OPERATION_FAILED = STATUS_TOKEN_ERROR = 8
 STATUS_INVALID_SK = 9
 STATUS_INVALID_API_KEY = 10
 STATUS_OFFLINE = 11
@@ -87,6 +90,20 @@ STATUS_SUBSCRIBERS_ONLY = 12
 STATUS_INVALID_SIGNATURE = 13
 STATUS_TOKEN_UNAUTHORIZED = 14
 STATUS_TOKEN_EXPIRED = 15
+STATUS_TEMPORARILY_UNAVAILABLE = 16
+STATUS_LOGIN_REQUIRED = 17
+STATUS_TRIAL_EXPIRED = 18
+# 19 : This error does not exist
+STATUS_NOT_ENOUGH_CONTENT = 20
+STATUS_NOT_ENOUGH_MEMBERS = 21
+STATUS_NOT_ENOUGH_FANS = 22
+STATUS_NOT_ENOUGH_NEIGHBOURS = 23
+STATUS_NO_PEAK_RADIO = 24
+STATUS_RADIO_NOT_FOUND = 25
+STATUS_API_KEY_SUSPENDED = 26
+STATUS_DEPRECATED = 27
+# 28 : This error is not documented
+STATUS_RATE_LIMIT_EXCEEDED = 29
 
 PERIOD_OVERALL = "overall"
 PERIOD_7DAYS = "7day"
@@ -1415,13 +1432,25 @@ class WSError(Exception):
             STATUS_INVALID_FORMAT = 5
             STATUS_INVALID_PARAMS = 6
             STATUS_INVALID_RESOURCE = 7
-            STATUS_TOKEN_ERROR = 8
+            STATUS_OPERATION_FAILED = 8
             STATUS_INVALID_SK = 9
             STATUS_INVALID_API_KEY = 10
             STATUS_OFFLINE = 11
             STATUS_SUBSCRIBERS_ONLY = 12
             STATUS_TOKEN_UNAUTHORIZED = 14
             STATUS_TOKEN_EXPIRED = 15
+            STATUS_TEMPORARILY_UNAVAILABLE = 16
+            STATUS_LOGIN_REQUIRED = 17
+            STATUS_TRIAL_EXPIRED = 18
+            STATUS_NOT_ENOUGH_CONTENT = 20
+            STATUS_NOT_ENOUGH_MEMBERS  = 21
+            STATUS_NOT_ENOUGH_FANS = 22
+            STATUS_NOT_ENOUGH_NEIGHBOURS = 23
+            STATUS_NO_PEAK_RADIO = 24
+            STATUS_RADIO_NOT_FOUND = 25
+            STATUS_API_KEY_SUSPENDED = 26
+            STATUS_DEPRECATED = 27
+            STATUS_RATE_LIMIT_EXCEEDED = 29
         """
 
         return self.status
@@ -2782,7 +2811,19 @@ def _collect_nodes(limit, sender, method_name, cacheable, params=None):
 
     while not end_of_pages and (not limit or (limit and len(nodes) < limit)):
         params["page"] = str(page)
-        doc = sender._request(method_name, cacheable, params)
+
+        tries = 1
+        while True:
+            try:
+                doc = sender._request(method_name, cacheable, params)
+                break  # success
+            except Exception as e:
+                if tries >= 3:
+                    raise e
+                # Wait and try again
+                time.sleep(1)
+                tries += 1
+
         doc = cleanup_nodes(doc)
 
         # break if there are no child nodes
