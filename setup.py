@@ -4,7 +4,7 @@ import sys
 from setuptools import find_packages, setup
 
 version_dict = {}
-with open("pylast/version.py") as f:
+with open("src/pylast/version.py") as f:
     exec(f.read(), version_dict)
     version = version_dict["__version__"]
 
@@ -72,7 +72,8 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
     keywords=["Last.fm", "music", "scrobble", "scrobbling"],
-    packages=find_packages(exclude=("tests*",)),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     license="Apache2",
 )
 
