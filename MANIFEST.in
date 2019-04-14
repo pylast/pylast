@@ -1,4 +1,4 @@
-include pylast/*.py
+graft src
 include setup.py
 include README.md
 include COPYING
