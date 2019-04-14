@@ -2,7 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import pytest
 import unittest
 import warnings
 
@@ -12,10 +11,6 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastAlbum(TestPyLastWithLastFm):
-
-    # Last.fm bug
-    # https://getsatisfaction.com/lastfm/topics/gettoptags-getting-wrong-tags
-    @pytest.mark.xfail
     def test_album_tags_are_topitems(self):
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
