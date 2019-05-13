@@ -5,6 +5,8 @@ Integration (not unit) tests for pylast.py
 import unittest
 import warnings
 
+import pytest
+
 import pylast
 
 from .test_pylast import TestPyLastWithLastFm
@@ -40,6 +42,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Assert
         self.assertTrue(hasattr(track, "album"))
 
+    @pytest.mark.skip(reason="Last.fm is removing from API")
     def test_album_in_artist_tracks(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
