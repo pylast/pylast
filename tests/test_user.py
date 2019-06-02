@@ -461,6 +461,17 @@ class TestPyLastUser(TestPyLastWithLastFm):
         # Assert
         self.helper_validate_results(result1, result2, result3)
 
+    def test_get_artist_tracks_deprecated(self):
+        # Arrange
+        lastfm_user = self.network.get_user(self.username)
+
+        # Act / Assert
+        with warnings.catch_warnings(), self.assertRaisesRegex(
+            pylast.WSError, "Deprecated - This type of request is no longer supported"
+        ):
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            lastfm_user.get_artist_tracks(artist="Test Artist")
+
 
 if __name__ == "__main__":
     unittest.main(failfast=True)

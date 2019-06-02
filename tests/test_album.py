@@ -3,9 +3,6 @@
 Integration (not unit) tests for pylast.py
 """
 import unittest
-import warnings
-
-import pytest
 
 import pylast
 
@@ -38,19 +35,6 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Act
         # limit=2 to ignore now-playing:
         track = lastfm_user.get_recent_tracks(limit=2)[0]
-
-        # Assert
-        self.assertTrue(hasattr(track, "album"))
-
-    @pytest.mark.skip(reason="Last.fm is removing from API")
-    def test_album_in_artist_tracks(self):
-        # Arrange
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=DeprecationWarning)
-            track = lastfm_user.get_artist_tracks(artist="Test Artist")[0]
 
         # Assert
         self.assertTrue(hasattr(track, "album"))

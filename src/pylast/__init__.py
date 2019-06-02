@@ -2260,11 +2260,10 @@ class User(_BaseObject, _Chartable):
 
     def get_artist_tracks(self, artist, cacheable=False):
         """
+        Deprecated by Last.fm.
         Get a list of tracks by a given artist scrobbled by this user,
         including scrobble time.
         """
-        # Not implemented:
-        # "Can be limited to specific timeranges, defaults to all time."
 
         warnings.warn(
             "User.get_artist_tracks is deprecated and will be removed in a future "
