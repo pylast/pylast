@@ -903,6 +903,7 @@ class _Request:
         for name in self.params.keys():
             data.append("=".join((name, quote_plus(_string(self.params[name])))))
         data = "&".join(data)
+        logger.debug(data)
 
         if "api_sig" in self.params.keys():
             method = "POST"
@@ -910,6 +911,7 @@ class _Request:
         else:
             method = "GET"
             url_parameters = "?" + data
+        logger.debug(method)
 
         headers = {
             "Content-type": "application/x-www-form-urlencoded",
@@ -966,6 +968,7 @@ class _Request:
             self._check_response_for_errors(response_text)
         finally:
             conn.close()
+        logger.debug(response_text)
         return response_text
 
     def execute(self, cacheable=False):
