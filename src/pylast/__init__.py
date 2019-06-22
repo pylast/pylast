@@ -2896,8 +2896,9 @@ def _extract_top_albums(doc, network):
         name = _extract(node, "name")
         artist = _extract(node, "name", 1)
         playcount = _extract(node, "playcount")
+        info = {"image": _extract_all(node, "image")}
 
-        seq.append(TopItem(Album(artist, name, network), playcount))
+        seq.append(TopItem(Album(artist, name, network, info=info), playcount))
 
     return seq
 

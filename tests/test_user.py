@@ -271,6 +271,12 @@ class TestPyLastUser(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(albums, pylast.Album)
 
+        top_album = albums[0].item
+        self.assertTrue(len(top_album.info["image"]))
+        self.assertRegexpMatches(
+            top_album.info["image"][pylast.SIZE_LARGE], r"^http.+$"
+        )
+
     def test_user_tagged_artists(self):
         # Arrange
         lastfm_user = self.network.get_user(self.username)
