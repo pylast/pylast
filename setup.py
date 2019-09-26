@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-import sys
-
 from setuptools import find_packages, setup
 
 version_dict = {}
@@ -8,31 +6,6 @@ with open("src/pylast/version.py") as f:
     exec(f.read(), version_dict)
     version = version_dict["__version__"]
 
-
-if sys.version_info < (3, 5):
-    error = """pylast 3.0 and above are no longer compatible with Python 2.
-
-This is pylast {} and you are using Python {}.
-Make sure you have pip >= 9.0 and setuptools >= 24.2 and retry:
-
- $ pip install --upgrade pip setuptools
-
-Other choices:
-
-- Upgrade to Python 3.
-
-- Install an older version of pylast:
-
-$ pip install 'pylast<3.0'
-
-For more information:
-
-https://github.com/pylast/pylast/issues/265
-""".format(
-        version, ".".join([str(v) for v in sys.version_info[:3]])
-    )
-    print(error, file=sys.stderr)
-    sys.exit(1)
 
 with open("README.md") as f:
     long_description = f.read()

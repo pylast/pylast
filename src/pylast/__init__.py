@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # pylast -
 #     A Python interface to Last.fm and Libre.fm
@@ -26,12 +25,12 @@ import html.entities
 import logging
 import shelve
 import ssl
-import sys
 import tempfile
 import time
 import warnings
 import xml.dom
 from http.client import HTTPSConnection
+from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
 from . import version
@@ -43,34 +42,6 @@ __copyright__ = (
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
 __version__ = version.__version__
-
-if sys.version_info < (3,):
-    raise ImportError(
-        """pylast 3.0 and above are no longer compatible with Python 2.
-
-This is pylast {} and you are using Python {}.
-Make sure you have pip >= 9.0 and setuptools >= 24.2 and retry:
-
- $ pip install --upgrade pip setuptools
-
-Other choices:
-
-- Upgrade to Python 3.
-
-- Install an older version of pylast:
-
-$ pip install 'pylast<3.0'
-
-For more information:
-
-https://github.com/pylast/pylast/issues/265
-""".format(
-            version, ".".join([str(v) for v in sys.version_info[:3]])
-        )
-    )
-else:
-    # Keep importable on Python 2 for a while to show ImportError
-    from urllib.parse import quote_plus as url_quote_plus
 
 
 # 1 : This error does not exist
@@ -896,7 +867,7 @@ class _Request:
         keys = list(self.params.keys())
         keys.sort()
 
-        cache_key = str()
+        cache_key = ""
 
         for key in keys:
             if key != "api_sig" and key != "api_key" and key != "sk":
@@ -926,7 +897,7 @@ class _Request:
 
         data = []
         for name in self.params.keys():
-            data.append("=".join((name, url_quote_plus(_string(self.params[name])))))
+            data.append("=".join((name, quote_plus(_string(self.params[name])))))
         data = "&".join(data)
 
         headers = {
@@ -2932,7 +2903,7 @@ def _extract_tracks(doc, network):
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a URL."""
 
-    return url_quote_plus(url_quote_plus(_string(text))).lower()
+    return quote_plus(quote_plus(_string(text))).lower()
 
 
 def _number(string):
