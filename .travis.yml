@@ -13,8 +13,9 @@ env:
   - secure: SsKJoJwtDVWrL5xxl9C/gTRy6FhfRQQNNAFOogl9mTs/WeI2t9QTYoKsxLPXOdoRdu4MvT3h/B2sjwggt7zP81fBVxQRTkg4nq0zSHlj0NqclbFa6I5lUYdGwH9gPk/HWJJwXhKRDsqn/iRw2v+qBDs/j3kIgPQ0yjM58LEPXic=
 
 matrix:
+  fast_finish: true
   include:
-    - python: 3.6
+    - python: 3.7
       env: TOXENV=lint
     - python: 3.7
       env: TOXENV=py37
@@ -28,7 +29,6 @@ matrix:
       env: TOXENV=py38dev
   allow_failures:
     - env: TOXENV=pypy3
-  fast_finish: true
 
 install:
 - travis_retry pip install --upgrade pip
@@ -49,7 +49,7 @@ deploy:
       tags: false
       repo: pylast/pylast
       branch: master
-      condition: $TOXENV = py37
+      condition: $TOXENV = lint
     user: hugovk
     password:
       secure: "OCNT7Sf7TpS6aKuqBXEWxJZjmEpdERTBp/yllOd9xnpFt2ZL96CyKtAhPA8zu5OP58QFEZSafZRfXYJoz78RDrx3gOdRXCFT00vXIMnjVvrAlieNEHCVAT0kRW9lYK1Cf5baHYsOYIs6EZf2fEAhdzvmh83G4Y1Y+FPR9tA6uy8="
@@ -60,7 +60,7 @@ deploy:
       tags: true
       repo: pylast/pylast
       branch: master
-      condition: $TOXENV = py37
+      condition: $TOXENV = lint
     user: hugovk
     password:
       secure: "OCNT7Sf7TpS6aKuqBXEWxJZjmEpdERTBp/yllOd9xnpFt2ZL96CyKtAhPA8zu5OP58QFEZSafZRfXYJoz78RDrx3gOdRXCFT00vXIMnjVvrAlieNEHCVAT0kRW9lYK1Cf5baHYsOYIs6EZf2fEAhdzvmh83G4Y1Y+FPR9tA6uy8="
