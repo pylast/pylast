@@ -4,9 +4,8 @@ Integration (not unit) tests for pylast.py
 """
 import unittest
 
-from flaky import flaky
-
 import pylast
+from flaky import flaky
 
 from .test_pylast import PyLastTestCase, load_secrets
 

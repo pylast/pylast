@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import mock
-import pytest
-
 import pylast
+import pytest
 
 
 def mock_network():
