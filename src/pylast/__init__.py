@@ -1251,7 +1251,7 @@ class _Chartable:
         """
         Returns the weekly artist charts for the week starting from the
         from_date value to the to_date value.
-        Only for Tag or User.
+        Only for User.
         """
         return self.get_weekly_charts("artist", from_date, to_date)
 
