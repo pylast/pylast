@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v1.24.0
+    rev: v1.25.2
     hooks:
       - id: pyupgrade
         args: ["--py3-plus"]
 
   - repo: https://github.com/psf/black
-    rev: 19.3b0
+    rev: 19.10b0
     hooks:
       - id: black
         language_version: python3.7
@@ -15,7 +15,7 @@ repos:
         types: []
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.8
+    rev: 3.7.9
     hooks:
       - id: flake8
         additional_dependencies: [flake8-2020]
@@ -27,11 +27,11 @@ repos:
         language_version: python3.7
 
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.4.1
+    rev: v1.4.2
     hooks:
       - id: python-check-blanket-noqa
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v2.4.0
     hooks:
       - id: check-yaml
