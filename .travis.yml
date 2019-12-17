@@ -37,7 +37,6 @@ after_success:
     if [ "$TOXENV" != "lint" ]; then
       travis_retry pip install -U coveralls && coveralls
       travis_retry pip install -U codecov && codecov
-      travis_retry pip install -U scrutinizer-ocular && ocular
     fi
 
 deploy:
