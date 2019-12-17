@@ -9,7 +9,6 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-        language_version: python3.7
         # override until resolved: https://github.com/psf/black/issues/402
         files: \.pyi?$
         types: []
@@ -24,7 +23,6 @@ repos:
     rev: v4.3.21
     hooks:
       - id: isort
-        language_version: python3.7
 
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.4.2
