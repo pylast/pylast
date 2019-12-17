@@ -5,6 +5,7 @@ Integration (not unit) tests for pylast.py
 import unittest
 
 import pylast
+import pytest
 
 from .test_pylast import TestPyLastWithLastFm
 
@@ -281,6 +282,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         self.assertEqual(corrected_artist_name, "Guns N' Roses")
 
+    @pytest.mark.xfail
     def test_get_userplaycount(self):
         # Arrange
         artist = pylast.Artist("John Lennon", self.network, username=self.username)
