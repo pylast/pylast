@@ -20,7 +20,9 @@ setup(
     author="Amr Hassan <amr.hassan@gmail.com> and Contributors",
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
-    tests_require=["coverage", "flaky", "pycodestyle", "pyflakes", "pytest", "pyyaml"],
+    extras_require={
+        "tests": ["flaky", "pytest", "pytest-cov", "pytest-random-order", "pyyaml"]
+    },
     python_requires=">=3.5",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
