@@ -20,15 +20,9 @@ setup(
     author="Amr Hassan <amr.hassan@gmail.com> and Contributors",
     author_email="amr.hassan@gmail.com",
     url="https://github.com/pylast/pylast",
-    tests_require=[
-        "coverage",
-        "flaky",
-        "mock",
-        "pycodestyle",
-        "pyflakes",
-        "pytest",
-        "pyyaml",
-    ],
+    extras_require={
+        "tests": ["flaky", "pytest", "pytest-cov", "pytest-random-order", "pyyaml"]
+    },
     python_requires=">=3.5",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -40,6 +34,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",

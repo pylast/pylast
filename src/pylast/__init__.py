@@ -36,9 +36,7 @@ from xml.dom import Node, minidom
 from . import version
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
-__copyright__ = (
-    "Copyright (C) 2008-2010 Amr Hassan, 2013-2019 hugovk, " "2017 Mice Pápai"
-)
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2019 hugovk, 2017 Mice Pápai"
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
 __version__ = version.__version__
@@ -903,7 +901,7 @@ class _Request:
         headers = {
             "Content-type": "application/x-www-form-urlencoded",
             "Accept-Charset": "utf-8",
-            "User-Agent": "pylast" + "/" + __version__,
+            "User-Agent": "pylast/" + __version__,
         }
 
         (host_name, host_subdir) = self.network.ws_server
