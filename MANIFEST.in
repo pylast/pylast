@@ -2,5 +2,4 @@ graft src
 include setup.py
 include README.md
 include COPYING
-include INSTALL
 recursive-include tests *.py
