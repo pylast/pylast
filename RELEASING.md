@@ -20,6 +20,8 @@ git push --tags
 
   * Tag: Pick existing tag "3.2.0"
 
+  * Description: Copy from `CHANGELOG.md`
+
 * [ ] Check the tagged [Travis CI build](https://travis-ci.org/pylast/pylast) has
       deployed to [PyPI](https://pypi.org/project/pylast/#history)
 
