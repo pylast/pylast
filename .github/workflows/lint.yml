@@ -16,18 +16,17 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.cache/pip
-          key: ${{ matrix.os }}-pip-${{ hashFiles('**/setup.py') }}
+          key: lint-pip-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ matrix.os }}-pip-
+            lint-pip-
 
       - name: pre-commit cache
         uses: actions/cache@v1
         with:
           path: ~/.cache/pre-commit
-          key:
-            ${{ matrix.os }}-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
+          key: lint-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
           restore-keys: |
-            ${{ matrix.os }}-pre-commit-
+            lint-pre-commit-
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
