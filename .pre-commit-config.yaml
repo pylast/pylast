@@ -31,12 +31,12 @@ repos:
       - id: isort
 
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.4.4
+    rev: v1.5.1
     hooks:
       - id: python-check-blanket-noqa
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v2.5.0
     hooks:
       - id: check-merge-conflict
       - id: check-yaml

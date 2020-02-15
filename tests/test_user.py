@@ -2,6 +2,8 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import calendar
+import datetime as dt
 import os
 import unittest
 import warnings
@@ -354,12 +356,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def test_get_recent_tracks_from_to(self):
         # Arrange
         lastfm_user = self.network.get_user("RJ")
-
-        from datetime import datetime
-
-        start = datetime(2011, 7, 21, 15, 10)
-        end = datetime(2011, 7, 21, 15, 15)
-        import calendar
+        start = dt.datetime(2011, 7, 21, 15, 10)
+        end = dt.datetime(2011, 7, 21, 15, 15)
 
         utc_start = calendar.timegm(start.utctimetuple())
         utc_end = calendar.timegm(end.utctimetuple())
@@ -371,6 +369,25 @@ class TestPyLastUser(TestPyLastWithLastFm):
         self.assertEqual(len(tracks), 1)
         self.assertEqual(str(tracks[0].track.artist), "Johnny Cash")
         self.assertEqual(str(tracks[0].track.title), "Ring of Fire")
+
+    def test_get_recent_tracks_limit_none(self):
+        # Arrange
+        lastfm_user = self.network.get_user("bbc6music")
+        start = dt.datetime(2020, 2, 15, 15, 00)
+        end = dt.datetime(2020, 2, 15, 15, 40)
+
+        utc_start = calendar.timegm(start.utctimetuple())
+        utc_end = calendar.timegm(end.utctimetuple())
+
+        # Act
+        tracks = lastfm_user.get_recent_tracks(
+            time_from=utc_start, time_to=utc_end, limit=None
+        )
+
+        # Assert
+        self.assertEqual(len(tracks), 11)
+        self.assertEqual(str(tracks[0].track.artist), "Seun Kuti & Egypt 80")
+        self.assertEqual(str(tracks[0].track.title), "Struggles Sounds")
 
     def test_get_playcount(self):
         # Arrange
