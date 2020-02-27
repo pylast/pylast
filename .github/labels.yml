@@ -1,0 +1,96 @@
+# Default GitHub labels
+- color: d73a4a
+  description: "Something isn't working"
+  name: bug
+- color: cfd3d7
+  description: "This issue or pull request already exists"
+  name: duplicate
+- color: a2eeef
+  description: "New feature or request"
+  name: enhancement
+- color: 7057ff
+  description: "Good for newcomers"
+  name: good first issue
+- color: 008672
+  description: "Extra attention is needed"
+  name: help wanted
+- color: e4e669
+  description: "This doesn't seem right"
+  name: invalid
+- color: d876e3
+  description: "Further information is requested"
+  name: question
+- color: ffffff
+  description: "This will not be worked on"
+  name: wontfix
+
+# Keep a Changelog labels
+# https://keepachangelog.com/en/1.0.0/
+- color: 0e8a16
+  description: "For new features"
+  name: "changelog: Added"
+- color: af99e5
+  description: "For changes in existing functionality"
+  name: "changelog: Changed"
+- color: FFA500
+  description: "For soon-to-be removed features"
+  name: "changelog: Deprecated"
+- color: 00A800
+  description: "For any bug fixes"
+  name: "changelog: Fixed"
+- color: ff0000
+  description: "For now removed features"
+  name: "changelog: Removed"
+- color: 045aa0
+  description: "In case of vulnerabilities"
+  name: "changelog: Security"
+- color: fbca04
+  description: "Exclude PR from release draft"
+  name: "changelog: skip"
+
+# Other labels
+- color: e11d21
+  description: ""
+  name: Last.fm bug
+- color: FFFFFF
+  description: ""
+  name: Milestone-0.3
+- color: FFFFFF
+  description: ""
+  name: Performance
+- color: FFFFFF
+  description: ""
+  name: Priority-High
+- color: FFFFFF
+  description: ""
+  name: Priority-Low
+- color: FFFFFF
+  description: ""
+  name: Priority-Medium
+- color: FFFFFF
+  description: ""
+  name: Type-Other
+- color: FFFFFF
+  description: ""
+  name: Type-Patch
+- color: FFFFFF
+  description: ""
+  name: Usability
+- color: 64c1c0
+  description: ""
+  name: backwards incompatible
+- color: fef2c0
+  description: ""
+  name: build
+- color: e99695
+  description: Feature that will be removed in the future
+  name: deprecation
+- color: FFFFFF
+  description: ""
+  name: imported
+- color: b60205
+  description: Removal of a feature, usually done in major releases
+  name: removal
+- color: fef2c0
+  description: ""
+  name: test
