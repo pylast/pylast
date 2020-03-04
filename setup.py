@@ -44,5 +44,3 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
 )
-
-# End of file
