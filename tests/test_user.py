@@ -277,9 +277,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         top_album = albums[0].item
         self.assertTrue(len(top_album.info["image"]))
-        self.assertRegexpMatches(
-            top_album.info["image"][pylast.SIZE_LARGE], r"^http.+$"
-        )
+        self.assertRegex(top_album.info["image"][pylast.SIZE_LARGE], r"^http.+$")
 
     def test_user_tagged_artists(self):
         # Arrange
