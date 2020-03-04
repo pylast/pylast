@@ -2358,7 +2358,11 @@ class User(_BaseObject, _Chartable):
 
         seq = []
         for track in _collect_nodes(
-            limit + 1, self, self.ws_prefix + ".getRecentTracks", cacheable, params
+            limit + 1 if limit else None,
+            self,
+            self.ws_prefix + ".getRecentTracks",
+            cacheable,
+            params,
         ):
 
             if track.hasAttribute("nowplaying"):
@@ -2374,8 +2378,10 @@ class User(_BaseObject, _Chartable):
                 PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
             )
 
-        # Slice, in case we didn't remove a now playing track
-        return seq[:limit]
+        if limit:
+            # Slice, in case we didn't remove a now playing track
+            seq = seq[:limit]
+        return seq
 
     def get_country(self):
         """Returns the name of the country of the user."""
