@@ -4,23 +4,13 @@
       [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for
       all merges to master.
 
-* [ ] Tag with the version number:
+* [ ] Edit release draft, adjust text if needed: https://github.com/pylast/pylast/releases
 
-```bash
-git tag -a 3.2.0 -m "Release 3.2.0"
-```
+* [ ] Check next tag is correct, amend if needed
 
-* [ ] Push tag:
+* [ ] Copy text into [`CHANGELOG.md`](CHANGELOG.md)
 
-```bash
-git push --tags
-```
-
-* [ ] Create new GitHub release: https://github.com/pylast/pylast/releases/new
-
-  * Tag: Pick existing tag "3.2.0"
-
-  * Description: Copy from [`CHANGELOG.md`](CHANGELOG.md)
+* [ ] Publish release
 
 * [ ] Check the tagged [Travis CI build](https://travis-ci.org/pylast/pylast) has
       deployed to [PyPI](https://pypi.org/project/pylast/#history)
