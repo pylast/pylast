@@ -52,6 +52,17 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         self.assertIsNotNone(bio)
         self.assertGreaterEqual(len(bio), 1)
 
+    def test_bio_content_none(self):
+        # Arrange
+        # An artist with no biography, with "<content/>" in the API XML
+        artist = pylast.Artist("Mr Sizef + Unquote", self.network)
+
+        # Act
+        bio = artist.get_bio_content()
+
+        # Assert
+        self.assertIsNone(bio)
+
     def test_bio_summary(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
