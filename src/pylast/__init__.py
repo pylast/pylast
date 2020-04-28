@@ -932,7 +932,15 @@ class _Request:
                 raise NetworkError(self.network, e)
 
         try:
-            response_text = _unicode(conn.getresponse().read())
+            response = conn.getresponse()
+            if response.status in [500, 502, 503, 504]:
+                raise WSError(
+                    self.network,
+                    response.status,
+                    "Connection to the API failed with HTTP code "
+                    + str(response.status),
+                )
+            response_text = _unicode(response.read())
         except Exception as e:
             raise MalformedResponseError(self.network, e)
 
