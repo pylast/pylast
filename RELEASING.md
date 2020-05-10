@@ -4,7 +4,8 @@
       [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for
       all merges to master.
 
-* [ ] Edit release draft, adjust text if needed: https://github.com/pylast/pylast/releases
+* [ ] Edit release draft, adjust text if needed:
+      https://github.com/pylast/pylast/releases
 
 * [ ] Check next tag is correct, amend if needed
 

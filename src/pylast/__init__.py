@@ -1142,7 +1142,12 @@ class _BaseObject:
     def _extract_cdata_from_request(self, method_name, tag_name, params):
         doc = self._request(method_name, True, params)
 
-        return doc.getElementsByTagName(tag_name)[0].firstChild.wholeText.strip()
+        first_child = doc.getElementsByTagName(tag_name)[0].firstChild
+
+        if first_child is None:
+            return None
+
+        return first_child.wholeText.strip()
 
     def _get_things(self, method, thing, thing_type, params=None, cacheable=True):
         """Returns a list of the most played thing_types by this thing."""
