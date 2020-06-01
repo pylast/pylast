@@ -2338,8 +2338,9 @@ class User(_BaseObject, _Chartable):
 
         artist = _extract(e, "artist")
         title = _extract(e, "name")
+        info = {"album": _extract(e, "album"), "image": _extract_all(e, "image")}
 
-        return Track(artist, title, self.network, self.name)
+        return Track(artist, title, self.network, self.name, info=info)
 
     def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None):
         """

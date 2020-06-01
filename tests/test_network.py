@@ -47,6 +47,10 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assertIsNotNone(current_track)
         self.assertEqual(str(current_track.title).lower(), "test title")
         self.assertEqual(str(current_track.artist).lower(), "test artist")
+        self.assertEqual(current_track.info["album"], "Test Album")
+
+        self.assertTrue(len(current_track.info["image"]))
+        self.assertRegex(current_track.info["image"][pylast.SIZE_LARGE], r"^http.+$")
 
     def test_enable_rate_limiting(self):
         # Arrange
