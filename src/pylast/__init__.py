@@ -2128,6 +2128,8 @@ class Track(_Opus):
 
     def get_album(self):
         """Returns the album object of this track."""
+        if "album" in self.info and self.info["album"] is not None:
+            return Album(self.artist, self.info["album"], self.network)
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
