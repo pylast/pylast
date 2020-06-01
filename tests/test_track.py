@@ -3,9 +3,9 @@
 Integration (not unit) tests for pylast.py
 """
 import time
-import unittest
 
 import pylast
+import pytest
 
 from .test_pylast import PY37, TestPyLastWithLastFm
 
@@ -23,10 +23,10 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
-        self.assertEqual(str(loved[0].track.artist).lower(), "test artist")
-        self.assertEqual(str(loved[0].track.title).lower(), "test title")
+        assert str(loved[0].track.artist).lower() == "test artist"
+        assert str(loved[0].track.title).lower() == "test title"
 
-    @unittest.skipUnless(PY37, "Only run on Python 3.7 to avoid collisions")
+    @pytest.mark.skipif(not PY37, reason="Only run on Python 3.7 to avoid collisions")
     def test_unlove(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)
@@ -42,8 +42,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         # Assert
         loved = lastfm_user.get_loved_tracks(limit=1)
         if len(loved):  # OK to be empty but if not:
-            self.assertNotEqual(str(loved[0].track.artist), "Test Artist")
-            self.assertNotEqual(str(loved[0].track.title), "test title")
+            assert str(loved[0].track.artist) != "Test Artist"
+            assert str(loved[0].track.title) != "test title"
 
     def test_user_play_count_in_track_info(self):
         # Arrange
@@ -57,7 +57,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         count = track.get_userplaycount()
 
         # Assert
-        self.assertGreaterEqual(count, 0)
+        assert count >= 0
 
     def test_user_loved_in_track_info(self):
         # Arrange
@@ -71,15 +71,15 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         loved = track.get_userloved()
 
         # Assert
-        self.assertIsNotNone(loved)
-        self.assertIsInstance(loved, bool)
-        self.assertNotIsInstance(loved, str)
+        assert loved is not None
+        assert isinstance(loved, bool)
+        assert not isinstance(loved, str)
 
     def test_track_is_hashable(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
         track = artist.get_top_tracks()[0].item
-        self.assertIsInstance(track, pylast.Track)
+        assert isinstance(track, pylast.Track)
 
         # Act/Assert
         self.helper_is_thing_hashable(track)
@@ -92,8 +92,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         wiki = track.get_wiki_content()
 
         # Assert
-        self.assertIsNotNone(wiki)
-        self.assertGreaterEqual(len(wiki), 1)
+        assert wiki is not None
+        assert len(wiki) >= 1
 
     def test_track_wiki_summary(self):
         # Arrange
@@ -103,8 +103,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         wiki = track.get_wiki_summary()
 
         # Assert
-        self.assertIsNotNone(wiki)
-        self.assertGreaterEqual(len(wiki), 1)
+        assert wiki is not None
+        assert len(wiki) >= 1
 
     def test_track_get_duration(self):
         # Arrange
@@ -114,7 +114,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         duration = track.get_duration()
 
         # Assert
-        self.assertGreaterEqual(duration, 200000)
+        assert duration >= 200000
 
     def test_track_is_streamable(self):
         # Arrange
@@ -124,7 +124,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         streamable = track.is_streamable()
 
         # Assert
-        self.assertFalse(streamable)
+        assert not streamable
 
     def test_track_is_fulltrack_available(self):
         # Arrange
@@ -134,7 +134,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         fulltrack_available = track.is_fulltrack_available()
 
         # Assert
-        self.assertFalse(fulltrack_available)
+        assert not fulltrack_available
 
     def test_track_get_album(self):
         # Arrange
@@ -144,7 +144,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         album = track.get_album()
 
         # Assert
-        self.assertEqual(str(album), "Nirvana - Nevermind")
+        assert str(album) == "Nirvana - Nevermind"
 
     def test_track_get_similar(self):
         # Arrange
@@ -159,17 +159,17 @@ class TestPyLastTrack(TestPyLastWithLastFm):
             if str(track.item) == "Madonna - Vogue":
                 found = True
                 break
-        self.assertTrue(found)
+        assert found
 
     def test_track_get_similar_limits(self):
         # Arrange
         track = pylast.Track("Cher", "Believe", self.network)
 
         # Act/Assert
-        self.assertEqual(len(track.get_similar(limit=20)), 20)
-        self.assertLessEqual(len(track.get_similar(limit=10)), 10)
-        self.assertGreaterEqual(len(track.get_similar(limit=None)), 23)
-        self.assertGreaterEqual(len(track.get_similar(limit=0)), 23)
+        assert len(track.get_similar(limit=20)) == 20
+        assert len(track.get_similar(limit=10)) <= 10
+        assert len(track.get_similar(limit=None)) >= 23
+        assert len(track.get_similar(limit=0)) >= 23
 
     def test_tracks_notequal(self):
         # Arrange
@@ -178,7 +178,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
         # Act
         # Assert
-        self.assertNotEqual(track1, track2)
+        assert track1 != track2
 
     def test_track_title_prop_caps(self):
         # Arrange
@@ -188,7 +188,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         title = track.get_title(properly_capitalized=True)
 
         # Assert
-        self.assertEqual(title, "Test Title")
+        assert title == "Test Title"
 
     def test_track_listener_count(self):
         # Arrange
@@ -198,7 +198,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         count = track.get_listener_count()
 
         # Assert
-        self.assertGreater(count, 21)
+        assert count > 21
 
     def test_album_tracks(self):
         # Arrange
@@ -209,10 +209,10 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         url = tracks[0].get_url()
 
         # Assert
-        self.assertIsInstance(tracks, list)
-        self.assertIsInstance(tracks[0], pylast.Track)
-        self.assertEqual(len(tracks), 1)
-        self.assertTrue(url.startswith("https://www.last.fm/music/test"))
+        assert isinstance(tracks, list)
+        assert isinstance(tracks[0], pylast.Track)
+        assert len(tracks) == 1
+        assert url.startswith("https://www.last.fm/music/test")
 
     def test_track_eq_none_is_false(self):
         # Arrange
@@ -220,7 +220,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
-        self.assertNotEqual(track1, track2)
+        assert track1 != track2
 
     def test_track_ne_none_is_true(self):
         # Arrange
@@ -228,7 +228,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         track2 = pylast.Track("Test Artist", "test title", self.network)
 
         # Act / Assert
-        self.assertNotEqual(track1, track2)
+        assert track1 != track2
 
     def test_track_get_correction(self):
         # Arrange
@@ -238,7 +238,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         corrected_track_name = track.get_correction()
 
         # Assert
-        self.assertEqual(corrected_track_name, "Mr. Brownstone")
+        assert corrected_track_name == "Mr. Brownstone"
 
     def test_track_with_no_mbid(self):
         # Arrange
@@ -248,8 +248,4 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         mbid = track.get_mbid()
 
         # Assert
-        self.assertIsNone(mbid)
-
-
-if __name__ == "__main__":
-    unittest.main(failfast=True)
+        assert mbid is None

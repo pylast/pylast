@@ -2,8 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import unittest
-
 import pylast
 
 from .test_pylast import TestPyLastWithLastFm
@@ -28,13 +26,9 @@ class TestPyLastCountry(TestPyLastWithLastFm):
         url = country1.get_url()
 
         # Assert
-        self.assertIn("Italy", rep)
-        self.assertIn("pylast.Country", rep)
-        self.assertEqual(text, "Italy")
-        self.assertEqual(country1, country1)
-        self.assertNotEqual(country1, country2)
-        self.assertEqual(url, "https://www.last.fm/place/italy")
-
-
-if __name__ == "__main__":
-    unittest.main(failfast=True)
+        assert "Italy" in rep
+        assert "pylast.Country" in rep
+        assert text == "Italy"
+        assert country1 == country1
+        assert country1 != country2
+        assert url == "https://www.last.fm/place/italy"
