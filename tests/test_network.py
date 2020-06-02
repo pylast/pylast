@@ -49,6 +49,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert str(current_track.title).lower() == "test title"
         assert str(current_track.artist).lower() == "test artist"
         assert current_track.info["album"] == "Test Album"
+        assert current_track.get_album().title == "Test Album"
 
         assert len(current_track.info["image"])
         assert re.search(r"^http.+$", current_track.info["image"][pylast.SIZE_LARGE])
