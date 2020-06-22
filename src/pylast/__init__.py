@@ -1726,6 +1726,15 @@ class Artist(_BaseObject, _Taggable):
             SIZE_SMALL
         """
 
+        warnings.warn(
+            "Artist.get_cover_image is deprecated and will be removed in a future "
+            "version. In the meantime, only default star images are available. "
+            "See https://github.com/pylast/pylast/issues/317 and "
+            "https://support.last.fm/t/api-announcement/202",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
         if "image" not in self.info:
             self.info["image"] = _extract_all(
                 self._request(self.ws_prefix + ".getInfo", cacheable=True), "image"
