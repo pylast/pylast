@@ -2,8 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import unittest
-
 import pylast
 
 from .test_pylast import TestPyLastWithLastFm
@@ -49,14 +47,10 @@ class TestPyLastTag(TestPyLastWithLastFm):
         url = tag1.get_url()
 
         # Assert
-        self.assertEqual("blues", tag_str)
-        self.assertIn("pylast.Tag", tag_repr)
-        self.assertIn("blues", tag_repr)
-        self.assertEqual("blues", name)
-        self.assertEqual(tag1, tag1)
-        self.assertNotEqual(tag1, tag2)
-        self.assertEqual(url, "https://www.last.fm/tag/blues")
-
-
-if __name__ == "__main__":
-    unittest.main(failfast=True)
+        assert "blues" == tag_str
+        assert "pylast.Tag" in tag_repr
+        assert "blues" in tag_repr
+        assert "blues" == name
+        assert tag1 == tag1
+        assert tag1 != tag2
+        assert url == "https://www.last.fm/tag/blues"

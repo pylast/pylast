@@ -5,7 +5,7 @@ Integration (not unit) tests for pylast.py
 import calendar
 import datetime as dt
 import os
-import unittest
+import re
 import warnings
 
 import pylast
@@ -33,7 +33,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         string = str(user)
 
         # Assert
-        self.assertEqual(string, "RJ")
+        assert string == "RJ"
 
     def test_equality(self):
         # Arrange
@@ -43,9 +43,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         not_a_user = self.network
 
         # Act / Assert
-        self.assertEqual(user_1a, user_1b)
-        self.assertNotEqual(user_1a, user_2)
-        self.assertNotEqual(user_1a, not_a_user)
+        assert user_1a == user_1b
+        assert user_1a != user_2
+        assert user_1a != not_a_user
 
     def test_get_name(self):
         # Arrange
@@ -55,7 +55,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         name = user.get_name(properly_capitalized=True)
 
         # Assert
-        self.assertEqual(name, "RJ")
+        assert name == "RJ"
 
     def test_get_user_registration(self):
         # Arrange
@@ -67,11 +67,11 @@ class TestPyLastUser(TestPyLastWithLastFm):
         # Assert
         if int(registered):
             # Last.fm API broken? Used to be yyyy-mm-dd not Unix timestamp
-            self.assertEqual(registered, "1037793040")
+            assert registered == "1037793040"
         else:
             # Old way
             # Just check date because of timezones
-            self.assertIn("2002-11-20 ", registered)
+            assert "2002-11-20 " in registered
 
     def test_get_user_unixtime_registration(self):
         # Arrange
@@ -82,7 +82,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Assert
         # Just check date because of timezones
-        self.assertEqual(unixtime_registered, 1037793040)
+        assert unixtime_registered == 1037793040
 
     def test_get_countryless_user(self):
         # Arrange
@@ -93,7 +93,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         country = lastfm_user.get_country()
 
         # Assert
-        self.assertIsNone(country)
+        assert country is None
 
     def test_user_get_country(self):
         # Arrange
@@ -103,7 +103,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         country = lastfm_user.get_country()
 
         # Assert
-        self.assertEqual(str(country), "United Kingdom")
+        assert str(country) == "United Kingdom"
 
     def test_user_equals_none(self):
         # Arrange
@@ -113,7 +113,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         value = lastfm_user is None
 
         # Assert
-        self.assertFalse(value)
+        assert not value
 
     def test_user_not_equal_to_none(self):
         # Arrange
@@ -123,7 +123,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         value = lastfm_user is not None
 
         # Assert
-        self.assertTrue(value)
+        assert value
 
     def test_now_playing_user_with_no_scrobbles(self):
         # Arrange
@@ -134,7 +134,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         current_track = user.get_now_playing()
 
         # Assert
-        self.assertIsNone(current_track)
+        assert current_track is None
 
     def test_love_limits(self):
         # Arrange
@@ -142,10 +142,10 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("test-user")
 
         # Act/Assert
-        self.assertEqual(len(user.get_loved_tracks(limit=20)), 20)
-        self.assertLessEqual(len(user.get_loved_tracks(limit=100)), 100)
-        self.assertGreaterEqual(len(user.get_loved_tracks(limit=None)), 23)
-        self.assertGreaterEqual(len(user.get_loved_tracks(limit=0)), 23)
+        assert len(user.get_loved_tracks(limit=20)) == 20
+        assert len(user.get_loved_tracks(limit=100)) <= 100
+        assert len(user.get_loved_tracks(limit=None)) >= 23
+        assert len(user.get_loved_tracks(limit=0)) >= 23
 
     def test_user_is_hashable(self):
         # Arrange
@@ -183,7 +183,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         os.remove(filename)
 
         # Assert
-        self.assertEqual(lastfm_user, loaded_user)
+        assert lastfm_user == loaded_user
 
     @pytest.mark.xfail
     def test_cacheable_user(self):
@@ -217,10 +217,10 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
     def helper_assert_chart(self, chart, expected_type):
         # Assert
-        self.assertIsNotNone(chart)
-        self.assertGreater(len(chart), 0)
-        self.assertIsInstance(chart[0], pylast.TopItem)
-        self.assertIsInstance(chart[0].item, expected_type)
+        assert chart is not None
+        assert len(chart) > 0
+        assert isinstance(chart[0], pylast.TopItem)
+        assert isinstance(chart[0].item, expected_type)
 
     def helper_get_assert_charts(self, thing, date):
         # Arrange
@@ -241,10 +241,10 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
     def helper_dates_valid(self, dates):
         # Assert
-        self.assertGreaterEqual(len(dates), 1)
-        self.assertIsInstance(dates[0], tuple)
+        assert len(dates) >= 1
+        assert isinstance(dates[0], tuple)
         (start, end) = dates[0]
-        self.assertLess(start, end)
+        assert start < end
 
     def test_user_charts(self):
         # Arrange
@@ -276,8 +276,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
         self.helper_only_one_thing_in_top_list(albums, pylast.Album)
 
         top_album = albums[0].item
-        self.assertTrue(len(top_album.info["image"]))
-        self.assertRegex(top_album.info["image"][pylast.SIZE_LARGE], r"^http.+$")
+        assert len(top_album.info["image"])
+        assert re.search(r"^http.+$", top_album.info["image"][pylast.SIZE_LARGE])
 
     def test_user_tagged_artists(self):
         # Arrange
@@ -328,8 +328,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
         non_subscriber_is_subscriber = non_subscriber.is_subscriber()
 
         # Assert
-        self.assertTrue(subscriber_is_subscriber)
-        self.assertFalse(non_subscriber_is_subscriber)
+        assert subscriber_is_subscriber
+        assert not non_subscriber_is_subscriber
 
     def test_user_get_image(self):
         # Arrange
@@ -349,7 +349,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         library = user.get_library()
 
         # Assert
-        self.assertIsInstance(library, pylast.Library)
+        assert isinstance(library, pylast.Library)
 
     def test_get_recent_tracks_from_to(self):
         # Arrange
@@ -364,9 +364,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end)
 
         # Assert
-        self.assertEqual(len(tracks), 1)
-        self.assertEqual(str(tracks[0].track.artist), "Johnny Cash")
-        self.assertEqual(str(tracks[0].track.title), "Ring of Fire")
+        assert len(tracks) == 1
+        assert str(tracks[0].track.artist) == "Johnny Cash"
+        assert str(tracks[0].track.title) == "Ring of Fire"
 
     def test_get_recent_tracks_limit_none(self):
         # Arrange
@@ -383,9 +383,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         )
 
         # Assert
-        self.assertEqual(len(tracks), 11)
-        self.assertEqual(str(tracks[0].track.artist), "Seun Kuti & Egypt 80")
-        self.assertEqual(str(tracks[0].track.title), "Struggles Sounds")
+        assert len(tracks) == 11
+        assert str(tracks[0].track.artist) == "Seun Kuti & Egypt 80"
+        assert str(tracks[0].track.title) == "Struggles Sounds"
 
     def test_get_playcount(self):
         # Arrange
@@ -395,7 +395,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         playcount = user.get_playcount()
 
         # Assert
-        self.assertGreaterEqual(playcount, 128387)
+        assert playcount >= 128387
 
     def test_get_image(self):
         # Arrange
@@ -416,7 +416,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         url = user.get_url()
 
         # Assert
-        self.assertEqual(url, "https://www.last.fm/user/rj")
+        assert url == "https://www.last.fm/user/rj"
 
     def test_get_weekly_artist_charts(self):
         # Arrange
@@ -427,8 +427,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
         artist, weight = charts[0]
 
         # Assert
-        self.assertIsNotNone(artist)
-        self.assertIsInstance(artist.network, pylast.LastFMNetwork)
+        assert artist is not None
+        assert isinstance(artist.network, pylast.LastFMNetwork)
 
     def test_get_weekly_track_charts(self):
         # Arrange
@@ -439,8 +439,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
         track, weight = charts[0]
 
         # Assert
-        self.assertIsNotNone(track)
-        self.assertIsInstance(track.network, pylast.LastFMNetwork)
+        assert track is not None
+        assert isinstance(track.network, pylast.LastFMNetwork)
 
     def test_user_get_track_scrobbles(self):
         # Arrange
@@ -452,9 +452,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         scrobbles = user.get_track_scrobbles(artist, title)
 
         # Assert
-        self.assertGreater(len(scrobbles), 0)
-        self.assertEqual(str(scrobbles[0].track.artist), "France Gall")
-        self.assertEqual(scrobbles[0].track.title, "Laisse Tomber Les Filles")
+        assert len(scrobbles) > 0
+        assert str(scrobbles[0].track.artist) == "France Gall"
+        assert scrobbles[0].track.title == "Laisse Tomber Les Filles"
 
     def test_cacheable_user_get_track_scrobbles(self):
         # Arrange
@@ -475,12 +475,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user(self.username)
 
         # Act / Assert
-        with warnings.catch_warnings(), self.assertRaisesRegex(
-            pylast.WSError, "Deprecated - This type of request is no longer supported"
+        with warnings.catch_warnings(), pytest.raises(
+            pylast.WSError,
+            match="Deprecated - This type of request is no longer supported",
         ):
             warnings.filterwarnings("ignore", category=DeprecationWarning)
             lastfm_user.get_artist_tracks(artist="Test Artist")
-
-
-if __name__ == "__main__":
-    unittest.main(failfast=True)

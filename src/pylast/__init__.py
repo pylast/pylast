@@ -2128,6 +2128,8 @@ class Track(_Opus):
 
     def get_album(self):
         """Returns the album object of this track."""
+        if "album" in self.info and self.info["album"] is not None:
+            return Album(self.artist, self.info["album"], self.network)
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
@@ -2338,8 +2340,9 @@ class User(_BaseObject, _Chartable):
 
         artist = _extract(e, "artist")
         title = _extract(e, "name")
+        info = {"album": _extract(e, "album"), "image": _extract_all(e, "image")}
 
-        return Track(artist, title, self.network, self.name)
+        return Track(artist, title, self.network, self.name, info=info)
 
     def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None):
         """

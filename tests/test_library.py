@@ -2,8 +2,6 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import unittest
-
 import pylast
 
 from .test_pylast import TestPyLastWithLastFm
@@ -53,8 +51,4 @@ class TestPyLastLibrary(TestPyLastWithLastFm):
         library_user = library.get_user()
 
         # Assert
-        self.assertEqual(library_user, user_to_get)
-
-
-if __name__ == "__main__":
-    unittest.main(failfast=True)
+        assert library_user == user_to_get
