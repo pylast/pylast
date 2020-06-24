@@ -7,10 +7,11 @@ import time
 import pylast
 import pytest
 
-from .test_pylast import PY37, TestPyLastWithLastFm
+from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
 class TestPyLastTrack(TestPyLastWithLastFm):
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_love(self):
         # Arrange
         artist = "Test Artist"
@@ -26,7 +27,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         assert str(loved[0].track.artist).lower() == "test artist"
         assert str(loved[0].track.title).lower() == "test title"
 
-    @pytest.mark.skipif(not PY37, reason="Only run on Python 3.7 to avoid collisions")
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_unlove(self):
         # Arrange
         artist = pylast.Artist("Test Artist", self.network)

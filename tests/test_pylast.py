@@ -10,7 +10,7 @@ import pylast
 import pytest
 from flaky import flaky
 
-PY37 = sys.version_info[:2] == (3, 7)
+WRITE_TEST = sys.version_info[:2] == (3, 8)
 
 
 def load_secrets():
