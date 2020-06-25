@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [3.3.0] - 2020-06-25
+### Added
+
+* `User.get_now_playing`: Add album and cover image to info (#330) @hugovk
+
+### Changed
+
+* Improve handling of error responses from the API (#327) @spiritualized
+
+### Deprecated
+
+* Deprecate `Artist.get_cover_image`, they're no longer available from Last.fm (#332) @hugovk
+
+### Fixed
+
+* Fix `artist.get_bio_content()` to return `None` if bio is empty (#326) @hugovk
+
+
 ## [3.2.1] - 2020-03-05
 ### Fixed
 
@@ -67,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for Python 2.7 ([#265])
 
+[3.3.0]: https://github.com/pylast/pylast/compare/v3.2.1...3.3.0
 [3.2.1]: https://github.com/pylast/pylast/compare/v3.2.0...3.2.1
 [3.2.0]: https://github.com/pylast/pylast/compare/v3.1.0...3.2.0
 [3.1.0]: https://github.com/pylast/pylast/compare/v3.0.0...3.1.0
