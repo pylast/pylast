@@ -5,7 +5,7 @@ Integration (not unit) tests for pylast.py
 import pylast
 import pytest
 
-from .test_pylast import TestPyLastWithLastFm
+from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
 class TestPyLastArtist(TestPyLastWithLastFm):
@@ -141,6 +141,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         assert isinstance(count, int)
         assert count > 0
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_tag_artist(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
@@ -159,6 +160,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
                 break
         assert found
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_remove_tag_of_type_text(self):
         # Arrange
         tag = "testing"  # text
@@ -177,6 +179,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
                 break
         assert not found
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_remove_tag_of_type_tag(self):
         # Arrange
         tag = pylast.Tag("testing", self.network)  # Tag
@@ -195,6 +198,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
                 break
         assert not found
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_remove_tags(self):
         # Arrange
         tags = ["removetag1", "removetag2"]
@@ -218,6 +222,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         assert not found1
         assert not found2
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_set_tags(self):
         # Arrange
         tags = ["sometag1", "sometag2"]

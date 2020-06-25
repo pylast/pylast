@@ -8,11 +8,11 @@ import time
 import pylast
 import pytest
 
-from .test_pylast import PY37, TestPyLastWithLastFm
+from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
 class TestPyLastNetwork(TestPyLastWithLastFm):
-    @pytest.mark.skipif(not PY37, reason="Only run on Python 3.7 to avoid collisions")
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_scrobble(self):
         # Arrange
         artist = "test artist"
@@ -30,6 +30,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert str(last_scrobble.track.artist).lower() == artist
         assert str(last_scrobble.track.title).lower() == title
 
+    @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
     def test_update_now_playing(self):
         # Arrange
         artist = "Test Artist"
