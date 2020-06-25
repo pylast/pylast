@@ -19,5 +19,5 @@
 * [ ] Check installation:
 
 ```bash
-pip3 uninstall -y pylast && pip3 install -U pylast
+pip3 uninstall -y pylast && pip3 install -U pylast && python3 -c "import pylast; print(pylast.__version__)"
 ```
