@@ -4,13 +4,14 @@ Integration (not unit) tests for pylast.py
 """
 import calendar
 import datetime as dt
+import inspect
 import os
 import re
 import warnings
 
+import pylast
 import pytest
 
-import pylast
 from .test_pylast import TestPyLastWithLastFm
 
 
@@ -361,7 +362,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         utc_end = calendar.timegm(end.utctimetuple())
 
         # Act
-        tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end, stream=False)
+        tracks = lastfm_user.get_recent_tracks(
+            time_from=utc_start, time_to=utc_end, stream=False
+        )
 
         # Assert
         assert len(tracks) == 1
@@ -386,6 +389,23 @@ class TestPyLastUser(TestPyLastWithLastFm):
         assert len(tracks) == 11
         assert str(tracks[0].track.artist) == "Seun Kuti & Egypt 80"
         assert str(tracks[0].track.title) == "Struggles Sounds"
+
+    def test_get_recent_tracks_is_streamable(self):
+        # Arrange
+        lastfm_user = self.network.get_user("bbc6music")
+        start = dt.datetime(2020, 2, 15, 15, 00)
+        end = dt.datetime(2020, 2, 15, 15, 40)
+
+        utc_start = calendar.timegm(start.utctimetuple())
+        utc_end = calendar.timegm(end.utctimetuple())
+
+        # Act
+        tracks = lastfm_user.get_recent_tracks(
+            time_from=utc_start, time_to=utc_end, limit=None, stream=True
+        )
+
+        # Assert
+        assert inspect.isgenerator(tracks)
 
     def test_get_playcount(self):
         # Arrange

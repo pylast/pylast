@@ -2,9 +2,9 @@
 """
 Integration (not unit) tests for pylast.py
 """
+import pylast
 import pytest
 
-import pylast
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
