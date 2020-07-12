@@ -4,9 +4,9 @@ Integration (not unit) tests for pylast.py
 """
 import time
 
-import pylast
 import pytest
 
+import pylast
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
@@ -23,7 +23,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         track.love()
 
         # Assert
-        loved = lastfm_user.get_loved_tracks(limit=1)
+        loved = list(lastfm_user.get_loved_tracks(limit=1))
         assert str(loved[0].track.artist).lower() == "test artist"
         assert str(loved[0].track.title).lower() == "test title"
 
@@ -41,7 +41,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         time.sleep(1)  # Delay, for Last.fm latency. TODO Can this be removed later?
 
         # Assert
-        loved = lastfm_user.get_loved_tracks(limit=1)
+        loved = list(lastfm_user.get_loved_tracks(limit=1))
         if len(loved):  # OK to be empty but if not:
             assert str(loved[0].track.artist) != "Test Artist"
             assert str(loved[0].track.title) != "test title"
@@ -79,7 +79,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
     def test_track_is_hashable(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
-        track = artist.get_top_tracks()[0].item
+        track = artist.get_top_tracks(stream=False)[0].item
         assert isinstance(track, pylast.Track)
 
         # Act/Assert

@@ -5,9 +5,9 @@ Integration (not unit) tests for pylast.py
 import re
 import time
 
-import pylast
 import pytest
 
+import pylast
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
@@ -26,7 +26,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         # limit=2 to ignore now-playing:
-        last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
+        last_scrobble = list(lastfm_user.get_recent_tracks(limit=2))[0]
         assert str(last_scrobble.track.artist).lower() == artist
         assert str(last_scrobble.track.title).lower() == title
 
@@ -153,7 +153,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         country = self.network.get_country("Croatia")
 
         # Act
-        things = country.get_top_tracks(limit=2)
+        things = country.get_top_tracks(limit=2, stream=False)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -171,7 +171,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         tag = self.network.get_tag("blues")
 
         # Act
-        things = tag.get_top_tracks(limit=2)
+        things = tag.get_top_tracks(limit=2, stream=False)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)

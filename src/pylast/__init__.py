@@ -1149,21 +1149,22 @@ class _BaseObject:
 
         return first_child.wholeText.strip()
 
-    def _get_things(self, method, thing, thing_type, params=None, cacheable=True):
+    def _get_things(self, method, thing, thing_type, params=None, cacheable=True, stream=False):
         """Returns a list of the most played thing_types by this thing."""
 
-        limit = params.get("limit", 1)
-        seq = []
-        for node in _collect_nodes(
-            limit, self, self.ws_prefix + "." + method, cacheable, params
-        ):
-            title = _extract(node, "name")
-            artist = _extract(node, "name", 1)
-            playcount = _number(_extract(node, "playcount"))
+        def _stream_get_things():
+            limit = params.get("limit", 1)
+            nodes = _collect_nodes(
+                limit, self, self.ws_prefix + "." + method, cacheable, params, stream=stream,
+            )
+            for node in nodes:
+                title = _extract(node, "name")
+                artist = _extract(node, "name", 1)
+                playcount = _number(_extract(node, "playcount"))
 
-            seq.append(TopItem(thing_type(artist, title, self.network), playcount))
+                yield TopItem(thing_type(artist, title, self.network), playcount)
 
-        return seq
+        return _stream_get_things() if stream else list(_stream_get_things())
 
     def get_wiki_published_date(self):
         """
@@ -1835,21 +1836,21 @@ class Artist(_BaseObject, _Taggable):
 
         return artists
 
-    def get_top_albums(self, limit=None, cacheable=True):
+    def get_top_albums(self, limit=None, cacheable=True, stream=True):
         """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopAlbums", "album", Album, params, cacheable)
+        return self._get_things("getTopAlbums", "album", Album, params, cacheable, stream=stream)
 
-    def get_top_tracks(self, limit=None, cacheable=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
         """Returns a list of the most played Tracks by this artist."""
         params = self._get_params()
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", "track", Track, params, cacheable, stream=stream)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the artist page on the network.
@@ -1917,13 +1918,13 @@ class Country(_BaseObject):
 
         return _extract_top_artists(doc, self)
 
-    def get_top_tracks(self, limit=None, cacheable=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
         """Returns a sequence of the most played tracks"""
         params = self._get_params()
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", "track", Track, params, cacheable, stream=stream)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the country page on the network.
@@ -1978,24 +1979,24 @@ class Library(_BaseObject):
         """Returns the user who owns this library."""
         return self.user
 
-    def get_artists(self, limit=50, cacheable=True):
+    def get_artists(self, limit=50, cacheable=True, stream=True):
         """
         Returns a sequence of Album objects
         if limit==None it will return all (may take a while)
         """
 
-        seq = []
-        for node in _collect_nodes(
-            limit, self, self.ws_prefix + ".getArtists", cacheable
-        ):
-            name = _extract(node, "name")
+        def _get_artists():
+            for node in _collect_nodes(
+                limit, self, self.ws_prefix + ".getArtists", cacheable, stream=stream
+            ):
+                name = _extract(node, "name")
 
-            playcount = _number(_extract(node, "playcount"))
-            tagcount = _number(_extract(node, "tagcount"))
+                playcount = _number(_extract(node, "playcount"))
+                tagcount = _number(_extract(node, "tagcount"))
 
-            seq.append(LibraryItem(Artist(name, self.network), playcount, tagcount))
+                yield LibraryItem(Artist(name, self.network), playcount, tagcount)
 
-        return seq
+        return _get_artists() if stream else list(_get_artists())
 
 
 class Tag(_BaseObject, _Chartable):
@@ -2047,13 +2048,13 @@ class Tag(_BaseObject, _Chartable):
 
         return _extract_top_albums(doc, self.network)
 
-    def get_top_tracks(self, limit=None, cacheable=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
         """Returns a list of the most played Tracks for this tag."""
         params = self._get_params()
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", "track", Track, params, cacheable, stream=stream)
 
     def get_top_artists(self, limit=None, cacheable=True):
         """Returns a sequence of the most played artists."""
@@ -2241,6 +2242,14 @@ class User(_BaseObject, _Chartable):
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
+    def _extract_played_track(self, track_node):
+        title = _extract(track_node, "name")
+        track_artist = _extract(track_node, "artist")
+        date = _extract(track_node, "date")
+        album = _extract(track_node, "album")
+        timestamp = track_node.getElementsByTagName("date")[0].getAttribute("uts")
+        return PlayedTrack(Track(track_artist, title, self.network), album, date, timestamp)
+
     def get_name(self, properly_capitalized=False):
         """Returns the user name."""
 
@@ -2251,7 +2260,7 @@ class User(_BaseObject, _Chartable):
 
         return self.name
 
-    def get_artist_tracks(self, artist, cacheable=False):
+    def get_artist_tracks(self, artist, cacheable=False, stream=True):
         """
         Deprecated by Last.fm.
         Get a list of tracks by a given artist scrobbled by this user,
@@ -2269,63 +2278,56 @@ class User(_BaseObject, _Chartable):
         params = self._get_params()
         params["artist"] = artist
 
-        seq = []
-        for track in _collect_nodes(
-            None, self, self.ws_prefix + ".getArtistTracks", cacheable, params
-        ):
-            title = _extract(track, "name")
-            artist = _extract(track, "artist")
-            date = _extract(track, "date")
-            album = _extract(track, "album")
-            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+        def _get_artist_tracks():
+            for track_node in _collect_nodes(
+                None, self, self.ws_prefix + ".getArtistTracks", cacheable, params, stream=stream,
+            ):
+                yield self._extract_played_track(track_node=track_node)
 
-            seq.append(
-                PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
-            )
+        return _get_artist_tracks() if stream else list(_get_artist_tracks())
 
-        return seq
-
-    def get_friends(self, limit=50, cacheable=False):
+    def get_friends(self, limit=50, cacheable=False, stream=True):
         """Returns a list of the user's friends. """
 
-        seq = []
-        for node in _collect_nodes(
-            limit, self, self.ws_prefix + ".getFriends", cacheable
-        ):
-            seq.append(User(_extract(node, "name"), self.network))
+        def _get_friends():
+            for node in _collect_nodes(
+                limit, self, self.ws_prefix + ".getFriends", cacheable, stream=stream
+            ):
+                yield User(_extract(node, "name"), self.network)
 
-        return seq
+        return _get_friends() if stream else list(_get_friends())
 
-    def get_loved_tracks(self, limit=50, cacheable=True):
+    def get_loved_tracks(self, limit=50, cacheable=True, stream=True):
         """
         Returns this user's loved track as a sequence of LovedTrack objects in
         reverse order of their timestamp, all the way back to the first track.
 
         If limit==None, it will try to pull all the available data.
+        If stream=True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
         """
 
-        params = self._get_params()
-        if limit:
-            params["limit"] = limit
+        def _get_loved_tracks():
+            params = self._get_params()
+            if limit:
+                params["limit"] = limit
 
-        seq = []
-        for track in _collect_nodes(
-            limit, self, self.ws_prefix + ".getLovedTracks", cacheable, params
-        ):
-            try:
-                artist = _extract(track, "name", 1)
-            except IndexError:  # pragma: no cover
-                continue
-            title = _extract(track, "name")
-            date = _extract(track, "date")
-            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+            for track in _collect_nodes(
+                limit, self, self.ws_prefix + ".getLovedTracks", cacheable, params, stream=stream
+            ):
+                try:
+                    artist = _extract(track, "name", 1)
+                except IndexError:  # pragma: no cover
+                    continue
+                title = _extract(track, "name")
+                date = _extract(track, "date")
+                timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
 
-            seq.append(LovedTrack(Track(artist, title, self.network), date, timestamp))
+                yield LovedTrack(Track(artist, title, self.network), date, timestamp)
 
-        return seq
+        return _get_loved_tracks() if stream else list(_get_loved_tracks())
 
     def get_now_playing(self):
         """
@@ -2353,7 +2355,7 @@ class User(_BaseObject, _Chartable):
 
         return Track(artist, title, self.network, self.name, info=info)
 
-    def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None):
+    def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None, stream=True):
         """
         Returns this user's played track as a sequence of PlayedTrack objects
         in reverse order of playtime, all the way back to the first track.
@@ -2368,45 +2370,35 @@ class User(_BaseObject, _Chartable):
         before this time, in UNIX timestamp format (integer number of
         seconds since 00:00:00, January 1st 1970 UTC). This must be in
         the UTC time zone.
+        stream: If True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
         """
 
-        params = self._get_params()
-        if limit:
-            params["limit"] = limit + 1  # in case we remove the now playing track
-        if time_from:
-            params["from"] = time_from
-        if time_to:
-            params["to"] = time_to
+        def _get_recent_tracks():
+            params = self._get_params()
+            if limit:
+                params["limit"] = limit + 1  # in case we remove the now playing track
+            if time_from:
+                params["from"] = time_from
+            if time_to:
+                params["to"] = time_to
 
-        seq = []
-        for track in _collect_nodes(
-            limit + 1 if limit else None,
-            self,
-            self.ws_prefix + ".getRecentTracks",
-            cacheable,
-            params,
-        ):
+            for track_node in _collect_nodes(
+                limit + 1 if limit else None,
+                self,
+                self.ws_prefix + ".getRecentTracks",
+                cacheable,
+                params,
+                stream=stream
+            ):
+                if track_node.hasAttribute("nowplaying"):
+                    continue  # to prevent the now playing track from sneaking in
 
-            if track.hasAttribute("nowplaying"):
-                continue  # to prevent the now playing track from sneaking in
+                yield self._extract_played_track(track_node=track_node)
 
-            title = _extract(track, "name")
-            artist = _extract(track, "artist")
-            date = _extract(track, "date")
-            album = _extract(track, "album")
-            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
-
-            seq.append(
-                PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
-            )
-
-        if limit:
-            # Slice, in case we didn't remove a now playing track
-            seq = seq[:limit]
-        return seq
+        return _get_recent_tracks() if stream else list(_get_recent_tracks())
 
     def get_country(self):
         """Returns the name of the country of the user."""
@@ -2545,7 +2537,7 @@ class User(_BaseObject, _Chartable):
 
         return seq
 
-    def get_top_tracks(self, period=PERIOD_OVERALL, limit=None, cacheable=True):
+    def get_top_tracks(self, period=PERIOD_OVERALL, limit=None, cacheable=True, stream=True):
         """Returns the top tracks played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -2561,33 +2553,24 @@ class User(_BaseObject, _Chartable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", "track", Track, params, cacheable, stream=stream)
 
-    def get_track_scrobbles(self, artist, track, cacheable=False):
+    def get_track_scrobbles(self, artist, track, cacheable=False, stream=True):
         """
         Get a list of this user's scrobbles of this artist's track,
         including scrobble time.
         """
-
         params = self._get_params()
         params["artist"] = artist
         params["track"] = track
 
-        seq = []
-        for track in _collect_nodes(
-            None, self, self.ws_prefix + ".getTrackScrobbles", cacheable, params
-        ):
-            title = _extract(track, "name")
-            artist = _extract(track, "artist")
-            date = _extract(track, "date")
-            album = _extract(track, "album")
-            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
+        def _get_track_scrobbles():
+            for track_node in _collect_nodes(
+                None, self, self.ws_prefix + ".getTrackScrobbles", cacheable, params, stream=stream
+            ):
+                yield self._extract_played_track(track_node)
 
-            seq.append(
-                PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
-            )
-
-        return seq
+        return _get_track_scrobbles() if stream else list(_get_track_scrobbles())
 
     def get_image(self, size=SIZE_EXTRA_LARGE):
         """
@@ -2797,59 +2780,57 @@ def cleanup_nodes(doc):
     return doc
 
 
-def _collect_nodes(limit, sender, method_name, cacheable, params=None):
+def _collect_nodes(limit, sender, method_name, cacheable, params=None, stream=False):
     """
     Returns a sequence of dom.Node objects about as close to limit as possible
     """
-
     if not params:
         params = sender._get_params()
 
-    nodes = []
-    page = 1
-    end_of_pages = False
+    def _stream_collect_nodes():
+        node_count = 0
+        page = 1
+        end_of_pages = False
 
-    while not end_of_pages and (not limit or (limit and len(nodes) < limit)):
-        params["page"] = str(page)
+        while not end_of_pages and (not limit or (limit and node_count < limit)):
+            params["page"] = str(page)
 
-        tries = 1
-        while True:
-            try:
-                doc = sender._request(method_name, cacheable, params)
-                break  # success
-            except Exception as e:
-                if tries >= 3:
-                    raise e
-                # Wait and try again
-                time.sleep(1)
-                tries += 1
+            tries = 1
+            while True:
+                try:
+                    doc = sender._request(method_name, cacheable, params)
+                    break  # success
+                except Exception as e:
+                    if tries >= 3:
+                        raise e
+                    # Wait and try again
+                    time.sleep(1)
+                    tries += 1
 
-        doc = cleanup_nodes(doc)
+            doc = cleanup_nodes(doc)
 
-        # break if there are no child nodes
-        if not doc.documentElement.childNodes:
-            break
-        main = doc.documentElement.childNodes[0]
+            # break if there are no child nodes
+            if not doc.documentElement.childNodes:
+                break
+            main = doc.documentElement.childNodes[0]
 
-        if main.hasAttribute("totalPages"):
-            total_pages = _number(main.getAttribute("totalPages"))
-        elif main.hasAttribute("totalpages"):
-            total_pages = _number(main.getAttribute("totalpages"))
-        else:
-            raise Exception("No total pages attribute")
+            if main.hasAttribute("totalPages") or main.hasAttribute("totalpages"):
+                total_pages = _number(main.getAttribute("totalPages") or main.getAttribute("totalpages"))
+            else:
+                raise Exception("No total pages attribute")
 
-        for node in main.childNodes:
-            if not node.nodeType == xml.dom.Node.TEXT_NODE and (
-                not limit or (len(nodes) < limit)
-            ):
-                nodes.append(node)
+            for node in main.childNodes:
+                if not node.nodeType == xml.dom.Node.TEXT_NODE and (
+                    not limit or (node_count < limit)
+                ):
+                    node_count += 1
+                    yield node
 
-        if page >= total_pages:
-            end_of_pages = True
+            end_of_pages = page >= total_pages
 
-        page += 1
+            page += 1
 
-    return nodes
+    return _stream_collect_nodes() if stream else list(_stream_collect_nodes())
 
 
 def _extract(node, name, index=0):

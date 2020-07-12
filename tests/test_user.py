@@ -8,9 +8,9 @@ import os
 import re
 import warnings
 
-import pylast
 import pytest
 
+import pylast
 from .test_pylast import TestPyLastWithLastFm
 
 
@@ -142,10 +142,10 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("test-user")
 
         # Act/Assert
-        assert len(user.get_loved_tracks(limit=20)) == 20
-        assert len(user.get_loved_tracks(limit=100)) <= 100
-        assert len(user.get_loved_tracks(limit=None)) >= 23
-        assert len(user.get_loved_tracks(limit=0)) >= 23
+        assert len(user.get_loved_tracks(limit=20, stream=False)) == 20
+        assert len(user.get_loved_tracks(limit=100, stream=False)) <= 100
+        assert len(user.get_loved_tracks(limit=None, stream=False)) >= 23
+        assert len(user.get_loved_tracks(limit=0, stream=False)) >= 23
 
     def test_user_is_hashable(self):
         # Arrange
@@ -210,7 +210,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user("RJ")
 
         # Act
-        things = lastfm_user.get_top_tracks(limit=2)
+        things = lastfm_user.get_top_tracks(limit=2, stream=False)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -361,7 +361,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         utc_end = calendar.timegm(end.utctimetuple())
 
         # Act
-        tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end)
+        tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end, stream=False)
 
         # Assert
         assert len(tracks) == 1
@@ -379,7 +379,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Act
         tracks = lastfm_user.get_recent_tracks(
-            time_from=utc_start, time_to=utc_end, limit=None
+            time_from=utc_start, time_to=utc_end, limit=None, stream=False
         )
 
         # Assert
@@ -449,7 +449,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("bbc6music")
 
         # Act
-        scrobbles = user.get_track_scrobbles(artist, title)
+        scrobbles = user.get_track_scrobbles(artist, title, stream=False)
 
         # Assert
         assert len(scrobbles) > 0
@@ -463,9 +463,9 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("bbc6music")
 
         # Act
-        result1 = user.get_track_scrobbles(artist, title, cacheable=False)
-        result2 = user.get_track_scrobbles(artist, title, cacheable=True)
-        result3 = user.get_track_scrobbles(artist, title)
+        result1 = user.get_track_scrobbles(artist, title, cacheable=False, stream=False)
+        result2 = list(user.get_track_scrobbles(artist, title, cacheable=True))
+        result3 = list(user.get_track_scrobbles(artist, title))
 
         # Assert
         self.helper_validate_results(result1, result2, result3)
@@ -480,4 +480,4 @@ class TestPyLastUser(TestPyLastWithLastFm):
             match="Deprecated - This type of request is no longer supported",
         ):
             warnings.filterwarnings("ignore", category=DeprecationWarning)
-            lastfm_user.get_artist_tracks(artist="Test Artist")
+            lastfm_user.get_artist_tracks(artist="Test Artist", stream=False)

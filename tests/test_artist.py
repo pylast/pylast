@@ -2,9 +2,9 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import pylast
 import pytest
 
+import pylast
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 
@@ -78,7 +78,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_tracks(limit=2)
+        things = artist.get_top_tracks(limit=2, stream=False)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -89,7 +89,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=2)
+        things = list(artist.get_top_albums(limit=2))
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Album)
@@ -101,7 +101,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=limit)
+        things = artist.get_top_albums(limit=limit, stream=False)
 
         # Assert
         assert len(things) == 1
@@ -113,7 +113,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=limit)
+        things = artist.get_top_albums(limit=limit, stream=False)
 
         # Assert
         assert len(things) == 50
@@ -125,7 +125,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=limit)
+        things = list(artist.get_top_albums(limit=limit))
 
         # Assert
         assert len(things) == 100
