@@ -91,6 +91,12 @@
 - color: b60205
   description: Removal of a feature, usually done in major releases
   name: removal
+- color: 2d18b2
+  description: "To automatically merge PRs that are ready"
+  name: automerge
+- color: 0366d6
+  description: "For dependencies"
+  name: dependencies
 - color: fef2c0
   description: ""
   name: test
