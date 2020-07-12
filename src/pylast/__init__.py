@@ -28,12 +28,12 @@ import ssl
 import tempfile
 import time
 import warnings
-import xml.dom
 from http.client import HTTPSConnection
 from urllib.parse import quote_plus
-from xml.dom import Node, minidom
 
 import pkg_resources
+import xml.dom
+from xml.dom import Node, minidom
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2020 hugovk, 2017 Mice Pápai"
@@ -424,7 +424,9 @@ class _Network:
         """
 
         if not file_path:
-            file_path = tempfile.mktemp(prefix="pylast_tmp_")
+            file = tempfile.TemporaryFile(prefix="pylast_tmp_")
+            file.close()
+            file_path = file.name
 
         self.cache_backend = _ShelfCacheBackend(file_path)
 
@@ -668,8 +670,7 @@ class LastFMNetwork(_Network):
         password_hash="",
         token="",
     ):
-        _Network.__init__(
-            self,
+        super().__init__(
             name="Last.fm",
             homepage="https://www.last.fm",
             ws_server=("ws.audioscrobbler.com", "/2.0/"),
@@ -736,8 +737,7 @@ class LibreFMNetwork(_Network):
         self, api_key="", api_secret="", session_key="", username="", password_hash=""
     ):
 
-        _Network.__init__(
-            self,
+        super().__init__(
             name="Libre.fm",
             homepage="https://libre.fm",
             ws_server=("libre.fm", "/2.0/"),
@@ -1205,11 +1205,11 @@ class _BaseObject:
         return _extract(node, section)
 
 
-class _Chartable:
+class _Chartable(_BaseObject):
     """Common functions for classes with charts."""
 
-    def __init__(self, ws_prefix):
-        self.ws_prefix = ws_prefix  # TODO move to _BaseObject?
+    def __init__(self, network, ws_prefix):
+        super().__init__(network=network, ws_prefix=ws_prefix)
 
     def get_weekly_chart_dates(self):
         """Returns a list of From and To tuples for the available charts."""
@@ -1276,11 +1276,11 @@ class _Chartable:
         return seq
 
 
-class _Taggable:
+class _Taggable(_BaseObject):
     """Common functions for classes with tags."""
 
-    def __init__(self, ws_prefix):
-        self.ws_prefix = ws_prefix  # TODO move to _BaseObject
+    def __init__(self, network, ws_prefix):
+        super().__init__(network=network, ws_prefix=ws_prefix)
 
     def add_tags(self, tags):
         """Adds one or several tags.
@@ -1385,9 +1385,9 @@ class _Taggable:
 
         for element in elements:
             tag_name = _extract(element, "name")
-            tagcount = _extract(element, "count")
+            tag_count = _extract(element, "count")
 
-            seq.append(TopItem(Tag(tag_name, self.network), tagcount))
+            seq.append(TopItem(Tag(tag_name, self.network), tag_count))
 
         if limit:
             seq = seq[:limit]
@@ -1463,7 +1463,7 @@ class NetworkError(Exception):
         return "NetworkError: %s" % str(self.underlying_error)
 
 
-class _Opus(_BaseObject, _Taggable):
+class _Opus(_Taggable):
     """An album or track."""
 
     artist = None
@@ -1484,8 +1484,7 @@ class _Opus(_BaseObject, _Taggable):
         if info is None:
             info = {}
 
-        _BaseObject.__init__(self, network, ws_prefix)
-        _Taggable.__init__(self, ws_prefix)
+        super().__init__(network=network, ws_prefix=ws_prefix)
 
         if isinstance(artist, Artist):
             self.artist = artist
@@ -1653,7 +1652,7 @@ class Album(_Opus):
         }
 
 
-class Artist(_BaseObject, _Taggable):
+class Artist(_Taggable):
     """An artist."""
 
     name = None
@@ -1670,8 +1669,7 @@ class Artist(_BaseObject, _Taggable):
         if info is None:
             info = {}
 
-        _BaseObject.__init__(self, network, "artist")
-        _Taggable.__init__(self, "artist")
+        super().__init__(network=network, ws_prefix="artist")
 
         self.name = name
         self.username = username
@@ -1883,7 +1881,7 @@ class Country(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network):
-        _BaseObject.__init__(self, network, "geo")
+        super().__init__(network=network, ws_prefix="geo")
 
         self.name = name
 
@@ -1958,7 +1956,7 @@ class Library(_BaseObject):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user, network):
-        _BaseObject.__init__(self, network, "library")
+        super().__init__(network=network, ws_prefix="library")
 
         if isinstance(user, User):
             self.user = user
@@ -1999,7 +1997,7 @@ class Library(_BaseObject):
         return _get_artists() if stream else list(_get_artists())
 
 
-class Tag(_BaseObject, _Chartable):
+class Tag(_Chartable):
     """A Last.fm object tag."""
 
     name = None
@@ -2007,8 +2005,7 @@ class Tag(_BaseObject, _Chartable):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, name, network):
-        _BaseObject.__init__(self, network, "tag")
-        _Chartable.__init__(self, "tag")
+        super().__init__(network=network, ws_prefix="tag")
 
         self.name = name
 
@@ -2210,7 +2207,7 @@ class Track(_Opus):
         }
 
 
-class User(_BaseObject, _Chartable):
+class User(_Chartable):
     """A Last.fm user."""
 
     name = None
@@ -2218,8 +2215,7 @@ class User(_BaseObject, _Chartable):
     __hash__ = _BaseObject.__hash__
 
     def __init__(self, user_name, network):
-        _BaseObject.__init__(self, network, "user")
-        _Chartable.__init__(self, "user")
+        super().__init__(network=network, ws_prefix="user")
 
         self.name = user_name
 
@@ -2619,21 +2615,21 @@ class User(_BaseObject, _Chartable):
 
 class AuthenticatedUser(User):
     def __init__(self, network):
-        User.__init__(self, network.username, network)
+        super().__init__(user_name=network.username, network=network)
 
     def _get_params(self):
         return {"user": self.get_name()}
 
-    def get_name(self):
+    def get_name(self, properly_capitalized=False):
         """Returns the name of the authenticated user."""
-        return self.name
+        return super().get_name(properly_capitalized=properly_capitalized)
 
 
 class _Search(_BaseObject):
     """An abstract class. Use one of its derivatives."""
 
     def __init__(self, ws_prefix, search_terms, network):
-        _BaseObject.__init__(self, network, ws_prefix)
+        super().__init__(network, ws_prefix)
 
         self._ws_prefix = ws_prefix
         self.search_terms = search_terms
@@ -2673,8 +2669,7 @@ class AlbumSearch(_Search):
     """Search for an album by name."""
 
     def __init__(self, album_name, network):
-
-        _Search.__init__(self, "album", {"album": album_name}, network)
+        super().__init__(ws_prefix="album", search_terms={"album": album_name}, network=network)
 
     def get_next_page(self):
         """Returns the next page of results as a sequence of Album objects."""
@@ -2699,7 +2694,7 @@ class ArtistSearch(_Search):
     """Search for an artist by artist name."""
 
     def __init__(self, artist_name, network):
-        _Search.__init__(self, "artist", {"artist": artist_name}, network)
+        super().__init__(ws_prefix="artist", search_terms={"artist": artist_name}, network=network)
 
     def get_next_page(self):
         """Returns the next page of results as a sequence of Artist objects."""
@@ -2726,10 +2721,7 @@ class TrackSearch(_Search):
     """
 
     def __init__(self, artist_name, track_title, network):
-
-        _Search.__init__(
-            self, "track", {"track": track_title, "artist": artist_name}, network
-        )
+        super().__init__(ws_prefix="track", search_terms={"track": track_title, "artist": artist_name}, network=network)
 
     def get_next_page(self):
         """Returns the next page of results as a sequence of Track objects."""
@@ -2927,8 +2919,6 @@ def _number(string):
     """
 
     if not string:
-        return 0
-    elif string == "":
         return 0
     else:
         try:
