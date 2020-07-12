@@ -2355,7 +2355,7 @@ class User(_BaseObject, _Chartable):
 
         return Track(artist, title, self.network, self.name, info=info)
 
-    def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None, stream=True):
+    def get_recent_tracks(self, limit=10, cacheable=True, time_from=None, time_to=None, stream=True, now_playing=False):
         """
         Returns this user's played track as a sequence of PlayedTrack objects
         in reverse order of playtime, all the way back to the first track.
@@ -2394,7 +2394,7 @@ class User(_BaseObject, _Chartable):
                 params,
                 stream=stream
             ):
-                if track_node.hasAttribute("nowplaying"):
+                if track_node.hasAttribute("nowplaying") and not now_playing:
                     continue  # to prevent the now playing track from sneaking in
 
                 if limit and track_count >= limit:
