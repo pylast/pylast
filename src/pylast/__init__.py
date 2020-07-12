@@ -2385,6 +2385,7 @@ class User(_BaseObject, _Chartable):
             if time_to:
                 params["to"] = time_to
 
+            track_count = 0
             for track_node in _collect_nodes(
                 limit + 1 if limit else None,
                 self,
@@ -2396,7 +2397,10 @@ class User(_BaseObject, _Chartable):
                 if track_node.hasAttribute("nowplaying"):
                     continue  # to prevent the now playing track from sneaking in
 
+                if limit and track_count >= limit:
+                    break
                 yield self._extract_played_track(track_node=track_node)
+                track_count += 1
 
         return _get_recent_tracks() if stream else list(_get_recent_tracks())
 
