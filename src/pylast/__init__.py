@@ -1841,7 +1841,7 @@ class Artist(_Taggable):
 
         return artists
 
-    def get_top_albums(self, limit=None, cacheable=True, stream=True):
+    def get_top_albums(self, limit=None, cacheable=True, stream=False):
         """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
@@ -1851,7 +1851,7 @@ class Artist(_Taggable):
             "getTopAlbums", "album", Album, params, cacheable, stream=stream
         )
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
         """Returns a list of the most played Tracks by this artist."""
         params = self._get_params()
         if limit:
@@ -1927,7 +1927,7 @@ class Country(_BaseObject):
 
         return _extract_top_artists(doc, self)
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
         """Returns a sequence of the most played tracks"""
         params = self._get_params()
         if limit:
@@ -1990,7 +1990,7 @@ class Library(_BaseObject):
         """Returns the user who owns this library."""
         return self.user
 
-    def get_artists(self, limit=50, cacheable=True, stream=True):
+    def get_artists(self, limit=50, cacheable=True, stream=False):
         """
         Returns a sequence of Album objects
         if limit==None it will return all (may take a while)
@@ -2058,7 +2058,7 @@ class Tag(_Chartable):
 
         return _extract_top_albums(doc, self.network)
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=True):
+    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
         """Returns a list of the most played Tracks for this tag."""
         params = self._get_params()
         if limit:
@@ -2273,7 +2273,7 @@ class User(_Chartable):
 
         return self.name
 
-    def get_artist_tracks(self, artist, cacheable=False, stream=True):
+    def get_artist_tracks(self, artist, cacheable=False, stream=False):
         """
         Deprecated by Last.fm.
         Get a list of tracks by a given artist scrobbled by this user,
@@ -2304,7 +2304,7 @@ class User(_Chartable):
 
         return _get_artist_tracks() if stream else list(_get_artist_tracks())
 
-    def get_friends(self, limit=50, cacheable=False, stream=True):
+    def get_friends(self, limit=50, cacheable=False, stream=False):
         """Returns a list of the user's friends. """
 
         def _get_friends():
@@ -2315,13 +2315,13 @@ class User(_Chartable):
 
         return _get_friends() if stream else list(_get_friends())
 
-    def get_loved_tracks(self, limit=50, cacheable=True, stream=True):
+    def get_loved_tracks(self, limit=50, cacheable=True, stream=False):
         """
         Returns this user's loved track as a sequence of LovedTrack objects in
         reverse order of their timestamp, all the way back to the first track.
 
         If limit==None, it will try to pull all the available data.
-        If stream=True, it will yield tracks as soon as a page has been retrieved.
+        If stream=False, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
@@ -2384,7 +2384,7 @@ class User(_Chartable):
         cacheable=True,
         time_from=None,
         time_to=None,
-        stream=True,
+        stream=False,
         now_playing=False,
     ):
         """
@@ -2573,7 +2573,7 @@ class User(_Chartable):
         return seq
 
     def get_top_tracks(
-        self, period=PERIOD_OVERALL, limit=None, cacheable=True, stream=True
+        self, period=PERIOD_OVERALL, limit=None, cacheable=True, stream=False
     ):
         """Returns the top tracks played by a user.
         * period: The period of time. Possible values:
@@ -2594,7 +2594,7 @@ class User(_Chartable):
             "getTopTracks", "track", Track, params, cacheable, stream=stream
         )
 
-    def get_track_scrobbles(self, artist, track, cacheable=False, stream=True):
+    def get_track_scrobbles(self, artist, track, cacheable=False, stream=False):
         """
         Get a list of this user's scrobbles of this artist's track,
         including scrobble time.
