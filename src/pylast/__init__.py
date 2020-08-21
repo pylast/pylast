@@ -1592,7 +1592,10 @@ class _Opus(_BaseObject, _Taggable):
     def get_mbid(self):
         """Returns the MusicBrainz ID of the album or track."""
 
-        doc = self._request(self.ws_prefix + ".getInfo", cacheable=True)
+        try:
+            doc = self._request(self.ws_prefix + ".getInfo", cacheable=True)
+        except WSError:
+            return None
 
         try:
             lfm = doc.getElementsByTagName("lfm")[0]
