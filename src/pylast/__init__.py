@@ -1594,8 +1594,10 @@ class _Opus(_BaseObject, _Taggable):
 
         try:
             doc = self._request(self.ws_prefix + ".getInfo", cacheable=True)
-        except WSError:
-            return None
+        except WSError as e:
+            if int(e.get_id()) == STATUS_INVALID_PARAMS and str(e) == "Track not found":
+                return None
+            raise
 
         try:
             lfm = doc.getElementsByTagName("lfm")[0]
