@@ -241,9 +241,16 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         # Assert
         assert corrected_track_name == "Mr. Brownstone"
 
-    def test_track_with_no_mbid(self):
+    @pytest.mark.parametrize(
+        ("test_artist", "test_track"),
+        [
+            ("Static-X", "Set It Off"),  # Track with no MBID
+            ("Zytaris", "Shores of Life"),  # "Track not found"
+        ],
+    )
+    def test_track_with_no_mbid(self, test_artist, test_track):
         # Arrange
-        track = pylast.Track("Static-X", "Set It Off", self.network)
+        track = pylast.Track(test_track, test_artist, self.network)
 
         # Act
         mbid = track.get_mbid()
