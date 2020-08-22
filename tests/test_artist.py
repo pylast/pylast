@@ -153,11 +153,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         tags = artist.get_tags()
         assert len(tags) > 0
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -172,11 +168,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
         # Assert
         tags = artist.get_tags()
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert not found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -191,11 +183,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
         # Assert
         tags = artist.get_tags()
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert not found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -213,12 +201,8 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         tags_after = artist.get_tags()
         assert len(tags_after) == len(tags_before) - 2
-        found1, found2 = False, False
-        for tag in tags_after:
-            if tag.name == "removetag1":
-                found1 = True
-            elif tag.name == "removetag2":
-                found2 = True
+        found1 = any(tag.name == "removetag1" for tag in tags_after)
+        found2 = any(tag.name == "removetag2" for tag in tags_after)
         assert not found1
         assert not found2
 
@@ -308,4 +292,4 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         playcount = artist.get_userplaycount()
 
         # Assert
-        assert playcount >= 0
+        assert playcount >= 0  # whilst xfail: # pragma: no cover
