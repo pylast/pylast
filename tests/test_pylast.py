@@ -13,7 +13,7 @@ from flaky import flaky
 WRITE_TEST = sys.version_info[:2] == (3, 8)
 
 
-def load_secrets():
+def load_secrets():  # pragma: no cover
     secrets_file = "test_pylast.yaml"
     if os.path.isfile(secrets_file):
         import yaml  # pip install pyyaml

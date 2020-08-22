@@ -68,7 +68,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         if int(registered):
             # Last.fm API broken? Used to be yyyy-mm-dd not Unix timestamp
             assert registered == "1037793040"
-        else:
+        else:  # pragma: no cover
             # Old way
             # Just check date because of timezones
             assert "2002-11-20 " in registered
@@ -192,8 +192,13 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Act/Assert
         self.helper_validate_cacheable(lastfm_user, "get_friends")
-        self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
-        self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
+        # no cover whilst xfail:
+        self.helper_validate_cacheable(  # pragma: no cover
+            lastfm_user, "get_loved_tracks"
+        )
+        self.helper_validate_cacheable(  # pragma: no cover
+            lastfm_user, "get_recent_tracks"
+        )
 
     def test_user_get_top_tags_with_limit(self):
         # Arrange
