@@ -27,7 +27,6 @@ import shelve
 import ssl
 import tempfile
 import time
-import warnings
 import xml.dom
 from http.client import HTTPSConnection
 from urllib.parse import quote_plus
@@ -49,9 +48,7 @@ STATUS_AUTH_FAILED = 4
 STATUS_INVALID_FORMAT = 5
 STATUS_INVALID_PARAMS = 6
 STATUS_INVALID_RESOURCE = 7
-# DeprecationWarning: STATUS_TOKEN_ERROR is deprecated and will be
-# removed in a future version. Use STATUS_OPERATION_FAILED instead.
-STATUS_OPERATION_FAILED = STATUS_TOKEN_ERROR = 8
+STATUS_OPERATION_FAILED = 8
 STATUS_INVALID_SK = 9
 STATUS_INVALID_API_KEY = 10
 STATUS_OFFLINE = 11
@@ -1715,32 +1712,6 @@ class Artist(_BaseObject, _Taggable):
 
         return _extract(self._request(self.ws_prefix + ".getCorrection"), "name")
 
-    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
-        """
-        Returns a URI to the cover image
-        size can be one of:
-            SIZE_MEGA
-            SIZE_EXTRA_LARGE
-            SIZE_LARGE
-            SIZE_MEDIUM
-            SIZE_SMALL
-        """
-
-        warnings.warn(
-            "Artist.get_cover_image is deprecated and will be removed in a future "
-            "version. In the meantime, only default star images are available. "
-            "See https://github.com/pylast/pylast/issues/317 and "
-            "https://support.last.fm/t/api-announcement/202",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
-        if "image" not in self.info:
-            self.info["image"] = _extract_all(
-                self._request(self.ws_prefix + ".getInfo", cacheable=True), "image"
-            )
-        return self.info["image"][size]
-
     def get_playcount(self):
         """Returns the number of plays on the network."""
 
@@ -2250,40 +2221,6 @@ class User(_BaseObject, _Chartable):
             )
 
         return self.name
-
-    def get_artist_tracks(self, artist, cacheable=False):
-        """
-        Deprecated by Last.fm.
-        Get a list of tracks by a given artist scrobbled by this user,
-        including scrobble time.
-        """
-
-        warnings.warn(
-            "User.get_artist_tracks is deprecated and will be removed in a future "
-            "version. User.get_track_scrobbles is a partial replacement. "
-            "See https://github.com/pylast/pylast/issues/298",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
-        params = self._get_params()
-        params["artist"] = artist
-
-        seq = []
-        for track in _collect_nodes(
-            None, self, self.ws_prefix + ".getArtistTracks", cacheable, params
-        ):
-            title = _extract(track, "name")
-            artist = _extract(track, "artist")
-            date = _extract(track, "date")
-            album = _extract(track, "album")
-            timestamp = track.getElementsByTagName("date")[0].getAttribute("uts")
-
-            seq.append(
-                PlayedTrack(Track(artist, title, self.network), album, date, timestamp)
-            )
-
-        return seq
 
     def get_friends(self, limit=50, cacheable=False):
         """Returns a list of the user's friends. """

@@ -241,16 +241,12 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         url = artist1.get_url()
         mbid = artist1.get_mbid()
 
-        with pytest.warns(DeprecationWarning):
-            image = artist1.get_cover_image()
-
         playcount = artist1.get_playcount()
         streamable = artist1.is_streamable()
         name = artist1.get_name(properly_capitalized=False)
         name_cap = artist1.get_name(properly_capitalized=True)
 
         # Assert
-        assert "https" in image
         assert playcount > 1
         assert artist1 != artist2
         assert name.lower() == name_cap.lower()
