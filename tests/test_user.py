@@ -8,8 +8,9 @@ import os
 import re
 import warnings
 
-import pylast
 import pytest
+
+import pylast
 
 from .test_pylast import TestPyLastWithLastFm
 
