@@ -146,29 +146,29 @@ class _Network:
         token=None,
     ):
         """
-            name: the name of the network
-            homepage: the homepage URL
-            ws_server: the URL of the webservices server
-            api_key: a provided API_KEY
-            api_secret: a provided API_SECRET
-            session_key: a generated session_key or None
-            username: a username of a valid user
-            password_hash: the output of pylast.md5(password) where password is
-                the user's password
-            domain_names: a dict mapping each DOMAIN_* value to a string domain
-                name
-            urls: a dict mapping types to URLs
-            token: an authentication token to retrieve a session
+        name: the name of the network
+        homepage: the homepage URL
+        ws_server: the URL of the webservices server
+        api_key: a provided API_KEY
+        api_secret: a provided API_SECRET
+        session_key: a generated session_key or None
+        username: a username of a valid user
+        password_hash: the output of pylast.md5(password) where password is
+            the user's password
+        domain_names: a dict mapping each DOMAIN_* value to a string domain
+            name
+        urls: a dict mapping types to URLs
+        token: an authentication token to retrieve a session
 
-            if username and password_hash were provided and not session_key,
-            session_key will be generated automatically when needed.
+        if username and password_hash were provided and not session_key,
+        session_key will be generated automatically when needed.
 
-            Either a valid session_key or a combination of username and
-            password_hash must be present for scrobbling.
+        Either a valid session_key or a combination of username and
+        password_hash must be present for scrobbling.
 
-            You should use a preconfigured network object through a
-            get_*_network(...) method instead of creating an object
-            of this class, unless you know what you're doing.
+        You should use a preconfigured network object through a
+        get_*_network(...) method instead of creating an object
+        of this class, unless you know what you're doing.
         """
 
         self.name = name
@@ -209,56 +209,56 @@ class _Network:
 
     def get_artist(self, artist_name):
         """
-            Return an Artist object
+        Return an Artist object
         """
 
         return Artist(artist_name, self)
 
     def get_track(self, artist, title):
         """
-            Return a Track object
+        Return a Track object
         """
 
         return Track(artist, title, self)
 
     def get_album(self, artist, title):
         """
-            Return an Album object
+        Return an Album object
         """
 
         return Album(artist, title, self)
 
     def get_authenticated_user(self):
         """
-            Returns the authenticated user
+        Returns the authenticated user
         """
 
         return AuthenticatedUser(self)
 
     def get_country(self, country_name):
         """
-            Returns a country object
+        Returns a country object
         """
 
         return Country(country_name, self)
 
     def get_user(self, username):
         """
-            Returns a user object
+        Returns a user object
         """
 
         return User(username, self)
 
     def get_tag(self, name):
         """
-            Returns a tag object
+        Returns a tag object
         """
 
         return Tag(name, self)
 
     def _get_language_domain(self, domain_language):
         """
-            Returns the mapped domain name of the network to a DOMAIN_* value
+        Returns the mapped domain name of the network to a DOMAIN_* value
         """
 
         if domain_language in self.domain_names:
@@ -271,13 +271,13 @@ class _Network:
 
     def _get_ws_auth(self):
         """
-            Returns an (API_KEY, API_SECRET, SESSION_KEY) tuple.
+        Returns an (API_KEY, API_SECRET, SESSION_KEY) tuple.
         """
         return self.api_key, self.api_secret, self.session_key
 
     def _delay_call(self):
         """
-            Makes sure that web service calls are at least 0.2 seconds apart.
+        Makes sure that web service calls are at least 0.2 seconds apart.
         """
         now = time.time()
 
@@ -1408,31 +1408,31 @@ class WSError(Exception):
 
     def get_id(self):
         """Returns the exception ID, from one of the following:
-            STATUS_INVALID_SERVICE = 2
-            STATUS_INVALID_METHOD = 3
-            STATUS_AUTH_FAILED = 4
-            STATUS_INVALID_FORMAT = 5
-            STATUS_INVALID_PARAMS = 6
-            STATUS_INVALID_RESOURCE = 7
-            STATUS_OPERATION_FAILED = 8
-            STATUS_INVALID_SK = 9
-            STATUS_INVALID_API_KEY = 10
-            STATUS_OFFLINE = 11
-            STATUS_SUBSCRIBERS_ONLY = 12
-            STATUS_TOKEN_UNAUTHORIZED = 14
-            STATUS_TOKEN_EXPIRED = 15
-            STATUS_TEMPORARILY_UNAVAILABLE = 16
-            STATUS_LOGIN_REQUIRED = 17
-            STATUS_TRIAL_EXPIRED = 18
-            STATUS_NOT_ENOUGH_CONTENT = 20
-            STATUS_NOT_ENOUGH_MEMBERS  = 21
-            STATUS_NOT_ENOUGH_FANS = 22
-            STATUS_NOT_ENOUGH_NEIGHBOURS = 23
-            STATUS_NO_PEAK_RADIO = 24
-            STATUS_RADIO_NOT_FOUND = 25
-            STATUS_API_KEY_SUSPENDED = 26
-            STATUS_DEPRECATED = 27
-            STATUS_RATE_LIMIT_EXCEEDED = 29
+        STATUS_INVALID_SERVICE = 2
+        STATUS_INVALID_METHOD = 3
+        STATUS_AUTH_FAILED = 4
+        STATUS_INVALID_FORMAT = 5
+        STATUS_INVALID_PARAMS = 6
+        STATUS_INVALID_RESOURCE = 7
+        STATUS_OPERATION_FAILED = 8
+        STATUS_INVALID_SK = 9
+        STATUS_INVALID_API_KEY = 10
+        STATUS_OFFLINE = 11
+        STATUS_SUBSCRIBERS_ONLY = 12
+        STATUS_TOKEN_UNAUTHORIZED = 14
+        STATUS_TOKEN_EXPIRED = 15
+        STATUS_TEMPORARILY_UNAVAILABLE = 16
+        STATUS_LOGIN_REQUIRED = 17
+        STATUS_TRIAL_EXPIRED = 18
+        STATUS_NOT_ENOUGH_CONTENT = 20
+        STATUS_NOT_ENOUGH_MEMBERS  = 21
+        STATUS_NOT_ENOUGH_FANS = 22
+        STATUS_NOT_ENOUGH_NEIGHBOURS = 23
+        STATUS_NO_PEAK_RADIO = 24
+        STATUS_RADIO_NOT_FOUND = 25
+        STATUS_API_KEY_SUSPENDED = 26
+        STATUS_DEPRECATED = 27
+        STATUS_RATE_LIMIT_EXCEEDED = 29
         """
 
         return self.status
@@ -2937,8 +2937,8 @@ def _url_safe(text):
 
 def _number(string):
     """
-        Extracts an int from a string.
-        Returns a 0 if None or an empty string was passed.
+    Extracts an int from a string.
+    Returns a 0 if None or an empty string was passed.
     """
 
     if not string:

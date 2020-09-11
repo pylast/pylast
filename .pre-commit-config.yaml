@@ -6,7 +6,7 @@ repos:
         args: ["--py3-plus"]
 
   - repo: https://github.com/psf/black
-    rev: 19.10b0
+    rev: 20.8b1
     hooks:
       - id: black
         args: ["--target-version", "py35"]
@@ -15,7 +15,7 @@ repos:
         types: []
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.5.1
+    rev: 5.5.2
     hooks:
       - id: isort
 

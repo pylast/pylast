@@ -6,9 +6,10 @@ import os
 import sys
 import time
 
-import pylast
 import pytest
 from flaky import flaky
+
+import pylast
 
 WRITE_TEST = sys.version_info[:2] == (3, 8)
 

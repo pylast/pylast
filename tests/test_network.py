@@ -5,8 +5,9 @@ Integration (not unit) tests for pylast.py
 import re
 import time
 
-import pylast
 import pytest
+
+import pylast
 
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
