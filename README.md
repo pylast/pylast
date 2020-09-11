@@ -31,7 +31,7 @@ Or from requirements.txt:
 
 Note:
 
-* pyLast 4.0.0+ supports Python 3.6+.
+* pyLast 4.0.0+ supports Python 3.6-3.9.
 * pyLast 3.2.0 - 3.3.0 supports Python 3.5-3.8.
 * pyLast 3.0.0 - 3.1.0 supports Python 3.5-3.7.
 * pyLast 2.2.0 - 2.4.0 supports Python 2.7.10+, 3.4-3.7.
