@@ -3,13 +3,13 @@ repos:
     rev: v2.7.2
     hooks:
       - id: pyupgrade
-        args: ["--py3-plus"]
+        args: ["--py36-plus"]
 
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
       - id: black
-        args: ["--target-version", "py35"]
+        args: ["--target-version", "py36"]
         # override until resolved: https://github.com/psf/black/issues/402
         files: \.pyi?$
         types: []
