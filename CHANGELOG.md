@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Removed
 
-* Remove deprecated Artist.get_cover_image, User.get_artist_tracks and STATUS_TOKEN_ERROR (#348) @hugovk
+* Remove deprecated `Artist.get_cover_image`, `User.get_artist_tracks` and `STATUS_TOKEN_ERROR` (#348) @hugovk
 * Drop support for EOL Python 3.5 (#346) @hugovk
 
 
