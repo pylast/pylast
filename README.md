@@ -4,10 +4,9 @@ pyLast
 [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.org/project/pylast/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypistats.org/packages/pylast)
-[![Build status](https://travis-ci.org/pylast/pylast.svg?branch=master)](https://travis-ci.org/pylast/pylast)
+[![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/master/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
-[![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=master)](https://coveralls.io/github/pylast/pylast?branch=master)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).

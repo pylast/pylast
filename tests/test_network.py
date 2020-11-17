@@ -64,7 +64,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.network.enable_rate_limit()
         then = time.time()
         # Make some network call, limit not applied first time
-        self.network.get_user(self.username)
+        self.network.get_top_artists()
         # Make a second network call, limiting should be applied
         self.network.get_top_artists()
         now = time.time()
