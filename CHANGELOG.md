@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2020-10-07
+## Added
+
+* Add support for Python 3.9 (#347) @hugovk
+
+## Removed
+
+* Remove deprecated `Artist.get_cover_image`, `User.get_artist_tracks` and `STATUS_TOKEN_ERROR` (#348) @hugovk
+* Drop support for EOL Python 3.5 (#346) @hugovk
+
 
 ## [3.3.0] - 2020-06-25
 ### Added
@@ -86,10 +96,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for Python 2.7 ([#265])
 
-[3.3.0]: https://github.com/pylast/pylast/compare/v3.2.1...3.3.0
-[3.2.1]: https://github.com/pylast/pylast/compare/v3.2.0...3.2.1
-[3.2.0]: https://github.com/pylast/pylast/compare/v3.1.0...3.2.0
-[3.1.0]: https://github.com/pylast/pylast/compare/v3.0.0...3.1.0
+[4.0.0]: https://github.com/pylast/pylast/compare/3.3.0...4.0.0
+[3.3.0]: https://github.com/pylast/pylast/compare/3.2.1...3.3.0
+[3.2.1]: https://github.com/pylast/pylast/compare/3.2.0...3.2.1
+[3.2.0]: https://github.com/pylast/pylast/compare/3.1.0...3.2.0
+[3.1.0]: https://github.com/pylast/pylast/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/pylast/pylast/compare/2.4.0...3.0.0
 [2.4.0]: https://github.com/pylast/pylast/compare/2.3.0...2.4.0
 [#265]: https://github.com/pylast/pylast/issues/265
@@ -105,3 +116,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#311]: https://github.com/pylast/pylast/issues/311
 [#312]: https://github.com/pylast/pylast/issues/312
 [#316]: https://github.com/pylast/pylast/issues/316
+[#346]: https://github.com/pylast/pylast/issues/346
+[#347]: https://github.com/pylast/pylast/issues/347
+[#348]: https://github.com/pylast/pylast/issues/348

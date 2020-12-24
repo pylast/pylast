@@ -6,14 +6,15 @@ import os
 import sys
 import time
 
-import pylast
 import pytest
 from flaky import flaky
+
+import pylast
 
 WRITE_TEST = sys.version_info[:2] == (3, 8)
 
 
-def load_secrets():
+def load_secrets():  # pragma: no cover
     secrets_file = "test_pylast.yaml"
     if os.path.isfile(secrets_file):
         import yaml  # pip install pyyaml
@@ -40,7 +41,12 @@ class PyLastTestCase:
         assert str.endswith(suffix, start, end)
 
 
-@flaky(max_runs=3, min_passes=1)
+def _no_xfail_rerun_filter(err, name, test, plugin):
+    for _ in test.iter_markers(name="xfail"):
+        return False
+
+
+@flaky(max_runs=3, min_passes=1, rerun_filter=_no_xfail_rerun_filter)
 class TestPyLastWithLastFm(PyLastTestCase):
 
     secrets = None

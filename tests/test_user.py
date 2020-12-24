@@ -7,10 +7,10 @@ import datetime as dt
 import inspect
 import os
 import re
-import warnings
+
+import pytest
 
 import pylast
-import pytest
 
 from .test_pylast import TestPyLastWithLastFm
 
@@ -69,7 +69,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         if int(registered):
             # Last.fm API broken? Used to be yyyy-mm-dd not Unix timestamp
             assert registered == "1037793040"
-        else:
+        else:  # pragma: no cover
             # Old way
             # Just check date because of timezones
             assert "2002-11-20 " in registered
@@ -193,8 +193,13 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Act/Assert
         self.helper_validate_cacheable(lastfm_user, "get_friends")
-        self.helper_validate_cacheable(lastfm_user, "get_loved_tracks")
-        self.helper_validate_cacheable(lastfm_user, "get_recent_tracks")
+        # no cover whilst xfail:
+        self.helper_validate_cacheable(  # pragma: no cover
+            lastfm_user, "get_loved_tracks"
+        )
+        self.helper_validate_cacheable(  # pragma: no cover
+            lastfm_user, "get_recent_tracks"
+        )
 
     def test_user_get_top_tags_with_limit(self):
         # Arrange
@@ -489,15 +494,3 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Assert
         self.helper_validate_results(result1, result2, result3)
-
-    def test_get_artist_tracks_deprecated(self):
-        # Arrange
-        lastfm_user = self.network.get_user(self.username)
-
-        # Act / Assert
-        with warnings.catch_warnings(), pytest.raises(
-            pylast.WSError,
-            match="Deprecated - This type of request is no longer supported",
-        ):
-            warnings.filterwarnings("ignore", category=DeprecationWarning)
-            lastfm_user.get_artist_tracks(artist="Test Artist", stream=False)

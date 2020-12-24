@@ -2,8 +2,9 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import pylast
 import pytest
+
+import pylast
 
 from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
@@ -153,11 +154,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         tags = artist.get_tags()
         assert len(tags) > 0
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -172,11 +169,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
         # Assert
         tags = artist.get_tags()
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert not found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -191,11 +184,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
         # Assert
         tags = artist.get_tags()
-        found = False
-        for tag in tags:
-            if tag.name == "testing":
-                found = True
-                break
+        found = any(tag.name == "testing" for tag in tags)
         assert not found
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
@@ -213,12 +202,8 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         tags_after = artist.get_tags()
         assert len(tags_after) == len(tags_before) - 2
-        found1, found2 = False, False
-        for tag in tags_after:
-            if tag.name == "removetag1":
-                found1 = True
-            elif tag.name == "removetag2":
-                found2 = True
+        found1 = any(tag.name == "removetag1" for tag in tags_after)
+        found2 = any(tag.name == "removetag2" for tag in tags_after)
         assert not found1
         assert not found2
 
@@ -256,16 +241,12 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         url = artist1.get_url()
         mbid = artist1.get_mbid()
 
-        with pytest.warns(DeprecationWarning):
-            image = artist1.get_cover_image()
-
         playcount = artist1.get_playcount()
         streamable = artist1.is_streamable()
         name = artist1.get_name(properly_capitalized=False)
         name_cap = artist1.get_name(properly_capitalized=True)
 
         # Assert
-        assert "https" in image
         assert playcount > 1
         assert artist1 != artist2
         assert name.lower() == name_cap.lower()
@@ -308,4 +289,4 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         playcount = artist.get_userplaycount()
 
         # Assert
-        assert playcount >= 0
+        assert playcount >= 0  # whilst xfail: # pragma: no cover

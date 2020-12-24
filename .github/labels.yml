@@ -97,6 +97,12 @@
 - color: 0366d6
   description: "For dependencies"
   name: dependencies
+- color: f4660e
+  description: ""
+  name: Hacktoberfest
+- color: f4660e
+  description: "To credit accepted Hacktoberfest PRs"
+  name: hacktoberfest-accepted
 - color: fef2c0
   description: ""
   name: test

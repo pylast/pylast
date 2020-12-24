@@ -2,8 +2,9 @@
 """
 Integration (not unit) tests for pylast.py
 """
-import pylast
 from flaky import flaky
+
+import pylast
 
 from .test_pylast import PyLastTestCase, load_secrets
 
