@@ -1146,8 +1146,8 @@ class _BaseObject:
 
         return first_child.wholeText.strip()
 
-    def _get_things(self, method, thing, thing_type, params=None, cacheable=True):
-        """Returns a list of the most played thing_types by this thing."""
+    def _get_things(self, method, thing_type, params=None, cacheable=True):
+        """Returns a list of the most played thing_types."""
 
         limit = params.get("limit", 50)
         seq = []
@@ -1812,7 +1812,7 @@ class Artist(_BaseObject, _Taggable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopAlbums", "album", Album, params, cacheable)
+        return self._get_things("getTopAlbums", Album, params, cacheable)
 
     def get_top_tracks(self, limit=None, cacheable=True):
         """Returns a list of the most played Tracks by this artist."""
@@ -1820,7 +1820,7 @@ class Artist(_BaseObject, _Taggable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the artist page on the network.
@@ -1894,7 +1894,7 @@ class Country(_BaseObject):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", Track, params, cacheable)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the country page on the network.
@@ -2024,7 +2024,7 @@ class Tag(_BaseObject, _Chartable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", Track, params, cacheable)
 
     def get_top_artists(self, limit=None, cacheable=True):
         """Returns a sequence of the most played artists."""
@@ -2498,7 +2498,7 @@ class User(_BaseObject, _Chartable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things("getTopTracks", "track", Track, params, cacheable)
+        return self._get_things("getTopTracks", Track, params, cacheable)
 
     def get_track_scrobbles(self, artist, track, cacheable=False):
         """
