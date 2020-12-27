@@ -1149,7 +1149,7 @@ class _BaseObject:
     def _get_things(self, method, thing, thing_type, params=None, cacheable=True):
         """Returns a list of the most played thing_types by this thing."""
 
-        limit = params.get("limit", 1)
+        limit = params.get("limit", 50)
         seq = []
         for node in _collect_nodes(
             limit, self, self.ws_prefix + "." + method, cacheable, params

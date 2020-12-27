@@ -131,6 +131,17 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         assert len(things) == 100
 
+    def test_artist_top_albums_limit_default(self):
+        # Arrange
+        # Pick an artist with plenty of plays
+        artist = self.network.get_top_artists(limit=1)[0].item
+
+        # Act
+        things = artist.get_top_albums()
+
+        # Assert
+        assert len(things) == 50
+
     def test_artist_listener_count(self):
         # Arrange
         artist = self.network.get_artist("Test Artist")
