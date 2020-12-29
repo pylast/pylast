@@ -421,7 +421,7 @@ class _Network:
         """
 
         if not file_path:
-            file_path = tempfile.mkstemp(prefix="pylast_tmp_")
+            file_path = tempfile.mktemp(prefix="pylast_tmp_")
 
         self.cache_backend = _ShelfCacheBackend(file_path)
 
