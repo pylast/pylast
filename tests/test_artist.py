@@ -79,7 +79,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_tracks(limit=2, stream=False)
+        things = artist.get_top_tracks(limit=2)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -95,41 +95,28 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Album)
 
-    def test_artist_top_albums_limit_1(self):
+    @pytest.mark.parametrize("test_limit", [1, 50, 100])
+    def test_artist_top_albums_limit(self, test_limit: int) -> None:
         # Arrange
-        limit = 1
         # Pick an artist with plenty of plays
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=limit, stream=False)
+        things = artist.get_top_albums(limit=test_limit)
 
         # Assert
-        assert len(things) == 1
+        assert len(things) == test_limit
 
-    def test_artist_top_albums_limit_50(self):
+    def test_artist_top_albums_limit_default(self):
         # Arrange
-        limit = 50
         # Pick an artist with plenty of plays
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=limit, stream=False)
+        things = artist.get_top_albums()
 
         # Assert
         assert len(things) == 50
-
-    def test_artist_top_albums_limit_100(self):
-        # Arrange
-        limit = 100
-        # Pick an artist with plenty of plays
-        artist = self.network.get_top_artists(limit=1)[0].item
-
-        # Act
-        things = list(artist.get_top_albums(limit=limit))
-
-        # Assert
-        assert len(things) == 100
 
     def test_artist_listener_count(self):
         # Arrange

@@ -143,10 +143,10 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("test-user")
 
         # Act/Assert
-        assert len(user.get_loved_tracks(limit=20, stream=False)) == 20
-        assert len(user.get_loved_tracks(limit=100, stream=False)) <= 100
-        assert len(user.get_loved_tracks(limit=None, stream=False)) >= 23
-        assert len(user.get_loved_tracks(limit=0, stream=False)) >= 23
+        assert len(user.get_loved_tracks(limit=20)) == 20
+        assert len(user.get_loved_tracks(limit=100)) <= 100
+        assert len(user.get_loved_tracks(limit=None)) >= 23
+        assert len(user.get_loved_tracks(limit=0)) >= 23
 
     def test_user_is_hashable(self):
         # Arrange
@@ -216,7 +216,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         lastfm_user = self.network.get_user("RJ")
 
         # Act
-        things = lastfm_user.get_top_tracks(limit=2, stream=False)
+        things = lastfm_user.get_top_tracks(limit=2)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -367,9 +367,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         utc_end = calendar.timegm(end.utctimetuple())
 
         # Act
-        tracks = lastfm_user.get_recent_tracks(
-            time_from=utc_start, time_to=utc_end, stream=False
-        )
+        tracks = lastfm_user.get_recent_tracks(time_from=utc_start, time_to=utc_end)
 
         # Assert
         assert len(tracks) == 1
@@ -387,7 +385,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Act
         tracks = lastfm_user.get_recent_tracks(
-            time_from=utc_start, time_to=utc_end, limit=None, stream=False
+            time_from=utc_start, time_to=utc_end, limit=None
         )
 
         # Assert
@@ -474,7 +472,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("bbc6music")
 
         # Act
-        scrobbles = user.get_track_scrobbles(artist, title, stream=False)
+        scrobbles = user.get_track_scrobbles(artist, title)
 
         # Assert
         assert len(scrobbles) > 0
@@ -488,7 +486,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         user = self.network.get_user("bbc6music")
 
         # Act
-        result1 = user.get_track_scrobbles(artist, title, cacheable=False, stream=False)
+        result1 = user.get_track_scrobbles(artist, title, cacheable=False)
         result2 = list(user.get_track_scrobbles(artist, title, cacheable=True))
         result3 = list(user.get_track_scrobbles(artist, title))
 

@@ -154,7 +154,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         country = self.network.get_country("Croatia")
 
         # Act
-        things = country.get_top_tracks(limit=2, stream=False)
+        things = country.get_top_tracks(limit=2)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
@@ -172,7 +172,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         tag = self.network.get_tag("blues")
 
         # Act
-        things = tag.get_top_tracks(limit=2, stream=False)
+        things = tag.get_top_tracks(limit=2)
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)

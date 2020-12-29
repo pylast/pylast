@@ -1147,12 +1147,12 @@ class _BaseObject:
         return first_child.wholeText.strip()
 
     def _get_things(
-        self, method, thing, thing_type, params=None, cacheable=True, stream=False
+        self, method, thing_type, params=None, cacheable=True, stream=False
     ):
         """Returns a list of the most played thing_types by this thing."""
 
         def _stream_get_things():
-            limit = params.get("limit", 1)
+            limit = params.get("limit", 50)
             nodes = _collect_nodes(
                 limit,
                 self,
@@ -1818,9 +1818,7 @@ class Artist(_Taggable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things(
-            "getTopAlbums", "album", Album, params, cacheable, stream=stream
-        )
+        return self._get_things("getTopAlbums", Album, params, cacheable, stream=stream)
 
     def get_top_tracks(self, limit=None, cacheable=True, stream=False):
         """Returns a list of the most played Tracks by this artist."""
@@ -1828,9 +1826,7 @@ class Artist(_Taggable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things(
-            "getTopTracks", "track", Track, params, cacheable, stream=stream
-        )
+        return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the artist page on the network.
@@ -1904,9 +1900,7 @@ class Country(_BaseObject):
         if limit:
             params["limit"] = limit
 
-        return self._get_things(
-            "getTopTracks", "track", Track, params, cacheable, stream=stream
-        )
+        return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
     def get_url(self, domain_name=DOMAIN_ENGLISH):
         """Returns the URL of the country page on the network.
@@ -2035,9 +2029,7 @@ class Tag(_Chartable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things(
-            "getTopTracks", "track", Track, params, cacheable, stream=stream
-        )
+        return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
     def get_top_artists(self, limit=None, cacheable=True):
         """Returns a sequence of the most played artists."""
@@ -2244,7 +2236,7 @@ class User(_Chartable):
 
         return self.name
 
-    def get_friends(self, limit=50, cacheable=False):
+    def get_friends(self, limit=50, cacheable=False, stream=False):
         """Returns a list of the user's friends. """
 
         def _get_friends():
@@ -2261,7 +2253,7 @@ class User(_Chartable):
         reverse order of their timestamp, all the way back to the first track.
 
         If limit==None, it will try to pull all the available data.
-        If stream=False, it will yield tracks as soon as a page has been retrieved.
+        If stream=True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
@@ -2530,9 +2522,7 @@ class User(_Chartable):
         if limit:
             params["limit"] = limit
 
-        return self._get_things(
-            "getTopTracks", "track", Track, params, cacheable, stream=stream
-        )
+        return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
     def get_track_scrobbles(self, artist, track, cacheable=False, stream=False):
         """

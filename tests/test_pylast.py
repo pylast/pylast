@@ -34,11 +34,11 @@ def load_secrets():  # pragma: no cover
 
 
 class PyLastTestCase:
-    def assert_startswith(self, str, prefix, start=None, end=None):
-        assert str.startswith(prefix, start, end)
+    def assert_startswith(self, s, prefix, start=None, end=None):
+        assert s.startswith(prefix, start, end)
 
-    def assert_endswith(self, str, suffix, start=None, end=None):
-        assert str.endswith(suffix, start, end)
+    def assert_endswith(self, s, suffix, start=None, end=None):
+        assert s.endswith(suffix, start, end)
 
 
 def _no_xfail_rerun_filter(err, name, test, plugin):
@@ -100,8 +100,8 @@ class TestPyLastWithLastFm(PyLastTestCase):
         func = getattr(thing, function_name, None)
 
         # Act
-        result1 = func(limit=1, cacheable=False, stream=False)
-        result2 = func(limit=1, cacheable=True, stream=False)
+        result1 = func(limit=1, cacheable=False)
+        result2 = func(limit=1, cacheable=True)
         result3 = list(func(limit=1))
 
         # Assert
