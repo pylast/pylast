@@ -4,10 +4,9 @@ pyLast
 [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.org/project/pylast/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypistats.org/packages/pylast)
-[![Build status](https://travis-ci.org/pylast/pylast.svg?branch=master)](https://travis-ci.org/pylast/pylast)
+[![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/master/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
-[![Coverage (Coveralls)](https://coveralls.io/repos/github/pylast/pylast/badge.svg?branch=master)](https://coveralls.io/github/pylast/pylast?branch=master)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).
@@ -31,11 +30,13 @@ Or from requirements.txt:
 
 Note:
 
-* pylast 3.0.0+ supports Python 3.5+ ([#265](https://github.com/pylast/pylast/issues/265))
-* pyLast 2.2.0 - 2.4.0 supports Python 2.7.10+, 3.4, 3.5, 3.6, 3.7.
-* pyLast 2.0.0 - 2.1.0 supports Python 2.7.10+, 3.4, 3.5, 3.6.
-* pyLast 1.7.0 - 1.9.0 supports Python 2.7, 3.3, 3.4, 3.5, 3.6.
-* pyLast 1.0.0 - 1.6.0 supports Python 2.7, 3.3, 3.4.
+* pyLast 4.0.0+ supports Python 3.6-3.9.
+* pyLast 3.2.0 - 3.3.0 supports Python 3.5-3.8.
+* pyLast 3.0.0 - 3.1.0 supports Python 3.5-3.7.
+* pyLast 2.2.0 - 2.4.0 supports Python 2.7.10+, 3.4-3.7.
+* pyLast 2.0.0 - 2.1.0 supports Python 2.7.10+, 3.4-3.6.
+* pyLast 1.7.0 - 1.9.0 supports Python 2.7, 3.3-3.6.
+* pyLast 1.0.0 - 1.6.0 supports Python 2.7, 3.3-3.4.
 * pyLast 0.5 supports Python 2, 3.
 * pyLast < 0.5 supports Python 2.
 
@@ -49,7 +50,6 @@ Features
  * Proxy support.
  * Internal caching support for some web services calls (disabled by default).
  * Support for other API-compatible networks like Libre.fm.
- * Python 3-friendly (Starting from 0.5).
 
 
 Getting started

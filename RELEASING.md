@@ -1,8 +1,9 @@
 # Release Checklist
 
 * [ ] Get master to the appropriate code release state.
-      [Travis CI](https://travis-ci.org/pylast/pylast) should be running cleanly for
+      [GitHub Actions](https://github.com/pylast/pylast/actions) should be running cleanly for
       all merges to master.
+      [![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
 
 * [ ] Edit release draft, adjust text if needed:
       https://github.com/pylast/pylast/releases
@@ -13,8 +14,8 @@
 
 * [ ] Publish release
 
-* [ ] Check the tagged [Travis CI build](https://travis-ci.org/pylast/pylast) has
-      deployed to [PyPI](https://pypi.org/project/pylast/#history)
+* [ ] Check the tagged [GitHub Actions build](https://github.com/pylast/pylast/actions?query=workflow%3ADeploy)
+      has deployed to [PyPI](https://pypi.org/project/pylast/#history)
 
 * [ ] Check installation:
 

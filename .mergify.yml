@@ -3,8 +3,6 @@ pull_request_rules:
     conditions:
       - label=automerge
       - status-success=build
-      - status-success=continuous-integration/travis-ci/pr
-      - status-success=continuous-integration/travis-ci/push
     actions:
       merge:
         method: merge

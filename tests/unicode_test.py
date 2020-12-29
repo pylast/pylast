@@ -1,7 +1,8 @@
 from unittest import mock
 
-import pylast
 import pytest
+
+import pylast
 
 
 def mock_network():
