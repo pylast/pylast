@@ -94,8 +94,8 @@ class TestPyLastWithLastFm(PyLastTestCase):
         func = getattr(thing, function_name, None)
 
         # Act
-        result1 = func(limit=1, cacheable=False, stream=False)
-        result2 = func(limit=1, cacheable=True, stream=False)
+        result1 = func(limit=1, cacheable=False)
+        result2 = func(limit=1, cacheable=True)
         result3 = list(func(limit=1))
 
         # Assert
