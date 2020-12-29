@@ -2321,7 +2321,7 @@ class User(_Chartable):
         reverse order of their timestamp, all the way back to the first track.
 
         If limit==None, it will try to pull all the available data.
-        If stream=False, it will yield tracks as soon as a page has been retrieved.
+        If stream=True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
         large amount of data.
