@@ -785,7 +785,7 @@ class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
     def __init__(self, file_path=None):
-        self.shelf = shelve.open(file_path, flag='n')
+        self.shelf = shelve.open(file_path, flag="n")
         self.cache_keys = set(self.shelf.keys())
 
     def __contains__(self, key):
@@ -1398,6 +1398,7 @@ class _Taggable(_BaseObject):
 
 class PyLastError(Exception):
     """Generic exception raised by PyLast"""
+
     pass
 
 
