@@ -79,8 +79,12 @@ API_SECRET = "425b55975eed76058ac220b7b4e8a054"
 username = "your_user_name"
 password_hash = pylast.md5("your_password")
 
-network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET,
-                               username=username, password_hash=password_hash)
+network = pylast.LastFMNetwork(
+    api_key=API_KEY,
+    api_secret=API_SECRET,
+    username=username,
+    password_hash=password_hash,
+)
 
 # Now you can use that object everywhere
 artist = network.get_artist("System of a Down")
