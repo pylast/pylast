@@ -422,8 +422,8 @@ class _Network:
         """
 
         if not file_path:
-            file_descriptor, file_path = tempfile.mkstemp(prefix="pylast_tmp_")
-            os.close(file_descriptor)
+            self.cache_backend = _ShelfCacheBackend.create_shelf()
+            return
 
         self.cache_backend = _ShelfCacheBackend(file_path)
 
@@ -784,8 +784,11 @@ class LibreFMNetwork(_Network):
 class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
-    def __init__(self, file_path=None):
-        self.shelf = shelve.open(file_path, flag="n")
+    def __init__(self, file_path=None, flag=None):
+        if flag:
+            self.shelf = shelve.open(file_path, flag=flag)
+        else:
+            self.shelf = shelve.open(file_path)
         self.cache_keys = set(self.shelf.keys())
 
     def __contains__(self, key):
@@ -800,6 +803,12 @@ class _ShelfCacheBackend:
     def set_xml(self, key, xml_string):
         self.cache_keys.add(key)
         self.shelf[key] = xml_string
+
+    @classmethod
+    def create_shelf(cls):
+        file_descriptor, file_path = tempfile.mkstemp(prefix="pylast_tmp_")
+        os.close(file_descriptor)
+        return cls(file_path=file_path, flag="n")
 
 
 class _Request:
