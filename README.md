@@ -9,7 +9,8 @@ pyLast
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
-A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites such as [Libre.fm](https://libre.fm/).
+A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites
+such as [Libre.fm](https://libre.fm/).
 
 Use the pydoc utility for help on usage or see [tests/](tests/) for examples.
 
@@ -18,25 +19,31 @@ Installation
 
 Install via pip:
 
-    pip install pylast
+```sh
+python3 -m pip install pylast
+```
 
 Install latest development version:
 
-    pip install -U git+https://github.com/pylast/pylast
+```sh
+python3 -m pip install -U git+https://github.com/pylast/pylast
+```
 
 Or from requirements.txt:
 
-    -e git://github.com/pylast/pylast.git#egg=pylast
+```txt
+-e git://github.com/pylast/pylast.git#egg=pylast
+```
 
 Note:
 
-* pyLast 4.0.0+ supports Python 3.6-3.9.
-* pyLast 3.2.0 - 3.3.0 supports Python 3.5-3.8.
-* pyLast 3.0.0 - 3.1.0 supports Python 3.5-3.7.
-* pyLast 2.2.0 - 2.4.0 supports Python 2.7.10+, 3.4-3.7.
-* pyLast 2.0.0 - 2.1.0 supports Python 2.7.10+, 3.4-3.6.
-* pyLast 1.7.0 - 1.9.0 supports Python 2.7, 3.3-3.6.
-* pyLast 1.0.0 - 1.6.0 supports Python 2.7, 3.3-3.4.
+* pyLast 4.0+ supports Python 3.6-3.9.
+* pyLast 3.2 - 3.3 supports Python 3.5-3.8.
+* pyLast 3.0 - 3.1 supports Python 3.5-3.7.
+* pyLast 2.2 - 2.4 supports Python 2.7.10+, 3.4-3.7.
+* pyLast 2.0 - 2.1 supports Python 2.7.10+, 3.4-3.6.
+* pyLast 1.7 - 1.9 supports Python 2.7, 3.3-3.6.
+* pyLast 1.0 - 1.6 supports Python 2.7, 3.3-3.4.
 * pyLast 0.5 supports Python 2, 3.
 * pyLast < 0.5 supports Python 2.
 
@@ -55,7 +62,10 @@ Features
 Getting started
 ---------------
 
-Here's some simple code example to get you started. In order to create any object from pyLast, you need a `Network` object which represents a social music network that is Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm and use it as follows:
+Here's some simple code example to get you started. In order to create any object from
+pyLast, you need a `Network` object which represents a social music network that is
+Last.fm or any other API-compatible one. You can obtain a pre-configured one for Last.fm
+and use it as follows:
 
 ```python
 import pylast
@@ -85,14 +95,20 @@ track.add_tags(("awesome", "favorite"))
 # to get more help about anything and see examples of how it works
 ```
 
-More examples in <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and [tests/](tests/).
+More examples in
+<a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and
+[tests/](https://github.com/pylast/pylast/tree/master/tests).
 
 Testing
 -------
 
-The [tests/](tests/) directory contains integration and unit tests with Last.fm, and plenty of code examples.
+The [tests/](https://github.com/pylast/pylast/tree/master/tests) directory contains
+integration and unit tests with Last.fm, and plenty of code examples.
 
-For integration tests you need a test account at Last.fm that will become cluttered with test data, and an API key and secret. Either copy [example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out the credentials, or set them as environment variables like:
+For integration tests you need a test account at Last.fm that will become cluttered with
+test data, and an API key and secret. Either copy
+[example_test_pylast.yaml](example_test_pylast.yaml) to test_pylast.yaml and fill out
+the credentials, or set them as environment variables like:
 
 ```sh
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
@@ -102,17 +118,20 @@ export PYLAST_API_SECRET=TODO_ENTER_YOURS_HERE
 ```
 
 To run all unit and integration tests:
+
 ```sh
-pip install -e ".[tests]"
+python3 -m pip install -e ".[tests]"
 pytest
 ```
 
 Or run just one test case:
+
 ```sh
 pytest -k test_scrobble
 ```
 
 To run with coverage:
+
 ```sh
 pytest -v --cov pylast --cov-report term-missing
 coverage report # for command-line report
