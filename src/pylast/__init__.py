@@ -785,7 +785,7 @@ class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
     def __init__(self, file_path=None, flag=None):
-        if flag:
+        if flag is not None:
             self.shelf = shelve.open(file_path, flag=flag)
         else:
             self.shelf = shelve.open(file_path)
