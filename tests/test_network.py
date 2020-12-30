@@ -27,7 +27,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         # limit=2 to ignore now-playing:
-        last_scrobble = lastfm_user.get_recent_tracks(limit=2)[0]
+        last_scrobble = list(lastfm_user.get_recent_tracks(limit=2))[0]
         assert str(last_scrobble.track.artist).lower() == artist
         assert str(last_scrobble.track.title).lower() == title
 

@@ -4,6 +4,7 @@ Integration (not unit) tests for pylast.py
 """
 import calendar
 import datetime as dt
+import inspect
 import os
 import re
 
@@ -392,6 +393,23 @@ class TestPyLastUser(TestPyLastWithLastFm):
         assert str(tracks[0].track.artist) == "Seun Kuti & Egypt 80"
         assert str(tracks[0].track.title) == "Struggles Sounds"
 
+    def test_get_recent_tracks_is_streamable(self):
+        # Arrange
+        lastfm_user = self.network.get_user("bbc6music")
+        start = dt.datetime(2020, 2, 15, 15, 00)
+        end = dt.datetime(2020, 2, 15, 15, 40)
+
+        utc_start = calendar.timegm(start.utctimetuple())
+        utc_end = calendar.timegm(end.utctimetuple())
+
+        # Act
+        tracks = lastfm_user.get_recent_tracks(
+            time_from=utc_start, time_to=utc_end, limit=None, stream=True
+        )
+
+        # Assert
+        assert inspect.isgenerator(tracks)
+
     def test_get_playcount(self):
         # Arrange
         user = self.network.get_user("RJ")
@@ -469,8 +487,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
 
         # Act
         result1 = user.get_track_scrobbles(artist, title, cacheable=False)
-        result2 = user.get_track_scrobbles(artist, title, cacheable=True)
-        result3 = user.get_track_scrobbles(artist, title)
+        result2 = list(user.get_track_scrobbles(artist, title, cacheable=True))
+        result3 = list(user.get_track_scrobbles(artist, title))
 
         # Assert
         self.helper_validate_results(result1, result2, result3)

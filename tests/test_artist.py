@@ -90,7 +90,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         artist = self.network.get_top_artists(limit=1)[0].item
 
         # Act
-        things = artist.get_top_albums(limit=2)
+        things = list(artist.get_top_albums(limit=2))
 
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Album)

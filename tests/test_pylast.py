@@ -88,9 +88,9 @@ class TestPyLastWithLastFm(PyLastTestCase):
         assert a is not None
         assert b is not None
         assert c is not None
-        assert len(a) >= 0
-        assert len(b) >= 0
-        assert len(c) >= 0
+        assert isinstance(len(a), int)
+        assert isinstance(len(b), int)
+        assert isinstance(len(c), int)
         assert a == b
         assert b == c
 
@@ -102,7 +102,7 @@ class TestPyLastWithLastFm(PyLastTestCase):
         # Act
         result1 = func(limit=1, cacheable=False)
         result2 = func(limit=1, cacheable=True)
-        result3 = func(limit=1)
+        result3 = list(func(limit=1))
 
         # Assert
         self.helper_validate_results(result1, result2, result3)

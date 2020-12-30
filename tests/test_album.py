@@ -32,7 +32,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
 
         # Act
         # limit=2 to ignore now-playing:
-        track = lastfm_user.get_recent_tracks(limit=2)[0]
+        track = list(lastfm_user.get_recent_tracks(limit=2))[0]
 
         # Assert
         assert hasattr(track, "album")
