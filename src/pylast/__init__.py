@@ -925,7 +925,12 @@ class _Request:
             conn = HTTPSConnection(context=SSL_CONTEXT, host=host_name)
 
             try:
-                conn.request(method="POST", url=f'{host_subdir}{username}', body=data, headers=headers)
+                conn.request(
+                    method="POST",
+                    url=f"{host_subdir}{username}",
+                    body=data,
+                    headers=headers,
+                )
             except Exception as e:
                 raise NetworkError(self.network, e)
 
@@ -1497,7 +1502,9 @@ class _Opus(_Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
-        self.username = username if username else network.username  # Default to current user
+        self.username = (
+            username if username else network.username
+        )  # Default to current user
         self.info = info
 
     def __repr__(self):
