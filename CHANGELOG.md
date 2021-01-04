@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2021-01-04
+## Added
+
+* Add support for streaming (#336) @kvanzuijlen
+* Add Python 3.9 final to Travis CI (#350) @sheetalsingala
+
+## Changed
+
+* Update copyright year (#360) @hugovk
+* Replace Travis CI with GitHub Actions (#352) @hugovk
+* [pre-commit.ci] pre-commit autoupdate (#359) @pre-commit-ci
+
+## Fixed
+
+* Set limit to 50 by default, not 1 (#355) @hugovk
+
+
 ## [4.0.0] - 2020-10-07
 ## Added
 
@@ -96,6 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for Python 2.7 ([#265])
 
+[4.1.0]: https://github.com/pylast/pylast/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/pylast/pylast/compare/3.3.0...4.0.0
 [3.3.0]: https://github.com/pylast/pylast/compare/3.2.1...3.3.0
 [3.2.1]: https://github.com/pylast/pylast/compare/3.2.0...3.2.1
