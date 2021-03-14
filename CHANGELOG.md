@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0] - 2021-03-14
+
+## Changed
+
+* Fix unsafe creation of temp file for caching, and improve exception raising (#356) @kvanzuijlen
+* [pre-commit.ci] pre-commit autoupdate (#362) @pre-commit-ci
+
+
 ## [4.1.0] - 2021-01-04
 ## Added
 
@@ -113,6 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for Python 2.7 ([#265])
 
+[4.2.0]: https://github.com/pylast/pylast/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/pylast/pylast/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/pylast/pylast/compare/3.3.0...4.0.0
 [3.3.0]: https://github.com/pylast/pylast/compare/3.2.1...3.3.0
