@@ -899,6 +899,9 @@ class _Request:
         if self.network.limit_rate:
             self.network._delay_call()
 
+        username = self.params.pop("username", None)
+        username = f"?username={username}" if username is not None else ""
+
         data = []
         for name in self.params.keys():
             data.append("=".join((name, quote_plus(_string(self.params[name])))))
@@ -922,7 +925,7 @@ class _Request:
             try:
                 conn.request(
                     method="POST",
-                    url="https://" + host_name + host_subdir,
+                    url=f"https://{host_name}{host_subdir}{username}",
                     body=data,
                     headers=headers,
                 )
@@ -933,7 +936,12 @@ class _Request:
             conn = HTTPSConnection(context=SSL_CONTEXT, host=host_name)
 
             try:
-                conn.request(method="POST", url=host_subdir, body=data, headers=headers)
+                conn.request(
+                    method="POST",
+                    url=f"{host_subdir}{username}",
+                    body=data,
+                    headers=headers,
+                )
             except Exception as e:
                 raise NetworkError(self.network, e) from e
 
@@ -1508,7 +1516,9 @@ class _Opus(_Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
-        self.username = username
+        self.username = (
+            username if username else network.username
+        )  # Default to current user
         self.info = info
 
     def __repr__(self):
