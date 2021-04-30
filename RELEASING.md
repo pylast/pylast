@@ -10,8 +10,6 @@
 
 * [ ] Check next tag is correct, amend if needed
 
-* [ ] Copy text into [`CHANGELOG.md`](CHANGELOG.md)
-
 * [ ] Publish release
 
 * [ ] Check the tagged [GitHub Actions build](https://github.com/pylast/pylast/actions?query=workflow%3ADeploy)
