@@ -417,3 +417,15 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         assert int(total) > 10000
+
+    def test_mbid_biography_issue(self):
+        # Arrange
+        mbid = "e2bef0c5-02e7-4505-b87f-90fc96bd70c3"
+
+        # Act
+        artist = self.network.get_artist_by_mbid(mbid)
+
+        # Assert
+        assert isinstance(artist, pylast.Artist)
+        assert artist.name == "Space 92"
+        assert artist.get_bio_content() is None

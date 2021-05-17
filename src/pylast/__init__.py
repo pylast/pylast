@@ -1153,8 +1153,11 @@ class _BaseObject:
     def _extract_cdata_from_request(self, method_name, tag_name, params):
         doc = self._request(method_name, True, params)
 
-        first_child = doc.getElementsByTagName(tag_name)[0].firstChild
+        elements = doc.getElementsByTagName(tag_name)
+        if len(elements) == 0:
+            return None
 
+        first_child = elements[0].firstChild
         if first_child is None:
             return None
 
