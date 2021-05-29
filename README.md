@@ -87,9 +87,6 @@ network = pylast.LastFMNetwork(
 )
 
 # Now you can use that object everywhere
-artist = network.get_artist("System of a Down")
-
-
 track = network.get_track("Iron Maiden", "The Nomad")
 track.love()
 track.add_tags(("awesome", "favorite"))
