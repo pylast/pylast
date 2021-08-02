@@ -265,7 +265,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         assert isinstance(artist, pylast.Artist)
-        assert artist.name == "MusicBrainz Test Artist"
+        assert artist.name in ("MusicBrainz Test Artist", "MusicBrainzz Test Artist")
 
     def test_track_mbid(self):
         # Arrange
