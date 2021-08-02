@@ -95,4 +95,4 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
 
         # Assert
         self.assert_startswith(image, "https://")
-        self.assert_endswith(image, ".png")
+        self.assert_endswith(image, ".gif")
