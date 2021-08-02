@@ -1355,7 +1355,7 @@ class _Taggable(_BaseObject):
             self.remove_tag(tag)
 
     def clear_tags(self):
-        """Clears all the user-set tags. """
+        """Clears all the user-set tags."""
 
         self.remove_tags(*(self.get_tags()))
 
@@ -1702,7 +1702,7 @@ class Artist(_Taggable):
         self.info = info
 
     def __repr__(self):
-        return "pylast.Artist({}, {})".format(repr(self.get_name()), repr(self.network))
+        return f"pylast.Artist({repr(self.get_name())}, {repr(self.network)})"
 
     def __unicode__(self):
         return str(self.get_name())
@@ -1886,7 +1886,7 @@ class Country(_BaseObject):
         self.name = name
 
     def __repr__(self):
-        return "pylast.Country({}, {})".format(repr(self.name), repr(self.network))
+        return f"pylast.Country({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
     def __str__(self):
@@ -1902,7 +1902,7 @@ class Country(_BaseObject):
         return {"country": self.get_name()}
 
     def get_name(self):
-        """Returns the country name. """
+        """Returns the country name."""
 
         return self.name
 
@@ -1964,7 +1964,7 @@ class Library(_BaseObject):
             self.user = User(user, self.network)
 
     def __repr__(self):
-        return "pylast.Library({}, {})".format(repr(self.user), repr(self.network))
+        return f"pylast.Library({repr(self.user)}, {repr(self.network)})"
 
     @_string_output
     def __str__(self):
@@ -2010,7 +2010,7 @@ class Tag(_Chartable):
         self.name = name
 
     def __repr__(self):
-        return "pylast.Tag({}, {})".format(repr(self.name), repr(self.network))
+        return f"pylast.Tag({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
     def __str__(self):
@@ -2026,7 +2026,7 @@ class Tag(_Chartable):
         return {self.ws_prefix: self.get_name()}
 
     def get_name(self, properly_capitalized=False):
-        """Returns the name of the tag. """
+        """Returns the name of the tag."""
 
         if properly_capitalized:
             self.name = _extract(
@@ -2149,12 +2149,12 @@ class Track(_Opus):
         return Album(_extract(node, "artist"), _extract(node, "title"), self.network)
 
     def love(self):
-        """Adds the track to the user's loved tracks. """
+        """Adds the track to the user's loved tracks."""
 
         self._request(self.ws_prefix + ".love")
 
     def unlove(self):
-        """Remove the track to the user's loved tracks. """
+        """Remove the track to the user's loved tracks."""
 
         self._request(self.ws_prefix + ".unlove")
 
@@ -2220,7 +2220,7 @@ class User(_Chartable):
         self.name = user_name
 
     def __repr__(self):
-        return "pylast.User({}, {})".format(repr(self.name), repr(self.network))
+        return f"pylast.User({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
     def __str__(self):
@@ -2259,7 +2259,7 @@ class User(_Chartable):
         return self.name
 
     def get_friends(self, limit=50, cacheable=False, stream=False):
-        """Returns a list of the user's friends. """
+        """Returns a list of the user's friends."""
 
         def _get_friends():
             for node in _collect_nodes(
@@ -2604,7 +2604,7 @@ class User(_Chartable):
         return self.network._get_url(domain_name, "user") % {"name": name}
 
     def get_library(self):
-        """Returns the associated Library object. """
+        """Returns the associated Library object."""
 
         return Library(self, self.network)
 
