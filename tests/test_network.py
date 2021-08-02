@@ -267,6 +267,8 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(artist, pylast.Artist)
         assert artist.name in ("MusicBrainz Test Artist", "MusicBrainzz Test Artist")
 
+    @pytest.mark.xfail(reason="Broken at Last.fm: Track not found")
+    # https://support.last.fm/t/track-getinfo-with-mbid-returns-6-track-not-found/47905
     def test_track_mbid(self):
         # Arrange
         mbid = "ebc037b1-cc9c-44f2-a21f-83c219f0e1e0"
