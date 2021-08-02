@@ -1798,9 +1798,14 @@ class Artist(_Taggable):
         else:
             params = None
 
-        return self._extract_cdata_from_request(
-            self.ws_prefix + ".getInfo", section, params
-        )
+        try:
+            bio = self._extract_cdata_from_request(
+                self.ws_prefix + ".getInfo", section, params
+            )
+        except IndexError:
+            bio = None
+
+        return bio
 
     def get_bio_published_date(self):
         """Returns the date on which the artist's biography was published."""
