@@ -5,8 +5,8 @@ pyLast
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypistats.org/packages/pylast)
 [![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
-[![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/master/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/main/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites
@@ -98,12 +98,12 @@ track.add_tags(("awesome", "favorite"))
 
 More examples in
 <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and
-[tests/](https://github.com/pylast/pylast/tree/master/tests).
+[tests/](https://github.com/pylast/pylast/tree/main/tests).
 
 Testing
 -------
 
-The [tests/](https://github.com/pylast/pylast/tree/master/tests) directory contains
+The [tests/](https://github.com/pylast/pylast/tree/main/tests) directory contains
 integration and unit tests with Last.fm, and plenty of code examples.
 
 For integration tests you need a test account at Last.fm that will become cluttered with
