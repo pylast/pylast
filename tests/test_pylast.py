@@ -3,7 +3,6 @@
 Integration (not unit) tests for pylast.py
 """
 import os
-import sys
 import time
 
 import pytest
@@ -11,7 +10,7 @@ from flaky import flaky
 
 import pylast
 
-WRITE_TEST = sys.version_info[:2] == (3, 9)
+WRITE_TEST = False
 
 
 def load_secrets():  # pragma: no cover
