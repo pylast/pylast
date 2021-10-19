@@ -22,7 +22,7 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
     def test_artist_is_hashable(self):
         # Arrange
-        test_artist = self.network.get_artist("Test Artist")
+        test_artist = self.network.get_artist("Radiohead")
         artist = test_artist.get_similar(limit=2)[0].item
         assert isinstance(artist, pylast.Artist)
 
