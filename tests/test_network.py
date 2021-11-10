@@ -245,7 +245,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_album_mbid(self):
         # Arrange
-        mbid = "a6a265bf-9f81-4055-8224-f7ac0aa6b937"
+        mbid = "03c91c40-49a6-44a7-90e7-a700edf97a62"
 
         # Act
         album = self.network.get_album_by_mbid(mbid)
@@ -253,7 +253,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         assert isinstance(album, pylast.Album)
-        assert album.title.lower() == "test"
+        assert album.title == "Believe"
         assert album_mbid == mbid
 
     def test_artist_mbid(self):
