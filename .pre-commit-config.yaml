@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.29.0
+    rev: v2.29.1
     hooks:
       - id: pyupgrade
         args: ["--py36-plus"]
 
   - repo: https://github.com/psf/black
-    rev: 21.9b0
+    rev: 21.11b1
     hooks:
       - id: black
         args: ["--target-version", "py36"]
@@ -15,19 +15,19 @@ repos:
         types: []
 
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.11.0
+    rev: v1.12.0
     hooks:
       - id: blacken-docs
         args: ["--target-version", "py36"]
-        additional_dependencies: [black==20.8b1]
+        additional_dependencies: [black==21.11b1]
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.3
+    rev: 5.10.1
     hooks:
       - id: isort
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 4.0.1
     hooks:
       - id: flake8
         additional_dependencies: [flake8-2020, flake8-implicit-str-concat]
@@ -42,6 +42,11 @@ repos:
     hooks:
       - id: check-merge-conflict
       - id: check-yaml
+
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.20.0
+    hooks:
+      - id: setup-cfg-fmt
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
     rev: 0.5.1

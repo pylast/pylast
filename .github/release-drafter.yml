@@ -23,7 +23,6 @@ exclude-labels:
   - "changelog: skip"
 
 template: |
-
   $CHANGES
 
 version-resolver:

@@ -9,7 +9,7 @@ on:
 
 jobs:
   update_release_draft:
-    if: github.repository_owner == 'hugovk'
+    if: github.repository_owner == 'pylast'
     runs-on: ubuntu-latest
     steps:
       # Drafts your next release notes as pull requests are merged into "main"
