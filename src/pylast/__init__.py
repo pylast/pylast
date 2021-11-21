@@ -33,13 +33,18 @@ from http.client import HTTPSConnection
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
-import pkg_resources
+try:
+    # Python 3.8+
+    import importlib.metadata as importlib_metadata
+except ImportError:
+    # Python 3.7 and lower
+    import importlib_metadata
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
-__version__ = pkg_resources.get_distribution(__name__).version
+__version__ = importlib_metadata.version(__name__)
 
 
 # 1 : This error does not exist
