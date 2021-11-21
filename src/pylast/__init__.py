@@ -2551,8 +2551,7 @@ class User(_Chartable):
 
         params = self._get_params()
         params["period"] = period
-        if limit:
-            params["limit"] = limit
+        params["limit"] = limit
 
         return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
