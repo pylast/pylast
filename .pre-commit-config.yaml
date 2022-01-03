@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.29.1
+    rev: v2.31.0
     hooks:
       - id: pyupgrade
         args: ["--py36-plus"]
 
   - repo: https://github.com/psf/black
-    rev: 21.11b1
+    rev: 21.12b0
     hooks:
       - id: black
         args: ["--target-version", "py36"]
@@ -38,7 +38,7 @@ repos:
       - id: python-check-blanket-noqa
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: check-merge-conflict
       - id: check-yaml
@@ -49,7 +49,7 @@ repos:
       - id: setup-cfg-fmt
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: 0.5.1
+    rev: 0.5.2
     hooks:
       - id: tox-ini-fmt
 
