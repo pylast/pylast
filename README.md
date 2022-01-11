@@ -1,5 +1,4 @@
-pyLast
-======
+# pyLast
 
 [![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.org/project/pylast/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
@@ -14,8 +13,7 @@ such as [Libre.fm](https://libre.fm/).
 
 Use the pydoc utility for help on usage or see [tests/](tests/) for examples.
 
-Installation
-------------
+## Installation
 
 Install via pip:
 
@@ -32,11 +30,12 @@ python3 -m pip install -U git+https://github.com/pylast/pylast
 Or from requirements.txt:
 
 ```txt
--e git://github.com/pylast/pylast.git#egg=pylast
+-e https://github.com/pylast/pylast.git#egg=pylast
 ```
 
 Note:
 
+* pyLast 5.0+ supports Python 3.7-3.10.
 * pyLast 4.3+ supports Python 3.6-3.10.
 * pyLast 4.0 - 4.2 supports Python 3.6-3.9.
 * pyLast 3.2 - 3.3 supports Python 3.5-3.8.
@@ -48,8 +47,7 @@ Note:
 * pyLast 0.5 supports Python 2, 3.
 * pyLast < 0.5 supports Python 2.
 
-Features
---------
+## Features
 
  * Simple public interface.
  * Access to all the data exposed by the Last.fm web services.
@@ -60,8 +58,7 @@ Features
  * Support for other API-compatible networks like Libre.fm.
 
 
-Getting started
----------------
+## Getting started
 
 Here's some simple code example to get you started. In order to create any object from
 pyLast, you need a `Network` object which represents a social music network that is
@@ -100,8 +97,7 @@ More examples in
 <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and
 [tests/](https://github.com/pylast/pylast/tree/main/tests).
 
-Testing
--------
+## Testing
 
 The [tests/](https://github.com/pylast/pylast/tree/main/tests) directory contains
 integration and unit tests with Last.fm, and plenty of code examples.
@@ -140,8 +136,7 @@ coverage html   # for HTML report
 open htmlcov/index.html
 ```
 
-Logging
--------
+## Logging
 
 To enable from your own code:
 
