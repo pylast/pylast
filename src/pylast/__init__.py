@@ -1101,7 +1101,7 @@ Image = collections.namedtuple(
 
 def _string_output(func):
     def r(*args):
-        return _string(func(*args))
+        return str(func(*args))
 
     return r
 
@@ -2730,12 +2730,6 @@ def _unicode(text):
         return str(text)
 
 
-def _string(string):
-    if isinstance(string, str):
-        return string
-    return str(string)
-
-
 def cleanup_nodes(doc):
     """
     Remove text nodes containing only whitespace
@@ -2881,7 +2875,7 @@ def _extract_tracks(doc, network):
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a URL."""
 
-    return quote_plus(quote_plus(_string(text))).lower()
+    return quote_plus(quote_plus(str(text))).lower()
 
 
 def _number(string):
@@ -2908,7 +2902,7 @@ def _unescape_htmlentity(string):
 
 
 def _parse_response(response: str) -> xml.dom.minidom.Document:
-    response = _string(response).replace("opensearch:", "")
+    response = str(response).replace("opensearch:", "")
     try:
         doc = minidom.parseString(response)
     except xml.parsers.expat.ExpatError:
