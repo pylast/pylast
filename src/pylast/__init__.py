@@ -2724,8 +2724,6 @@ def md5(text):
 def _unicode(text):
     if isinstance(text, bytes):
         return str(text, "utf-8")
-    elif isinstance(text, str):
-        return text
     else:
         return str(text)
 
