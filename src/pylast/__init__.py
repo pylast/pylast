@@ -24,6 +24,7 @@ import hashlib
 import html.entities
 import logging
 import os
+import re
 import shelve
 import ssl
 import tempfile
@@ -969,7 +970,7 @@ class _Request:
             conn.close()
         return response_text
 
-    def execute(self, cacheable=False):
+    def execute(self, cacheable: bool = False) -> xml.dom.minidom.Document:
         """Returns the XML DOM response of the POST Request from the server"""
 
         if self.network.is_caching_enabled() and cacheable:
@@ -977,13 +978,12 @@ class _Request:
         else:
             response = self._download_response()
 
-        return minidom.parseString(_string(response).replace("opensearch:", ""))
+        return _parse_response(response)
 
     def _check_response_for_errors(self, response):
         """Checks the response for errors and raises one if any exists."""
-
         try:
-            doc = minidom.parseString(_string(response).replace("opensearch:", ""))
+            doc = _parse_response(response)
         except Exception as e:
             raise MalformedResponseError(self.network, e) from e
 
@@ -2948,6 +2948,22 @@ def _unescape_htmlentity(string):
         string = string.replace("&%s;" % key, chr(mapping[key]))
 
     return string
+
+
+def _parse_response(response: str) -> xml.dom.minidom.Document:
+    response = _string(response).replace("opensearch:", "")
+    try:
+        doc = minidom.parseString(response)
+    except xml.parsers.expat.ExpatError:
+        # Try again. For performance, we only remove when needed in rare cases.
+        doc = minidom.parseString(_remove_invalid_xml_chars(response))
+    return doc
+
+
+def _remove_invalid_xml_chars(string: str) -> str:
+    return re.sub(
+        r"[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u10000-\u10FFF]+", "", string
+    )
 
 
 # End of file
