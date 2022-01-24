@@ -19,6 +19,8 @@
 #
 # https://github.com/pylast/pylast
 
+from __future__ import annotations
+
 import collections
 import hashlib
 import html.entities
@@ -194,7 +196,6 @@ class _Network:
         self.urls = urls
 
         self.cache_backend = None
-        self.proxy_enabled = False
         self.proxy = None
         self.last_call_time = 0
         self.limit_rate = False
@@ -394,26 +395,20 @@ class _Network:
 
         return seq
 
-    def enable_proxy(self, host, port):
-        """Enable a default web proxy"""
+    def enable_proxy(self, proxy: str | dict) -> None:
+        """Enable default web proxy.
+        Multiple proxies can be passed as a `dict`, see
+        https://www.python-httpx.org/advanced/#http-proxying
+        """
+        self.proxy = proxy
 
-        self.proxy = f"{host}:{_number(port)}"
-        self.proxy_enabled = True
-
-    def disable_proxy(self):
+    def disable_proxy(self) -> None:
         """Disable using the web proxy"""
+        self.proxy = None
 
-        self.proxy_enabled = False
-
-    def is_proxy_enabled(self):
-        """Returns True if a web proxy is enabled."""
-
-        return self.proxy_enabled
-
-    def _get_proxy(self):
-        """Returns proxy details."""
-
-        return self.proxy
+    def is_proxy_enabled(self) -> bool:
+        """Returns True if web proxy is enabled."""
+        return self.proxy is not None
 
     def enable_rate_limit(self):
         """Enables rate limiting for this network"""
@@ -922,7 +917,7 @@ class _Request:
                 verify=SSL_CONTEXT,
                 base_url=f"https://{host_name}",
                 headers=HEADERS,
-                proxies=f"http://{self.network._get_proxy()}",
+                proxies=self.network.proxy,
             )
         else:
             client = httpx.Client(
