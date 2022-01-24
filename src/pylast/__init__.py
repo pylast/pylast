@@ -409,44 +409,37 @@ class _Network:
         """Returns True if web proxy is enabled."""
         return self.proxy is not None
 
-    def enable_rate_limit(self):
+    def enable_rate_limit(self) -> None:
         """Enables rate limiting for this network"""
         self.limit_rate = True
 
-    def disable_rate_limit(self):
+    def disable_rate_limit(self) -> None:
         """Disables rate limiting for this network"""
         self.limit_rate = False
 
-    def is_rate_limited(self):
+    def is_rate_limited(self) -> bool:
         """Return True if web service calls are rate limited"""
         return self.limit_rate
 
-    def enable_caching(self, file_path=None):
+    def enable_caching(self, file_path=None) -> None:
         """Enables caching request-wide for all cacheable calls.
 
         * file_path: A file path for the backend storage file. If
         None set, a temp file would probably be created, according the backend.
         """
-
         if not file_path:
             self.cache_backend = _ShelfCacheBackend.create_shelf()
             return
 
         self.cache_backend = _ShelfCacheBackend(file_path)
 
-    def disable_caching(self):
+    def disable_caching(self) -> None:
         """Disables all caching features."""
-
         self.cache_backend = None
 
-    def is_caching_enabled(self):
+    def is_caching_enabled(self) -> bool:
         """Returns True if caching is enabled."""
-
-        return not (self.cache_backend is None)
-
-    def _get_cache_backend(self):
-
-        return self.cache_backend
+        return self.cache_backend is not None
 
     def search_for_album(self, album_name):
         """Searches for an album by its name. Returns a AlbumSearch object.
@@ -839,7 +832,7 @@ class _Request:
         self.params["method"] = method_name
 
         if network.is_caching_enabled():
-            self.cache = network._get_cache_backend()
+            self.cache = network.cache_backend
 
         if self.session_key:
             self.params["sk"] = self.session_key
