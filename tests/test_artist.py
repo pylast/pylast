@@ -268,7 +268,6 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         assert corrected_artist_name == "Guns N' Roses"
 
-    @pytest.mark.xfail
     def test_get_userplaycount(self):
         # Arrange
         artist = pylast.Artist("John Lennon", self.network, username=self.username)
@@ -277,4 +276,4 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         playcount = artist.get_userplaycount()
 
         # Assert
-        assert playcount >= 0  # whilst xfail: # pragma: no cover
+        assert playcount >= 0
