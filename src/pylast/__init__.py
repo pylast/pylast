@@ -189,7 +189,7 @@ class _Network:
 
         self.cache_backend = None
         self.proxy_enabled = False
-        self.proxy = None
+        self.proxy = self.proxies = None
         self.last_call_time = 0
         self.limit_rate = False
 
@@ -390,13 +390,32 @@ class _Network:
 
     def enable_proxy(self, host, port):
         """Enable a default web proxy"""
+        warnings.warn(
+            "enable_proxy() is deprecated and will be removed in pylast 5.0.0, use "
+            "enable_proxies() instead. Note the parameters will also change in 5.0.0.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        self.enable_proxies(host, port)
 
-        self.proxy = [host, _number(port)]
+    def enable_proxies(self, host, port):
+        """Enable a default web proxy"""
+
+        self.proxy = self.proxies = [host, _number(port)]
         self.proxy_enabled = True
 
     def disable_proxy(self):
         """Disable using the web proxy"""
+        warnings.warn(
+            "disable_proxy() is deprecated and will be removed in pylast 5.0.0, use "
+            "disable_proxies() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        self.disable_proxies()
 
+    def disable_proxies(self):
+        """Disable using the web proxy"""
         self.proxy_enabled = False
 
     def is_proxy_enabled(self):
@@ -406,8 +425,13 @@ class _Network:
 
     def _get_proxy(self):
         """Returns proxy details."""
-
-        return self.proxy
+        warnings.warn(
+            "_get_proxy() is deprecated and will be removed in pylast 5.0.0. "
+            "Use proxies directly instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.proxies
 
     def enable_rate_limit(self):
         """Enables rate limiting for this network"""
@@ -925,8 +949,8 @@ class _Request:
         if self.network.is_proxy_enabled():
             conn = HTTPSConnection(
                 context=SSL_CONTEXT,
-                host=self.network._get_proxy()[0],
-                port=self.network._get_proxy()[1],
+                host=self.network.proxy[0],
+                port=self.network.proxy[1],
             )
 
             try:

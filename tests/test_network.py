@@ -301,11 +301,11 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         port = 1234
 
         # Act / Assert
-        self.network.enable_proxy(host, port)
+        self.network.enable_proxies(host, port)
         assert self.network.is_proxy_enabled()
-        assert self.network._get_proxy() == ["https://example.com", 1234]
+        assert self.network.proxies == ["https://example.com", 1234]
 
-        self.network.disable_proxy()
+        self.network.disable_proxies()
         assert not self.network.is_proxy_enabled()
 
     def test_album_search(self):
