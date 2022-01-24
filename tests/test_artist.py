@@ -229,7 +229,8 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         mbid = artist1.get_mbid()
 
         playcount = artist1.get_playcount()
-        streamable = artist1.is_streamable()
+        with pytest.warns(DeprecationWarning):
+            streamable = artist1.is_streamable()
         name = artist1.get_name(properly_capitalized=False)
         name_cap = artist1.get_name(properly_capitalized=True)
 

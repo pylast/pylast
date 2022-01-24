@@ -123,7 +123,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         track = pylast.Track("Nirvana", "Lithium", self.network)
 
         # Act
-        streamable = track.is_streamable()
+        with pytest.warns(DeprecationWarning):
+            streamable = track.is_streamable()
 
         # Assert
         assert not streamable
@@ -133,7 +134,8 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         track = pylast.Track("Nirvana", "Lithium", self.network)
 
         # Act
-        fulltrack_available = track.is_fulltrack_available()
+        with pytest.warns(DeprecationWarning):
+            fulltrack_available = track.is_fulltrack_available()
 
         # Assert
         assert not fulltrack_available
