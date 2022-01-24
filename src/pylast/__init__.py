@@ -216,7 +216,7 @@ class _Network:
             self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
 
     def __str__(self):
-        return "%s Network" % self.name
+        return f"{self.name} Network"
 
     def get_artist(self, artist_name):
         """
@@ -276,9 +276,7 @@ class _Network:
             return self.domain_names[domain_language]
 
     def _get_url(self, domain, url_type):
-        return "https://{}/{}".format(
-            self._get_language_domain(domain), self.urls[url_type]
-        )
+        return f"https://{self._get_language_domain(domain)}/{self.urls[url_type]}"
 
     def _get_ws_auth(self):
         """
@@ -601,8 +599,8 @@ class _Network:
         params = {}
         for i in range(len(tracks_to_scrobble)):
 
-            params["artist[%d]" % i] = tracks_to_scrobble[i]["artist"]
-            params["track[%d]" % i] = tracks_to_scrobble[i]["title"]
+            params[f"artist[{i}]"] = tracks_to_scrobble[i]["artist"]
+            params[f"track[{i}]"] = tracks_to_scrobble[i]["title"]
 
             additional_args = (
                 "timestamp",
@@ -628,7 +626,7 @@ class _Network:
                     else:
                         maps_to = arg
 
-                    params["%s[%d]" % (maps_to, i)] = tracks_to_scrobble[i][arg]
+                    params[f"{maps_to}[{i}]"] = tracks_to_scrobble[i][arg]
 
         _Request(self, "track.scrobble", params).execute()
 
@@ -702,16 +700,14 @@ class LastFMNetwork(_Network):
         )
 
     def __repr__(self):
-        return "pylast.LastFMNetwork(%s)" % (
-            ", ".join(
-                (
-                    "'%s'" % self.api_key,
-                    "'%s'" % self.api_secret,
-                    "'%s'" % self.session_key,
-                    "'%s'" % self.username,
-                    "'%s'" % self.password_hash,
-                )
-            )
+        return (
+            "pylast.LastFMNetwork("
+            f"'{self.api_key}', "
+            f"'{self.api_secret}', "
+            f"'{self.session_key}', "
+            f"'{self.username}', "
+            f"'{self.password_hash}'"
+            ")"
         )
 
 
@@ -768,16 +764,14 @@ class LibreFMNetwork(_Network):
         )
 
     def __repr__(self):
-        return "pylast.LibreFMNetwork(%s)" % (
-            ", ".join(
-                (
-                    "'%s'" % self.api_key,
-                    "'%s'" % self.api_secret,
-                    "'%s'" % self.session_key,
-                    "'%s'" % self.username,
-                    "'%s'" % self.password_hash,
-                )
-            )
+        return (
+            "pylast.LibreFMNetwork("
+            f"'{self.api_key}', "
+            f"'{self.api_secret}', "
+            f"'{self.session_key}', "
+            f"'{self.username}', "
+            f"'{self.password_hash}'"
+            ")"
         )
 
 
@@ -1018,8 +1012,10 @@ class SessionKeyGenerator:
 
         token = self._get_web_auth_token()
 
-        url = "{homepage}/api/auth/?api_key={api}&token={token}".format(
-            homepage=self.network.homepage, api=self.network.api_key, token=token
+        url = (
+            f"{self.network.homepage}/api/auth/"
+            f"?api_key={self.network.api_key}"
+            f"&token={token}"
         )
 
         self.web_auth_tokens[url] = token
@@ -1443,8 +1439,9 @@ class MalformedResponseError(PyLastError):
         self.underlying_error = underlying_error
 
     def __str__(self):
-        return "Malformed response from {}. Underlying error: {}".format(
-            self.network.name, str(self.underlying_error)
+        return (
+            f"Malformed response from {self.network.name}. "
+            f"Underlying error: {self.underlying_error}"
         )
 
 
@@ -1456,7 +1453,7 @@ class NetworkError(PyLastError):
         self.underlying_error = underlying_error
 
     def __str__(self):
-        return "NetworkError: %s" % str(self.underlying_error)
+        return f"NetworkError: {self.underlying_error}"
 
 
 class _Opus(_Taggable):
@@ -1494,16 +1491,14 @@ class _Opus(_Taggable):
         self.info = info
 
     def __repr__(self):
-        return "pylast.{}({}, {}, {})".format(
-            self.ws_prefix.title(),
-            repr(self.artist.name),
-            repr(self.title),
-            repr(self.network),
+        return (
+            f"pylast.{self.ws_prefix.title()}"
+            f"({repr(self.artist.name)}, {repr(self.title)}, {repr(self.network)})"
         )
 
     @_string_output
     def __str__(self):
-        return _unicode("%s - %s") % (self.get_artist().get_name(), self.get_title())
+        return f"{self.get_artist().get_name()} - {self.get_title()}"
 
     def __eq__(self, other):
         if type(self) != type(other):
@@ -2881,7 +2876,7 @@ def _number(string):
 def _unescape_htmlentity(string):
     mapping = html.entities.name2codepoint
     for key in mapping:
-        string = string.replace("&%s;" % key, chr(mapping[key]))
+        string = string.replace(f"&{key};", chr(mapping[key]))
 
     return string
 
