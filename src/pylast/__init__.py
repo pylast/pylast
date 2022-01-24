@@ -29,6 +29,7 @@ import shelve
 import ssl
 import tempfile
 import time
+import warnings
 import xml.dom
 from http.client import HTTPSConnection
 from urllib.parse import quote_plus
@@ -1783,13 +1784,18 @@ class Artist(_Taggable):
             return self.listener_count
 
     def is_streamable(self):
-        """Returns True if the artist is streamable."""
-
-        return bool(
-            _number(
-                _extract(self._request(self.ws_prefix + ".getInfo", True), "streamable")
-            )
+        """Returns True if the artist is streamable: always False because Last.fm has
+        deprecated the Radio API."""
+        warnings.warn(
+            "Always returns False. Last.fm has deprecated the Radio API and will "
+            "it at some point. is_streamable() will be removed in pylast 5.0.0. "
+            "See https://www.last.fm/api/radio and "
+            "https://support.last.fm/t/"
+            "is-the-streamable-attribute-broken-it-always-returns-0/39723/3",
+            DeprecationWarning,
+            stacklevel=2,
         )
+        return False
 
     def get_bio(self, section, language=None):
         """
@@ -2130,18 +2136,32 @@ class Track(_Opus):
         return bool(loved)
 
     def is_streamable(self):
-        """Returns True if the track is available at Last.fm."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-        return _extract(doc, "streamable") == "1"
+        """Returns True if the artist is streamable: always False because Last.fm has
+        deprecated the Radio API."""
+        warnings.warn(
+            "Always returns False. Last.fm has deprecated the Radio API and will "
+            "it at some point. is_streamable() will be removed in pylast 5.0.0. "
+            "See https://www.last.fm/api/radio and "
+            "https://support.last.fm/t/"
+            "is-the-streamable-attribute-broken-it-always-returns-0/39723/3",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return False
 
     def is_fulltrack_available(self):
-        """Returns True if the full track is available for streaming."""
-
-        doc = self._request(self.ws_prefix + ".getInfo", True)
-        return (
-            doc.getElementsByTagName("streamable")[0].getAttribute("fulltrack") == "1"
+        """Returns True if the full track is available for streaming: always False
+        because Last.fm has deprecated the Radio API."""
+        warnings.warn(
+            "Always returns False. Last.fm has deprecated the Radio API and will "
+            "remove it at some point. is_fulltrack_available() will be removed in "
+            "pylast 5.0.0. See https://www.last.fm/api/radio and "
+            "https://support.last.fm/t/"
+            "is-the-streamable-attribute-broken-it-always-returns-0/39723/3",
+            DeprecationWarning,
+            stacklevel=2,
         )
+        return False
 
     def get_album(self):
         """Returns the album object of this track."""

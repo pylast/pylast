@@ -229,7 +229,8 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         mbid = artist1.get_mbid()
 
         playcount = artist1.get_playcount()
-        streamable = artist1.is_streamable()
+        with pytest.warns(DeprecationWarning):
+            streamable = artist1.is_streamable()
         name = artist1.get_name(properly_capitalized=False)
         name_cap = artist1.get_name(properly_capitalized=True)
 
@@ -267,7 +268,6 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         # Assert
         assert corrected_artist_name == "Guns N' Roses"
 
-    @pytest.mark.xfail
     def test_get_userplaycount(self):
         # Arrange
         artist = pylast.Artist("John Lennon", self.network, username=self.username)
@@ -276,4 +276,4 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         playcount = artist.get_userplaycount()
 
         # Assert
-        assert playcount >= 0  # whilst xfail: # pragma: no cover
+        assert playcount >= 0
