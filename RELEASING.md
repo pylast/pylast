@@ -12,7 +12,7 @@
 
 - [ ] Publish release
 
-- [ ] Check the tagged [GitHub Actions build](https://github.com/pylast/pylast/actions?query=workflow%3ADeploy)
+- [ ] Check the tagged [GitHub Actions build](https://github.com/pylast/pylast/actions/workflows/deploy.yml)
       has deployed to [PyPI](https://pypi.org/project/pylast/#history)
 
 - [ ] Check installation:
