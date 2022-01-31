@@ -229,8 +229,6 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         mbid = artist1.get_mbid()
 
         playcount = artist1.get_playcount()
-        with pytest.warns(DeprecationWarning):
-            streamable = artist1.is_streamable()
         name = artist1.get_name(properly_capitalized=False)
         name_cap = artist1.get_name(properly_capitalized=True)
 
@@ -240,7 +238,6 @@ class TestPyLastArtist(TestPyLastWithLastFm):
         assert name.lower() == name_cap.lower()
         assert url == "https://www.last.fm/music/radiohead"
         assert mbid == "a74b1b7f-71a5-4011-9441-d0b5e4122711"
-        assert isinstance(streamable, bool)
 
     def test_artist_eq_none_is_false(self):
         # Arrange
