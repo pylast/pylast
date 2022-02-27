@@ -18,7 +18,6 @@
 # limitations under the License.
 #
 # https://github.com/pylast/pylast
-
 from __future__ import annotations
 
 import collections
@@ -1595,7 +1594,7 @@ class _Opus(_Taggable):
             )
         )
 
-    def get_mbid(self):
+    def get_mbid(self) -> str | None:
         """Returns the MusicBrainz ID of the album or track."""
 
         doc = self._request(self.ws_prefix + ".getInfo", cacheable=True)
@@ -1604,7 +1603,7 @@ class _Opus(_Taggable):
             lfm = doc.getElementsByTagName("lfm")[0]
             opus = next(self._get_children_by_tag_name(lfm, self.ws_prefix))
             mbid = next(self._get_children_by_tag_name(opus, "mbid"))
-            return mbid.firstChild.nodeValue
+            return mbid.firstChild.nodeValue if mbid.firstChild else None
         except StopIteration:
             return None
 
