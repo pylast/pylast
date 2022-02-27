@@ -19,6 +19,8 @@
 #
 # https://github.com/pylast/pylast
 
+from __future__ import annotations
+
 import collections
 import hashlib
 import html.entities
@@ -30,9 +32,10 @@ import ssl
 import tempfile
 import time
 import xml.dom
-from http.client import HTTPSConnection
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
+
+import httpx
 
 try:
     # Python 3.8+
@@ -125,6 +128,12 @@ DELAY_TIME = 0.2
 # Python >3.4 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
 
+HEADERS = {
+    "Content-type": "application/x-www-form-urlencoded",
+    "Accept-Charset": "utf-8",
+    "User-Agent": f"pylast/{__version__}",
+}
+
 logger = logging.getLogger(__name__)
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
@@ -187,7 +196,6 @@ class _Network:
         self.urls = urls
 
         self.cache_backend = None
-        self.proxy_enabled = False
         self.proxy = None
         self.last_call_time = 0
         self.limit_rate = False
@@ -387,26 +395,20 @@ class _Network:
 
         return seq
 
-    def enable_proxy(self, host, port):
-        """Enable a default web proxy"""
+    def enable_proxy(self, proxy: str | dict) -> None:
+        """Enable default web proxy.
+        Multiple proxies can be passed as a `dict`, see
+        https://www.python-httpx.org/advanced/#http-proxying
+        """
+        self.proxy = proxy
 
-        self.proxy = [host, _number(port)]
-        self.proxy_enabled = True
-
-    def disable_proxy(self):
+    def disable_proxy(self) -> None:
         """Disable using the web proxy"""
+        self.proxy = None
 
-        self.proxy_enabled = False
-
-    def is_proxy_enabled(self):
-        """Returns True if a web proxy is enabled."""
-
-        return self.proxy_enabled
-
-    def _get_proxy(self):
-        """Returns proxy details."""
-
-        return self.proxy
+    def is_proxy_enabled(self) -> bool:
+        """Returns True if web proxy is enabled."""
+        return self.proxy is not None
 
     def enable_rate_limit(self):
         """Enables rate limiting for this network"""
@@ -906,68 +908,41 @@ class _Request:
             self.network._delay_call()
 
         username = self.params.pop("username", None)
-        username = f"?username={username}" if username is not None else ""
-
-        data = []
-        for name in self.params.keys():
-            data.append("=".join((name, quote_plus(_string(self.params[name])))))
-        data = "&".join(data)
-
-        headers = {
-            "Content-type": "application/x-www-form-urlencoded",
-            "Accept-Charset": "utf-8",
-            "User-Agent": "pylast/" + __version__,
-        }
+        username = "" if username is None else f"?username={username}"
 
         (host_name, host_subdir) = self.network.ws_server
 
         if self.network.is_proxy_enabled():
-            conn = HTTPSConnection(
-                context=SSL_CONTEXT,
-                host=self.network._get_proxy()[0],
-                port=self.network._get_proxy()[1],
+            client = httpx.Client(
+                verify=SSL_CONTEXT,
+                base_url=f"https://{host_name}",
+                headers=HEADERS,
+                proxies=self.network.proxy,
+            )
+        else:
+            client = httpx.Client(
+                verify=SSL_CONTEXT,
+                base_url=f"https://{host_name}",
+                headers=HEADERS,
             )
 
-            try:
-                conn.request(
-                    method="POST",
-                    url=f"https://{host_name}{host_subdir}{username}",
-                    body=data,
-                    headers=headers,
-                )
-            except Exception as e:
-                raise NetworkError(self.network, e) from e
-
-        else:
-            conn = HTTPSConnection(context=SSL_CONTEXT, host=host_name)
-
-            try:
-                conn.request(
-                    method="POST",
-                    url=f"{host_subdir}{username}",
-                    body=data,
-                    headers=headers,
-                )
-            except Exception as e:
-                raise NetworkError(self.network, e) from e
-
         try:
-            response = conn.getresponse()
-            if response.status in [500, 502, 503, 504]:
-                raise WSError(
-                    self.network,
-                    response.status,
-                    "Connection to the API failed with HTTP code "
-                    + str(response.status),
-                )
-            response_text = _unicode(response.read())
+            response = client.post(f"{host_subdir}{username}", data=self.params)
         except Exception as e:
-            raise MalformedResponseError(self.network, e) from e
+            raise NetworkError(self.network, e) from e
+
+        if response.status_code in (500, 502, 503, 504):
+            raise WSError(
+                self.network,
+                response.status_code,
+                f"Connection to the API failed with HTTP code {response.status_code}",
+            )
+        response_text = _unicode(response.read())
 
         try:
             self._check_response_for_errors(response_text)
         finally:
-            conn.close()
+            client.close()
         return response_text
 
     def execute(self, cacheable: bool = False) -> xml.dom.minidom.Document:
@@ -1121,7 +1096,7 @@ Image = collections.namedtuple(
 
 def _string_output(func):
     def r(*args):
-        return _string(func(*args))
+        return str(func(*args))
 
     return r
 
@@ -2744,16 +2719,8 @@ def md5(text):
 def _unicode(text):
     if isinstance(text, bytes):
         return str(text, "utf-8")
-    elif isinstance(text, str):
-        return text
     else:
         return str(text)
-
-
-def _string(string):
-    if isinstance(string, str):
-        return string
-    return str(string)
 
 
 def cleanup_nodes(doc):
@@ -2901,7 +2868,7 @@ def _extract_tracks(doc, network):
 def _url_safe(text):
     """Does all kinds of tricks on a text to make it safe to use in a URL."""
 
-    return quote_plus(quote_plus(_string(text))).lower()
+    return quote_plus(quote_plus(str(text))).lower()
 
 
 def _number(string):
@@ -2928,7 +2895,7 @@ def _unescape_htmlentity(string):
 
 
 def _parse_response(response: str) -> xml.dom.minidom.Document:
-    response = _string(response).replace("opensearch:", "")
+    response = str(response).replace("opensearch:", "")
     try:
         doc = minidom.parseString(response)
     except xml.parsers.expat.ExpatError:

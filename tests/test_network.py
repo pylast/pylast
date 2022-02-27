@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Integration (not unit) tests for pylast.py
 """
@@ -297,13 +296,12 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_proxy(self):
         # Arrange
-        host = "https://example.com"
-        port = 1234
+        proxy = "http://example.com:1234"
 
         # Act / Assert
-        self.network.enable_proxy(host, port)
+        self.network.enable_proxy(proxy)
         assert self.network.is_proxy_enabled()
-        assert self.network._get_proxy() == ["https://example.com", 1234]
+        assert self.network.proxy == "http://example.com:1234"
 
         self.network.disable_proxy()
         assert not self.network.is_proxy_enabled()
