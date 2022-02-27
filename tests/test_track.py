@@ -118,28 +118,6 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         # Assert
         assert duration >= 200000
 
-    def test_track_is_streamable(self):
-        # Arrange
-        track = pylast.Track("Nirvana", "Lithium", self.network)
-
-        # Act
-        with pytest.warns(DeprecationWarning):
-            streamable = track.is_streamable()
-
-        # Assert
-        assert not streamable
-
-    def test_track_is_fulltrack_available(self):
-        # Arrange
-        track = pylast.Track("Nirvana", "Lithium", self.network)
-
-        # Act
-        with pytest.warns(DeprecationWarning):
-            fulltrack_available = track.is_fulltrack_available()
-
-        # Assert
-        assert not fulltrack_available
-
     def test_track_get_album(self):
         # Arrange
         track = pylast.Track("Nirvana", "Lithium", self.network)
