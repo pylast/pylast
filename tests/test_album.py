@@ -96,3 +96,23 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Assert
         self.assert_startswith(image, "https://")
         self.assert_endswith(image, ".gif")
+
+    def test_mbid(self):
+        # Arrange
+        album = self.network.get_album("Radiohead", "OK Computer")
+
+        # Act
+        mbid = album.get_mbid()
+
+        # Assert
+        assert mbid == "0b6b4ba0-d36f-47bd-b4ea-6a5b91842d29"
+
+    def test_no_mbid(self):
+        # Arrange
+        album = self.network.get_album("Test Artist", "Test Album")
+
+        # Act
+        mbid = album.get_mbid()
+
+        # Assert
+        assert mbid is None
