@@ -440,13 +440,13 @@ class _Network:
         return self.cache_backend is not None
 
     def search_for_album(self, album_name):
-        """Searches for an album by its name. Returns a AlbumSearch object.
+        """Searches for an album by its name. Returns an AlbumSearch object.
         Use get_next_page() to retrieve sequences of results."""
 
         return AlbumSearch(album_name, self)
 
     def search_for_artist(self, artist_name):
-        """Searches of an artist by its name. Returns a ArtistSearch object.
+        """Searches of an artist by its name. Returns an ArtistSearch object.
         Use get_next_page() to retrieve sequences of results."""
 
         return ArtistSearch(artist_name, self)
@@ -976,7 +976,7 @@ class SessionKeyGenerator:
     A session key's lifetime is infinite, unless the user revokes the rights
     of the given API Key.
 
-    If you create a Network object with just a API_KEY and API_SECRET and a
+    If you create a Network object with just an API_KEY and API_SECRET and a
     username and a password_hash, a SESSION_KEY will be automatically generated
     for that network and stored in it so you don't have to do this manually,
     unless you want to.
