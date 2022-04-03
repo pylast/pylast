@@ -31,7 +31,6 @@ import ssl
 import tempfile
 import time
 import xml.dom
-from typing import Iterator
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
@@ -197,7 +196,7 @@ class _Network:
 
         self.cache_backend = None
         self.proxy = None
-        self.last_call_time: float = 0
+        self.last_call_time: float = 0.0
         self.limit_rate = False
 
         # Load session_key and username from authentication token if provided
@@ -796,7 +795,7 @@ class _ShelfCacheBackend:
     def __contains__(self, key) -> bool:
         return key in self.cache_keys
 
-    def __iter__(self) -> Iterator:
+    def __iter__(self):
         return iter(self.shelf.keys())
 
     def get_xml(self, key):
