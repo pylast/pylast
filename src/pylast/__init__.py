@@ -792,7 +792,7 @@ class _ShelfCacheBackend:
             self.shelf = shelve.open(file_path)
         self.cache_keys = set(self.shelf.keys())
 
-    def __contains__(self, key):
+    def __contains__(self, key) -> bool:
         return key in self.cache_keys
 
     def __iter__(self):
@@ -1408,7 +1408,7 @@ class WSError(PyLastError):
         self.network = network
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return self.details
 
     def get_id(self):
@@ -1689,7 +1689,7 @@ class Artist(_Taggable):
         return str(self.get_name())
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__unicode__()
 
     def __eq__(self, other):
@@ -1866,7 +1866,7 @@ class Country(_BaseObject):
         return f"pylast.Country({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name()
 
     def __eq__(self, other):
@@ -1944,7 +1944,7 @@ class Library(_BaseObject):
         return f"pylast.Library({repr(self.user)}, {repr(self.network)})"
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return repr(self.get_user()) + "'s Library"
 
     def _get_params(self):
@@ -1992,7 +1992,7 @@ class Tag(_Chartable):
         return f"pylast.Tag({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name()
 
     def __eq__(self, other):
@@ -2188,7 +2188,7 @@ class User(_Chartable):
         return f"pylast.User({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name()
 
     def __eq__(self, other):
