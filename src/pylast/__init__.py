@@ -156,7 +156,7 @@ class _Network:
         domain_names,
         urls,
         token=None,
-    ):
+    ) -> None:
         """
         name: the name of the network
         homepage: the homepage URL
@@ -284,7 +284,7 @@ class _Network:
         """
         return self.api_key, self.api_secret, self.session_key
 
-    def _delay_call(self):
+    def _delay_call(self) -> None:
         """
         Makes sure that web service calls are at least 0.2 seconds apart.
         """
@@ -496,7 +496,7 @@ class _Network:
         track_number=None,
         mbid=None,
         context=None,
-    ):
+    ) -> None:
         """
         Used to notify Last.fm that a user has started listening to a track.
 
@@ -583,7 +583,7 @@ class _Network:
             )
         )
 
-    def scrobble_many(self, tracks):
+    def scrobble_many(self, tracks) -> None:
         """
         Used to scrobble a batch of tracks at once. The parameter tracks is a
         sequence of dicts per track containing the keyword arguments as if
@@ -664,7 +664,7 @@ class LastFMNetwork(_Network):
         username="",
         password_hash="",
         token="",
-    ):
+    ) -> None:
         super().__init__(
             name="Last.fm",
             homepage="https://www.last.fm",
@@ -728,7 +728,7 @@ class LibreFMNetwork(_Network):
 
     def __init__(
         self, api_key="", api_secret="", session_key="", username="", password_hash=""
-    ):
+    ) -> None:
 
         super().__init__(
             name="Libre.fm",
@@ -778,7 +778,7 @@ class LibreFMNetwork(_Network):
 class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
-    def __init__(self, file_path=None, flag=None):
+    def __init__(self, file_path=None, flag=None) -> None:
         if flag is not None:
             self.shelf = shelve.open(file_path, flag=flag)
         else:
@@ -794,7 +794,7 @@ class _ShelfCacheBackend:
     def get_xml(self, key):
         return self.shelf[key]
 
-    def set_xml(self, key, xml_string):
+    def set_xml(self, key, xml_string) -> None:
         self.cache_keys.add(key)
         self.shelf[key] = xml_string
 
@@ -808,7 +808,7 @@ class _ShelfCacheBackend:
 class _Request:
     """Representing an abstract web service operation."""
 
-    def __init__(self, network, method_name, params=None):
+    def __init__(self, network, method_name, params=None) -> None:
         logger.info(method_name)
 
         if params is None:
@@ -832,7 +832,7 @@ class _Request:
             self.params["sk"] = self.session_key
             self.sign_it()
 
-    def sign_it(self):
+    def sign_it(self) -> None:
         """Sign this request."""
 
         if "api_sig" not in self.params.keys():
@@ -982,7 +982,7 @@ class SessionKeyGenerator:
     unless you want to.
     """
 
-    def __init__(self, network):
+    def __init__(self, network) -> None:
         self.network = network
         self.web_auth_tokens = {}
 
@@ -1094,7 +1094,7 @@ class _BaseObject:
 
     network = None
 
-    def __init__(self, network, ws_prefix):
+    def __init__(self, network, ws_prefix) -> None:
         self.network = network
         self.ws_prefix = ws_prefix
 
@@ -1194,7 +1194,7 @@ class _BaseObject:
 class _Chartable(_BaseObject):
     """Common functions for classes with charts."""
 
-    def __init__(self, network, ws_prefix):
+    def __init__(self, network, ws_prefix) -> None:
         super().__init__(network=network, ws_prefix=ws_prefix)
 
     def get_weekly_chart_dates(self):
@@ -1265,10 +1265,10 @@ class _Chartable(_BaseObject):
 class _Taggable(_BaseObject):
     """Common functions for classes with tags."""
 
-    def __init__(self, network, ws_prefix):
+    def __init__(self, network, ws_prefix) -> None:
         super().__init__(network=network, ws_prefix=ws_prefix)
 
-    def add_tags(self, tags):
+    def add_tags(self, tags) -> None:
         """Adds one or several tags.
         * tags: A sequence of tag names or Tag objects.
         """
@@ -1276,7 +1276,7 @@ class _Taggable(_BaseObject):
         for tag in tags:
             self.add_tag(tag)
 
-    def add_tag(self, tag):
+    def add_tag(self, tag) -> None:
         """Adds one tag.
         * tag: a tag name or a Tag object.
         """
@@ -1289,7 +1289,7 @@ class _Taggable(_BaseObject):
 
         self._request(self.ws_prefix + ".addTags", False, params)
 
-    def remove_tag(self, tag):
+    def remove_tag(self, tag) -> None:
         """Remove a user's tag from this object."""
 
         if isinstance(tag, Tag):
@@ -1314,7 +1314,7 @@ class _Taggable(_BaseObject):
 
         return tags
 
-    def remove_tags(self, tags):
+    def remove_tags(self, tags) -> None:
         """Removes one or several tags from this object.
         * tags: a sequence of tag names or Tag objects.
         """
@@ -1322,12 +1322,12 @@ class _Taggable(_BaseObject):
         for tag in tags:
             self.remove_tag(tag)
 
-    def clear_tags(self):
+    def clear_tags(self) -> None:
         """Clears all the user-set tags."""
 
         self.remove_tags(*(self.get_tags()))
 
-    def set_tags(self, tags):
+    def set_tags(self, tags) -> None:
         """Sets this object's tags to only those tags.
         * tags: a sequence of tag names or Tag objects.
         """
@@ -1390,7 +1390,7 @@ class PyLastError(Exception):
 class WSError(PyLastError):
     """Exception related to the Network web service"""
 
-    def __init__(self, network, status, details):
+    def __init__(self, network, status, details) -> None:
         self.status = status
         self.details = details
         self.network = network
@@ -1434,7 +1434,7 @@ class WSError(PyLastError):
 class MalformedResponseError(PyLastError):
     """Exception conveying a malformed response from the music network."""
 
-    def __init__(self, network, underlying_error):
+    def __init__(self, network, underlying_error) -> None:
         self.network = network
         self.underlying_error = underlying_error
 
@@ -1448,7 +1448,7 @@ class MalformedResponseError(PyLastError):
 class NetworkError(PyLastError):
     """Exception conveying a problem in sending a request to Last.fm"""
 
-    def __init__(self, network, underlying_error):
+    def __init__(self, network, underlying_error) -> None:
         self.network = network
         self.underlying_error = underlying_error
 
@@ -1465,7 +1465,9 @@ class _Opus(_Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, artist, title, network, ws_prefix, username=None, info=None):
+    def __init__(
+        self, artist, title, network, ws_prefix, username=None, info=None
+    ) -> None:
         """
         Create an opus instance.
         # Parameters:
@@ -1608,7 +1610,7 @@ class Album(_Opus):
 
     __hash__ = _Opus.__hash__
 
-    def __init__(self, artist, title, network, username=None, info=None):
+    def __init__(self, artist, title, network, username=None, info=None) -> None:
         super().__init__(artist, title, network, "album", username, info)
 
     def get_tracks(self):
@@ -1653,7 +1655,7 @@ class Artist(_Taggable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, name, network, username=None, info=None):
+    def __init__(self, name, network, username=None, info=None) -> None:
         """Create an artist object.
         # Parameters:
             * name str: The artist's name.
@@ -1843,7 +1845,7 @@ class Country(_BaseObject):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, name, network):
+    def __init__(self, name, network) -> None:
         super().__init__(network=network, ws_prefix="geo")
 
         self.name = name
@@ -1918,7 +1920,7 @@ class Library(_BaseObject):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, user, network):
+    def __init__(self, user, network) -> None:
         super().__init__(network=network, ws_prefix="library")
 
         if isinstance(user, User):
@@ -1967,7 +1969,7 @@ class Tag(_Chartable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, name, network):
+    def __init__(self, name, network) -> None:
         super().__init__(network=network, ws_prefix="tag")
 
         self.name = name
@@ -2054,7 +2056,7 @@ class Track(_Opus):
 
     __hash__ = _Opus.__hash__
 
-    def __init__(self, artist, title, network, username=None, info=None):
+    def __init__(self, artist, title, network, username=None, info=None) -> None:
         super().__init__(artist, title, network, "track", username, info)
 
     def get_correction(self):
@@ -2097,12 +2099,12 @@ class Track(_Opus):
         node = doc.getElementsByTagName("album")[0]
         return Album(_extract(node, "artist"), _extract(node, "title"), self.network)
 
-    def love(self):
+    def love(self) -> None:
         """Adds the track to the user's loved tracks."""
 
         self._request(self.ws_prefix + ".love")
 
-    def unlove(self):
+    def unlove(self) -> None:
         """Remove the track to the user's loved tracks."""
 
         self._request(self.ws_prefix + ".unlove")
@@ -2163,7 +2165,7 @@ class User(_Chartable):
 
     __hash__ = _BaseObject.__hash__
 
-    def __init__(self, user_name, network):
+    def __init__(self, user_name, network) -> None:
         super().__init__(network=network, ws_prefix="user")
 
         self.name = user_name
@@ -2558,7 +2560,7 @@ class User(_Chartable):
 
 
 class AuthenticatedUser(User):
-    def __init__(self, network):
+    def __init__(self, network) -> None:
         super().__init__(user_name=network.username, network=network)
 
     def _get_params(self):
@@ -2572,7 +2574,7 @@ class AuthenticatedUser(User):
 class _Search(_BaseObject):
     """An abstract class. Use one of its derivatives."""
 
-    def __init__(self, ws_prefix, search_terms, network):
+    def __init__(self, ws_prefix, search_terms, network) -> None:
         super().__init__(network, ws_prefix)
 
         self._ws_prefix = ws_prefix
@@ -2612,7 +2614,7 @@ class _Search(_BaseObject):
 class AlbumSearch(_Search):
     """Search for an album by name."""
 
-    def __init__(self, album_name, network):
+    def __init__(self, album_name, network) -> None:
         super().__init__(
             ws_prefix="album", search_terms={"album": album_name}, network=network
         )
@@ -2639,7 +2641,7 @@ class AlbumSearch(_Search):
 class ArtistSearch(_Search):
     """Search for an artist by artist name."""
 
-    def __init__(self, artist_name, network):
+    def __init__(self, artist_name, network) -> None:
         super().__init__(
             ws_prefix="artist", search_terms={"artist": artist_name}, network=network
         )
@@ -2668,7 +2670,7 @@ class TrackSearch(_Search):
     down by specifying the artist name, set it to empty string.
     """
 
-    def __init__(self, artist_name, track_title, network):
+    def __init__(self, artist_name, track_title, network) -> None:
         super().__init__(
             ws_prefix="track",
             search_terms={"track": track_title, "artist": artist_name},

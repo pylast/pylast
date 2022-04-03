@@ -8,14 +8,14 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastCountry(TestPyLastWithLastFm):
-    def test_country_is_hashable(self):
+    def test_country_is_hashable(self) -> None:
         # Arrange
         country = self.network.get_country("Italy")
 
         # Act/Assert
         self.helper_is_thing_hashable(country)
 
-    def test_countries(self):
+    def test_countries(self) -> None:
         # Arrange
         country1 = pylast.Country("Italy", self.network)
         country2 = pylast.Country("Finland", self.network)

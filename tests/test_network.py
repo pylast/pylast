@@ -13,7 +13,7 @@ from .test_pylast import WRITE_TEST, TestPyLastWithLastFm
 
 class TestPyLastNetwork(TestPyLastWithLastFm):
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
-    def test_scrobble(self):
+    def test_scrobble(self) -> None:
         # Arrange
         artist = "test artist"
         title = "test title"
@@ -31,7 +31,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert str(last_scrobble.track.title).lower() == title
 
     @pytest.mark.skipif(not WRITE_TEST, reason="Only test once to avoid collisions")
-    def test_update_now_playing(self):
+    def test_update_now_playing(self) -> None:
         # Arrange
         artist = "Test Artist"
         title = "test title"
@@ -55,7 +55,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert len(current_track.info["image"])
         assert re.search(r"^http.+$", current_track.info["image"][pylast.SIZE_LARGE])
 
-    def test_enable_rate_limiting(self):
+    def test_enable_rate_limiting(self) -> None:
         # Arrange
         assert not self.network.is_rate_limited()
 
@@ -72,7 +72,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert self.network.is_rate_limited()
         assert now - then >= 0.2
 
-    def test_disable_rate_limiting(self):
+    def test_disable_rate_limiting(self) -> None:
         # Arrange
         self.network.enable_rate_limit()
         assert self.network.is_rate_limited()
@@ -87,14 +87,14 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert not self.network.is_rate_limited()
 
-    def test_lastfm_network_name(self):
+    def test_lastfm_network_name(self) -> None:
         # Act
         name = str(self.network)
 
         # Assert
         assert name == "Last.fm Network"
 
-    def test_geo_get_top_artists(self):
+    def test_geo_get_top_artists(self) -> None:
         # Arrange
         # Act
         artists = self.network.get_geo_top_artists(country="United Kingdom", limit=1)
@@ -104,7 +104,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(artists[0], pylast.TopItem)
         assert isinstance(artists[0].item, pylast.Artist)
 
-    def test_geo_get_top_tracks(self):
+    def test_geo_get_top_tracks(self) -> None:
         # Arrange
         # Act
         tracks = self.network.get_geo_top_tracks(
@@ -116,7 +116,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(tracks[0], pylast.TopItem)
         assert isinstance(tracks[0].item, pylast.Track)
 
-    def test_network_get_top_artists_with_limit(self):
+    def test_network_get_top_artists_with_limit(self) -> None:
         # Arrange
         # Act
         artists = self.network.get_top_artists(limit=1)
@@ -124,7 +124,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
 
-    def test_network_get_top_tags_with_limit(self):
+    def test_network_get_top_tags_with_limit(self) -> None:
         # Arrange
         # Act
         tags = self.network.get_top_tags(limit=1)
@@ -132,7 +132,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(tags, pylast.Tag)
 
-    def test_network_get_top_tags_with_no_limit(self):
+    def test_network_get_top_tags_with_no_limit(self) -> None:
         # Arrange
         # Act
         tags = self.network.get_top_tags()
@@ -140,7 +140,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_at_least_one_thing_in_top_list(tags, pylast.Tag)
 
-    def test_network_get_top_tracks_with_limit(self):
+    def test_network_get_top_tracks_with_limit(self) -> None:
         # Arrange
         # Act
         tracks = self.network.get_top_tracks(limit=1)
@@ -148,7 +148,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(tracks, pylast.Track)
 
-    def test_country_top_tracks(self):
+    def test_country_top_tracks(self) -> None:
         # Arrange
         country = self.network.get_country("Croatia")
 
@@ -158,7 +158,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
 
-    def test_country_network_top_tracks(self):
+    def test_country_network_top_tracks(self) -> None:
         # Arrange
         # Act
         things = self.network.get_geo_top_tracks("Croatia", limit=2)
@@ -166,7 +166,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
 
-    def test_tag_top_tracks(self):
+    def test_tag_top_tracks(self) -> None:
         # Arrange
         tag = self.network.get_tag("blues")
 
@@ -176,7 +176,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_two_different_things_in_top_list(things, pylast.Track)
 
-    def test_album_data(self):
+    def test_album_data(self) -> None:
         # Arrange
         thing = self.network.get_album("Test Artist", "Test Album")
 
@@ -196,7 +196,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert playcount > 1
         assert "https://www.last.fm/music/test%2bartist/test%2balbum" == url
 
-    def test_track_data(self):
+    def test_track_data(self) -> None:
         # Arrange
         thing = self.network.get_track("Test Artist", "test title")
 
@@ -217,7 +217,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert playcount > 1
         assert "https://www.last.fm/fr/music/test%2bartist/_/test%2btitle" == url
 
-    def test_country_top_artists(self):
+    def test_country_top_artists(self) -> None:
         # Arrange
         country = self.network.get_country("Ukraine")
 
@@ -227,7 +227,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
 
-    def test_caching(self):
+    def test_caching(self) -> None:
         # Arrange
         user = self.network.get_user("RJ")
 
@@ -242,7 +242,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.network.disable_caching()
         assert not self.network.is_caching_enabled()
 
-    def test_album_mbid(self):
+    def test_album_mbid(self) -> None:
         # Arrange
         mbid = "03c91c40-49a6-44a7-90e7-a700edf97a62"
 
@@ -255,7 +255,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert album.title == "Believe"
         assert album_mbid == mbid
 
-    def test_artist_mbid(self):
+    def test_artist_mbid(self) -> None:
         # Arrange
         mbid = "7e84f845-ac16-41fe-9ff8-df12eb32af55"
 
@@ -266,7 +266,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(artist, pylast.Artist)
         assert artist.name in ("MusicBrainz Test Artist", "MusicBrainzz Test Artist")
 
-    def test_track_mbid(self):
+    def test_track_mbid(self) -> None:
         # Arrange
         mbid = "ebc037b1-cc9c-44f2-a21f-83c219f0e1e0"
 
@@ -279,7 +279,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert track.title == "first"
         assert track_mbid == mbid
 
-    def test_init_with_token(self):
+    def test_init_with_token(self) -> None:
         # Arrange/Act
         msg = None
         try:
@@ -294,7 +294,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert msg == "Unauthorized Token - This token has not been issued"
 
-    def test_proxy(self):
+    def test_proxy(self) -> None:
         # Arrange
         proxy = "http://example.com:1234"
 
@@ -306,7 +306,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.network.disable_proxy()
         assert not self.network.is_proxy_enabled()
 
-    def test_album_search(self):
+    def test_album_search(self) -> None:
         # Arrange
         album = "Nevermind"
 
@@ -318,7 +318,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(results, list)
         assert isinstance(results[0], pylast.Album)
 
-    def test_album_search_images(self):
+    def test_album_search_images(self) -> None:
         # Arrange
         album = "Nevermind"
         search = self.network.search_for_album(album)
@@ -338,7 +338,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
-    def test_artist_search(self):
+    def test_artist_search(self) -> None:
         # Arrange
         artist = "Nirvana"
 
@@ -350,7 +350,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(results, list)
         assert isinstance(results[0], pylast.Artist)
 
-    def test_artist_search_images(self):
+    def test_artist_search_images(self) -> None:
         # Arrange
         artist = "Nirvana"
         search = self.network.search_for_artist(artist)
@@ -370,7 +370,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
-    def test_track_search(self):
+    def test_track_search(self) -> None:
         # Arrange
         artist = "Nirvana"
         track = "Smells Like Teen Spirit"
@@ -383,7 +383,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         assert isinstance(results, list)
         assert isinstance(results[0], pylast.Track)
 
-    def test_track_search_images(self):
+    def test_track_search_images(self) -> None:
         # Arrange
         artist = "Nirvana"
         track = "Smells Like Teen Spirit"
@@ -404,7 +404,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
-    def test_search_get_total_result_count(self):
+    def test_search_get_total_result_count(self) -> None:
         # Arrange
         artist = "Nirvana"
         track = "Smells Like Teen Spirit"

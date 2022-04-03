@@ -8,7 +8,7 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastAlbum(TestPyLastWithLastFm):
-    def test_album_tags_are_topitems(self):
+    def test_album_tags_are_topitems(self) -> None:
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
 
@@ -19,14 +19,14 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         assert len(tags) > 0
         assert isinstance(tags[0], pylast.TopItem)
 
-    def test_album_is_hashable(self):
+    def test_album_is_hashable(self) -> None:
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
 
         # Act/Assert
         self.helper_is_thing_hashable(album)
 
-    def test_album_in_recent_tracks(self):
+    def test_album_in_recent_tracks(self) -> None:
         # Arrange
         lastfm_user = self.network.get_user(self.username)
 
@@ -37,7 +37,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Assert
         assert hasattr(track, "album")
 
-    def test_album_wiki_content(self):
+    def test_album_wiki_content(self) -> None:
         # Arrange
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
@@ -48,7 +48,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         assert wiki is not None
         assert len(wiki) >= 1
 
-    def test_album_wiki_published_date(self):
+    def test_album_wiki_published_date(self) -> None:
         # Arrange
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
@@ -59,7 +59,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         assert wiki is not None
         assert len(wiki) >= 1
 
-    def test_album_wiki_summary(self):
+    def test_album_wiki_summary(self) -> None:
         # Arrange
         album = pylast.Album("Test Artist", "Test Album", self.network)
 
@@ -70,7 +70,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         assert wiki is not None
         assert len(wiki) >= 1
 
-    def test_album_eq_none_is_false(self):
+    def test_album_eq_none_is_false(self) -> None:
         # Arrange
         album1 = None
         album2 = pylast.Album("Test Artist", "Test Album", self.network)
@@ -78,7 +78,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Act / Assert
         assert album1 != album2
 
-    def test_album_ne_none_is_true(self):
+    def test_album_ne_none_is_true(self) -> None:
         # Arrange
         album1 = None
         album2 = pylast.Album("Test Artist", "Test Album", self.network)
@@ -86,7 +86,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Act / Assert
         assert album1 != album2
 
-    def test_get_cover_image(self):
+    def test_get_cover_image(self) -> None:
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
 
@@ -97,7 +97,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         self.assert_startswith(image, "https://")
         self.assert_endswith(image, ".gif")
 
-    def test_mbid(self):
+    def test_mbid(self) -> None:
         # Arrange
         album = self.network.get_album("Radiohead", "OK Computer")
 
@@ -107,7 +107,7 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         # Assert
         assert mbid == "0b6b4ba0-d36f-47bd-b4ea-6a5b91842d29"
 
-    def test_no_mbid(self):
+    def test_no_mbid(self) -> None:
         # Arrange
         album = self.network.get_album("Test Artist", "Test Album")
 
