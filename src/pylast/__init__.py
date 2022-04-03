@@ -297,7 +297,7 @@ class _Network:
 
         self.last_call_time = now
 
-    def get_top_artists(self, limit=None, cacheable=True):
+    def get_top_artists(self, limit=None, cacheable: bool = True):
         """Returns the most played artists as a sequence of TopItem objects."""
 
         params = {}
@@ -308,7 +308,7 @@ class _Network:
 
         return _extract_top_artists(doc, self)
 
-    def get_top_tracks(self, limit=None, cacheable=True):
+    def get_top_tracks(self, limit=None, cacheable: bool = True):
         """Returns the most played tracks as a sequence of TopItem objects."""
 
         params = {}
@@ -327,7 +327,7 @@ class _Network:
 
         return seq
 
-    def get_top_tags(self, limit=None, cacheable=True):
+    def get_top_tags(self, limit=None, cacheable: bool = True):
         """Returns the most used tags as a sequence of TopItem objects."""
 
         # Last.fm has no "limit" parameter for tag.getTopTags
@@ -344,7 +344,7 @@ class _Network:
 
         return seq
 
-    def get_geo_top_artists(self, country, limit=None, cacheable=True):
+    def get_geo_top_artists(self, country, limit=None, cacheable: bool = True):
         """Get the most popular artists on Last.fm by country.
         Parameters:
         country (Required) : A country name, as defined by the ISO 3166-1
@@ -361,7 +361,9 @@ class _Network:
 
         return _extract_top_artists(doc, self)
 
-    def get_geo_top_tracks(self, country, location=None, limit=None, cacheable=True):
+    def get_geo_top_tracks(
+        self, country, location=None, limit=None, cacheable: bool = True
+    ):
         """Get the most popular tracks on Last.fm last week by country.
         Parameters:
         country (Required) : A country name, as defined by the ISO 3166-1
@@ -1098,7 +1100,7 @@ class _BaseObject:
         self.network = network
         self.ws_prefix = ws_prefix
 
-    def _request(self, method_name, cacheable=False, params=None):
+    def _request(self, method_name, cacheable: bool = False, params=None):
         if not params:
             params = self._get_params()
 
@@ -1129,7 +1131,12 @@ class _BaseObject:
         return first_child.wholeText.strip()
 
     def _get_things(
-        self, method, thing_type, params=None, cacheable=True, stream=False
+        self,
+        method,
+        thing_type,
+        params=None,
+        cacheable: bool = True,
+        stream: bool = False,
     ):
         """Returns a list of the most played thing_types by this thing."""
 
@@ -1540,7 +1547,7 @@ class _Opus(_Taggable):
             )
         return self.info["image"][size]
 
-    def get_title(self, properly_capitalized=False):
+    def get_title(self, properly_capitalized: bool = False):
         """Returns the artist or track title."""
         if properly_capitalized:
             self.title = _extract(
@@ -1549,7 +1556,7 @@ class _Opus(_Taggable):
 
         return self.title
 
-    def get_name(self, properly_capitalized=False):
+    def get_name(self, properly_capitalized: bool = False):
         """Returns the album or track title (alias to get_title())."""
 
         return self.get_title(properly_capitalized)
@@ -1692,7 +1699,7 @@ class Artist(_Taggable):
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
-    def get_name(self, properly_capitalized=False):
+    def get_name(self, properly_capitalized: bool = False):
         """Returns the name of the artist.
         If properly_capitalized was asserted then the name would be downloaded
         overwriting the given one."""
@@ -1799,7 +1806,7 @@ class Artist(_Taggable):
 
         return artists
 
-    def get_top_albums(self, limit=None, cacheable=True, stream=False):
+    def get_top_albums(self, limit=None, cacheable: bool = True, stream: bool = False):
         """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
@@ -1807,7 +1814,7 @@ class Artist(_Taggable):
 
         return self._get_things("getTopAlbums", Album, params, cacheable, stream=stream)
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
+    def get_top_tracks(self, limit=None, cacheable: bool = True, stream: bool = False):
         """Returns a list of the most played Tracks by this artist."""
         params = self._get_params()
         if limit:
@@ -1871,7 +1878,7 @@ class Country(_BaseObject):
 
         return self.name
 
-    def get_top_artists(self, limit=None, cacheable=True):
+    def get_top_artists(self, limit=None, cacheable: bool = True):
         """Returns a sequence of the most played artists."""
         params = self._get_params()
         if limit:
@@ -1881,7 +1888,7 @@ class Country(_BaseObject):
 
         return _extract_top_artists(doc, self)
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
+    def get_top_tracks(self, limit=None, cacheable: bool = True, stream: bool = False):
         """Returns a sequence of the most played tracks"""
         params = self._get_params()
         if limit:
@@ -1942,7 +1949,7 @@ class Library(_BaseObject):
         """Returns the user who owns this library."""
         return self.user
 
-    def get_artists(self, limit=50, cacheable=True, stream=False):
+    def get_artists(self, limit=50, cacheable: bool = True, stream: bool = False):
         """
         Returns a sequence of Album objects
         if limit==None it will return all (may take a while)
@@ -1990,7 +1997,7 @@ class Tag(_Chartable):
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
-    def get_name(self, properly_capitalized=False):
+    def get_name(self, properly_capitalized: bool = False):
         """Returns the name of the tag."""
 
         if properly_capitalized:
@@ -2000,7 +2007,7 @@ class Tag(_Chartable):
 
         return self.name
 
-    def get_top_albums(self, limit=None, cacheable=True):
+    def get_top_albums(self, limit=None, cacheable: bool = True):
         """Returns a list of the top albums."""
         params = self._get_params()
         if limit:
@@ -2010,7 +2017,7 @@ class Tag(_Chartable):
 
         return _extract_top_albums(doc, self.network)
 
-    def get_top_tracks(self, limit=None, cacheable=True, stream=False):
+    def get_top_tracks(self, limit=None, cacheable: bool = True, stream: bool = False):
         """Returns a list of the most played Tracks for this tag."""
         params = self._get_params()
         if limit:
@@ -2018,7 +2025,7 @@ class Tag(_Chartable):
 
         return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
-    def get_top_artists(self, limit=None, cacheable=True):
+    def get_top_artists(self, limit=None, cacheable: bool = True):
         """Returns a sequence of the most played artists."""
 
         params = self._get_params()
@@ -2199,7 +2206,7 @@ class User(_Chartable):
             Track(track_artist, title, self.network), album, date, timestamp
         )
 
-    def get_name(self, properly_capitalized=False):
+    def get_name(self, properly_capitalized: bool = False):
         """Returns the user name."""
 
         if properly_capitalized:
@@ -2209,7 +2216,7 @@ class User(_Chartable):
 
         return self.name
 
-    def get_friends(self, limit=50, cacheable=False, stream=False):
+    def get_friends(self, limit=50, cacheable: bool = False, stream: bool = False):
         """Returns a list of the user's friends."""
 
         def _get_friends():
@@ -2220,7 +2227,7 @@ class User(_Chartable):
 
         return _get_friends() if stream else list(_get_friends())
 
-    def get_loved_tracks(self, limit=50, cacheable=True, stream=False):
+    def get_loved_tracks(self, limit=50, cacheable: bool = True, stream: bool = False):
         """
         Returns this user's loved track as a sequence of LovedTrack objects in
         reverse order of their timestamp, all the way back to the first track.
@@ -2286,11 +2293,11 @@ class User(_Chartable):
     def get_recent_tracks(
         self,
         limit=10,
-        cacheable=True,
+        cacheable: bool = True,
         time_from=None,
         time_to=None,
-        stream=False,
-        now_playing=False,
+        stream: bool = False,
+        now_playing: bool = False,
     ):
         """
         Returns this user's played track as a sequence of PlayedTrack objects
@@ -2380,7 +2387,7 @@ class User(_Chartable):
 
         return int(doc.getElementsByTagName("registered")[0].getAttribute("unixtime"))
 
-    def get_tagged_albums(self, tag, limit=None, cacheable=True):
+    def get_tagged_albums(self, tag, limit=None, cacheable: bool = True):
         """Returns the albums tagged by a user."""
 
         params = self._get_params()
@@ -2402,7 +2409,7 @@ class User(_Chartable):
         doc = self._request(self.ws_prefix + ".getpersonaltags", True, params)
         return _extract_artists(doc, self.network)
 
-    def get_tagged_tracks(self, tag, limit=None, cacheable=True):
+    def get_tagged_tracks(self, tag, limit=None, cacheable: bool = True):
         """Returns the tracks tagged by a user."""
 
         params = self._get_params()
@@ -2413,7 +2420,7 @@ class User(_Chartable):
         doc = self._request(self.ws_prefix + ".getpersonaltags", cacheable, params)
         return _extract_tracks(doc, self.network)
 
-    def get_top_albums(self, period=PERIOD_OVERALL, limit=None, cacheable=True):
+    def get_top_albums(self, period=PERIOD_OVERALL, limit=None, cacheable: bool = True):
         """Returns the top albums played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -2453,7 +2460,7 @@ class User(_Chartable):
 
         return _extract_top_artists(doc, self.network)
 
-    def get_top_tags(self, limit=None, cacheable=True):
+    def get_top_tags(self, limit=None, cacheable: bool = True):
         """
         Returns a sequence of the top tags used by this user with their counts
         as TopItem objects.
@@ -2478,7 +2485,11 @@ class User(_Chartable):
         return seq
 
     def get_top_tracks(
-        self, period=PERIOD_OVERALL, limit=None, cacheable=True, stream=False
+        self,
+        period=PERIOD_OVERALL,
+        limit=None,
+        cacheable: bool = True,
+        stream: bool = False,
     ):
         """Returns the top tracks played by a user.
         * period: The period of time. Possible values:
@@ -2496,7 +2507,9 @@ class User(_Chartable):
 
         return self._get_things("getTopTracks", Track, params, cacheable, stream=stream)
 
-    def get_track_scrobbles(self, artist, track, cacheable=False, stream=False):
+    def get_track_scrobbles(
+        self, artist, track, cacheable: bool = False, stream: bool = False
+    ):
         """
         Get a list of this user's scrobbles of this artist's track,
         including scrobble time.
@@ -2566,7 +2579,7 @@ class AuthenticatedUser(User):
     def _get_params(self):
         return {"user": self.get_name()}
 
-    def get_name(self, properly_capitalized=False):
+    def get_name(self, properly_capitalized: bool = False):
         """Returns the name of the authenticated user."""
         return super().get_name(properly_capitalized=properly_capitalized)
 
@@ -2722,7 +2735,9 @@ def cleanup_nodes(doc):
     return doc
 
 
-def _collect_nodes(limit, sender, method_name, cacheable, params=None, stream=False):
+def _collect_nodes(
+    limit, sender, method_name, cacheable, params=None, stream: bool = False
+):
     """
     Returns a sequence of dom.Node objects about as close to limit as possible
     """
