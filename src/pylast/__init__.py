@@ -42,7 +42,7 @@ try:
     import importlib.metadata as importlib_metadata
 except ImportError:
     # Python 3.7 and lower
-    import importlib_metadata
+    import importlib_metadata  # type: ignore
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
@@ -197,7 +197,7 @@ class _Network:
 
         self.cache_backend = None
         self.proxy = None
-        self.last_call_time = 0
+        self.last_call_time: float = 0
         self.limit_rate = False
 
         # Load session_key and username from authentication token if provided
@@ -335,7 +335,7 @@ class _Network:
         # so we need to get all (250) and then limit locally
         doc = _Request(self, "tag.getTopTags").execute(cacheable)
 
-        seq = []
+        seq: list[TopItem] = []
         for node in doc.getElementsByTagName("tag"):
             if limit and len(seq) >= limit:
                 break
@@ -449,13 +449,13 @@ class _Network:
         return AlbumSearch(album_name, self)
 
     def search_for_artist(self, artist_name):
-        """Searches of an artist by its name. Returns an ArtistSearch object.
+        """Searches for an artist by its name. Returns an ArtistSearch object.
         Use get_next_page() to retrieve sequences of results."""
 
         return ArtistSearch(artist_name, self)
 
     def search_for_track(self, artist_name, track_name):
-        """Searches of a track by its name and its artist. Set artist to an
+        """Searches for a track by its name and its artist. Set artist to an
         empty string if not available.
         Returns a TrackSearch object.
         Use get_next_page() to retrieve sequences of results."""
