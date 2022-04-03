@@ -822,7 +822,7 @@ class _Request:
     """Representing an abstract web service operation."""
 
     def __init__(self, network, method_name, params=None):
-        logger.debug(method_name)
+        logger.info(method_name)
 
         if params is None:
             params = {}
@@ -962,7 +962,7 @@ class _Request:
             raise MalformedResponseError(self.network, e) from e
 
         e = doc.getElementsByTagName("lfm")[0]
-        # logger.debug(doc.toprettyxml())
+        logger.debug(doc.toprettyxml())
 
         if e.getAttribute("status") != "ok":
             e = doc.getElementsByTagName("error")[0]

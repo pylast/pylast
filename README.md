@@ -144,7 +144,8 @@ To enable from your own code:
 import logging
 import pylast
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+
 
 network = pylast.LastFMNetwork(...)
 ```
@@ -152,5 +153,8 @@ network = pylast.LastFMNetwork(...)
 To enable from pytest:
 
 ```sh
-pytest --log-cli-level debug -k test_album_search_images
+pytest --log-cli-level info -k test_album_search_images
 ```
+
+To also see data returned from the API, use `level=logging.DEBUG` or
+`--log-cli-level debug` instead.
