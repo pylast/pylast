@@ -31,6 +31,7 @@ import ssl
 import tempfile
 import time
 import xml.dom
+from typing import Iterator
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
@@ -795,7 +796,7 @@ class _ShelfCacheBackend:
     def __contains__(self, key) -> bool:
         return key in self.cache_keys
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         return iter(self.shelf.keys())
 
     def get_xml(self, key):
