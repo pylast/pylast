@@ -948,13 +948,13 @@ class _Request:
         except Exception as e:
             raise MalformedResponseError(self.network, e) from e
 
-        e = doc.getElementsByTagName("lfm")[0]
+        element = doc.getElementsByTagName("lfm")[0]
         logger.debug(doc.toprettyxml())
 
-        if e.getAttribute("status") != "ok":
-            e = doc.getElementsByTagName("error")[0]
-            status = e.getAttribute("code")
-            details = e.firstChild.data.strip()
+        if element.getAttribute("status") != "ok":
+            element = doc.getElementsByTagName("error")[0]
+            status = element.getAttribute("code")
+            details = element.firstChild.data.strip()
             raise WSError(self.network, status, details)
 
 
