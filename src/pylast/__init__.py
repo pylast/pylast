@@ -660,12 +660,12 @@ class LastFMNetwork(_Network):
 
     def __init__(
         self,
-        api_key="",
-        api_secret="",
-        session_key="",
-        username="",
-        password_hash="",
-        token="",
+        api_key: str = "",
+        api_secret: str = "",
+        session_key: str = "",
+        username: str = "",
+        password_hash: str = "",
+        token: str = "",
     ) -> None:
         super().__init__(
             name="Last.fm",
@@ -729,7 +729,12 @@ class LibreFMNetwork(_Network):
     """
 
     def __init__(
-        self, api_key="", api_secret="", session_key="", username="", password_hash=""
+        self,
+        api_key: str = "",
+        api_secret: str = "",
+        session_key: str = "",
+        username: str = "",
+        password_hash: str = "",
     ) -> None:
 
         super().__init__(
@@ -1024,7 +1029,7 @@ class SessionKeyGenerator:
 
         return url
 
-    def get_web_auth_session_key_username(self, url, token=""):
+    def get_web_auth_session_key_username(self, url, token: str = ""):
         """
         Retrieves the session key/username of a web authorization process by its URL.
         """
@@ -1044,7 +1049,7 @@ class SessionKeyGenerator:
         username = doc.getElementsByTagName("name")[0].firstChild.data
         return session_key, username
 
-    def get_web_auth_session_key(self, url, token=""):
+    def get_web_auth_session_key(self, url, token: str = ""):
         """
         Retrieves the session key of a web authorization process by its URL.
         """
@@ -1949,7 +1954,9 @@ class Library(_BaseObject):
         """Returns the user who owns this library."""
         return self.user
 
-    def get_artists(self, limit=50, cacheable: bool = True, stream: bool = False):
+    def get_artists(
+        self, limit: int = 50, cacheable: bool = True, stream: bool = False
+    ):
         """
         Returns a sequence of Album objects
         if limit==None it will return all (may take a while)
@@ -2216,7 +2223,9 @@ class User(_Chartable):
 
         return self.name
 
-    def get_friends(self, limit=50, cacheable: bool = False, stream: bool = False):
+    def get_friends(
+        self, limit: int = 50, cacheable: bool = False, stream: bool = False
+    ):
         """Returns a list of the user's friends."""
 
         def _get_friends():
@@ -2227,7 +2236,9 @@ class User(_Chartable):
 
         return _get_friends() if stream else list(_get_friends())
 
-    def get_loved_tracks(self, limit=50, cacheable: bool = True, stream: bool = False):
+    def get_loved_tracks(
+        self, limit: int = 50, cacheable: bool = True, stream: bool = False
+    ):
         """
         Returns this user's loved track as a sequence of LovedTrack objects in
         reverse order of their timestamp, all the way back to the first track.
@@ -2292,7 +2303,7 @@ class User(_Chartable):
 
     def get_recent_tracks(
         self,
-        limit=10,
+        limit: int = 10,
         cacheable: bool = True,
         time_from=None,
         time_to=None,
@@ -2792,7 +2803,7 @@ def _collect_nodes(
     return _stream_collect_nodes() if stream else list(_stream_collect_nodes())
 
 
-def _extract(node, name, index=0):
+def _extract(node, name, index: int = 0):
     """Extracts a value from the xml string"""
 
     nodes = node.getElementsByTagName(name)
