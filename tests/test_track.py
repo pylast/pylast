@@ -110,7 +110,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
     def test_track_get_duration(self):
         # Arrange
-        track = pylast.Track("Nirvana", "Lithium", self.network)
+        track = pylast.Track("Cher", "Believe", self.network)
 
         # Act
         duration = track.get_duration()
