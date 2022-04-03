@@ -215,7 +215,7 @@ class _Network:
             sk_gen = SessionKeyGenerator(self)
             self.session_key = sk_gen.get_session_key(self.username, self.password_hash)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} Network"
 
     def get_artist(self, artist_name):
@@ -275,7 +275,7 @@ class _Network:
         if domain_language in self.domain_names:
             return self.domain_names[domain_language]
 
-    def _get_url(self, domain, url_type):
+    def _get_url(self, domain, url_type) -> str:
         return f"https://{self._get_language_domain(domain)}/{self.urls[url_type]}"
 
     def _get_ws_auth(self):
@@ -699,7 +699,7 @@ class LastFMNetwork(_Network):
             },
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             "pylast.LastFMNetwork("
             f"'{self.api_key}', "
@@ -763,7 +763,7 @@ class LibreFMNetwork(_Network):
             },
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             "pylast.LibreFMNetwork("
             f"'{self.api_key}', "
@@ -1438,7 +1438,7 @@ class MalformedResponseError(PyLastError):
         self.network = network
         self.underlying_error = underlying_error
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"Malformed response from {self.network.name}. "
             f"Underlying error: {self.underlying_error}"
@@ -1452,7 +1452,7 @@ class NetworkError(PyLastError):
         self.network = network
         self.underlying_error = underlying_error
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"NetworkError: {self.underlying_error}"
 
 
@@ -1492,14 +1492,14 @@ class _Opus(_Taggable):
         )  # Default to current user
         self.info = info
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"pylast.{self.ws_prefix.title()}"
             f"({repr(self.artist.name)}, {repr(self.title)}, {repr(self.network)})"
         )
 
     @_string_output
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.get_artist().get_name()} - {self.get_title()}"
 
     def __eq__(self, other):
@@ -1670,7 +1670,7 @@ class Artist(_Taggable):
         self.username = username
         self.info = info
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"pylast.Artist({repr(self.get_name())}, {repr(self.network)})"
 
     def __unicode__(self):
@@ -1850,7 +1850,7 @@ class Country(_BaseObject):
 
         self.name = name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"pylast.Country({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
@@ -1928,7 +1928,7 @@ class Library(_BaseObject):
         else:
             self.user = User(user, self.network)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"pylast.Library({repr(self.user)}, {repr(self.network)})"
 
     @_string_output
@@ -1974,7 +1974,7 @@ class Tag(_Chartable):
 
         self.name = name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"pylast.Tag({repr(self.name)}, {repr(self.network)})"
 
     @_string_output
@@ -2170,7 +2170,7 @@ class User(_Chartable):
 
         self.name = user_name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"pylast.User({repr(self.name)}, {repr(self.network)})"
 
     @_string_output

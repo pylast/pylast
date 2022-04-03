@@ -40,7 +40,7 @@ class PyLastTestCase:
         assert s.endswith(suffix, start, end)
 
 
-def _no_xfail_rerun_filter(err, name, test, plugin):
+def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
     for _ in test.iter_markers(name="xfail"):
         return False
 
