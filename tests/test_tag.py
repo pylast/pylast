@@ -8,14 +8,14 @@ from .test_pylast import TestPyLastWithLastFm
 
 
 class TestPyLastTag(TestPyLastWithLastFm):
-    def test_tag_is_hashable(self):
+    def test_tag_is_hashable(self) -> None:
         # Arrange
         tag = self.network.get_top_tags(limit=1)[0]
 
         # Act/Assert
         self.helper_is_thing_hashable(tag)
 
-    def test_tag_top_artists(self):
+    def test_tag_top_artists(self) -> None:
         # Arrange
         tag = self.network.get_tag("blues")
 
@@ -25,7 +25,7 @@ class TestPyLastTag(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(artists, pylast.Artist)
 
-    def test_tag_top_albums(self):
+    def test_tag_top_albums(self) -> None:
         # Arrange
         tag = self.network.get_tag("blues")
 
@@ -35,7 +35,7 @@ class TestPyLastTag(TestPyLastWithLastFm):
         # Assert
         self.helper_only_one_thing_in_top_list(albums, pylast.Album)
 
-    def test_tags(self):
+    def test_tags(self) -> None:
         # Arrange
         tag1 = self.network.get_tag("blues")
         tag2 = self.network.get_tag("rock")

@@ -13,7 +13,7 @@ from .test_pylast import PyLastTestCase, load_secrets
 class TestPyLastWithLibreFm(PyLastTestCase):
     """Own class for Libre.fm because we don't need the Last.fm setUp"""
 
-    def test_libre_fm(self):
+    def test_libre_fm(self) -> None:
         # Arrange
         secrets = load_secrets()
         username = secrets["username"]
@@ -27,7 +27,7 @@ class TestPyLastWithLibreFm(PyLastTestCase):
         # Assert
         assert name == "Radiohead"
 
-    def test_repr(self):
+    def test_repr(self) -> None:
         # Arrange
         secrets = load_secrets()
         username = secrets["username"]

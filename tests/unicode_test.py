@@ -18,13 +18,13 @@ def mock_network():
         "fdasfdsafsaf not unicode",
     ],
 )
-def test_get_cache_key(artist):
+def test_get_cache_key(artist) -> None:
     request = pylast._Request(mock_network(), "some_method", params={"artist": artist})
     request._get_cache_key()
 
 
 @pytest.mark.parametrize("obj", [pylast.Artist("B\xe9l", mock_network())])
-def test_cast_and_hash(obj):
+def test_cast_and_hash(obj) -> None:
     assert type(str(obj)) is str
     assert isinstance(hash(obj), int)
 
