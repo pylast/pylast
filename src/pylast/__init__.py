@@ -47,8 +47,10 @@ __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
-__version__ = importlib_metadata.version(__name__)
-
+try:
+    __version__ = importlib_metadata.version("x")
+except importlib_metadata.PackageNotFoundError:
+    __version__ = "n/a"
 
 # 1 : This error does not exist
 STATUS_INVALID_SERVICE = 2
