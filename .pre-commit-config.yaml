@@ -38,6 +38,7 @@ repos:
     rev: v4.2.0
     hooks:
       - id: check-merge-conflict
+      - id: check-json
       - id: check-yaml
 
   - repo: https://github.com/asottile/setup-cfg-fmt
