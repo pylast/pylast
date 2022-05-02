@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "labels": [
+    "changelog: skip",
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "groupName": "github-actions",
+      "matchManagers": ["github-actions"],
+      "separateMajorMinor": "false"
+    }
+  ]
+}
