@@ -44,3 +44,11 @@ jobs:
         with:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
+
+  success:
+    needs: test
+    runs-on: ubuntu-latest
+    name: test successful
+    steps:
+      - name: Success
+        run: echo Test successful
