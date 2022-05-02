@@ -110,13 +110,13 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
     def test_track_get_duration(self) -> None:
         # Arrange
-        track = pylast.Track("Cher", "Believe", self.network)
+        track = pylast.Track("Radiohead", "Creep", self.network)
 
         # Act
         duration = track.get_duration()
 
         # Assert
-        assert duration >= 200000
+        assert duration >= 100000
 
     def test_track_get_album(self) -> None:
         # Arrange
