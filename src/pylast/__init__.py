@@ -3,7 +3,7 @@
 #     A Python interface to Last.fm and Libre.fm
 #
 # Copyright 2008-2010 Amr Hassan
-# Copyright 2013-2021 hugovk
+# Copyright 2013-2022 hugovk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ except ImportError:
     import importlib_metadata  # type: ignore
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
-__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
+__copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2022 hugovk, 2017 Mice Pápai"
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
 __version__ = importlib_metadata.version(__name__)
@@ -782,6 +782,37 @@ class LibreFMNetwork(_Network):
         )
 
 
+def network_via_web_auth(
+    api_key: str,
+    api_secret: str,
+    network_class: _Network = LastFMNetwork,
+) -> _Network:
+    session_key_file = os.path.join(os.path.expanduser("~"), ".session_key")
+    network = network_class(api_key, api_secret)
+
+    if os.path.exists(session_key_file):
+        with open(session_key_file) as f:
+            network.session_key = f.read()
+    else:
+        skg = SessionKeyGenerator(network)
+        url = skg.get_web_auth_url()
+
+        print(f"Please authorise to access your account: {url}\n")
+        import webbrowser
+
+        webbrowser.open(url, new=2)
+        while True:
+            try:
+                network.session_key = skg.get_web_auth_session_key(url)
+                with open(session_key_file, "w") as f:
+                    f.write(network.session_key)
+                break
+            except WSError:
+                time.sleep(1)
+
+    return network
+
+
 class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
@@ -1029,7 +1060,9 @@ class SessionKeyGenerator:
 
         return url
 
-    def get_web_auth_session_key_username(self, url, token: str = ""):
+    def get_web_auth_session_key_username(
+        self, url: str | None, token: str = ""
+    ) -> tuple[str, str]:
         """
         Retrieves the session key/username of a web authorization process by its URL.
         """
@@ -1049,7 +1082,7 @@ class SessionKeyGenerator:
         username = doc.getElementsByTagName("name")[0].firstChild.data
         return session_key, username
 
-    def get_web_auth_session_key(self, url, token: str = ""):
+    def get_web_auth_session_key(self, url: str, token: str = "") -> str:
         """
         Retrieves the session key of a web authorization process by its URL.
         """
