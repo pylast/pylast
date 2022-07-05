@@ -45,7 +45,7 @@ def test_cast_and_hash(obj) -> None:
     ],
 )
 def test__remove_invalid_xml_chars(test_input: str, expected: str) -> None:
-    assert pylast._remove_invalid_xml_chars(test_input) == expected
+    assert pylast.utils._remove_invalid_xml_chars(test_input) == expected
 
 
 @pytest.mark.parametrize(
