@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Integration (not unit) tests for pylast.py
 """
@@ -110,7 +109,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
     def test_track_get_duration(self) -> None:
         # Arrange
-        track = pylast.Track("Radiohead", "Creep", self.network)
+        track = pylast.Track("Daft Punk", "Something About Us", self.network)
 
         # Act
         duration = track.get_duration()
