@@ -5,7 +5,7 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypistats.org/packages/pylast)
 [![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
 [![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/main/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
-[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
 [![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites
@@ -35,6 +35,7 @@ Or from requirements.txt:
 
 Note:
 
+* pyLast 5.1+ supports Python 3.7-3.11.
 * pyLast 5.0+ supports Python 3.7-3.10.
 * pyLast 4.3+ supports Python 3.6-3.10.
 * pyLast 4.0 - 4.2 supports Python 3.6-3.9.
