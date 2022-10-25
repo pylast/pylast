@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: setup.cfg
+          cache-dependency-path: pyproject.toml
 
       - name: Install dependencies
         run: |
@@ -48,7 +48,7 @@ jobs:
   success:
     needs: test
     runs-on: ubuntu-latest
-    name: test successful
+    name: Test successful
     steps:
       - name: Success
         run: echo Test successful
