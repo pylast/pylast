@@ -90,6 +90,8 @@ Alternatively, instead of creating `network` with a username and password,
 you can authenticate with a session key:
 
 ```python
+import pylast
+
 SESSION_KEY_FILE = os.path.join(os.path.expanduser("~"), ".session_key")
 network = pylast.LastFMNetwork(API_KEY, API_SECRET)
 if not os.path.exists(SESSION_KEY_FILE):
