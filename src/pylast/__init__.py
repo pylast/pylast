@@ -546,7 +546,6 @@ class _Network:
         context=None,
         mbid=None,
     ):
-
         """Used to add a track-play to a user's profile.
 
         Parameters:
@@ -600,7 +599,6 @@ class _Network:
 
         params = {}
         for i in range(len(tracks_to_scrobble)):
-
             params[f"artist[{i}]"] = tracks_to_scrobble[i]["artist"]
             params[f"track[{i}]"] = tracks_to_scrobble[i]["title"]
 
@@ -621,7 +619,6 @@ class _Network:
             }
 
             for arg in additional_args:
-
                 if arg in tracks_to_scrobble[i] and tracks_to_scrobble[i][arg]:
                     if arg in args_map_to:
                         maps_to = args_map_to[arg]
@@ -736,7 +733,6 @@ class LibreFMNetwork(_Network):
         username: str = "",
         password_hash: str = "",
     ) -> None:
-
         super().__init__(
             name="Libre.fm",
             homepage="https://libre.fm",
