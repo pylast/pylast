@@ -47,7 +47,6 @@ def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
 
 @flaky(max_runs=3, min_passes=1, rerun_filter=_no_xfail_rerun_filter)
 class TestPyLastWithLastFm(PyLastTestCase):
-
     secrets = None
 
     def unix_timestamp(self):
