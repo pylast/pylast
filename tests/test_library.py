@@ -16,7 +16,7 @@ class TestPyLastLibrary(TestPyLastWithLastFm):
         representation = repr(library)
 
         # Assert
-        self.assert_startswith(representation, "pylast.Library(")
+        assert representation.startswith("pylast.Library(")
 
     def test_str(self) -> None:
         # Arrange
@@ -26,7 +26,7 @@ class TestPyLastLibrary(TestPyLastWithLastFm):
         string = str(library)
 
         # Assert
-        self.assert_endswith(string, "'s Library")
+        assert string.endswith("'s Library")
 
     def test_library_is_hashable(self) -> None:
         # Arrange

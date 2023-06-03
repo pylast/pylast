@@ -32,21 +32,13 @@ def load_secrets():  # pragma: no cover
     return doc
 
 
-class PyLastTestCase:
-    def assert_startswith(self, s, prefix, start=None, end=None) -> None:
-        assert s.startswith(prefix, start, end)
-
-    def assert_endswith(self, s, suffix, start=None, end=None) -> None:
-        assert s.endswith(suffix, start, end)
-
-
 def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
     for _ in test.iter_markers(name="xfail"):
         return False
 
 
 @flaky(max_runs=3, min_passes=1, rerun_filter=_no_xfail_rerun_filter)
-class TestPyLastWithLastFm(PyLastTestCase):
+class TestPyLastWithLastFm:
     secrets = None
 
     def unix_timestamp(self):

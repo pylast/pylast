@@ -24,7 +24,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         representation = repr(user)
 
         # Assert
-        self.assert_startswith(representation, "pylast.User('RJ',")
+        assert representation.startswith("pylast.User('RJ',")
 
     def test_str(self) -> None:
         # Arrange
@@ -345,7 +345,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         url = user.get_image()
 
         # Assert
-        self.assert_startswith(url, "https://")
+        assert url.startswith("https://")
 
     def test_user_get_library(self) -> None:
         # Arrange
@@ -428,8 +428,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
         image = user.get_image()
 
         # Assert
-        self.assert_startswith(image, "https://")
-        self.assert_endswith(image, ".png")
+        assert image.startswith("https://")
+        assert image.endswith(".png")
 
     def test_get_url(self) -> None:
         # Arrange
