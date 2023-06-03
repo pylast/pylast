@@ -41,7 +41,8 @@ def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
 class TestPyLastWithLastFm:
     secrets = None
 
-    def unix_timestamp(self):
+    @staticmethod
+    def unix_timestamp() -> int:
         return int(time.time())
 
     @classmethod
@@ -62,7 +63,8 @@ class TestPyLastWithLastFm:
             password_hash=password_hash,
         )
 
-    def helper_is_thing_hashable(self, thing) -> None:
+    @staticmethod
+    def helper_is_thing_hashable(thing) -> None:
         # Arrange
         things = set()
 
@@ -73,7 +75,8 @@ class TestPyLastWithLastFm:
         assert thing is not None
         assert len(things) == 1
 
-    def helper_validate_results(self, a, b, c) -> None:
+    @staticmethod
+    def helper_validate_results(a, b, c) -> None:
         # Assert
         assert a is not None
         assert b is not None
@@ -97,27 +100,31 @@ class TestPyLastWithLastFm:
         # Assert
         self.helper_validate_results(result1, result2, result3)
 
-    def helper_at_least_one_thing_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_at_least_one_thing_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) > 1
         assert isinstance(things, list)
         assert isinstance(things[0], pylast.TopItem)
         assert isinstance(things[0].item, expected_type)
 
-    def helper_only_one_thing_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_only_one_thing_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 1
         assert isinstance(things, list)
         assert isinstance(things[0], pylast.TopItem)
         assert isinstance(things[0].item, expected_type)
 
-    def helper_only_one_thing_in_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_only_one_thing_in_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 1
         assert isinstance(things, list)
         assert isinstance(things[0], expected_type)
 
-    def helper_two_different_things_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_two_different_things_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 2
         thing1 = things[0]
