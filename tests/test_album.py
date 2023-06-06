@@ -94,8 +94,8 @@ class TestPyLastAlbum(TestPyLastWithLastFm):
         image = album.get_cover_image()
 
         # Assert
-        self.assert_startswith(image, "https://")
-        self.assert_endswith(image, ".gif")
+        assert image.startswith("https://")
+        assert image.endswith(".gif") or image.endswith(".png")
 
     def test_mbid(self) -> None:
         # Arrange

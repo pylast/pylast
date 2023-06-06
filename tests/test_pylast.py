@@ -32,24 +32,17 @@ def load_secrets():  # pragma: no cover
     return doc
 
 
-class PyLastTestCase:
-    def assert_startswith(self, s, prefix, start=None, end=None) -> None:
-        assert s.startswith(prefix, start, end)
-
-    def assert_endswith(self, s, suffix, start=None, end=None) -> None:
-        assert s.endswith(suffix, start, end)
-
-
 def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
     for _ in test.iter_markers(name="xfail"):
         return False
 
 
 @flaky(max_runs=3, min_passes=1, rerun_filter=_no_xfail_rerun_filter)
-class TestPyLastWithLastFm(PyLastTestCase):
+class TestPyLastWithLastFm:
     secrets = None
 
-    def unix_timestamp(self):
+    @staticmethod
+    def unix_timestamp() -> int:
         return int(time.time())
 
     @classmethod
@@ -70,7 +63,8 @@ class TestPyLastWithLastFm(PyLastTestCase):
             password_hash=password_hash,
         )
 
-    def helper_is_thing_hashable(self, thing) -> None:
+    @staticmethod
+    def helper_is_thing_hashable(thing) -> None:
         # Arrange
         things = set()
 
@@ -81,7 +75,8 @@ class TestPyLastWithLastFm(PyLastTestCase):
         assert thing is not None
         assert len(things) == 1
 
-    def helper_validate_results(self, a, b, c) -> None:
+    @staticmethod
+    def helper_validate_results(a, b, c) -> None:
         # Assert
         assert a is not None
         assert b is not None
@@ -105,27 +100,31 @@ class TestPyLastWithLastFm(PyLastTestCase):
         # Assert
         self.helper_validate_results(result1, result2, result3)
 
-    def helper_at_least_one_thing_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_at_least_one_thing_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) > 1
         assert isinstance(things, list)
         assert isinstance(things[0], pylast.TopItem)
         assert isinstance(things[0].item, expected_type)
 
-    def helper_only_one_thing_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_only_one_thing_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 1
         assert isinstance(things, list)
         assert isinstance(things[0], pylast.TopItem)
         assert isinstance(things[0].item, expected_type)
 
-    def helper_only_one_thing_in_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_only_one_thing_in_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 1
         assert isinstance(things, list)
         assert isinstance(things[0], expected_type)
 
-    def helper_two_different_things_in_top_list(self, things, expected_type) -> None:
+    @staticmethod
+    def helper_two_different_things_in_top_list(things, expected_type) -> None:
         # Assert
         assert len(things) == 2
         thing1 = things[0]

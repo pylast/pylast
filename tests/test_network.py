@@ -330,12 +330,12 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert len(images) == 4
 
-        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
-        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        assert images[pylast.SIZE_SMALL].startswith("https://")
+        assert images[pylast.SIZE_SMALL].endswith(".png")
         assert "/34s/" in images[pylast.SIZE_SMALL]
 
-        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
-        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        assert images[pylast.SIZE_EXTRA_LARGE].startswith("https://")
+        assert images[pylast.SIZE_EXTRA_LARGE].endswith(".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
     def test_artist_search(self) -> None:
@@ -362,12 +362,12 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert len(images) == 5
 
-        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
-        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        assert images[pylast.SIZE_SMALL].startswith("https://")
+        assert images[pylast.SIZE_SMALL].endswith(".png")
         assert "/34s/" in images[pylast.SIZE_SMALL]
 
-        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
-        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        assert images[pylast.SIZE_EXTRA_LARGE].startswith("https://")
+        assert images[pylast.SIZE_EXTRA_LARGE].endswith(".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
     def test_track_search(self) -> None:
@@ -396,12 +396,12 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert len(images) == 4
 
-        self.assert_startswith(images[pylast.SIZE_SMALL], "https://")
-        self.assert_endswith(images[pylast.SIZE_SMALL], ".png")
+        assert images[pylast.SIZE_SMALL].startswith("https://")
+        assert images[pylast.SIZE_SMALL].endswith(".png")
         assert "/34s/" in images[pylast.SIZE_SMALL]
 
-        self.assert_startswith(images[pylast.SIZE_EXTRA_LARGE], "https://")
-        self.assert_endswith(images[pylast.SIZE_EXTRA_LARGE], ".png")
+        assert images[pylast.SIZE_EXTRA_LARGE].startswith("https://")
+        assert images[pylast.SIZE_EXTRA_LARGE].endswith(".png")
         assert "/300x300/" in images[pylast.SIZE_EXTRA_LARGE]
 
     def test_search_get_total_result_count(self) -> None:

@@ -1,9 +1,9 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
+    rev: v3.4.0
     hooks:
       - id: pyupgrade
-        args: [--py37-plus]
+        args: [--py38-plus]
 
   - repo: https://github.com/psf/black
     rev: 23.3.0
@@ -14,7 +14,7 @@ repos:
     rev: 1.13.0
     hooks:
       - id: blacken-docs
-        args: [--target-version=py37]
+        args: [--target-version=py38]
         additional_dependencies: [black==23.3.0]
 
   - repo: https://github.com/PyCQA/isort
@@ -46,12 +46,12 @@ repos:
       - id: requirements-txt-fixer
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 0.9.2
+    rev: 0.10.0
     hooks:
       - id: pyproject-fmt
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.12.2
+    rev: v0.13
     hooks:
       - id: validate-pyproject
 
