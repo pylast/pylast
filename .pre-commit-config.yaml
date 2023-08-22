@@ -49,6 +49,7 @@ repos:
     rev: 0.13.1
     hooks:
       - id: pyproject-fmt
+        additional_dependencies: [tox]
 
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.14
