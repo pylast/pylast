@@ -1505,7 +1505,7 @@ class _Opus(_Taggable):
         return f"{self.get_artist().get_name()} - {self.get_title()}"
 
     def __eq__(self, other):
-        if type(self) != type(other):
+        if not isinstance(self, other):
             return False
         a = self.get_title().lower()
         b = other.get_title().lower()
