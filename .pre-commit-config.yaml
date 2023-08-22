@@ -44,6 +44,8 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: requirements-txt-fixer
+      - id: trailing-whitespace
+        exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
 
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: 0.13.1
