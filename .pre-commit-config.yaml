@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.10.1
+    rev: v3.13.0
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
 
   - repo: https://github.com/psf/black
-    rev: 23.7.0
+    rev: 23.9.1
     hooks:
       - id: black
 
@@ -48,7 +48,7 @@ repos:
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 0.13.1
+    rev: 1.2.0
     hooks:
       - id: pyproject-fmt
         additional_dependencies: [tox]
