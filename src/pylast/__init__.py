@@ -1156,7 +1156,7 @@ class _BaseObject:
 
     def get_wiki_published_date(self):
         """
-        Returns the summary of the wiki.
+        Returns the date on which the wiki was published.
         Only for Album/Track.
         """
         return self.get_wiki("published")
@@ -1170,7 +1170,7 @@ class _BaseObject:
 
     def get_wiki_content(self):
         """
-        Returns the summary of the wiki.
+        Returns the content of the wiki.
         Only for Album/Track.
         """
         return self.get_wiki("content")
@@ -1543,7 +1543,7 @@ class _Opus(_Taggable):
         return self.info["image"][size]
 
     def get_title(self, properly_capitalized: bool = False):
-        """Returns the artist or track title."""
+        """Returns the album or track title."""
         if properly_capitalized:
             self.title = _extract(
                 self._request(self.ws_prefix + ".getInfo", True), "name"
