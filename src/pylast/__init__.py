@@ -2380,7 +2380,7 @@ class User(_Chartable):
         return _extract(doc, "registered")
 
     def get_unixtime_registered(self):
-        """Returns the user's registration date as a UNIX timestamp."""
+        """Returns the user's registration date as a Unix timestamp."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
