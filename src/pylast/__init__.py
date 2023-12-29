@@ -2310,7 +2310,7 @@ class User(_Chartable):
         scrobbles after this time, in UNIX timestamp format (integer
         number of seconds since 00:00:00, January 1st 1970 UTC).
         to (Optional) : End timestamp of a range - only display scrobbles
-        before this time, in UNIX timestamp format (integer number of
+        before this time, in Unix timestamp format (integer number of
         seconds since 00:00:00, January 1st 1970 UTC).
         stream: If True, it will yield tracks as soon as a page has been retrieved.
 
