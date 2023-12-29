@@ -529,25 +529,25 @@ class _Network:
 
     def scrobble(
         self,
-        artist,
-        title,
-        timestamp,
-        album=None,
-        album_artist=None,
-        track_number=None,
-        duration=None,
-        stream_id=None,
-        context=None,
-        mbid=None,
+        artist: str,
+        title: str,
+        timestamp: int,
+        album: str | None = None,
+        album_artist: str | None = None,
+        track_number: int | None = None,
+        duration: int | None = None,
+        stream_id: str | None = None,
+        context: str | None = None,
+        mbid: str | None = None,
     ):
         """Used to add a track-play to a user's profile.
 
         Parameters:
             artist (Required) : The artist name.
             title (Required) : The track name.
-            timestamp (Required) : The time the track started playing, in UNIX
+            timestamp (Required) : The time the track started playing, in Unix
                 timestamp format (integer number of seconds since 00:00:00,
-                January 1st 1970 UTC). This must be in the UTC time zone.
+                January 1st 1970 UTC).
             album (Optional) : The album name.
             album_artist (Optional) : The album artist - if this differs from
                 the track artist.
@@ -2295,8 +2295,8 @@ class User(_Chartable):
         self,
         limit: int = 10,
         cacheable: bool = True,
-        time_from=None,
-        time_to=None,
+        time_from: int | None = None,
+        time_to: int | None = None,
         stream: bool = False,
         now_playing: bool = False,
     ):
@@ -2307,13 +2307,11 @@ class User(_Chartable):
         Parameters:
         limit : If None, it will try to pull all the available data.
         from (Optional) : Beginning timestamp of a range - only display
-        scrobbles after this time, in UNIX timestamp format (integer
-        number of seconds since 00:00:00, January 1st 1970 UTC). This
-        must be in the UTC time zone.
+        scrobbles after this time, in Unix timestamp format (integer
+        number of seconds since 00:00:00, January 1st 1970 UTC).
         to (Optional) : End timestamp of a range - only display scrobbles
-        before this time, in UNIX timestamp format (integer number of
-        seconds since 00:00:00, January 1st 1970 UTC). This must be in
-        the UTC time zone.
+        before this time, in Unix timestamp format (integer number of
+        seconds since 00:00:00, January 1st 1970 UTC).
         stream: If True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
@@ -2382,7 +2380,7 @@ class User(_Chartable):
         return _extract(doc, "registered")
 
     def get_unixtime_registered(self):
-        """Returns the user's registration date as a UNIX timestamp."""
+        """Returns the user's registration date as a Unix timestamp."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
