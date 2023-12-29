@@ -31,6 +31,7 @@ import shelve
 import ssl
 import tempfile
 import time
+from typing import Optional
 import xml.dom
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
@@ -529,16 +530,16 @@ class _Network:
 
     def scrobble(
         self,
-        artist,
-        title,
-        timestamp,
-        album=None,
-        album_artist=None,
-        track_number=None,
-        duration=None,
-        stream_id=None,
-        context=None,
-        mbid=None,
+        artist: str,
+        title: str,
+        timestamp: int,
+        album: Optional[str] = None,
+        album_artist: Optional[str] = None,
+        track_number: Optional[int] = None,
+        duration: Optional[int] = None,
+        stream_id: Optional[str] = None,
+        context: Optional[str] = None,
+        mbid: Optional[str] = None,
     ):
         """Used to add a track-play to a user's profile.
 
@@ -547,7 +548,7 @@ class _Network:
             title (Required) : The track name.
             timestamp (Required) : The time the track started playing, in UNIX
                 timestamp format (integer number of seconds since 00:00:00,
-                January 1st 1970 UTC). This must be in the UTC time zone.
+                January 1st 1970 UTC).
             album (Optional) : The album name.
             album_artist (Optional) : The album artist - if this differs from
                 the track artist.
@@ -2295,8 +2296,8 @@ class User(_Chartable):
         self,
         limit: int = 10,
         cacheable: bool = True,
-        time_from=None,
-        time_to=None,
+        time_from: Optional[int] = None,
+        time_to: Optional[int] = None,
         stream: bool = False,
         now_playing: bool = False,
     ):
@@ -2308,12 +2309,10 @@ class User(_Chartable):
         limit : If None, it will try to pull all the available data.
         from (Optional) : Beginning timestamp of a range - only display
         scrobbles after this time, in UNIX timestamp format (integer
-        number of seconds since 00:00:00, January 1st 1970 UTC). This
-        must be in the UTC time zone.
+        number of seconds since 00:00:00, January 1st 1970 UTC).
         to (Optional) : End timestamp of a range - only display scrobbles
         before this time, in UNIX timestamp format (integer number of
-        seconds since 00:00:00, January 1st 1970 UTC). This must be in
-        the UTC time zone.
+        seconds since 00:00:00, January 1st 1970 UTC).
         stream: If True, it will yield tracks as soon as a page has been retrieved.
 
         This method uses caching. Enable caching only if you're pulling a
