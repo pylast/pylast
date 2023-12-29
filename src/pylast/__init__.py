@@ -2307,7 +2307,7 @@ class User(_Chartable):
         Parameters:
         limit : If None, it will try to pull all the available data.
         from (Optional) : Beginning timestamp of a range - only display
-        scrobbles after this time, in UNIX timestamp format (integer
+        scrobbles after this time, in Unix timestamp format (integer
         number of seconds since 00:00:00, January 1st 1970 UTC).
         to (Optional) : End timestamp of a range - only display scrobbles
         before this time, in Unix timestamp format (integer number of
