@@ -32,7 +32,6 @@ import ssl
 import tempfile
 import time
 import xml.dom
-from typing import Optional
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
