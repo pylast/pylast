@@ -545,7 +545,7 @@ class _Network:
         Parameters:
             artist (Required) : The artist name.
             title (Required) : The track name.
-            timestamp (Required) : The time the track started playing, in UNIX
+            timestamp (Required) : The time the track started playing, in Unix
                 timestamp format (integer number of seconds since 00:00:00,
                 January 1st 1970 UTC).
             album (Optional) : The album name.
