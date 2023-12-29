@@ -31,8 +31,8 @@ import shelve
 import ssl
 import tempfile
 import time
-from typing import Optional
 import xml.dom
+from typing import Optional
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
@@ -533,13 +533,13 @@ class _Network:
         artist: str,
         title: str,
         timestamp: int,
-        album: Optional[str] = None,
-        album_artist: Optional[str] = None,
-        track_number: Optional[int] = None,
-        duration: Optional[int] = None,
-        stream_id: Optional[str] = None,
-        context: Optional[str] = None,
-        mbid: Optional[str] = None,
+        album: str | None = None,
+        album_artist: str | None = None,
+        track_number: int | None = None,
+        duration: int | None = None,
+        stream_id: str | None = None,
+        context: str | None = None,
+        mbid: str | None = None,
     ):
         """Used to add a track-play to a user's profile.
 
@@ -2296,8 +2296,8 @@ class User(_Chartable):
         self,
         limit: int = 10,
         cacheable: bool = True,
-        time_from: Optional[int] = None,
-        time_to: Optional[int] = None,
+        time_from: int | None = None,
+        time_to: int | None = None,
         stream: bool = False,
         now_playing: bool = False,
     ):
