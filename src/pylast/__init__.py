@@ -894,6 +894,7 @@ class _Request:
         username = "" if username is None else f"?username={username}"
 
         (host_name, host_subdir) = self.network.ws_server
+        timeout = httpx.Timeout(5, read=10)
 
         if self.network.is_proxy_enabled():
             client = httpx.Client(
@@ -901,12 +902,14 @@ class _Request:
                 base_url=f"https://{host_name}",
                 headers=HEADERS,
                 proxies=self.network.proxy,
+                timeout=timeout,
             )
         else:
             client = httpx.Client(
                 verify=SSL_CONTEXT,
                 base_url=f"https://{host_name}",
                 headers=HEADERS,
+                timeout=timeout,
             )
 
         try:
