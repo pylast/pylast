@@ -1,12 +1,12 @@
 repos:
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.2.0
     hooks:
-      - id: pyupgrade
-        args: [--py38-plus]
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 23.12.1
+    rev: 24.1.1
     hooks:
       - id: black
 
@@ -15,24 +15,7 @@ repos:
     hooks:
       - id: blacken-docs
         args: [--target-version=py38]
-        additional_dependencies: [black==23.3.0]
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-        additional_dependencies: [flake8-2020, flake8-implicit-str-concat]
-
-  - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.10.0
-    hooks:
-      - id: python-check-blanket-noqa
-      - id: python-no-log-warn
+        additional_dependencies: [black]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -42,19 +25,19 @@ repos:
       - id: check-json
       - id: check-toml
       - id: check-yaml
+      - id: debug-statements
       - id: end-of-file-fixer
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 1.5.3
+    rev: 1.7.0
     hooks:
       - id: pyproject-fmt
         additional_dependencies: [tox]
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.15
+    rev: v0.16
     hooks:
       - id: validate-pyproject
 
@@ -62,6 +45,11 @@ repos:
     rev: 1.3.1
     hooks:
       - id: tox-ini-fmt
+
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
 
 ci:
   autoupdate_schedule: quarterly

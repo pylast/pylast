@@ -628,7 +628,6 @@ class _Network:
 
 
 class LastFMNetwork(_Network):
-
     """A Last.fm network object
 
     api_key: a provided API_KEY
@@ -1243,8 +1242,10 @@ class _Chartable(_BaseObject):
         from_date value to the to_date value.
         chart_kind should be one of "album", "artist" or "track"
         """
+        import sys
+
         method = ".getWeekly" + chart_kind.title() + "Chart"
-        chart_type = eval(chart_kind.title())  # string to type
+        chart_type = getattr(sys.modules[__name__], chart_kind.title())
 
         params = self._get_params()
         if from_date and to_date:
@@ -1356,11 +1357,11 @@ class _Taggable(_BaseObject):
             new_tags.append(tag)
 
         for i in range(0, len(old_tags)):
-            if not c_old_tags[i] in c_new_tags:
+            if c_old_tags[i] not in c_new_tags:
                 to_remove.append(old_tags[i])
 
         for i in range(0, len(new_tags)):
-            if not c_new_tags[i] in c_old_tags:
+            if c_new_tags[i] not in c_old_tags:
                 to_add.append(new_tags[i])
 
         self.remove_tags(to_remove)
@@ -2778,7 +2779,8 @@ def _collect_nodes(
                     main.getAttribute("totalPages") or main.getAttribute("totalpages")
                 )
             else:
-                raise PyLastError("No total pages attribute")
+                msg = "No total pages attribute"
+                raise PyLastError(msg)
 
             for node in main.childNodes:
                 if not node.nodeType == xml.dom.Node.TEXT_NODE and (

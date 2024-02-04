@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest import mock
 
 import pytest
@@ -25,7 +27,7 @@ def test_get_cache_key(artist) -> None:
 
 @pytest.mark.parametrize("obj", [pylast.Artist("B\xe9l", mock_network())])
 def test_cast_and_hash(obj) -> None:
-    assert type(str(obj)) is str
+    assert isinstance(str(obj), str)
     assert isinstance(hash(obj), int)
 
 
