@@ -35,31 +35,30 @@ Or from requirements.txt:
 
 Note:
 
-* pyLast 5.3+ supports Python 3.8-3.13.
-* pyLast 5.2+ supports Python 3.8-3.12.
-* pyLast 5.1 supports Python 3.7-3.11.
-* pyLast 5.0 supports Python 3.7-3.10.
-* pyLast 4.3 - 4.5 supports Python 3.6-3.10.
-* pyLast 4.0 - 4.2 supports Python 3.6-3.9.
-* pyLast 3.2 - 3.3 supports Python 3.5-3.8.
-* pyLast 3.0 - 3.1 supports Python 3.5-3.7.
-* pyLast 2.2 - 2.4 supports Python 2.7.10+, 3.4-3.7.
-* pyLast 2.0 - 2.1 supports Python 2.7.10+, 3.4-3.6.
-* pyLast 1.7 - 1.9 supports Python 2.7, 3.3-3.6.
-* pyLast 1.0 - 1.6 supports Python 2.7, 3.3-3.4.
-* pyLast 0.5 supports Python 2, 3.
-* pyLast < 0.5 supports Python 2.
+- pyLast 5.3+ supports Python 3.8-3.13.
+- pyLast 5.2+ supports Python 3.8-3.12.
+- pyLast 5.1 supports Python 3.7-3.11.
+- pyLast 5.0 supports Python 3.7-3.10.
+- pyLast 4.3 - 4.5 supports Python 3.6-3.10.
+- pyLast 4.0 - 4.2 supports Python 3.6-3.9.
+- pyLast 3.2 - 3.3 supports Python 3.5-3.8.
+- pyLast 3.0 - 3.1 supports Python 3.5-3.7.
+- pyLast 2.2 - 2.4 supports Python 2.7.10+, 3.4-3.7.
+- pyLast 2.0 - 2.1 supports Python 2.7.10+, 3.4-3.6.
+- pyLast 1.7 - 1.9 supports Python 2.7, 3.3-3.6.
+- pyLast 1.0 - 1.6 supports Python 2.7, 3.3-3.4.
+- pyLast 0.5 supports Python 2, 3.
+- pyLast < 0.5 supports Python 2.
 
 ## Features
 
- * Simple public interface.
- * Access to all the data exposed by the Last.fm web services.
- * Scrobbling support.
- * Full object-oriented design.
- * Proxy support.
- * Internal caching support for some web services calls (disabled by default).
- * Support for other API-compatible networks like Libre.fm.
-
+- Simple public interface.
+- Access to all the data exposed by the Last.fm web services.
+- Scrobbling support.
+- Full object-oriented design.
+- Proxy support.
+- Internal caching support for some web services calls (disabled by default).
+- Support for other API-compatible networks like Libre.fm.
 
 ## Getting started
 
@@ -88,8 +87,8 @@ network = pylast.LastFMNetwork(
 )
 ```
 
-Alternatively, instead of creating `network` with a username and password,
-you can authenticate with a session key:
+Alternatively, instead of creating `network` with a username and password, you can
+authenticate with a session key:
 
 ```python
 import pylast
@@ -131,7 +130,6 @@ track.add_tags(("awesome", "favorite"))
 # Type help(pylast.LastFMNetwork) or help(pylast) in a Python interpreter
 # to get more help about anything and see examples of how it works
 ```
-
 
 More examples in
 <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and
