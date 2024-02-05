@@ -46,6 +46,13 @@ repos:
     hooks:
       - id: tox-ini-fmt
 
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        args: [--prose-wrap=always, --print-width=88]
+        exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
+
   - repo: meta
     hooks:
       - id: check-hooks-apply
