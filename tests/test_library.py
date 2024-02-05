@@ -2,6 +2,8 @@
 """
 Integration (not unit) tests for pylast.py
 """
+from __future__ import annotations
+
 import pylast
 
 from .test_pylast import TestPyLastWithLastFm

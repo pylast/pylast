@@ -2,6 +2,8 @@
 """
 Integration (not unit) tests for pylast.py
 """
+from __future__ import annotations
+
 import calendar
 import datetime as dt
 import inspect
