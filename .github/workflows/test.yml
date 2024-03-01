@@ -40,7 +40,7 @@ jobs:
           PYLAST_USERNAME: ${{ secrets.PYLAST_USERNAME }}
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3.1.5
+        uses: codecov/codecov-action@v4.1.0
         with:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
