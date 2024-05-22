@@ -71,6 +71,7 @@ select = [
   "LOG", # flake8-logging
   "PGH", # pygrep-hooks
   "RUF100", # unused noqa (yesqa)
+  "RUF022", # unsorted-dunder-all
   "UP", # pyupgrade
   "W", # pycodestyle warnings
   "YTT", # flake8-2020
