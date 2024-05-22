@@ -141,10 +141,10 @@ The [tests/](https://github.com/pylast/pylast/tree/main/tests) directory contain
 integration and unit tests with Last.fm, and plenty of code examples.
 
 For integration tests you need a test account at Last.fm that will become cluttered with
-test data, and an API key and secret. Either copy [example_test_pylast.yaml](
-https://github.com/pylast/pylast/blob/main/example_test_pylast.yaml) to
-test_pylast.yaml and fill out the credentials, or set them as environment
-variables like:
+test data, and an API key and secret. Either copy
+[example_test_pylast.yaml](https://github.com/pylast/pylast/blob/main/example_test_pylast.yaml)
+to test_pylast.yaml and fill out the credentials, or set them as environment variables
+like:
 
 ```sh
 export PYLAST_USERNAME=TODO_ENTER_YOURS_HERE
