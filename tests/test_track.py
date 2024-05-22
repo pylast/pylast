@@ -140,7 +140,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         # Assert
         found = False
         for track in similar:
-            if str(track.item) == "Madonna - Vogue":
+            if str(track.item) == "Cher - Strong Enough":
                 found = True
                 break
         assert found
