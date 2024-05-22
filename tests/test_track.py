@@ -138,11 +138,7 @@ class TestPyLastTrack(TestPyLastWithLastFm):
         similar = track.get_similar()
 
         # Assert
-        found = False
-        for track in similar:
-            if str(track.item) == "Cher - Strong Enough":
-                found = True
-                break
+        found = any(str(track.item) == "Cher - Strong Enough" for track in similar)
         assert found
 
     def test_track_get_similar_limits(self) -> None:
