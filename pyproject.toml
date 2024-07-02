@@ -15,9 +15,13 @@ keywords = [
   "scrobble",
   "scrobbling",
 ]
-license = {text = "Apache-2.0"}
-maintainers = [{name = "Hugo van Kemenade"}]
-authors = [{name = "Amr Hassan <amr.hassan@gmail.com> and Contributors", email = "amr.hassan@gmail.com"}]
+license = { text = "Apache-2.0" }
+maintainers = [
+  { name = "Hugo van Kemenade" },
+]
+authors = [
+  { name = "Amr Hassan <amr.hassan@gmail.com> and Contributors", email = "amr.hassan@gmail.com" },
+]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -41,18 +45,16 @@ dynamic = [
 dependencies = [
   "httpx",
 ]
-[project.optional-dependencies]
-tests = [
+optional-dependencies.tests = [
   "flaky",
   "pytest",
   "pytest-cov",
   "pytest-random-order",
   "pyyaml",
 ]
-[project.urls]
-Changelog = "https://github.com/pylast/pylast/releases"
-Homepage = "https://github.com/pylast/pylast"
-Source = "https://github.com/pylast/pylast"
+urls.Changelog = "https://github.com/pylast/pylast/releases"
+urls.Homepage = "https://github.com/pylast/pylast"
+urls.Source = "https://github.com/pylast/pylast"
 
 [tool.hatch]
 version.source = "vcs"
@@ -60,29 +62,36 @@ version.source = "vcs"
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
-[tool.ruff.lint]
-select = [
-  "C4", # flake8-comprehensions
-  "E", # pycodestyle errors
-  "EM", # flake8-errmsg
-  "F", # pyflakes errors
-  "I", # isort
-  "ISC", # flake8-implicit-str-concat
-  "LOG", # flake8-logging
-  "PGH", # pygrep-hooks
-  "RUF100", # unused noqa (yesqa)
+[tool.ruff]
+fix = true
+
+lint.select = [
+  "C4",     # flake8-comprehensions
+  "E",      # pycodestyle errors
+  "EM",     # flake8-errmsg
+  "F",      # pyflakes errors
+  "I",      # isort
+  "ISC",    # flake8-implicit-str-concat
+  "LOG",    # flake8-logging
+  "PGH",    # pygrep-hooks
   "RUF022", # unsorted-dunder-all
-  "UP", # pyupgrade
-  "W", # pycodestyle warnings
-  "YTT", # flake8-2020
+  "RUF100", # unused noqa (yesqa)
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020
 ]
-extend-ignore = [
+lint.extend-ignore = [
   "E203", # Whitespace before ':'
   "E221", # Multiple spaces before operator
   "E226", # Missing whitespace around arithmetic operator
   "E241", # Multiple spaces after ','
 ]
+lint.isort.known-first-party = [
+  "pylast",
+]
+lint.isort.required-imports = [
+  "from __future__ import annotations",
+]
 
-[tool.ruff.lint.isort]
-known-first-party = ["pylast"]
-required-imports = ["from __future__ import annotations"]
+[tool.pyproject-fmt]
+max_supported_python = "3.13"
