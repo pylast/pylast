@@ -67,5 +67,5 @@ target/
 # JetBrains
 .idea/
 
-# Clone Digger
-output.html
+# hatch-vcs
+src/*/_version.py
