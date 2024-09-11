@@ -14,7 +14,7 @@ repos:
     rev: 1.18.0
     hooks:
       - id: blacken-docs
-        args: [--target-version=py38]
+        args: [--target-version=py39]
         additional_dependencies: [black]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
