@@ -14,6 +14,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FORCE_COLOR: 1
+
 jobs:
   # Always build & lint package.
   build-package:
@@ -38,6 +41,7 @@ jobs:
     needs: build-package
 
     permissions:
+      attestations: write
       id-token: write
 
     steps:
@@ -46,6 +50,11 @@ jobs:
         with:
           name: Packages
           path: dist
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: "dist/*"
 
       - name: Upload package to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -62,6 +71,7 @@ jobs:
     needs: build-package
 
     permissions:
+      attestations: write
       id-token: write
 
     steps:
@@ -70,6 +80,11 @@ jobs:
         with:
           name: Packages
           path: dist
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: "dist/*"
 
       - name: Upload package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
