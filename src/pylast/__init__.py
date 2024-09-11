@@ -23,7 +23,6 @@ from __future__ import annotations
 import collections
 import hashlib
 import html.entities
-import importlib.metadata
 import logging
 import os
 import re
@@ -37,11 +36,12 @@ from xml.dom import Node, minidom
 
 import httpx
 
+from ._version import __version__
+
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
 __license__ = "apache2"
 __email__ = "amr.hassan@gmail.com"
-__version__ = importlib.metadata.version(__name__)
 
 
 # 1 : This error does not exist
