@@ -29,13 +29,9 @@ jobs:
       - name: Install uv
         uses: hynek/setup-cached-uv@v2
 
-      - name: Install dependencies
-        run: |
-          uv pip install --system -U tox-uv
-
       - name: Tox tests
         run: |
-          tox -e py
+          uvx --with tox-uv tox -e py
         env:
           PYLAST_API_KEY: ${{ secrets.PYLAST_API_KEY }}
           PYLAST_API_SECRET: ${{ secrets.PYLAST_API_SECRET }}
