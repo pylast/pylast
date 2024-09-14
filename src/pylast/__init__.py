@@ -878,7 +878,7 @@ class _Request:
 
         return self.cache.get_xml(self._get_cache_key())
 
-    def _is_cached(self):
+    def _is_cached(self) -> bool:
         """Returns True if the request is already in cache."""
 
         return self._get_cache_key() in self.cache
@@ -1517,7 +1517,7 @@ class _Opus(_Taggable):
         d = other.get_artist().get_name().lower()
         return (a == b) and (c == d)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
     def _get_params(self):
@@ -1692,7 +1692,7 @@ class Artist(_Taggable):
         else:
             return False
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
     def _get_params(self):
@@ -1866,7 +1866,7 @@ class Country(_BaseObject):
     def __eq__(self, other):
         return self.get_name().lower() == other.get_name().lower()
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
     def _get_params(self):  # TODO can move to _BaseObject
@@ -1992,7 +1992,7 @@ class Tag(_Chartable):
     def __eq__(self, other):
         return self.get_name().lower() == other.get_name().lower()
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
     def _get_params(self):
@@ -2191,7 +2191,7 @@ class User(_Chartable):
         else:
             return False
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
     def _get_params(self):
