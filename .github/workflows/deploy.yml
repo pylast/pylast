@@ -53,7 +53,7 @@ jobs:
           path: dist
 
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: "dist/*"
 
@@ -83,7 +83,7 @@ jobs:
           path: dist
 
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: "dist/*"
 
