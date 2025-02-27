@@ -1,12 +1,13 @@
 # pyLast
 
-[![PyPI version](https://img.shields.io/pypi/v/pylast.svg)](https://pypi.org/project/pylast/)
-[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg)](https://pypi.org/project/pylast/)
+[![PyPI version](https://img.shields.io/pypi/v/pylast.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/pylast/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/pylast.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/pylast/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pylast.svg)](https://pypistats.org/packages/pylast)
-[![Test](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
-[![Coverage (Codecov)](https://codecov.io/gh/pylast/pylast/branch/main/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
+[![GitHub Actions status](https://github.com/pylast/pylast/workflows/Test/badge.svg)](https://github.com/pylast/pylast/actions)
+[![Codecov](https://codecov.io/gh/pylast/pylast/branch/main/graph/badge.svg)](https://codecov.io/gh/pylast/pylast)
+[![Licence](https://img.shields.io/github/license/pylast/pylast.svg)](LICENSE.txt)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11247604.svg)](https://doi.org/10.5281/zenodo.11247604)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
-[![DOI](https://zenodo.org/badge/7803088.svg)](https://zenodo.org/badge/latestdoi/7803088)
 
 A Python interface to [Last.fm](https://www.last.fm/) and other API-compatible websites
 such as [Libre.fm](https://libre.fm/).
@@ -35,7 +36,7 @@ Or from requirements.txt:
 
 Note:
 
-- pyLast 5.4+ supports Python 3.9-3.13.
+- pyLast 5.4+ supports Python 3.9-3.14.
 - pyLast 5.3 supports Python 3.8-3.13.
 - pyLast 5.2 supports Python 3.8-3.12.
 - pyLast 5.1 supports Python 3.7-3.11.
