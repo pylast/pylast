@@ -1,16 +1,16 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.6
+    rev: v0.9.7
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
       - id: black
 
-  - repo: https://github.com/asottile/blacken-docs
+  - repo: https://github.com/adamchainz/blacken-docs
     rev: 1.19.1
     hooks:
       - id: blacken-docs
@@ -33,15 +33,20 @@ repos:
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.30.0
+    rev: 0.31.2
     hooks:
       - id: check-github-workflows
       - id: check-renovate
 
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.6
+    rev: v1.7.7
     hooks:
       - id: actionlint
+
+  - repo: https://github.com/woodruffw/zizmor-pre-commit
+    rev: v1.3.1
+    hooks:
+      - id: zizmor
 
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: v2.5.0
@@ -54,16 +59,22 @@ repos:
       - id: validate-pyproject
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: 1.4.1
+    rev: 1.5.0
     hooks:
       - id: tox-ini-fmt
 
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.16.0
+    hooks:
+      - id: yamlfmt
+
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.4.2
+    rev: v3.5.2
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
+        exclude_types: [yaml]
 
   - repo: meta
     hooks:

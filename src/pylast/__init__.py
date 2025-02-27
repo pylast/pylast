@@ -1356,11 +1356,11 @@ class _Taggable(_BaseObject):
             c_new_tags.append(tag.lower())
             new_tags.append(tag)
 
-        for i in range(0, len(old_tags)):
+        for i in range(len(old_tags)):
             if c_old_tags[i] not in c_new_tags:
                 to_remove.append(old_tags[i])
 
-        for i in range(0, len(new_tags)):
+        for i in range(len(new_tags)):
             if c_new_tags[i] not in c_old_tags:
                 to_add.append(new_tags[i])
 
@@ -1798,7 +1798,7 @@ class Artist(_Taggable):
         matches = _extract_all(doc, "match")
 
         artists = []
-        for i in range(0, len(names)):
+        for i in range(len(names)):
             artists.append(
                 SimilarItem(Artist(names[i], self.network), _number(matches[i]))
             )
@@ -2813,7 +2813,7 @@ def _extract_all(node, name, limit_count=None):
 
     seq = []
 
-    for i in range(0, len(node.getElementsByTagName(name))):
+    for i in range(len(node.getElementsByTagName(name))):
         if len(seq) == limit_count:
             break
 

@@ -14,12 +14,9 @@ on:
   #   types: [opened, reopened, synchronize]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   update_release_draft:
-    if: github.repository_owner == 'pylast'
+    if: github.event.repository.fork == false
     permissions:
       # write permission is required to create a GitHub Release
       contents: write

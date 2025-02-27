@@ -1,4 +1,4 @@
-# Release Checklist
+# Release checklist
 
 - [ ] Get `main` to the appropriate code release state.
       [GitHub Actions](https://github.com/pylast/pylast/actions) should be running
