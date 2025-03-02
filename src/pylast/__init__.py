@@ -893,7 +893,7 @@ class _Request:
         username = "" if username is None else f"?username={username}"
 
         (host_name, host_subdir) = self.network.ws_server
-        timeout = httpx.Timeout(5, read=10)
+        timeout = httpx.Timeout(5, read=20)
 
         if self.network.is_proxy_enabled():
             client = httpx.Client(
