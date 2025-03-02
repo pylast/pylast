@@ -20,3 +20,18 @@ jobs:
         with:
           python-version: "3.x"
       - uses: tox-dev/action-pre-commit-uv@v1
+
+  mypy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Mypy
+        run: uvx --with tox-uv tox -e mypy

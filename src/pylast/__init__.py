@@ -31,12 +31,15 @@ import ssl
 import tempfile
 import time
 import xml.dom
+import xml.parsers
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
 import httpx
 
 from ._version import __version__
+
+TYPE_CHECKING = False
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
@@ -188,8 +191,8 @@ class _Network:
         self.domain_names = domain_names
         self.urls = urls
 
-        self.cache_backend = None
-        self.proxy = None
+        self.cache_backend: _ShelfCacheBackend | None = None
+        self.proxy: str | dict | None = None
         self.last_call_time: float = 0.0
         self.limit_rate = False
 
@@ -983,7 +986,7 @@ class SessionKeyGenerator:
 
     def __init__(self, network) -> None:
         self.network = network
-        self.web_auth_tokens = {}
+        self.web_auth_tokens: dict = {}
 
     def _get_web_auth_token(self):
         """
@@ -1037,9 +1040,16 @@ class SessionKeyGenerator:
 
         doc = request.execute()
 
-        session_key = doc.getElementsByTagName("key")[0].firstChild.data
-        username = doc.getElementsByTagName("name")[0].firstChild.data
-        return session_key, username
+        session_key = doc.getElementsByTagName("key")[0].firstChild
+        username = doc.getElementsByTagName("name")[0].firstChild
+
+        if TYPE_CHECKING:
+            assert session_key is not None
+            assert username is not None
+            assert hasattr(session_key, "data")
+            assert hasattr(username, "data")
+
+        return session_key.data, username.data
 
     def get_web_auth_session_key(self, url, token: str = ""):
         """
@@ -1499,6 +1509,9 @@ class _Opus(_Taggable):
         self.info = info
 
     def __repr__(self) -> str:
+        if TYPE_CHECKING:
+            assert self.artist is not None
+
         return (
             f"pylast.{self.ws_prefix.title()}"
             f"({repr(self.artist.name)}, {repr(self.title)}, {repr(self.network)})"
@@ -1614,7 +1627,7 @@ class _Opus(_Taggable):
 class Album(_Opus):
     """An album."""
 
-    __hash__ = _Opus.__hash__
+    __hash__ = _Opus.__hash__  # type: ignore[assignment]
 
     def __init__(self, artist, title, network, username=None, info=None) -> None:
         super().__init__(artist, title, network, "album", username, info)
@@ -2062,7 +2075,7 @@ class Tag(_Chartable):
 class Track(_Opus):
     """A Last.fm track."""
 
-    __hash__ = _Opus.__hash__
+    __hash__ = _Opus.__hash__  # type: ignore[assignment]
 
     def __init__(self, artist, title, network, username=None, info=None) -> None:
         super().__init__(artist, title, network, "track", username, info)
