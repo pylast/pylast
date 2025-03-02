@@ -40,6 +40,9 @@ import httpx
 from ._version import __version__
 
 TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from collections.abc import Generator, Iterator
+
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
 __copyright__ = "Copyright (C) 2008-2010 Amr Hassan, 2013-2021 hugovk, 2017 Mice Pápai"
@@ -215,64 +218,65 @@ class _Network:
     def __str__(self) -> str:
         return f"{self.name} Network"
 
-    def get_artist(self, artist_name):
+    def get_artist(self, artist_name: str) -> Artist:
         """
         Return an Artist object
         """
 
         return Artist(artist_name, self)
 
-    def get_track(self, artist, title):
+    def get_track(self, artist: str, title: str) -> Track:
         """
         Return a Track object
         """
 
         return Track(artist, title, self)
 
-    def get_album(self, artist, title):
+    def get_album(self, artist: str, title: str) -> Album:
         """
         Return an Album object
         """
 
         return Album(artist, title, self)
 
-    def get_authenticated_user(self):
+    def get_authenticated_user(self) -> AuthenticatedUser:
         """
         Returns the authenticated user
         """
 
         return AuthenticatedUser(self)
 
-    def get_country(self, country_name):
+    def get_country(self, country_name: str) -> Country:
         """
         Returns a country object
         """
 
         return Country(country_name, self)
 
-    def get_user(self, username):
+    def get_user(self, username: str) -> User:
         """
         Returns a user object
         """
 
         return User(username, self)
 
-    def get_tag(self, name):
+    def get_tag(self, name: str) -> Tag:
         """
         Returns a tag object
         """
 
         return Tag(name, self)
 
-    def _get_language_domain(self, domain_language):
+    def _get_language_domain(self, domain_language: int) -> str | None:
         """
         Returns the mapped domain name of the network to a DOMAIN_* value
         """
-
         if domain_language in self.domain_names:
             return self.domain_names[domain_language]
 
-    def _get_url(self, domain, url_type) -> str:
+        return None
+
+    def _get_url(self, domain: int, url_type: str) -> str:
         return f"https://{self._get_language_domain(domain)}/{self.urls[url_type]}"
 
     def _get_ws_auth(self):
@@ -294,7 +298,9 @@ class _Network:
 
         self.last_call_time = now
 
-    def get_top_artists(self, limit=None, cacheable: bool = True):
+    def get_top_artists(
+        self, limit: int | None = None, cacheable: bool = True
+    ) -> list[TopItem]:
         """Returns the most played artists as a sequence of TopItem objects."""
 
         params = {}
@@ -305,7 +311,9 @@ class _Network:
 
         return _extract_top_artists(doc, self)
 
-    def get_top_tracks(self, limit=None, cacheable: bool = True):
+    def get_top_tracks(
+        self, limit: int | None = None, cacheable: bool = True
+    ) -> list[TopItem]:
         """Returns the most played tracks as a sequence of TopItem objects."""
 
         params = {}
@@ -324,7 +332,9 @@ class _Network:
 
         return seq
 
-    def get_top_tags(self, limit=None, cacheable: bool = True):
+    def get_top_tags(
+        self, limit: int | None = None, cacheable: bool = True
+    ) -> list[TopItem]:
         """Returns the most used tags as a sequence of TopItem objects."""
 
         # Last.fm has no "limit" parameter for tag.getTopTags
@@ -341,7 +351,9 @@ class _Network:
 
         return seq
 
-    def get_geo_top_artists(self, country, limit=None, cacheable: bool = True):
+    def get_geo_top_artists(
+        self, country: str, limit=None, cacheable: bool = True
+    ) -> list[TopItem]:
         """Get the most popular artists on Last.fm by country.
         Parameters:
         country (Required) : A country name, as defined by the ISO 3166-1
@@ -359,8 +371,12 @@ class _Network:
         return _extract_top_artists(doc, self)
 
     def get_geo_top_tracks(
-        self, country, location=None, limit=None, cacheable: bool = True
-    ):
+        self,
+        country: str,
+        location: str | None = None,
+        limit=None,
+        cacheable: bool = True,
+    ) -> list[TopItem]:
         """Get the most popular tracks on Last.fm last week by country.
         Parameters:
         country (Required) : A country name, as defined by the ISO 3166-1
@@ -438,19 +454,19 @@ class _Network:
         """Returns True if caching is enabled."""
         return self.cache_backend is not None
 
-    def search_for_album(self, album_name):
+    def search_for_album(self, album_name: str) -> AlbumSearch:
         """Searches for an album by its name. Returns an AlbumSearch object.
         Use get_next_page() to retrieve sequences of results."""
 
         return AlbumSearch(album_name, self)
 
-    def search_for_artist(self, artist_name):
+    def search_for_artist(self, artist_name: str) -> ArtistSearch:
         """Searches for an artist by its name. Returns an ArtistSearch object.
         Use get_next_page() to retrieve sequences of results."""
 
         return ArtistSearch(artist_name, self)
 
-    def search_for_track(self, artist_name, track_name):
+    def search_for_track(self, artist_name: str, track_name: str) -> TrackSearch:
         """Searches for a track by its name and its artist. Set artist to an
         empty string if not available.
         Returns a TrackSearch object.
@@ -458,7 +474,7 @@ class _Network:
 
         return TrackSearch(artist_name, track_name, self)
 
-    def get_track_by_mbid(self, mbid):
+    def get_track_by_mbid(self, mbid: str) -> Track:
         """Looks up a track by its MusicBrainz ID"""
 
         params = {"mbid": mbid}
@@ -467,7 +483,7 @@ class _Network:
 
         return Track(_extract(doc, "name", 1), _extract(doc, "name"), self)
 
-    def get_artist_by_mbid(self, mbid):
+    def get_artist_by_mbid(self, mbid: str) -> Artist:
         """Looks up an artist by its MusicBrainz ID"""
 
         params = {"mbid": mbid}
@@ -476,7 +492,7 @@ class _Network:
 
         return Artist(_extract(doc, "name"), self)
 
-    def get_album_by_mbid(self, mbid):
+    def get_album_by_mbid(self, mbid: str) -> Album:
         """Looks up an album by its MusicBrainz ID"""
 
         params = {"mbid": mbid}
@@ -787,7 +803,7 @@ class _ShelfCacheBackend:
     def __contains__(self, key) -> bool:
         return key in self.cache_keys
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self.shelf.keys())
 
     def get_xml(self, key):
@@ -798,7 +814,7 @@ class _ShelfCacheBackend:
         self.shelf[key] = xml_string
 
     @classmethod
-    def create_shelf(cls):
+    def create_shelf(cls) -> _ShelfCacheBackend:
         file_descriptor, file_path = tempfile.mkstemp(prefix="pylast_tmp_")
         os.close(file_descriptor)
         return cls(file_path=file_path, flag="n")
@@ -837,13 +853,11 @@ class _Request:
         if "api_sig" not in self.params.keys():
             self.params["api_sig"] = self._get_signature()
 
-    def _get_signature(self):
+    def _get_signature(self) -> str:
         """
         Returns a 32-character hexadecimal md5 hash of the signature string.
         """
-
         keys = list(self.params.keys())
-
         keys.sort()
 
         string = ""
@@ -856,7 +870,7 @@ class _Request:
 
         return md5(string)
 
-    def _get_cache_key(self):
+    def _get_cache_key(self) -> str:
         """
         The cache key is a string of concatenated sorted names and values.
         """
@@ -1006,7 +1020,7 @@ class SessionKeyGenerator:
         e = doc.getElementsByTagName("token")[0]
         return e.firstChild.data
 
-    def get_web_auth_url(self):
+    def get_web_auth_url(self) -> str:
         """
         The user must open this page, and you first, then
         call get_web_auth_session_key(url) after that.
@@ -1024,7 +1038,7 @@ class SessionKeyGenerator:
 
         return url
 
-    def get_web_auth_session_key_username(self, url, token: str = ""):
+    def get_web_auth_session_key_username(self, url: str | None, token: str = ""):
         """
         Retrieves the session key/username of a web authorization process by its URL.
         """
@@ -1051,14 +1065,14 @@ class SessionKeyGenerator:
 
         return session_key.data, username.data
 
-    def get_web_auth_session_key(self, url, token: str = ""):
+    def get_web_auth_session_key(self, url: str, token: str = ""):
         """
         Retrieves the session key of a web authorization process by its URL.
         """
         session_key, _username = self.get_web_auth_session_key_username(url, token)
         return session_key
 
-    def get_session_key(self, username, password_hash):
+    def get_session_key(self, username: str, password_hash: str):
         """
         Retrieve a session key with a username and a md5 hash of the user's
         password.
@@ -1246,7 +1260,9 @@ class _Chartable(_BaseObject):
         """
         return self.get_weekly_charts("track", from_date, to_date)
 
-    def get_weekly_charts(self, chart_kind, from_date=None, to_date=None):
+    def get_weekly_charts(
+        self, chart_kind: str, from_date: str | None = None, to_date: str | None = None
+    ) -> list[TopItem]:
         """
         Returns the weekly charts for the week starting from the
         from_date value to the to_date value.
@@ -1377,7 +1393,7 @@ class _Taggable(_BaseObject):
         self.remove_tags(to_remove)
         self.add_tags(to_add)
 
-    def get_top_tags(self, limit=None):
+    def get_top_tags(self, limit: int | None = None) -> list[TopItem]:
         """Returns a list of the most frequently used Tags on this object."""
 
         doc = self._request(self.ws_prefix + ".getTopTags", True)
@@ -1519,7 +1535,11 @@ class _Opus(_Taggable):
 
     @_string_output
     def __str__(self) -> str:
-        return f"{self.get_artist().get_name()} - {self.get_title()}"
+        artist = self.get_artist()
+        if TYPE_CHECKING:
+            assert artist is not None
+
+        return f"{artist.get_name()} - {self.get_title()}"
 
     def __eq__(self, other):
         if type(self) is not type(other):
@@ -1539,12 +1559,12 @@ class _Opus(_Taggable):
             self.ws_prefix: self.get_title(),
         }
 
-    def get_artist(self):
+    def get_artist(self) -> Artist | None:
         """Returns the associated Artist object."""
 
         return self.artist
 
-    def get_cover_image(self, size=SIZE_EXTRA_LARGE):
+    def get_cover_image(self, size: int = SIZE_EXTRA_LARGE):
         """
         Returns a URI to the cover image
         size can be one of:
@@ -1573,7 +1593,7 @@ class _Opus(_Taggable):
 
         return self.get_title(properly_capitalized)
 
-    def get_playcount(self):
+    def get_playcount(self) -> float:
         """Returns the number of plays on the network"""
 
         return _number(
@@ -1594,7 +1614,7 @@ class _Opus(_Taggable):
         doc = self._request(self.ws_prefix + ".getInfo", True, params)
         return _number(_extract(doc, "userplaycount"))
 
-    def get_listener_count(self):
+    def get_listener_count(self) -> float:
         """Returns the number of listeners on the network"""
 
         return _number(
@@ -1632,14 +1652,14 @@ class Album(_Opus):
     def __init__(self, artist, title, network, username=None, info=None) -> None:
         super().__init__(artist, title, network, "album", username, info)
 
-    def get_tracks(self):
+    def get_tracks(self) -> list[Track]:
         """Returns the list of Tracks on this album."""
 
         return _extract_tracks(
             self._request(self.ws_prefix + ".getInfo", cacheable=True), self.network
         )
 
-    def get_url(self, domain_name=DOMAIN_ENGLISH):
+    def get_url(self, domain_name: int = DOMAIN_ENGLISH):
         """Returns the URL of the album or track page on the network.
         # Parameters:
         * domain_name str: The network's language domain. Possible values:
@@ -1656,12 +1676,16 @@ class Album(_Opus):
             o DOMAIN_JAPANESE
             o DOMAIN_CHINESE
         """
+        artist = self.get_artist()
+        if TYPE_CHECKING:
+            assert artist is not None
+            assert self.network is not None
 
-        artist = _url_safe(self.get_artist().get_name())
+        artist_str = _url_safe(artist.get_name())
         title = _url_safe(self.get_title())
 
         return self.network._get_url(domain_name, self.ws_prefix) % {
-            "artist": artist,
+            "artist": artist_str,
             "album": title,
         }
 
@@ -2075,6 +2099,8 @@ class Tag(_Chartable):
 class Track(_Opus):
     """A Last.fm track."""
 
+    listener_count: float | None = None
+
     __hash__ = _Opus.__hash__  # type: ignore[assignment]
 
     def __init__(self, artist, title, network, username=None, info=None) -> None:
@@ -2130,7 +2156,7 @@ class Track(_Opus):
 
         self._request(self.ws_prefix + ".unlove")
 
-    def get_similar(self, limit=None):
+    def get_similar(self, limit: int | None = None) -> list[SimilarItem]:
         """
         Returns similar tracks for this track on the network,
         based on listening data.
@@ -2335,7 +2361,7 @@ class User(_Chartable):
         large amount of data.
         """
 
-        def _get_recent_tracks():
+        def _get_recent_tracks() -> Generator[PlayedTrack, None, None]:
             params = self._get_params()
             if limit:
                 params["limit"] = limit + 1  # in case we remove the now playing track
@@ -2363,7 +2389,7 @@ class User(_Chartable):
 
         return _get_recent_tracks() if stream else list(_get_recent_tracks())
 
-    def get_country(self):
+    def get_country(self) -> Country | None:
         """Returns the name of the country of the user."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
@@ -2375,35 +2401,37 @@ class User(_Chartable):
         else:
             return Country(country, self.network)
 
-    def is_subscriber(self):
+    def is_subscriber(self) -> bool:
         """Returns whether the user is a subscriber or not. True or False."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "subscriber") == "1"
 
-    def get_playcount(self):
+    def get_playcount(self) -> float:
         """Returns the user's playcount so far."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _number(_extract(doc, "playcount"))
 
-    def get_registered(self):
+    def get_registered(self) -> str:
         """Returns the user's registration date."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return _extract(doc, "registered")
 
-    def get_unixtime_registered(self):
+    def get_unixtime_registered(self) -> int:
         """Returns the user's registration date as a Unix timestamp."""
 
         doc = self._request(self.ws_prefix + ".getInfo", True)
 
         return int(doc.getElementsByTagName("registered")[0].getAttribute("unixtime"))
 
-    def get_tagged_albums(self, tag, limit=None, cacheable: bool = True):
+    def get_tagged_albums(
+        self, tag: str, limit: int | None = None, cacheable: bool = True
+    ) -> list[Album]:
         """Returns the albums tagged by a user."""
 
         params = self._get_params()
@@ -2414,7 +2442,7 @@ class User(_Chartable):
         doc = self._request(self.ws_prefix + ".getpersonaltags", cacheable, params)
         return _extract_albums(doc, self.network)
 
-    def get_tagged_artists(self, tag, limit=None):
+    def get_tagged_artists(self, tag: str, limit: int | None = None) -> list[Artist]:
         """Returns the artists tagged by a user."""
 
         params = self._get_params()
@@ -2425,7 +2453,9 @@ class User(_Chartable):
         doc = self._request(self.ws_prefix + ".getpersonaltags", True, params)
         return _extract_artists(doc, self.network)
 
-    def get_tagged_tracks(self, tag, limit=None, cacheable: bool = True):
+    def get_tagged_tracks(
+        self, tag: str, limit: int | None = None, cacheable: bool = True
+    ) -> list[Track]:
         """Returns the tracks tagged by a user."""
 
         params = self._get_params()
@@ -2436,7 +2466,12 @@ class User(_Chartable):
         doc = self._request(self.ws_prefix + ".getpersonaltags", cacheable, params)
         return _extract_tracks(doc, self.network)
 
-    def get_top_albums(self, period=PERIOD_OVERALL, limit=None, cacheable: bool = True):
+    def get_top_albums(
+        self,
+        period: str = PERIOD_OVERALL,
+        limit: int | None = None,
+        cacheable: bool = True,
+    ) -> list[TopItem]:
         """Returns the top albums played by a user.
         * period: The period of time. Possible values:
           o PERIOD_OVERALL
@@ -2476,7 +2511,7 @@ class User(_Chartable):
 
         return _extract_top_artists(doc, self.network)
 
-    def get_top_tags(self, limit=None, cacheable: bool = True):
+    def get_top_tags(self, limit=None, cacheable: bool = True) -> list[TopItem]:
         """
         Returns a sequence of the top tags used by this user with their counts
         as TopItem objects.
@@ -2582,7 +2617,7 @@ class User(_Chartable):
 
         return self.network._get_url(domain_name, "user") % {"name": name}
 
-    def get_library(self):
+    def get_library(self) -> Library:
         """Returns the associated Library object."""
 
         return Library(self, self.network)
@@ -2611,7 +2646,7 @@ class _Search(_BaseObject):
 
         self._last_page_index = 0
 
-    def _get_params(self):
+    def _get_params(self) -> dict:
         params = {}
 
         for key in self.search_terms.keys():
@@ -2626,7 +2661,7 @@ class _Search(_BaseObject):
 
         return _extract(doc, "totalResults")
 
-    def _retrieve_page(self, page_index):
+    def _retrieve_page(self, page_index: int) -> xml.dom.minidom.Element:
         """Returns the node of matches to be processed"""
 
         params = self._get_params()
@@ -2635,7 +2670,7 @@ class _Search(_BaseObject):
 
         return doc.getElementsByTagName(self._ws_prefix + "matches")[0]
 
-    def _retrieve_next_page(self):
+    def _retrieve_next_page(self) -> xml.dom.minidom.Element:
         self._last_page_index += 1
         return self._retrieve_page(self._last_page_index)
 
@@ -2648,7 +2683,7 @@ class AlbumSearch(_Search):
             ws_prefix="album", search_terms={"album": album_name}, network=network
         )
 
-    def get_next_page(self):
+    def get_next_page(self) -> list[Album]:
         """Returns the next page of results as a sequence of Album objects."""
 
         master_node = self._retrieve_next_page()
@@ -2675,7 +2710,7 @@ class ArtistSearch(_Search):
             ws_prefix="artist", search_terms={"artist": artist_name}, network=network
         )
 
-    def get_next_page(self):
+    def get_next_page(self) -> list[Artist]:
         """Returns the next page of results as a sequence of Artist objects."""
 
         master_node = self._retrieve_next_page()
@@ -2706,7 +2741,7 @@ class TrackSearch(_Search):
             network=network,
         )
 
-    def get_next_page(self):
+    def get_next_page(self) -> list[Track]:
         """Returns the next page of results as a sequence of Track objects."""
 
         master_node = self._retrieve_next_page()
@@ -2725,7 +2760,7 @@ class TrackSearch(_Search):
         return seq
 
 
-def md5(text):
+def md5(text: str) -> str:
     """Returns the md5 hash of a string."""
 
     h = hashlib.md5()
@@ -2734,7 +2769,7 @@ def md5(text):
     return h.hexdigest()
 
 
-def _unicode(text):
+def _unicode(text: bytes | str) -> str:
     if isinstance(text, bytes):
         return str(text, "utf-8")
     else:
@@ -2835,7 +2870,7 @@ def _extract_all(node, name, limit_count=None):
     return seq
 
 
-def _extract_top_artists(doc, network):
+def _extract_top_artists(doc: xml.dom.minidom.Document, network) -> list[TopItem]:
     # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("artist"):
@@ -2847,7 +2882,7 @@ def _extract_top_artists(doc, network):
     return seq
 
 
-def _extract_top_albums(doc, network):
+def _extract_top_albums(doc: xml.dom.minidom.Document, network) -> list[TopItem]:
     # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("album"):
@@ -2861,14 +2896,14 @@ def _extract_top_albums(doc, network):
     return seq
 
 
-def _extract_artists(doc, network):
+def _extract_artists(doc: xml.dom.minidom.Document, network) -> list[Artist]:
     seq = []
     for node in doc.getElementsByTagName("artist"):
         seq.append(Artist(_extract(node, "name"), network))
     return seq
 
 
-def _extract_albums(doc, network):
+def _extract_albums(doc: xml.dom.minidom.Document, network) -> list[Album]:
     seq = []
     for node in doc.getElementsByTagName("album"):
         name = _extract(node, "name")
@@ -2877,7 +2912,7 @@ def _extract_albums(doc, network):
     return seq
 
 
-def _extract_tracks(doc, network):
+def _extract_tracks(doc: xml.dom.minidom.Document, network) -> list[Track]:
     seq = []
     for node in doc.getElementsByTagName("track"):
         name = _extract(node, "name")
@@ -2886,13 +2921,13 @@ def _extract_tracks(doc, network):
     return seq
 
 
-def _url_safe(text):
+def _url_safe(text: str) -> str:
     """Does all kinds of tricks on a text to make it safe to use in a URL."""
 
     return quote_plus(quote_plus(str(text))).lower()
 
 
-def _number(string):
+def _number(string: str) -> float:
     """
     Extracts an int from a string.
     Returns a 0 if None or an empty string was passed.
@@ -2907,7 +2942,7 @@ def _number(string):
             return float(string)
 
 
-def _unescape_htmlentity(string):
+def _unescape_htmlentity(string: str) -> str:
     mapping = html.entities.name2codepoint
     for key in mapping:
         string = string.replace(f"&{key};", chr(mapping[key]))
