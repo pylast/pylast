@@ -5,3 +5,7 @@
 exclude_also =
     # Don't complain if non-runnable code isn't run:
     if TYPE_CHECKING:
+
+[run]
+disable_warnings =
+    no-sysmon
