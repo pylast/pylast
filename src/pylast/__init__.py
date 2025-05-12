@@ -833,7 +833,7 @@ class _Request:
         self.params = {}
 
         for key in params:
-            self.params[key] = _unicode(params[key])
+            self.params[key] = str(params[key])
 
         (self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
 
@@ -939,7 +939,7 @@ class _Request:
                 response.status_code,
                 f"Connection to the API failed with HTTP code {response.status_code}",
             )
-        response_text = _unicode(response.read())
+        response_text = str(response.read(), "utf-8")
 
         try:
             self._check_response_for_errors(response_text)
@@ -2762,18 +2762,10 @@ class TrackSearch(_Search):
 
 def md5(text: str) -> str:
     """Returns the md5 hash of a string."""
-
     h = hashlib.md5()
-    h.update(_unicode(text).encode("utf-8"))
+    h.update(text.encode("utf-8"))
 
     return h.hexdigest()
-
-
-def _unicode(text: bytes | str) -> str:
-    if isinstance(text, bytes):
-        return str(text, "utf-8")
-    else:
-        return str(text)
 
 
 def cleanup_nodes(doc):
