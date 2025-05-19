@@ -2236,9 +2236,7 @@ class User(_Chartable):
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
-    def _extract_played_track(
-        self, track_node: minidom.Element
-    ) -> PlayedTrack:
+    def _extract_played_track(self, track_node: minidom.Element) -> PlayedTrack:
         title = _extract(track_node, "name")
         track_artist = _extract(track_node, "artist")
         date = _extract(track_node, "date")
