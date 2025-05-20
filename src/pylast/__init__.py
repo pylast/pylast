@@ -20,7 +20,6 @@
 # https://github.com/pylast/pylast
 from __future__ import annotations
 
-import collections
 import hashlib
 import html.entities
 import logging
@@ -30,6 +29,7 @@ import shelve
 import ssl
 import tempfile
 import time
+import typing
 import xml.dom
 import xml.parsers
 from urllib.parse import quote_plus
@@ -1090,19 +1090,33 @@ class SessionKeyGenerator:
         return _extract(doc, "key")
 
 
-TopItem = collections.namedtuple("TopItem", ["item", "weight"])
-SimilarItem = collections.namedtuple("SimilarItem", ["item", "match"])
-LibraryItem = collections.namedtuple("LibraryItem", ["item", "playcount", "tagcount"])
-PlayedTrack = collections.namedtuple(
-    "PlayedTrack", ["track", "album", "playback_date", "timestamp"]
-)
-LovedTrack = collections.namedtuple("LovedTrack", ["track", "date", "timestamp"])
-ImageSizes = collections.namedtuple(
-    "ImageSizes", ["original", "large", "largesquare", "medium", "small", "extralarge"]
-)
-Image = collections.namedtuple(
-    "Image", ["title", "url", "dateadded", "format", "owner", "sizes", "votes"]
-)
+class TopItem(typing.NamedTuple):
+    item: Artist | Album | Track | Tag
+    weight: float
+
+
+class SimilarItem(typing.NamedTuple):
+    item: Artist | Track
+    match: float
+
+
+class LibraryItem(typing.NamedTuple):
+    item: Artist
+    playcount: float
+    tagcount: float
+
+
+class PlayedTrack(typing.NamedTuple):
+    track: Track
+    album: str | None
+    playback_date: str | None
+    timestamp: str | None
+
+
+class LovedTrack(typing.NamedTuple):
+    track: Track
+    date: str | None
+    timestamp: str
 
 
 def _string_output(func):
