@@ -1092,7 +1092,7 @@ class SessionKeyGenerator:
 
 class TopItem(typing.NamedTuple):
     item: Artist | Album | Track | Tag
-    weight: int | float
+    weight: float
 
 
 class SimilarItem(typing.NamedTuple):
@@ -1102,20 +1102,20 @@ class SimilarItem(typing.NamedTuple):
 
 class LibraryItem(typing.NamedTuple):
     item: Artist
-    playcount: int
-    tagcount: int
+    playcount: float
+    tagcount: float
 
 
 class PlayedTrack(typing.NamedTuple):
     track: Track
-    album: str
-    playback_date: str
+    album: str | None
+    playback_date: str | None
     timestamp: str | None
 
 
 class LovedTrack(typing.NamedTuple):
     track: Track
-    date: str
+    date: str | None
     timestamp: str
 
 
