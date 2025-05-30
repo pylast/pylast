@@ -677,7 +677,7 @@ class LastFMNetwork(_Network):
         username: str = "",
         password_hash: str = "",
         token: str = "",
-        proxy: str = None,
+        proxy: str | None = None,
     ) -> None:
         super().__init__(
             name="Last.fm",
@@ -749,7 +749,7 @@ class LibreFMNetwork(_Network):
         session_key: str = "",
         username: str = "",
         password_hash: str = "",
-        proxy: str = None,
+        proxy: str | None = None,
     ) -> None:
         super().__init__(
             name="Libre.fm",
