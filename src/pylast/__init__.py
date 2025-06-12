@@ -172,7 +172,8 @@ class _Network:
             name
         urls: a dict mapping types to URLs
         token: an authentication token to retrieve a session
-        proxy: A string URL for a proxy server that handles network requests.
+        proxy: A string or dictionary specifying the proxy server(s) to handle
+            network requests.
 
         if username and password_hash were provided and not session_key,
         session_key will be generated automatically when needed.
@@ -195,7 +196,18 @@ class _Network:
         self.password_hash = password_hash
         self.domain_names = domain_names
         self.urls = urls
-        self.proxy: str | None = proxy
+        self.proxy = None
+        if isinstance(proxy, str):
+            self.proxy = {"https://": httpx.HTTPTransport(proxy=proxy)}
+        elif isinstance(proxy, dict):
+            self.proxy = {
+                scheme: (
+                    httpx.HTTPTransport(proxy=proxy)
+                    if isinstance(proxy, str)
+                    else proxy
+                )
+                for scheme, proxy in proxy.items()
+            }
 
         self.cache_backend: _ShelfCacheBackend | None = None
         self.last_call_time: float = 0.0
@@ -409,7 +421,7 @@ class _Network:
 
         return seq
 
-    def enable_proxy(self, proxy: str) -> None:
+    def enable_proxy(self, proxy: str | dict) -> None:
         """Enable default web proxy.
         https://www.python-httpx.org/advanced/proxies
         """
@@ -656,7 +668,8 @@ class LastFMNetwork(_Network):
     username: a username of a valid user
     password_hash: the output of pylast.md5(password) where password is the
         user's password
-    proxy: A string URL for a proxy server that handles network requests.
+    proxy: A string or dictionary specifying the proxy server(s) to handle
+        network requests.
 
     if username and password_hash were provided and not session_key,
     session_key will be generated automatically when needed.
@@ -677,7 +690,7 @@ class LastFMNetwork(_Network):
         username: str = "",
         password_hash: str = "",
         token: str = "",
-        proxy: str | None = None,
+        proxy: str | dict | None = None,
     ) -> None:
         super().__init__(
             name="Last.fm",
@@ -736,7 +749,8 @@ class LibreFMNetwork(_Network):
     username: a username of a valid user
     password_hash: the output of pylast.md5(password) where password is the
         user's password
-    proxy: A string URL for a proxy server that handles network requests.
+    proxy: A string or dictionary specifying the proxy server(s) to handle
+        network requests.
 
     if username and password_hash were provided and not session_key,
     session_key will be generated automatically when needed.
@@ -749,7 +763,7 @@ class LibreFMNetwork(_Network):
         session_key: str = "",
         username: str = "",
         password_hash: str = "",
-        proxy: str | None = None,
+        proxy: str | dict | None = None,
     ) -> None:
         super().__init__(
             name="Libre.fm",
@@ -923,7 +937,7 @@ class _Request:
             verify=SSL_CONTEXT,
             base_url=f"https://{host_name}",
             headers=HEADERS,
-            proxy=self.network.proxy,
+            mounts=self.network.proxy,
             timeout=timeout,
         )
 
