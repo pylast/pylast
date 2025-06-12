@@ -197,6 +197,10 @@ class _Network:
         self.domain_names = domain_names
         self.urls = urls
         self.proxy = None
+        self.cache_backend: _ShelfCacheBackend | None = None
+        self.last_call_time: float = 0.0
+        self.limit_rate = False
+
         if isinstance(proxy, str):
             self.proxy = {"https://": httpx.HTTPTransport(proxy=proxy)}
         elif isinstance(proxy, dict):
@@ -208,10 +212,6 @@ class _Network:
                 )
                 for scheme, proxy in proxy.items()
             }
-
-        self.cache_backend: _ShelfCacheBackend | None = None
-        self.last_call_time: float = 0.0
-        self.limit_rate = False
 
         # Load session_key and username from authentication token if provided
         if token and not self.session_key:
