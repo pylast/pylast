@@ -919,21 +919,13 @@ class _Request:
         (host_name, host_subdir) = self.network.ws_server
         timeout = httpx.Timeout(5, read=20)
 
-        if self.network.is_proxy_enabled():
-            client = httpx.Client(
-                verify=SSL_CONTEXT,
-                base_url=f"https://{host_name}",
-                headers=HEADERS,
-                proxy=self.network.proxy,
-                timeout=timeout,
-            )
-        else:
-            client = httpx.Client(
-                verify=SSL_CONTEXT,
-                base_url=f"https://{host_name}",
-                headers=HEADERS,
-                timeout=timeout,
-            )
+        client = httpx.Client(
+            verify=SSL_CONTEXT,
+            base_url=f"https://{host_name}",
+            headers=HEADERS,
+            proxy=self.network.proxy,
+            timeout=timeout,
+        )
 
         try:
             response = client.post(f"{host_subdir}{username}", data=self.params)
