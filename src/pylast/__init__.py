@@ -425,6 +425,8 @@ class _Network:
         """Enable default web proxy.
         https://www.python-httpx.org/advanced/proxies
         """
+        if isinstance(proxy, str):
+            proxy = {"https://": proxy}
         self.proxy = proxy
 
     def disable_proxy(self) -> None:
