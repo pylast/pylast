@@ -156,6 +156,7 @@ class _Network:
         domain_names,
         urls,
         token=None,
+        proxy=None,
     ) -> None:
         """
         name: the name of the network
@@ -171,6 +172,8 @@ class _Network:
             name
         urls: a dict mapping types to URLs
         token: an authentication token to retrieve a session
+        proxy: A string or dictionary specifying the proxy server(s) to handle
+            network requests.
 
         if username and password_hash were provided and not session_key,
         session_key will be generated automatically when needed.
@@ -193,11 +196,22 @@ class _Network:
         self.password_hash = password_hash
         self.domain_names = domain_names
         self.urls = urls
-
+        self.proxy = None
         self.cache_backend: _ShelfCacheBackend | None = None
-        self.proxy: str | dict | None = None
         self.last_call_time: float = 0.0
         self.limit_rate = False
+
+        if isinstance(proxy, str):
+            self.proxy = {"https://": httpx.HTTPTransport(proxy=proxy)}
+        elif isinstance(proxy, dict):
+            self.proxy = {
+                scheme: (
+                    httpx.HTTPTransport(proxy=proxy)
+                    if isinstance(proxy, str)
+                    else proxy
+                )
+                for scheme, proxy in proxy.items()
+            }
 
         # Load session_key and username from authentication token if provided
         if token and not self.session_key:
@@ -409,9 +423,10 @@ class _Network:
 
     def enable_proxy(self, proxy: str | dict) -> None:
         """Enable default web proxy.
-        Multiple proxies can be passed as a `dict`, see
-        https://www.python-httpx.org/advanced/#http-proxying
+        https://www.python-httpx.org/advanced/proxies
         """
+        if isinstance(proxy, str):
+            proxy = {"https://": proxy}
         self.proxy = proxy
 
     def disable_proxy(self) -> None:
@@ -655,6 +670,8 @@ class LastFMNetwork(_Network):
     username: a username of a valid user
     password_hash: the output of pylast.md5(password) where password is the
         user's password
+    proxy: A string or dictionary specifying the proxy server(s) to handle
+        network requests.
 
     if username and password_hash were provided and not session_key,
     session_key will be generated automatically when needed.
@@ -675,6 +692,7 @@ class LastFMNetwork(_Network):
         username: str = "",
         password_hash: str = "",
         token: str = "",
+        proxy: str | dict | None = None,
     ) -> None:
         super().__init__(
             name="Last.fm",
@@ -686,6 +704,7 @@ class LastFMNetwork(_Network):
             username=username,
             password_hash=password_hash,
             token=token,
+            proxy=proxy,
             domain_names={
                 DOMAIN_ENGLISH: "www.last.fm",
                 DOMAIN_GERMAN: "www.last.fm/de",
@@ -732,6 +751,8 @@ class LibreFMNetwork(_Network):
     username: a username of a valid user
     password_hash: the output of pylast.md5(password) where password is the
         user's password
+    proxy: A string or dictionary specifying the proxy server(s) to handle
+        network requests.
 
     if username and password_hash were provided and not session_key,
     session_key will be generated automatically when needed.
@@ -744,6 +765,7 @@ class LibreFMNetwork(_Network):
         session_key: str = "",
         username: str = "",
         password_hash: str = "",
+        proxy: str | dict | None = None,
     ) -> None:
         super().__init__(
             name="Libre.fm",
@@ -754,6 +776,7 @@ class LibreFMNetwork(_Network):
             session_key=session_key,
             username=username,
             password_hash=password_hash,
+            proxy=proxy,
             domain_names={
                 DOMAIN_ENGLISH: "libre.fm",
                 DOMAIN_GERMAN: "libre.fm",
@@ -912,21 +935,13 @@ class _Request:
         (host_name, host_subdir) = self.network.ws_server
         timeout = httpx.Timeout(5, read=20)
 
-        if self.network.is_proxy_enabled():
-            client = httpx.Client(
-                verify=SSL_CONTEXT,
-                base_url=f"https://{host_name}",
-                headers=HEADERS,
-                proxies=self.network.proxy,
-                timeout=timeout,
-            )
-        else:
-            client = httpx.Client(
-                verify=SSL_CONTEXT,
-                base_url=f"https://{host_name}",
-                headers=HEADERS,
-                timeout=timeout,
-            )
+        client = httpx.Client(
+            verify=SSL_CONTEXT,
+            base_url=f"https://{host_name}",
+            headers=HEADERS,
+            mounts=self.network.proxy,
+            timeout=timeout,
+        )
 
         try:
             response = client.post(f"{host_subdir}{username}", data=self.params)
