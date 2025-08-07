@@ -271,7 +271,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_track_mbid(self) -> None:
         # Arrange
-        mbid = "ebc037b1-cc9c-44f2-a21f-83c219f0e1e0"
+        mbid = "8d3274de-437c-4dce-9404-58e59d4a5dbc"
 
         # Act
         track = self.network.get_track_by_mbid(mbid)
@@ -279,7 +279,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
         # Assert
         assert isinstance(track, pylast.Track)
-        assert track.title == "first"
+        assert track.title == "Believe"
         assert track_mbid == mbid
 
     def test_init_with_token(self) -> None:
@@ -363,7 +363,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         images = results[0].info["image"]
 
         # Assert
-        assert len(images) == 5
+        assert len(images) == 4
 
         assert images[pylast.SIZE_SMALL].startswith("https://")
         assert images[pylast.SIZE_SMALL].endswith(".png")
