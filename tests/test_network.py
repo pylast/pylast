@@ -304,7 +304,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Act / Assert
         self.network.enable_proxy(proxy)
         assert self.network.is_proxy_enabled()
-        assert self.network.proxy == "http://example.com:1234"
+        assert self.network.proxy == {"https://": "http://example.com:1234"}
 
         self.network.disable_proxy()
         assert not self.network.is_proxy_enabled()
