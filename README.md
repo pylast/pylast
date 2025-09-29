@@ -34,24 +34,6 @@ Or from requirements.txt:
 -e https://github.com/pylast/pylast.git#egg=pylast
 ```
 
-Note:
-
-- pyLast 5.4+ supports Python 3.9-3.14.
-- pyLast 5.3 supports Python 3.8-3.13.
-- pyLast 5.2 supports Python 3.8-3.12.
-- pyLast 5.1 supports Python 3.7-3.11.
-- pyLast 5.0 supports Python 3.7-3.10.
-- pyLast 4.3 - 4.5 supports Python 3.6-3.10.
-- pyLast 4.0 - 4.2 supports Python 3.6-3.9.
-- pyLast 3.2 - 3.3 supports Python 3.5-3.8.
-- pyLast 3.0 - 3.1 supports Python 3.5-3.7.
-- pyLast 2.2 - 2.4 supports Python 2.7.10+, 3.4-3.7.
-- pyLast 2.0 - 2.1 supports Python 2.7.10+, 3.4-3.6.
-- pyLast 1.7 - 1.9 supports Python 2.7, 3.3-3.6.
-- pyLast 1.0 - 1.6 supports Python 2.7, 3.3-3.4.
-- pyLast 0.5 supports Python 2, 3.
-- pyLast < 0.5 supports Python 2.
-
 ## Features
 
 - Simple public interface.
