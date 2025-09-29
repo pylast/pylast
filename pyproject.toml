@@ -19,11 +19,10 @@ license = "Apache-2.0"
 license-files = [ "LICENSE.txt" ]
 maintainers = [ { name = "Hugo van Kemenade" } ]
 authors = [ { name = "Amr Hassan <amr.hassan@gmail.com> and Contributors", email = "amr.hassan@gmail.com" } ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -88,7 +87,6 @@ lint.ignore = [
   "E226",   # Missing whitespace around arithmetic operator
   "E241",   # Multiple spaces after ','
   "PIE790", # Unnecessary pass statement
-  "UP038",  # Makes code slower and more verbose
 ]
 lint.flake8-import-conventions.aliases.datetime = "dt"
 lint.flake8-import-conventions.banned-from = [ "datetime" ]
