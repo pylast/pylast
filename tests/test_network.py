@@ -271,7 +271,7 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
 
     def test_track_mbid(self) -> None:
         # Arrange
-        mbid = "8d3274de-437c-4dce-9404-58e59d4a5dbc"
+        mbid = "8e99ebff-c706-33a0-8e73-9c8c6e15035b"
 
         # Act
         track = self.network.get_track_by_mbid(mbid)
