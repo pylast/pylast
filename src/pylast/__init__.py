@@ -813,6 +813,81 @@ class LibreFMNetwork(_Network):
         )
 
 
+class GNUFMNetwork(_Network):
+    """
+    A preconfigured _Network object for GNU FM
+
+    api_key: a provided API_KEY
+    api_secret: a provided API_SECRET
+    session_key: a generated session_key or None
+    username: a username of a valid user
+    password_hash: the output of pylast.md5(password) where password is the
+        user's password
+    hostname: the hostname of the GNU FM server default is 'gnu.fm'
+    proxy: A string or dictionary specifying the proxy server(s) to handle
+        network requests.
+
+    if username and password_hash were provided and not session_key,
+    session_key will be generated automatically when needed.
+    """
+
+    def __init__(
+        self,
+        api_key: str = "",
+        api_secret: str = "",
+        session_key: str = "",
+        username: str = "",
+        password_hash: str = "",
+        hostname: str = "",
+        proxy: str | dict | None = None,
+    ) -> None:
+        super().__init__(
+            name="Gnu.fm",
+            homepage=f"https://{hostname}",
+            ws_server=(hostname, "/2.0/"),
+            api_key=api_key,
+            api_secret=api_secret,
+            session_key=session_key,
+            username=username,
+            password_hash=password_hash,
+            proxy=proxy,
+            domain_names={
+                DOMAIN_ENGLISH: hostname,
+                DOMAIN_GERMAN: hostname,
+                DOMAIN_SPANISH: hostname,
+                DOMAIN_FRENCH: hostname,
+                DOMAIN_ITALIAN: hostname,
+                DOMAIN_POLISH: hostname,
+                DOMAIN_PORTUGUESE: hostname,
+                DOMAIN_SWEDISH: hostname,
+                DOMAIN_TURKISH: hostname,
+                DOMAIN_RUSSIAN: hostname,
+                DOMAIN_JAPANESE: hostname,
+                DOMAIN_CHINESE: hostname,
+            },
+            urls={
+                "album": "artist/%(artist)s/album/%(album)s",
+                "artist": "artist/%(artist)s",
+                "country": "place/%(country_name)s",
+                "tag": "tag/%(name)s",
+                "track": "music/%(artist)s/_/%(title)s",
+                "user": "user/%(name)s",
+            },
+        )
+
+    def __repr__(self) -> str:
+        return (
+            "pylast.GNUFMNetwork("
+            f"'{self.api_key}', "
+            f"'{self.api_secret}', "
+            f"'{self.session_key}', "
+            f"'{self.username}', "
+            f"'{self.password_hash}', "
+            f"'{self.ws_server[0]}'"
+            ")"
+        )
+
+
 class _ShelfCacheBackend:
     """Used as a backend for caching cacheable requests."""
 
