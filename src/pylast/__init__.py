@@ -855,8 +855,8 @@ class _Request:
         self.network = network
         self.params = {}
 
-        for key in params:
-            self.params[key] = str(params[key])
+        for key, value in params.items():
+            self.params[key] = self._convert_param(value)
 
         (self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
 
@@ -875,6 +875,19 @@ class _Request:
 
         if "api_sig" not in self.params.keys():
             self.params["api_sig"] = self._get_signature()
+
+    @staticmethod
+    def _convert_param(value: str | int | bool) -> str:
+        """
+        Convert a Python type to a string for use as an API parameter value.
+        """
+        return str(
+            # Convert boolean params to 1 or 0.
+            int(value)
+            if isinstance(value, bool)
+            # Everything else is just natively converted to a string.
+            else value
+        )
 
     def _get_signature(self) -> str:
         """
