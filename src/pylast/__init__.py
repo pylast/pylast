@@ -573,6 +573,8 @@ class _Network:
         stream_id: str | None = None,
         context: str | None = None,
         mbid: str | None = None,
+        *,
+        chosen_by_user: bool | None = None,
     ):
         """Used to add a track-play to a user's profile.
 
@@ -593,6 +595,10 @@ class _Network:
             context (Optional) : Sub-client version (not public, only enabled
                 for certain API keys)
             mbid (Optional) : The MusicBrainz Track ID.
+            chosen_by_user (Optional) : Set to True if the user chose this song,
+                or False if it was chosen by someone else (such as a radio
+                station or recommendation service). Assumes True if not
+                specified.
         """
 
         return self.scrobble_many(
@@ -608,6 +614,7 @@ class _Network:
                     "stream_id": stream_id,
                     "context": context,
                     "mbid": mbid,
+                    "chosen_by_user": chosen_by_user,
                 },
             )
         )
@@ -638,16 +645,21 @@ class _Network:
                 "stream_id",
                 "track_number",
                 "mbid",
+                "chosen_by_user",
                 "duration",
             )
             args_map_to = {  # so friggin lazy
                 "album_artist": "albumArtist",
                 "track_number": "trackNumber",
                 "stream_id": "streamID",
+                "chosen_by_user": "chosenByUser",
             }
 
             for arg in additional_args:
-                if arg in tracks_to_scrobble[i] and tracks_to_scrobble[i][arg]:
+                if (
+                    arg in tracks_to_scrobble[i]
+                    and tracks_to_scrobble[i][arg] is not None
+                ):
                     if arg in args_map_to:
                         maps_to = args_map_to[arg]
                     else:
