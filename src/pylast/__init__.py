@@ -585,14 +585,14 @@ class _Network:
             album (Optional) : The album name.
             album_artist (Optional) : The album artist - if this differs from
                 the track artist.
-            context (Optional) : Sub-client version (not public, only enabled
-                for certain API keys)
-            stream_id (Optional) : The stream id for this track received from
-                the radio.getPlaylist service.
             track_number (Optional) : The track number of the track on the
                 album.
-            mbid (Optional) : The MusicBrainz Track ID.
             duration (Optional) : The length of the track in seconds.
+            stream_id (Optional) : The stream id for this track received from
+                the radio.getPlaylist service.
+            context (Optional) : Sub-client version (not public, only enabled
+                for certain API keys)
+            mbid (Optional) : The MusicBrainz Track ID.
         """
 
         return self.scrobble_many(
