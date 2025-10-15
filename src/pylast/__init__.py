@@ -562,6 +562,8 @@ class _Network:
         stream_id: str | None = None,
         context: str | None = None,
         mbid: str | None = None,
+        *,
+        chosen_by_user: bool | None = None,
     ):
         """Used to add a track-play to a user's profile.
 
@@ -574,14 +576,18 @@ class _Network:
             album (Optional) : The album name.
             album_artist (Optional) : The album artist - if this differs from
                 the track artist.
-            context (Optional) : Sub-client version (not public, only enabled
-                for certain API keys)
-            stream_id (Optional) : The stream id for this track received from
-                the radio.getPlaylist service.
             track_number (Optional) : The track number of the track on the
                 album.
-            mbid (Optional) : The MusicBrainz Track ID.
             duration (Optional) : The length of the track in seconds.
+            stream_id (Optional) : The stream id for this track received from
+                the radio.getPlaylist service.
+            context (Optional) : Sub-client version (not public, only enabled
+                for certain API keys)
+            mbid (Optional) : The MusicBrainz Track ID.
+            chosen_by_user (Optional) : Set to True if the user chose this song,
+                or False if it was chosen by someone else (such as a radio
+                station or recommendation service). Assumes True if not
+                specified.
         """
 
         return self.scrobble_many(
@@ -597,6 +603,7 @@ class _Network:
                     "stream_id": stream_id,
                     "context": context,
                     "mbid": mbid,
+                    "chosen_by_user": chosen_by_user,
                 },
             )
         )
@@ -627,16 +634,21 @@ class _Network:
                 "stream_id",
                 "track_number",
                 "mbid",
+                "chosen_by_user",
                 "duration",
             )
             args_map_to = {  # so friggin lazy
                 "album_artist": "albumArtist",
                 "track_number": "trackNumber",
                 "stream_id": "streamID",
+                "chosen_by_user": "chosenByUser",
             }
 
             for arg in additional_args:
-                if arg in tracks_to_scrobble[i] and tracks_to_scrobble[i][arg]:
+                if (
+                    arg in tracks_to_scrobble[i]
+                    and tracks_to_scrobble[i][arg] is not None
+                ):
                     if arg in args_map_to:
                         maps_to = args_map_to[arg]
                     else:
@@ -844,8 +856,8 @@ class _Request:
         self.network = network
         self.params = {}
 
-        for key in params:
-            self.params[key] = str(params[key])
+        for key, value in params.items():
+            self.params[key] = self._convert_param(value)
 
         (self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
 
@@ -864,6 +876,19 @@ class _Request:
 
         if "api_sig" not in self.params.keys():
             self.params["api_sig"] = self._get_signature()
+
+    @staticmethod
+    def _convert_param(value: str | int | bool) -> str:
+        """
+        Convert a Python type to a string for use as an API parameter value.
+        """
+        return str(
+            # Convert boolean params to 1 or 0.
+            int(value)
+            if isinstance(value, bool)
+            # Everything else is just natively converted to a string.
+            else value
+        )
 
     def _get_signature(self) -> str:
         """
