@@ -1,0 +1,109 @@
+interactions:
+- request:
+    body: tag=blues&limit=2&page=1&method=tag.getTopTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '166'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><tracks tag="blues" page="1" perPage="2" totalPages="36"
+        total="72"><track rank="1"><name>I Put a Spell on You</name>
+
+        <duration>146</duration>
+
+        <mbid>c8e6b0e2-ba98-4b05-ba4b-f7b9dfe897f1</mbid>
+
+        <url>https://www.last.fm/music/Screamin%27+Jay+Hawkins/_/I+Put+a+Spell+on+You</url>
+
+        <streamable fulltrack="0">0</streamable>
+
+        <artist><name>Screamin&apos; Jay Hawkins</name>
+
+        <url>https://www.last.fm/music/Screamin%27+Jay+Hawkins</url>
+
+        </artist>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </track>
+
+        <track rank="2"><name>The Thrill Is Gone</name>
+
+        <duration>232</duration>
+
+        <mbid>f802d96e-c625-4767-9d6d-bd262cc59cd1</mbid>
+
+        <url>https://www.last.fm/music/B.B.+King/_/The+Thrill+Is+Gone</url>
+
+        <streamable fulltrack="0">0</streamable>
+
+        <artist><name>B.B. King</name>
+
+        <mbid>dcb03ce3-67a5-4eb3-b2d1-2a12d93a38f3</mbid>
+
+        <url>https://www.last.fm/music/B.B.+King</url>
+
+        </artist>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </track>
+
+        </tracks>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '1777'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:23 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

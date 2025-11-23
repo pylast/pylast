@@ -1,0 +1,274 @@
+interactions:
+- request:
+    body: artist=Radiohead&album=OK+Computer&method=album.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '173'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <album>\n
+        \   <name>OK Computer</name>\n    <artist>Radiohead</artist>\n    <mbid>0b6b4ba0-d36f-47bd-b4ea-6a5b91842d29</mbid>\n
+        \   <url>https://www.last.fm/music/Radiohead/OK+Computer</url>\n    <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <image size=\"mega\">https://lastfm.freetls.fastly.net/i/u/300x300/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <image size=\"\">https://lastfm.freetls.fastly.net/i/u/300x300/62d26c6cb4ac4bdccb8f3a2a0fd55421.png</image>\n
+        \   <listeners>4534014</listeners>\n    <playcount>233593613</playcount>\n
+        \   <tracks>\n      <track rank=\"1\">\n        <name>Airbag</name>\n        <url>https://www.last.fm/music/Radiohead/OK+Computer/Airbag</url>\n
+        \       <duration>262</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"2\">\n        <name>Paranoid Android</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Paranoid+Android</url>\n
+        \       <duration>383</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"3\">\n        <name>Subterranean Homesick
+        Alien</name>\n        <url>https://www.last.fm/music/Radiohead/OK+Computer/Subterranean+Homesick+Alien</url>\n
+        \       <duration>275</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"4\">\n        <name>Exit Music (for a
+        Film)</name>\n        <url>https://www.last.fm/music/Radiohead/OK+Computer/Exit+Music+(for+a+Film)</url>\n
+        \       <duration>275</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"5\">\n        <name>Let Down</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Let+Down</url>\n
+        \       <duration>337</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"6\">\n        <name>Karma Police</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Karma+Police</url>\n
+        \       <duration>263</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"7\">\n        <name>Fitter Happier</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Fitter+Happier</url>\n
+        \       <duration>117</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"8\">\n        <name>Electioneering</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Electioneering</url>\n
+        \       <duration>209</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"9\">\n        <name>Climbing Up the Walls</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/Climbing+Up+the+Walls</url>\n
+        \       <duration>285</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"10\">\n        <name>No Surprises</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/No+Surprises</url>\n
+        \       <duration>226</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"11\">\n        <name>Lucky</name>\n        <url>https://www.last.fm/music/Radiohead/OK+Computer/Lucky</url>\n
+        \       <duration>268</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n      <track rank=\"12\">\n        <name>The Tourist</name>\n
+        \       <url>https://www.last.fm/music/Radiohead/OK+Computer/The+Tourist</url>\n
+        \       <duration>318</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Radiohead</name>\n          <mbid>a74b1b7f-71a5-4011-9441-d0b5e4122711</mbid>\n
+        \         <url>https://www.last.fm/music/Radiohead</url>\n        </artist>\n
+        \     </track>\n    </tracks>\n    <tags>\n      <tag>\n        <name>alternative</name>\n
+        \       <url>https://www.last.fm/tag/alternative</url>\n      </tag>\n      <tag>\n
+        \       <name>alternative rock</name>\n        <url>https://www.last.fm/tag/alternative+rock</url>\n
+        \     </tag>\n      <tag>\n        <name>rock</name>\n        <url>https://www.last.fm/tag/rock</url>\n
+        \     </tag>\n      <tag>\n        <name>radiohead</name>\n        <url>https://www.last.fm/tag/radiohead</url>\n
+        \     </tag>\n      <tag>\n        <name>indie</name>\n        <url>https://www.last.fm/tag/indie</url>\n
+        \     </tag>\n    </tags>\n    <wiki>\n      <published>11 Nov 2022, 15:31</published>\n
+        \     <summary>OK Computer is the third album by the English rock band Radiohead,
+        released in 1997. It reached #1 on the UK Albums Chart and marked Radiohead&apos;s
+        highest entry into the American market at the time, where it debuted at #21.
+        OK Computer expanded the band&apos;s worldwide popularity, becoming the last
+        Radiohead album to have a delayed release outside of the United Kingdom. As
+        of 2007, it has been certified triple platinum in the UK and double platinum
+        in the US. OK Computer included the singles &quot;Paranoid Android&quot;,
+        &quot;Karma Police&quot; and &quot;No Surprises&quot;. The album was recorded
+        in rural Oxfordshire and &lt;a href=&quot;https://www.last.fm/music/Radiohead/OK+Computer&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>\n      <content>OK Computer is the third
+        album by the English rock band Radiohead, released in 1997. It reached #1
+        on the UK Albums Chart and marked Radiohead&apos;s highest entry into the
+        American market at the time, where it debuted at #21. OK Computer expanded
+        the band&apos;s worldwide popularity, becoming the last Radiohead album to
+        have a delayed release outside of the United Kingdom. As of 2007, it has been
+        certified triple platinum in the UK and double platinum in the US. OK Computer
+        included the singles &quot;Paranoid Android&quot;, &quot;Karma Police&quot;
+        and &quot;No Surprises&quot;.\n\nThe album was recorded in rural Oxfordshire
+        and Bath, England with Nigel Godrich, who would work with the band on all
+        their future recordings. Although OK Computer was dominated by guitar, its
+        expansive sound and wide range of influences set it apart from many of the
+        Britpop and alternative rock bands popular at the time, laying the groundwork
+        for Radiohead&apos;s later, more experimental work. The lyrics, by Thom Yorke,
+        and the album&apos;s artwork by Yorke and frequent collaborator Stanley Donwood,
+        emphasised themes such as consumerism, social disconnection, political stagnation
+        and modern malaise, though the band denied they set out to make a concept
+        album.\n\n\nUpon its release, OK Computer received almost unanimously positive
+        reviews. Consensus among critics was that the album was a landmark of its
+        time and would have far-reaching impact and importance. NME gave the album
+        a ten out of ten score, and reviewer James Oldham wrote &quot;Here are 12
+        tracks crammed with towering lyrical ambition and musical exploration; that
+        refuse to retread the successful formulas of before and instead opt for innovation
+        and surprise; and that vividly articulate both the dreams and anxieties of
+        one man without ever considering sacrifice or surrender. In short, here is
+        a landmark record of the 1990s, and one that deserves your attention more
+        than any other released this year.&quot; Taylor Parkes of Melody Maker connected
+        the album&apos;s release to the era&apos;s feeling of paranoia and alienation
+        about millenarianism, and said &quot;It&apos;s as pained and as slow-moving
+        as the emotions that inspired it. ... In one way or another, Radiohead have
+        excelled themselves.&quot; Q awarded the album five out of five stars, with
+        writer David Cavanagh stating that &quot;the majority of OK Computer&apos;s
+        12 songs ... takes place in a queer old landscape: unfamiliar and ominous,
+        but also beautiful and unspoiled. ... It&apos;s a huge, mysterious album for
+        the head and soul.&quot; Nick Kent wrote in Mojo that &quot;Others may end
+        up selling more, but in 20 years time I&apos;m betting OK Computer will be
+        seen as the key record of 1997, the one to take rock forward instead of artfully
+        revamping images and song-structures from an earlier era.&quot; In a four
+        out of five stars review, Caroline Sullivan of The Guardian wrote that the
+        album &quot;is surprising and sometimes inspiring but its intensity makes
+        for a demanding listen.&quot;\n\nThe album was also favourably received by
+        critics in North America. Rolling Stone gave the album four out of five stars.
+        Reviewer Mark Kemp wrote that the album is &quot;a stunning art-rock tour
+        de force ... On OK Computer, Radiohead take the ideas they had begun toying
+        with on The Bends into the stratosphere. ... OK Computer is evidence that
+        Radiohead are one rock band still willing to look the devil square in the
+        eyes&quot;, but warned &quot;OK Computer is not an easy listen.&quot; An Entertainment
+        Weekly review by David Browne gave the album a B+, and wrote that &quot;When
+        the arrangements and lyrics meander or sprout pretensions, the album grows
+        ponderous and soggy. For all of Radiohead&apos;s growing pains, though, their
+        aim \u2014 to take British pop to a heavenly new level \u2014 is true.&quot;
+        In an article for The New Yorker, writer Alex Ross praised OK Computer for
+        its progressiveness, and contrasted Radiohead&apos;s risk-taking with the
+        more musically conservative &quot;dadrock&quot; of their contemporaries Oasis.
+        Ross wrote that &quot;Throughout the album, contrasts of mood and style are
+        extreme  This band has pulled off one of the great art-pop balancing acts
+        in the history of rock.&quot; Ryan Schreiber wrote, in a highly enthusiastic
+        ten out of ten review in his online music magazine Pitchfork, that &quot;Radiohead&apos;s
+        third piece of incredible work, OK Computer, is not only their best yet, but
+        one of the year&apos;s greatest releases. The record is brimming with genuine
+        emotion, beautiful and complex imagery and music, and lyrics that are at once
+        passive and fire-breathing.&quot;\n\nDespite OK Computer&apos;s widespread
+        praise, it also received some criticism. Robert Christgau of the Village Voice
+        granted OK Computer a B\u2212 but ranked it as the &quot;Dud of the Month&quot;
+        in his consumer guide; Christgau commented that the album lacked &quot;soul&quot;,
+        calling it &quot;arid&quot; and &quot;ridiculous&quot; and comparing it unfavourably
+        to Pink Floyd. Andy Gill wrote for The Independent in an otherwise positive
+        review, &quot;For all its ambition, OK Computer is not, finally, as impressive
+        as The Bends, which covered much the same sort of emotional knots, but with
+        better tunes. It is easy to be impressed by, but ultimately hard to love,
+        an album that so luxuriates in its despondency&quot;. While a review in Time
+        was largely positive, particularly praising the songs &quot;Airbag&quot;,
+        &quot;Paranoid Android&quot;, and &quot;Let Down&quot;, reviewer Christopher
+        John Farley criticised the second half of the album. Farley stated, &quot;While
+        the first half-dozen tracks reward repeated listenings with melodies that
+        grow and bloom with familiarity, there is often no structure to be found in
+        the remaining half-dozen numbers.&quot;\n\nAt the end of 1997, OK Computer
+        appeared in many critics&apos; lists and listener polls for best album of
+        the year. OK Computer topped the year-end polls of the magazines Mojo, Vox,
+        Entertainment Weekly, Hot Press, Muziekkrant OOR, HUMO, Eye Weekly, and Inpress,
+        and tied for first place with Daft Punk&apos;s Homework in The Face. The album
+        placed second in NME, Melody Maker, Rolling Stone, Village Voice, Spin and
+        Uncut. Q and Les Inrockuptibles both listed OK Computer in their unranked
+        year-end polls. OK Computer was a nominee for the 1997 Mercury Prize, a prestigious
+        award recognizing the best British or Irish album of the year. The album was
+        nominated in the Album of the Year and Best Alternative Music Performance
+        categories at the 1998 Grammy Awards, ultimately winning the latter award.\n\nOK
+        Computer first appeared in a &quot;best of all time&quot; list three months
+        after its release, placing 16 in a chart based on submissions by customers
+        of Virgin Megastores. This chart heavily favoured recent releases, which suggested
+        that OK Computer&apos;s popularity was a passing fad. However, OK Computer
+        has since appeared frequently in professional lists of greatest albums. In
+        early 1998, OK Computer topped a Q reader&apos;s poll of the greatest albums
+        of all time, and in 2001 Q placed it at number one in a list of the top 50
+        pop albums of the last 15 years. A number of publications, including NME,
+        Melody Maker, Spin, Alternative Press, Pitchfork Media, and Time placed OK
+        Computer prominently in lists of best albums of the 1990s or of all time.
+        In 2003, the album was ranked number 162 on Rolling Stone magazine&apos;s
+        list of the 500 greatest albums of all time. Additionally, retrospective reviews
+        from The A.V. Club and Slant Magazine have received the album favourably;
+        likewise, Rolling Stone gave the album five stars in the 2004 Rolling Stone
+        Album Guide, with critic Rob Sheffield saying &quot;Radiohead was claiming
+        the high ground abandoned by Nirvana, Pearl Jam, U2, R.E.M., everybody; and
+        fans around the world loved them for trying too hard at a time when nobody
+        else was even bothering.&quot;\n\n\nOK Computer was recorded in the lead up
+        to the 1997 general election. It was thus seen by critics as encompassing
+        public opinion through its &quot;despairing-yet-hopeful tone&quot; and themes
+        of alienation. Yorke said his lyrics had been affected by reading a book about
+        the two decades of Conservative government which were just coming to an end
+        in 1997, as well as about factory farming and globalisation. However, in interviews
+        Yorke expressed little hope things would change under the &quot;New Labour&quot;
+        government of Tony Blair. With the approach of the year 2000, many people
+        felt the tone of the album was millennial.\n\nSome critics have credited OK
+        Computer with &quot;killing&quot; 1990s Britpop, as within a few years of
+        its release, the dominant style of UK guitar pop had become slower and more
+        melancholy. Many of the newer acts used similarly complex, atmospheric arrangements.
+        The band Travis worked with Godrich to create the languid pop texture of The
+        Man Who, which became the biggest selling album of 1999 in the UK. Others
+        have credited Radiohead with beginning a mainstream revival of progressive
+        rock and ambitious concept albums, though the band denied their affiliation
+        with the genre. Radiohead described the prevalence of bands that &quot;sound
+        like us&quot; as one reason to break with the style of OK Computer for their
+        next album, Kid A. When asked by MTV interviewer Gideon Yago what the band
+        thought of &quot;bands like Travis, Coldplay, and Muse ... making a career
+        sounding exactly like Radiohead did in 1997&quot;, Yorke replied &quot;Good
+        luck with &apos;Kid A&apos;!&quot;.\n\nSeveral rock bands which later became
+        popular, ranging from Coldplay and Bloc Party to TV on the Radio, have said
+        they were formatively influenced by OK Computer\u2014TV on the Radio&apos;s
+        debut album, for instance, was titled OK Calculator. Additionally, the album&apos;s
+        popularity paved the way for British alternative rock bands such as Muse,
+        Snow Patrol, and Keane. Classical and jazz musicians such as Christopher O&apos;Riley
+        and Brad Mehldau have performed material from OK Computer, and composer Esa-Pekka
+        Salonen said &quot;When I heard &apos;OK Computer,&apos; after five minutes
+        I said, &apos;I actually get this. I understand what these people are trying
+        to do.&apos; And what they were trying was not so drastically different from
+        what I was trying to do.&quot; Radiodread is a song for song cover of the
+        album in a Reggae style.\n\nOK Computer has received great acclaim from the
+        public and critics. It is often cited as Radiohead&apos;s best work and as
+        a landmark album of its time. In 1998, it was nominated for a Grammy Award
+        as Album of the Year, and won for Best Alternative Music Album. &lt;a href=&quot;https://www.last.fm/music/Radiohead/OK+Computer&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>\n    </wiki>\n
+        \ </album>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '18425'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:12 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

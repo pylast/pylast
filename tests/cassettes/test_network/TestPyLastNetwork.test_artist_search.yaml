@@ -1,0 +1,137 @@
+interactions:
+- request:
+    body: artist=Nirvana&page=1&method=artist.search
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '160'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<lfm status=\"ok\"><results
+        for=\"Nirvana\"><opensearch:Query role=\"request\" searchTerms=\"Nirvana\"
+        startPage=\"1\"></opensearch:Query>\n<opensearch:totalResults>9036</opensearch:totalResults>\n<opensearch:startIndex>0</opensearch:startIndex>\n<opensearch:itemsPerPage>30</opensearch:itemsPerPage>\n<artistmatches><artist><name>Nirvana</name>\n<listeners>7309413</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>N\u0130RVANA</name>\n<listeners>42</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/N%C4%B0RVANA</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Nirvan\xE0</name>\n<listeners>20</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvan%C3%A0</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Approaching Nirvana</name>\n<listeners>97566</listeners>\n<mbid>c3a64a25-251b-4d03-afba-1471440245b8</mbid>\n<url>https://www.last.fm/music/Approaching+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>n\u0131rvana</name>\n<listeners>19</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/n%C4%B1rvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Noise
+        Nirvana</name>\n<listeners>53338</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Noise+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Nirv\xE1na</name>\n<listeners>16</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirv%C3%A1na</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>\uFF2E\uFF49\uFF52\uFF56\uFF41\uFF4E\uFF41</name>\n<listeners>15</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/%EF%BC%AE%EF%BD%89%EF%BD%92%EF%BD%96%EF%BD%81%EF%BD%8E%EF%BD%81</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Cosmic Nirvana</name>\n<listeners>8752</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Cosmic+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana 2002</name>\n<listeners>10329</listeners>\n<mbid>f2dfdff9-3862-4be0-bf85-9c833fa3059e</mbid>\n<url>https://www.last.fm/music/Nirvana+2002</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Nirvana
+        Melodies</name>\n<listeners>1196</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+Melodies</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana Nada</name>\n<listeners>512</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+Nada</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana (UK)</name>\n<listeners>2603</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana+(UK)</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Nirvana
+        \u2022 Lossless</name>\n<listeners>45</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+%E2%80%A2+Lossless</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana; Nirvana; Nirvana</name>\n<listeners>10</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana;+Nirvana;+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>\uFEFFNirvana</name>\n<listeners>215</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/%EF%BB%BFNirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana - Topic</name>\n<listeners>767</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+-+Topic</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>\u2591Nirvana\u2591</name>\n<listeners>873</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/%E2%96%91Nirvana%E2%96%91</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana Handpan</name>\n<listeners>1737</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+Handpan</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana/Nirvana</name>\n<listeners>386</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana%2FNirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana - Unplugged</name>\n<listeners>1932</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana+-+Unplugged</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana, Sonic Youth
+        &amp; REM</name>\n<listeners>14521</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana,+Sonic+Youth+&amp;+REM</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>|Nirvana</name>\n<listeners>637</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/%7CNirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana (cover)</name>\n<listeners>1567</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana+(cover)</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana; Nirvana; Nirvana;
+        Nirvana; Nirvana</name>\n<listeners>4</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana;+Nirvana;+Nirvana;+Nirvana;+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana for children</name>\n<listeners>4011</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+for+children</url>\n<streamable>0</streamable>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n</artist>\n<artist><name>Nirvana,
+        Nirvana, Nirvana, Nirvana</name>\n<listeners>3</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana,+Nirvana,+Nirvana,+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana \u2022 From
+        Smart Shuffle</name>\n<listeners>1966</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Nirvana+%E2%80%A2+From+Smart+Shuffle</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Paz Nirvana</name>\n<listeners>985</listeners>\n<mbid></mbid>\n<url>https://www.last.fm/music/Paz+Nirvana</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n<artist><name>Nirvana - Nevermind</name>\n<listeners>924</listeners>\n<mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>\n<url>https://www.last.fm/music/Nirvana+-+Nevermind</url>\n<streamable>0</streamable>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n</artist>\n</artistmatches>\n</results>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '12737'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:27 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

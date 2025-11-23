@@ -1,0 +1,156 @@
+interactions:
+- request:
+    body: artist=Nirvana&track=Lithium&method=track.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '167'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><track><name>Lithium</name>
+
+        <mbid>535b0edb-d69d-3324-b2b3-960942a481bd</mbid>
+
+        <url>https://www.last.fm/music/Nirvana/_/Lithium</url>
+
+        <duration>311000</duration>
+
+        <streamable fulltrack="0">0</streamable>
+
+        <listeners>2701887</listeners>
+
+        <playcount>24119339</playcount>
+
+        <artist><name>Nirvana</name>
+
+        <mbid>5b11f4ce-a62d-471e-81fc-a69a8278c7da</mbid>
+
+        <url>https://www.last.fm/music/Nirvana</url>
+
+        </artist>
+
+        <album><artist>Nirvana</artist>
+
+        <title>Nevermind</title>
+
+        <url>https://www.last.fm/music/Nirvana/Nevermind</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/e8693de0a153e609b3eaebb42d62e8be.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/e8693de0a153e609b3eaebb42d62e8be.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/e8693de0a153e609b3eaebb42d62e8be.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/e8693de0a153e609b3eaebb42d62e8be.png</image>
+
+        </album>
+
+        <userplaycount>0</userplaycount><userloved>0</userloved><toptags><tag><name>Grunge</name>
+
+        <url>https://www.last.fm/tag/Grunge</url>
+
+        </tag>
+
+        <tag><name>rock</name>
+
+        <url>https://www.last.fm/tag/rock</url>
+
+        </tag>
+
+        <tag><name>90s</name>
+
+        <url>https://www.last.fm/tag/90s</url>
+
+        </tag>
+
+        <tag><name>alternative</name>
+
+        <url>https://www.last.fm/tag/alternative</url>
+
+        </tag>
+
+        <tag><name>Nirvana</name>
+
+        <url>https://www.last.fm/tag/Nirvana</url>
+
+        </tag>
+
+        </toptags>
+
+        <wiki><published>23 Jul 2008, 20:09</published>
+
+        <summary>&quot;Lithium&quot; is a song by the American grunge band Nirvana,
+        written by frontman Kurt Cobain. The name of the song is often attributed
+        to the usage of lithium salts as mood stabilizers. Because of this the lyrics
+        are often interpreted as describing bipolar disorder. Cobain is said to have
+        had bipolar disorder, which may have led to the writing of the song &quot;Lithium&quot;.
+        Still, there is much disagreement about the exact meaning and interpretation
+        of it.&#10;&#10;In the Nevermind press kit &lt;a href=&quot;http://www.last.fm/music/Nirvana/_/Lithium&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>
+
+        <content>&quot;Lithium&quot; is a song by the American grunge band Nirvana,
+        written by frontman Kurt Cobain. The name of the song is often attributed
+        to the usage of lithium salts as mood stabilizers. Because of this the lyrics
+        are often interpreted as describing bipolar disorder. Cobain is said to have
+        had bipolar disorder, which may have led to the writing of the song &quot;Lithium&quot;.
+        Still, there is much disagreement about the exact meaning and interpretation
+        of it.&#10;&#10;In the Nevermind press kit, Cobain said this about the song:
+        &quot;People who are secluded for so long go insane, and as a last resort
+        they often use religion to keep alive. In the song, the guy&apos;s lost his
+        girl and his friends and he&apos;s brooding. He&apos;s decided to find God
+        before he kills himself. It&apos;s hard for me to understand the need for
+        a vice like that, but I can appreciate it too. People need vices.&quot;&#10;&#10;Bruce
+        Lash did a mellow version that was used in the movie Marley &amp; Me. He told
+        Songfacts: &quot;I was looking for songs that were hard or angry or alienated
+        to make sort of loungy Bossa Novas out of. Calm them down&quot;&#10;(Lithium
+        Songfacts)&#10; &lt;a href=&quot;http://www.last.fm/music/Nirvana/_/Lithium&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>
+
+        </wiki>
+
+        </track>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '3560'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:28 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

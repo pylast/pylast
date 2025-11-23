@@ -1,0 +1,75 @@
+interactions:
+- request:
+    body: artist=Test+Artist&album=Test+Album&method=album.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '174'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <album>\n
+        \   <name>Test Album</name>\n    <artist>Test Artist</artist>\n    <mbid></mbid>\n
+        \   <url>https://www.last.fm/music/Test+Artist/Test+Album</url>\n    <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <image size=\"mega\">https://lastfm.freetls.fastly.net/i/u/300x300/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <image size=\"\">https://lastfm.freetls.fastly.net/i/u/300x300/17345cfed52c79b0e11042c364effd19.png</image>\n
+        \   <listeners>832</listeners>\n    <playcount>9487</playcount>\n    <tracks>\n
+        \     <track rank=\"1\">\n        <name>Test Title</name>\n        <url>https://www.last.fm/music/Test+Artist/Test+Album/Test+Title</url>\n
+        \       <duration>25</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Test Artist</name>\n          <mbid></mbid>\n
+        \         <url>https://www.last.fm/music/Test+Artist</url>\n        </artist>\n
+        \     </track>\n    </tracks>\n    <tags>\n      <tag>\n        <name>tracktagola</name>\n
+        \       <url>https://www.last.fm/tag/tracktagola</url>\n      </tag>\n      <tag>\n
+        \       <name>slamming guttural brutal test metal</name>\n        <url>https://www.last.fm/tag/slamming+guttural+brutal+test+metal</url>\n
+        \     </tag>\n      <tag>\n        <name>a tag</name>\n        <url>https://www.last.fm/tag/a+tag</url>\n
+        \     </tag>\n      <tag>\n        <name>brutal test metal</name>\n        <url>https://www.last.fm/tag/brutal+test+metal</url>\n
+        \     </tag>\n      <tag>\n        <name>testing</name>\n        <url>https://www.last.fm/tag/testing</url>\n
+        \     </tag>\n    </tags>\n    <wiki>\n      <published>07 Jul 2025, 13:57</published>\n
+        \     <summary>A even more slightly longer test wiki edit and again final
+        &lt;a href=&quot;https://www.last.fm/music/Test+Artist/Test+Album&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>\n      <content>A even more slightly
+        longer test wiki edit and again final &lt;a href=&quot;https://www.last.fm/music/Test+Artist/Test+Album&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>\n    </wiki>\n
+        \ </album>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '2566'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:11 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

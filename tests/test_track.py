@@ -51,24 +51,24 @@ class TestPyLastTrack(TestPyLastWithLastFm):
 
     def test_user_play_count_in_track_info(self) -> None:
         # Arrange
-        artist = "Test Artist"
-        title = "test title"
+        artist = "Labi Siffre"
+        title = "I Got The..."
         track = pylast.Track(
-            artist=artist, title=title, network=self.network, username=self.username
+            artist=artist, title=title, network=self.network, username="RJ"
         )
 
         # Act
         count = track.get_userplaycount()
 
         # Assert
-        assert count >= 0
+        assert count >= 10
 
     def test_user_loved_in_track_info(self) -> None:
         # Arrange
-        artist = "Test Artist"
-        title = "test title"
+        artist = "Labi Siffre"
+        title = "I Got The..."
         track = pylast.Track(
-            artist=artist, title=title, network=self.network, username=self.username
+            artist=artist, title=title, network=self.network, username="RJ"
         )
 
         # Act

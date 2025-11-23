@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: tag=blues&limit=1&method=tag.getTopAlbums
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '159'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><albums tag="blues" page="1" perPage="1" totalPages="8022"
+        total="8022"><album rank="1"><name>Naturally</name>
+
+        <mbid>1b335bbf-03cd-4d9c-84d5-9b4972385989</mbid>
+
+        <url>https://www.last.fm/music/J.J.+Cale/Naturally</url>
+
+        <artist><name>J.J. Cale</name>
+
+        <mbid>4b0be624-6b87-47e8-bbf0-588a2c6c0439</mbid>
+
+        <url>https://www.last.fm/music/J.J.+Cale</url>
+
+        </artist>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/0bfcede1aa37f5378d2b4224784ce738.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/0bfcede1aa37f5378d2b4224784ce738.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/0bfcede1aa37f5378d2b4224784ce738.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/0bfcede1aa37f5378d2b4224784ce738.png</image>
+
+        </album>
+
+        </albums>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '878'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:16 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

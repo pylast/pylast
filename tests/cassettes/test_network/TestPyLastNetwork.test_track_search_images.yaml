@@ -1,0 +1,725 @@
+interactions:
+- request:
+    body: track=Smells+Like+Teen+Spirit&artist=Nirvana&page=1&method=track.search
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '189'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><results for="Smells Like Teen Spirit"><opensearch:Query
+        role="request" searchTerms="Smells Like Teen Spirit" startPage="1"></opensearch:Query>
+
+        <opensearch:totalResults>38125</opensearch:totalResults>
+
+        <opensearch:startIndex>0</opensearch:startIndex>
+
+        <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+
+        <trackmatches><track><name>Smells Like Teen Spirit</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3884191</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Remastered</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Remastered</url>
+
+        <streamable>0</streamable>
+
+        <listeners>38133</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Remastered 2021</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Remastered+2021</url>
+
+        <streamable>0</streamable>
+
+        <listeners>52450</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Remastered)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Remastered)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>4281</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells like teen spirit - Rehearsal demo</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+like+teen+spirit+-+Rehearsal+demo</url>
+
+        <streamable>0</streamable>
+
+        <listeners>16571</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>5cb5c1d8-10b8-4d81-b593-fa3f99633262</mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Boombox Rehearsals</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Boombox+Rehearsals</url>
+
+        <streamable>0</streamable>
+
+        <listeners>20728</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>0159411a-bd93-494d-b9a9-6a44638ab97a</mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (1991)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(1991)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>13557</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (live)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(live)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>11290</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (edit)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(edit)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>11278</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>032bc167-223d-364a-878f-957abfd68dc5</mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Devonshire Mix</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Devonshire+Mix</url>
+
+        <streamable>0</streamable>
+
+        <listeners>7393</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit [LP Version]</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+%5BLP+Version%5D</url>
+
+        <streamable>0</streamable>
+
+        <listeners>27404</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Nirvana - Smells Like Teen Spirit</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Nirvana+-+Smells+Like+Teen+Spirit</url>
+
+        <streamable>0</streamable>
+
+        <listeners>6504</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Remastered 2021)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Remastered+2021)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>4429</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>195e9ee2-409a-41ca-8db9-d87ec8634f2a</mbid>
+
+        </track>
+
+        <track><name>&quot;Smells Like Teen Spirit&quot;</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/%22Smells+Like+Teen+Spirit%22</url>
+
+        <streamable>0</streamable>
+
+        <listeners>2973</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - 1992/Live at Reading</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+1992%2FLive+at+Reading</url>
+
+        <streamable>0</streamable>
+
+        <listeners>53083</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit [Live]</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+%5BLive%5D</url>
+
+        <streamable>0</streamable>
+
+        <listeners>5726</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit [1992]</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+%5B1992%5D</url>
+
+        <streamable>0</streamable>
+
+        <listeners>5747</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Home Demo)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Home+Demo)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>12481</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Butch Vig Mix)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Butch+Vig+Mix)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>23509</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>d9e34cf9-2e63-492f-b65d-8b83d5f710fd</mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Album Version)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Album+Version)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>2364</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>smells like teen spirit - live</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/smells+like+teen+spirit+-+live</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3858</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells like teen spirit - Butch Vig Mix</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+like+teen+spirit+-+Butch+Vig+Mix</url>
+
+        <streamable>0</streamable>
+
+        <listeners>9117</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>21611664-82f4-4880-a141-0c13b902e28c</mbid>
+
+        </track>
+
+        <track><name>smells like teen spirit [edit]</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/smells+like+teen+spirit+%5Bedit%5D</url>
+
+        <streamable>0</streamable>
+
+        <listeners>4146</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid>59d17870-57c5-4e47-b34b-3eb9c0f9bd6e</mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Butch</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Butch</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3870</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit [Demo]</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+%5BDemo%5D</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3818</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Rehea</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Rehea</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3003</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Live At The Paramount/1991</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Live+At+The+Paramount%2F1991</url>
+
+        <streamable>0</streamable>
+
+        <listeners>23778</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Demo)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Demo)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>3033</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit - Live At The Paramount</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+-+Live+At+The+Paramount</url>
+
+        <streamable>0</streamable>
+
+        <listeners>9932</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        <track><name>Smells Like Teen Spirit (Lyrics)</name>
+
+        <artist>Nirvana</artist>
+
+        <url>https://www.last.fm/music/Nirvana/_/Smells+Like+Teen+Spirit+(Lyrics)</url>
+
+        <streamable>0</streamable>
+
+        <listeners>2657</listeners>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <mbid></mbid>
+
+        </track>
+
+        </trackmatches>
+
+        </results>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '21152'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:28 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

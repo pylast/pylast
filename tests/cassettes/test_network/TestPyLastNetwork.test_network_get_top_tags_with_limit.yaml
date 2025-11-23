@@ -1,0 +1,460 @@
+interactions:
+- request:
+    body: method=tag.getTopTags
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '139'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><toptags offset="0" num_res="50" total="2874765"><tag><name>rock</name>
+
+        <count>4064633</count>
+
+        <reach>402532</reach>
+
+        </tag>
+
+        <tag><name>electronic</name>
+
+        <count>2491484</count>
+
+        <reach>261788</reach>
+
+        </tag>
+
+        <tag><name>seen live</name>
+
+        <count>2191777</count>
+
+        <reach>82552</reach>
+
+        </tag>
+
+        <tag><name>alternative</name>
+
+        <count>2129165</count>
+
+        <reach>266974</reach>
+
+        </tag>
+
+        <tag><name>pop</name>
+
+        <count>2076710</count>
+
+        <reach>233467</reach>
+
+        </tag>
+
+        <tag><name>indie</name>
+
+        <count>2063516</count>
+
+        <reach>260148</reach>
+
+        </tag>
+
+        <tag><name>female vocalists</name>
+
+        <count>1633323</count>
+
+        <reach>169116</reach>
+
+        </tag>
+
+        <tag><name>metal</name>
+
+        <count>1303831</count>
+
+        <reach>158838</reach>
+
+        </tag>
+
+        <tag><name>alternative rock</name>
+
+        <count>1226940</count>
+
+        <reach>170055</reach>
+
+        </tag>
+
+        <tag><name>jazz</name>
+
+        <count>1194015</count>
+
+        <reach>149812</reach>
+
+        </tag>
+
+        <tag><name>classic rock</name>
+
+        <count>1148871</count>
+
+        <reach>137092</reach>
+
+        </tag>
+
+        <tag><name>ambient</name>
+
+        <count>1121233</count>
+
+        <reach>149829</reach>
+
+        </tag>
+
+        <tag><name>experimental</name>
+
+        <count>1108817</count>
+
+        <reach>145090</reach>
+
+        </tag>
+
+        <tag><name>folk</name>
+
+        <count>955937</count>
+
+        <reach>151184</reach>
+
+        </tag>
+
+        <tag><name>indie rock</name>
+
+        <count>926048</count>
+
+        <reach>137190</reach>
+
+        </tag>
+
+        <tag><name>punk</name>
+
+        <count>917413</count>
+
+        <reach>145307</reach>
+
+        </tag>
+
+        <tag><name>Hip-Hop</name>
+
+        <count>917095</count>
+
+        <reach>131266</reach>
+
+        </tag>
+
+        <tag><name>hard rock</name>
+
+        <count>911982</count>
+
+        <reach>115240</reach>
+
+        </tag>
+
+        <tag><name>black metal</name>
+
+        <count>902795</count>
+
+        <reach>64445</reach>
+
+        </tag>
+
+        <tag><name>instrumental</name>
+
+        <count>886485</count>
+
+        <reach>125993</reach>
+
+        </tag>
+
+        <tag><name>singer-songwriter</name>
+
+        <count>856135</count>
+
+        <reach>109935</reach>
+
+        </tag>
+
+        <tag><name>dance</name>
+
+        <count>819591</count>
+
+        <reach>134292</reach>
+
+        </tag>
+
+        <tag><name>80s</name>
+
+        <count>796554</count>
+
+        <reach>100621</reach>
+
+        </tag>
+
+        <tag><name>death metal</name>
+
+        <count>759231</count>
+
+        <reach>72849</reach>
+
+        </tag>
+
+        <tag><name>Progressive rock</name>
+
+        <count>753556</count>
+
+        <reach>96698</reach>
+
+        </tag>
+
+        <tag><name>heavy metal</name>
+
+        <count>749950</count>
+
+        <reach>90822</reach>
+
+        </tag>
+
+        <tag><name>hardcore</name>
+
+        <count>720552</count>
+
+        <reach>99424</reach>
+
+        </tag>
+
+        <tag><name>british</name>
+
+        <count>699550</count>
+
+        <reach>93508</reach>
+
+        </tag>
+
+        <tag><name>soul</name>
+
+        <count>694528</count>
+
+        <reach>102051</reach>
+
+        </tag>
+
+        <tag><name>chillout</name>
+
+        <count>652417</count>
+
+        <reach>103591</reach>
+
+        </tag>
+
+        <tag><name>electronica</name>
+
+        <count>638499</count>
+
+        <reach>102472</reach>
+
+        </tag>
+
+        <tag><name>rap</name>
+
+        <count>624074</count>
+
+        <reach>110587</reach>
+
+        </tag>
+
+        <tag><name>industrial</name>
+
+        <count>585095</count>
+
+        <reach>85027</reach>
+
+        </tag>
+
+        <tag><name>punk rock</name>
+
+        <count>580391</count>
+
+        <reach>98367</reach>
+
+        </tag>
+
+        <tag><name>Classical</name>
+
+        <count>579287</count>
+
+        <reach>74864</reach>
+
+        </tag>
+
+        <tag><name>Soundtrack</name>
+
+        <count>576258</count>
+
+        <reach>85723</reach>
+
+        </tag>
+
+        <tag><name>blues</name>
+
+        <count>555037</count>
+
+        <reach>96396</reach>
+
+        </tag>
+
+        <tag><name>thrash metal</name>
+
+        <count>524484</count>
+
+        <reach>62906</reach>
+
+        </tag>
+
+        <tag><name>90s</name>
+
+        <count>499822</count>
+
+        <reach>57139</reach>
+
+        </tag>
+
+        <tag><name>metalcore</name>
+
+        <count>498796</count>
+
+        <reach>68403</reach>
+
+        </tag>
+
+        <tag><name>psychedelic</name>
+
+        <count>486499</count>
+
+        <reach>78607</reach>
+
+        </tag>
+
+        <tag><name>acoustic</name>
+
+        <count>485156</count>
+
+        <reach>111710</reach>
+
+        </tag>
+
+        <tag><name>japanese</name>
+
+        <count>478910</count>
+
+        <reach>50211</reach>
+
+        </tag>
+
+        <tag><name>hip hop</name>
+
+        <count>464147</count>
+
+        <reach>80383</reach>
+
+        </tag>
+
+        <tag><name>post-rock</name>
+
+        <count>457623</count>
+
+        <reach>66148</reach>
+
+        </tag>
+
+        <tag><name>Progressive metal</name>
+
+        <count>453576</count>
+
+        <reach>62867</reach>
+
+        </tag>
+
+        <tag><name>House</name>
+
+        <count>450428</count>
+
+        <reach>74811</reach>
+
+        </tag>
+
+        <tag><name>german</name>
+
+        <count>446006</count>
+
+        <reach>59822</reach>
+
+        </tag>
+
+        <tag><name>techno</name>
+
+        <count>444653</count>
+
+        <reach>72397</reach>
+
+        </tag>
+
+        <tag><name>new wave</name>
+
+        <count>438070</count>
+
+        <reach>64839</reach>
+
+        </tag>
+
+        </toptags>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, PUT
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '4040'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:22 GMT
+      Server:
+      - openresty/1.13.6.2
+      TSVC-Time-Spent:
+      - '0.000'
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

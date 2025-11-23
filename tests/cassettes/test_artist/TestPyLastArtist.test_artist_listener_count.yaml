@@ -1,0 +1,233 @@
+interactions:
+- request:
+    body: artist=Test+Artist&method=artist.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '158'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><artist><name>Test Artist</name>
+
+        <url>https://www.last.fm/music/Test+Artist</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/4856e46217c24ec8a6849b34de5ca116.gif</image>
+
+        <streamable>0</streamable>
+
+        <ontour>0</ontour>
+
+        <stats><listeners>1352</listeners>
+
+        <playcount>58848</playcount><userplaycount>5100</userplaycount>
+
+        </stats>
+
+        <similar><artist><name>Ontario Emperor</name>
+
+        <url>https://www.last.fm/music/Ontario+Emperor</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </artist>
+
+        <artist><name>Uberlulu</name>
+
+        <url>https://www.last.fm/music/Uberlulu</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </artist>
+
+        <artist><name>Combinator</name>
+
+        <url>https://www.last.fm/music/Combinator</url>
+
+        <image size="small"></image>
+
+        <image size="medium"></image>
+
+        <image size="large"></image>
+
+        <image size="extralarge"></image>
+
+        <image size="mega"></image>
+
+        <image size=""></image>
+
+        </artist>
+
+        <artist><name>Manische Poeten</name>
+
+        <url>https://www.last.fm/music/Manische+Poeten</url>
+
+        <image size="small"></image>
+
+        <image size="medium"></image>
+
+        <image size="large"></image>
+
+        <image size="extralarge"></image>
+
+        <image size="mega"></image>
+
+        <image size=""></image>
+
+        </artist>
+
+        <artist><name>X-modem</name>
+
+        <url>https://www.last.fm/music/X-modem</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </artist>
+
+        </similar>
+
+        <tags><tag><name>testing</name>
+
+        <url>https://www.last.fm/tag/testing</url>
+
+        </tag>
+
+        <tag><name>artisttagola</name>
+
+        <url>https://www.last.fm/tag/artisttagola</url>
+
+        </tag>
+
+        <tag><name>1</name>
+
+        <url>https://www.last.fm/tag/1</url>
+
+        </tag>
+
+        <tag><name>m</name>
+
+        <url>https://www.last.fm/tag/m</url>
+
+        </tag>
+
+        <tag><name>o</name>
+
+        <url>https://www.last.fm/tag/o</url>
+
+        </tag>
+
+        </tags>
+
+        <bio><links><link rel="original" href="https://last.fm/music/Test+Artist/+wiki"></link>
+
+        </links>
+
+        <published>09 Jun 2006, 13:18</published>
+
+        <summary>There are multiple artists that perform under the name Test Artist.&#10;&#10;HELLO
+        TO ALL WATCHING! &#10;&#10;1. The stage name of irccat, a notable underground
+        DJ.&#10;2. A brutal test metal supergroup from Wales, &lt;&lt;&lt; in 2003.&#10;3.
+        A mis-spelling of Test Artist 1 Test Artist 1 and  Test Artist 2.   you have
+        this artist in your library, please do yourself and last.fm a favour and delete
+        your entire account.&#10;&#10;From Wales, formed&lt;&lt;&lt; in 2003.&#10;From
+        Wales, formed&amp;formed in 2003. &lt;a href=&quot;https://www.last.fm/music/Test+Artist&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;</summary>
+
+        <content>There are multiple artists that perform under the name Test Artist.&#10;&#10;HELLO
+        TO ALL WATCHING! &#10;&#10;1. The stage name of irccat, a notable underground
+        DJ.&#10;2. A brutal test metal supergroup from Wales, &lt;&lt;&lt; in 2003.&#10;3.
+        A mis-spelling of Test Artist 1 Test Artist 1 and  Test Artist 2.   you have
+        this artist in your library, please do yourself and last.fm a favour and delete
+        your entire account.&#10;&#10;From Wales, formed&lt;&lt;&lt; in 2003.&#10;From
+        Wales, formed&amp;formed in 2003.&#10;From Wales, formed in 2003.&#10;&#10;testin&apos;
+        stuff&#10;&#10;www.last.fm&#10;&#10;SlowClub&#10;&#10;11&#10;&#10;1234567&#10;&#10;Mr
+        Test&#10;&#10;http://www.example.com&#10;www.example.com &lt;a href=&quot;https://www.last.fm/music/Test+Artist&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>
+
+        </bio>
+
+        </artist>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '5831'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:21 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1
