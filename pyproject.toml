@@ -42,7 +42,7 @@ dependencies = [
 ]
 optional-dependencies.tests = [
   "flaky",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
   "pytest-random-order",
   "pyyaml",
@@ -98,8 +98,14 @@ lint.isort.required-imports = [ "from __future__ import annotations" ]
 [tool.pyproject-fmt]
 max_supported_python = "3.15"
 
-[tool.pytest.ini_options]
+[tool.pytest]
+minversion = "9.0"
+filterwarnings = [
+  "once::DeprecationWarning",
+  "once::PendingDeprecationWarning",
+]
 testpaths = [ "tests" ]
+xfail_strict = true
 
 [tool.mypy]
 pretty = true
