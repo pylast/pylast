@@ -563,7 +563,7 @@ class _Network:
         context: str | None = None,
         mbid: str | None = None,
         *,
-        chosen_by_user: bool | None = None,
+        chosen_by_user: bool = True,
     ):
         """Used to add a track-play to a user's profile.
 
@@ -579,15 +579,14 @@ class _Network:
             track_number (Optional) : The track number of the track on the
                 album.
             duration (Optional) : The length of the track in seconds.
-            stream_id (Optional) : The stream id for this track received from
+            stream_id (Optional) : The stream ID for this track received from
                 the radio.getPlaylist service.
             context (Optional) : Sub-client version (not public, only enabled
                 for certain API keys)
             mbid (Optional) : The MusicBrainz Track ID.
             chosen_by_user (Optional) : Set to True if the user chose this song,
                 or False if it was chosen by someone else (such as a radio
-                station or recommendation service). Assumes True if not
-                specified.
+                station or recommendation service). Defaults to True.
         """
 
         return self.scrobble_many(
