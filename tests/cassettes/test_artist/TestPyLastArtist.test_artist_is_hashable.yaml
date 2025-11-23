@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: artist=Radiohead&limit=2&method=artist.getSimilar
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '167'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><similarartists artist="Radiohead"><artist><name>Thom Yorke</name>
+
+        <mbid>8ed2e0b3-aa4c-4e13-bec3-dc7393ed4d6b</mbid>
+
+        <match>1</match>
+
+        <url>https://www.last.fm/music/Thom+Yorke</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <streamable>0</streamable>
+
+        </artist>
+
+        <artist><name>Atoms for Peace</name>
+
+        <mbid>9e299bee-d7e2-49f3-8cd7-d6b28ab204d1</mbid>
+
+        <match>0.572640</match>
+
+        <url>https://www.last.fm/music/Atoms+for+Peace</url>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <streamable>0</streamable>
+
+        </artist>
+
+        </similarartists>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '1812'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:16 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

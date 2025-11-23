@@ -1,0 +1,91 @@
+interactions:
+- request:
+    body: tag=blues&method=tag.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '146'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><tag><name>blues</name>
+
+        <total>555037</total>
+
+        <reach>96396</reach>
+
+        <wiki><summary>Blues is a vocal and instrumental form of music based on the
+        use of &quot;blue notes.&quot; It emerged in Black communities of the United
+        States from spirituals, work songs, field hollers, shouts and chants, and
+        rhymed simple narrative ballads. The use of blue notes and the prominence
+        of call-and-response patterns in the music and lyrics are indicative of African
+        influence. &#10;&#10;&quot;Blue notes,&quot; also known as &quot;worried notes,&quot;
+        are the typically flattened third, fifth, and seventh degrees in a major scale.
+        &lt;a href=&quot;http://www.last.fm/tag/blues&quot;&gt;Read more on Last.fm&lt;/a&gt;.</summary>
+
+        <content>Blues is a vocal and instrumental form of music based on the use
+        of &quot;blue notes.&quot; It emerged in Black communities of the United States
+        from spirituals, work songs, field hollers, shouts and chants, and rhymed
+        simple narrative ballads. The use of blue notes and the prominence of call-and-response
+        patterns in the music and lyrics are indicative of African influence. &#10;&#10;&quot;Blue
+        notes,&quot; also known as &quot;worried notes,&quot; are the typically flattened
+        third, fifth, and seventh degrees in a major scale. This is what gives the
+        blues its inherent minor tonality. From performer to performer, or from blues
+        genre to genre, e.g., country blues, the deviation of the &quot;blue note&quot;
+        from the actual scale can be greater.&#10;&#10;The blues influenced much of
+        later American and Western popular music. It became one of the roots of jazz,
+        rhythm and blues, and bluegrass. During the 1960s and 1970s, a hybrid form
+        of the blues, blues rock, developed by combining of blues with various rock
+        and roll forms. &lt;a href=&quot;http://www.last.fm/tag/blues&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>
+
+        </wiki>
+
+        </tag>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '2035'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:16 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

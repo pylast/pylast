@@ -1,0 +1,81 @@
+interactions:
+- request:
+    body: artist=Test+Artist&album=Test+Album&method=album.getTopTags
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '177'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><toptags artist="Test Artist" album="Test Album"><tag><count>100</count>
+
+        <name>a tag</name>
+
+        <url>https://www.last.fm/tag/a+tag</url>
+
+        </tag>
+
+        <tag><count>100</count>
+
+        <name>slamming guttural brutal test metal</name>
+
+        <url>https://www.last.fm/tag/slamming+guttural+brutal+test+metal</url>
+
+        </tag>
+
+        <tag><count>66</count>
+
+        <name>brutal test metal</name>
+
+        <url>https://www.last.fm/tag/brutal+test+metal</url>
+
+        </tag>
+
+        </toptags>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '480'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:10 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

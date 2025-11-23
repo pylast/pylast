@@ -1,0 +1,431 @@
+interactions:
+- request:
+    body: limit=1&method=chart.getTopArtists
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '152'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><artists page="1" perPage="1" totalPages="108588996" total="108588996"><artist><name>The
+        Weeknd</name>
+
+        <playcount>1038749116</playcount>
+
+        <listeners>5071143</listeners>
+
+        <mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>
+
+        <url>https://www.last.fm/music/The+Weeknd</url>
+
+        <streamable>0</streamable>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </artist>
+
+        </artists>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '927'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:20 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=The+Weeknd&page=1&method=artist.getTopAlbums
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '169'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<lfm status=\"ok\"><topalbums
+        artist=\"The Weeknd\" page=\"1\" perPage=\"50\" totalPages=\"891\" total=\"44537\"><album
+        rank=\"1\"><name>Starboy</name>\n<playcount>190239184</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Starboy</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/08e3f15aca0423b084fb49f342756f3b.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/08e3f15aca0423b084fb49f342756f3b.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/08e3f15aca0423b084fb49f342756f3b.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/08e3f15aca0423b084fb49f342756f3b.png</image>\n</album>\n<album
+        rank=\"2\"><name>After Hours</name>\n<playcount>136996697</playcount>\n<url>https://www.last.fm/music/The+Weeknd/After+Hours</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/4583932b753c96d0d2f22fe9774e5ef3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/4583932b753c96d0d2f22fe9774e5ef3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/4583932b753c96d0d2f22fe9774e5ef3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/4583932b753c96d0d2f22fe9774e5ef3.png</image>\n</album>\n<album
+        rank=\"3\"><name>Beauty Behind the Madness</name>\n<playcount>95807490</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Beauty+Behind+the+Madness</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/8a54e33c0046d4752bcf56b37adaa97c.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/8a54e33c0046d4752bcf56b37adaa97c.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/8a54e33c0046d4752bcf56b37adaa97c.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/8a54e33c0046d4752bcf56b37adaa97c.png</image>\n</album>\n<album
+        rank=\"4\"><name>My Dear Melancholy,</name>\n<playcount>54787307</playcount>\n<url>https://www.last.fm/music/The+Weeknd/My+Dear+Melancholy,</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/6498660830a525a64f6a78bf94a2ec58.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/6498660830a525a64f6a78bf94a2ec58.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/6498660830a525a64f6a78bf94a2ec58.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/6498660830a525a64f6a78bf94a2ec58.png</image>\n</album>\n<album
+        rank=\"5\"><name>Dawn FM</name>\n<playcount>106589173</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Dawn+FM</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/c193799935f1dceb7bf9c463b17dd2d6.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/c193799935f1dceb7bf9c463b17dd2d6.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/c193799935f1dceb7bf9c463b17dd2d6.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/c193799935f1dceb7bf9c463b17dd2d6.png</image>\n</album>\n<album
+        rank=\"6\"><name>Trilogy</name>\n<playcount>74771031</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Trilogy</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/420479ebfa2c11e0c9310d2183854446.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/420479ebfa2c11e0c9310d2183854446.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/420479ebfa2c11e0c9310d2183854446.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/420479ebfa2c11e0c9310d2183854446.png</image>\n</album>\n<album
+        rank=\"7\"><name>The Idol Episode 4 (Music from the HBO Original Series)</name>\n<playcount>26202682</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Idol+Episode+4+(Music+from+the+HBO+Original+Series)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e13437ab4c8ebd7603289739b9f194f7.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e13437ab4c8ebd7603289739b9f194f7.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e13437ab4c8ebd7603289739b9f194f7.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e13437ab4c8ebd7603289739b9f194f7.png</image>\n</album>\n<album
+        rank=\"8\"><name>Hurry Up Tomorrow</name>\n<playcount>65849785</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Hurry+Up+Tomorrow</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/706f247829fbe0ee14febb195c6200c4.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/706f247829fbe0ee14febb195c6200c4.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/706f247829fbe0ee14febb195c6200c4.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/706f247829fbe0ee14febb195c6200c4.png</image>\n</album>\n<album
+        rank=\"9\"><name>After Hours (Deluxe)</name>\n<playcount>31619061</playcount>\n<url>https://www.last.fm/music/The+Weeknd/After+Hours+(Deluxe)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/6e24a23dc5242a7b078d5dadfe3e8e72.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/6e24a23dc5242a7b078d5dadfe3e8e72.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/6e24a23dc5242a7b078d5dadfe3e8e72.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/6e24a23dc5242a7b078d5dadfe3e8e72.png</image>\n</album>\n<album
+        rank=\"10\"><name>Popular (Music from the HBO Original Series)</name>\n<playcount>11468527</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Popular+(Music+from+the+HBO+Original+Series)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/70eb4680198b63d686bc67a3a697ee2e.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/70eb4680198b63d686bc67a3a697ee2e.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/70eb4680198b63d686bc67a3a697ee2e.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/70eb4680198b63d686bc67a3a697ee2e.png</image>\n</album>\n<album
+        rank=\"11\"><name>House of Balloons (Original)</name>\n<playcount>31212815</playcount>\n<url>https://www.last.fm/music/The+Weeknd/House+of+Balloons+(Original)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/4e71cb636c1273c142309a8e28e2a8c3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/4e71cb636c1273c142309a8e28e2a8c3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/4e71cb636c1273c142309a8e28e2a8c3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/4e71cb636c1273c142309a8e28e2a8c3.png</image>\n</album>\n<album
+        rank=\"12\"><name>The Highlights</name>\n<playcount>10590379</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Highlights</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/13eba218340495aa6ed6985c0c9a39dc.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/13eba218340495aa6ed6985c0c9a39dc.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/13eba218340495aa6ed6985c0c9a39dc.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/13eba218340495aa6ed6985c0c9a39dc.png</image>\n</album>\n<album
+        rank=\"13\"><name>Save Your Tears (Remix)</name>\n<playcount>11523396</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Save+Your+Tears+(Remix)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/fe93f844af22cb46217dc10b33b4c3cf.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/fe93f844af22cb46217dc10b33b4c3cf.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/fe93f844af22cb46217dc10b33b4c3cf.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/fe93f844af22cb46217dc10b33b4c3cf.png</image>\n</album>\n<album
+        rank=\"14\"><name>Timeless</name>\n<playcount>15452891</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Timeless</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/8c8ed9103aa2e938f2eff221fc998d16.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/8c8ed9103aa2e938f2eff221fc998d16.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/8c8ed9103aa2e938f2eff221fc998d16.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/8c8ed9103aa2e938f2eff221fc998d16.png</image>\n</album>\n<album
+        rank=\"15\"><name>Starboy (Deluxe)</name>\n<playcount>8195853</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Starboy+(Deluxe)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/73cd1defb94c620da60acfb75c42aabe.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/73cd1defb94c620da60acfb75c42aabe.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/73cd1defb94c620da60acfb75c42aabe.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/73cd1defb94c620da60acfb75c42aabe.png</image>\n</album>\n<album
+        rank=\"16\"><name>Die for You (Remix)</name>\n<playcount>7161465</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Die+for+You+(Remix)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/ea64243dbefa71a4ec0947f33ba926b9.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/ea64243dbefa71a4ec0947f33ba926b9.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/ea64243dbefa71a4ec0947f33ba926b9.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/ea64243dbefa71a4ec0947f33ba926b9.png</image>\n</album>\n<album
+        rank=\"17\"><name>Earned It (Fifty Shades Of Grey) [From The &quot;Fifty Shades
+        Of Grey&quot; Soundtrack]</name>\n<playcount>4028095</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Earned+It+(Fifty+Shades+Of+Grey)+%5BFrom+The+%22Fifty+Shades+Of+Grey%22+Soundtrack%5D</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/0869e8e4c97c47e6c7f99bc0618760bc.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/0869e8e4c97c47e6c7f99bc0618760bc.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/0869e8e4c97c47e6c7f99bc0618760bc.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/0869e8e4c97c47e6c7f99bc0618760bc.png</image>\n</album>\n<album
+        rank=\"18\"><name>Blinding Lights</name>\n<playcount>7272173</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Blinding+Lights</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/54f6328d1b36d25ff3465bf4f3defaa5.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/54f6328d1b36d25ff3465bf4f3defaa5.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/54f6328d1b36d25ff3465bf4f3defaa5.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/54f6328d1b36d25ff3465bf4f3defaa5.png</image>\n</album>\n<album
+        rank=\"19\"><name>Kiss Land</name>\n<playcount>18983596</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Kiss+Land</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/01ad150445023de653c50dbbc3e10dbc.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/01ad150445023de653c50dbbc3e10dbc.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/01ad150445023de653c50dbbc3e10dbc.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/01ad150445023de653c50dbbc3e10dbc.png</image>\n</album>\n<album
+        rank=\"20\"><name>Take My Breath</name>\n<playcount>4971697</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Take+My+Breath</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/d3024ebb9ffd9e4b9e9d6e411c674be3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/d3024ebb9ffd9e4b9e9d6e411c674be3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/d3024ebb9ffd9e4b9e9d6e411c674be3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/d3024ebb9ffd9e4b9e9d6e411c674be3.png</image>\n</album>\n<album
+        rank=\"21\"><name>Dawn FM (Alternate World)</name>\n<playcount>9235969</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Dawn+FM+(Alternate+World)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/25ec970ab688358a6720e890fbd6dc1b.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/25ec970ab688358a6720e890fbd6dc1b.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/25ec970ab688358a6720e890fbd6dc1b.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/25ec970ab688358a6720e890fbd6dc1b.png</image>\n</album>\n<album
+        rank=\"22\"><name>Dancing in the Flames</name>\n<playcount>4161023</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Dancing+in+the+Flames</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/5e2acf27952f4dc67a0a91314038a543.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/5e2acf27952f4dc67a0a91314038a543.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/5e2acf27952f4dc67a0a91314038a543.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/5e2acf27952f4dc67a0a91314038a543.png</image>\n</album>\n<album
+        rank=\"23\"><name>Double Fantasy</name>\n<playcount>4125391</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Double+Fantasy</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/44b27c561c82b2e326915f5bf4afce87.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/44b27c561c82b2e326915f5bf4afce87.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/44b27c561c82b2e326915f5bf4afce87.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/44b27c561c82b2e326915f5bf4afce87.png</image>\n</album>\n<album
+        rank=\"24\"><name>S\xE3o Paulo</name>\n<playcount>5710109</playcount>\n<url>https://www.last.fm/music/The+Weeknd/S%C3%A3o+Paulo</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/37d998800b358ee919f199111b848342.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/37d998800b358ee919f199111b848342.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/37d998800b358ee919f199111b848342.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/37d998800b358ee919f199111b848342.png</image>\n</album>\n<album
+        rank=\"25\"><name>The Highlights (Deluxe)</name>\n<playcount>3697410</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Highlights+(Deluxe)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e3dfc1b0bf952abdc7498a2b408d9252.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e3dfc1b0bf952abdc7498a2b408d9252.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e3dfc1b0bf952abdc7498a2b408d9252.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e3dfc1b0bf952abdc7498a2b408d9252.png</image>\n</album>\n<album
+        rank=\"26\"><name>In Your Eyes (Remix)</name>\n<playcount>2768366</playcount>\n<url>https://www.last.fm/music/The+Weeknd/In+Your+Eyes+(Remix)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e668cd3c1b807ff6dc18d6314984f1a0.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e668cd3c1b807ff6dc18d6314984f1a0.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e668cd3c1b807ff6dc18d6314984f1a0.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e668cd3c1b807ff6dc18d6314984f1a0.png</image>\n</album>\n<album
+        rank=\"27\"><name>Heartless</name>\n<playcount>2511891</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Heartless</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/291cc62d23d57188a1db33300ffcf180.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/291cc62d23d57188a1db33300ffcf180.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/291cc62d23d57188a1db33300ffcf180.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/291cc62d23d57188a1db33300ffcf180.png</image>\n</album>\n<album
+        rank=\"28\"><name>Die for You</name>\n<playcount>1463600</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Die+for+You</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/faa1e2bee0e6a5273f6b8b74aed025ca.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/faa1e2bee0e6a5273f6b8b74aed025ca.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/faa1e2bee0e6a5273f6b8b74aed025ca.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/faa1e2bee0e6a5273f6b8b74aed025ca.png</image>\n</album>\n<album
+        rank=\"29\"><name>Can\u2019t Feel My Face</name>\n<playcount>1403668</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Can%E2%80%99t+Feel+My+Face</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/48f57ce79c8b028f73ee62e68b723901.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/48f57ce79c8b028f73ee62e68b723901.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/48f57ce79c8b028f73ee62e68b723901.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/48f57ce79c8b028f73ee62e68b723901.png</image>\n</album>\n<album
+        rank=\"30\"><name>The Idol Episode 4 - Music from the HBO Original Series</name>\n<playcount>797884</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Idol+Episode+4+-+Music+from+the+HBO+Original+Series</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3e04a4c3ede4f049ae58dd28e32c69b5.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3e04a4c3ede4f049ae58dd28e32c69b5.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3e04a4c3ede4f049ae58dd28e32c69b5.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3e04a4c3ede4f049ae58dd28e32c69b5.png</image>\n</album>\n<album
+        rank=\"31\"><name>House Of Balloons - Original</name>\n<playcount>1728497</playcount>\n<url>https://www.last.fm/music/The+Weeknd/House+Of+Balloons+-+Original</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/4200ab839e57981efc9449f8d94bba58.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/4200ab839e57981efc9449f8d94bba58.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/4200ab839e57981efc9449f8d94bba58.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/4200ab839e57981efc9449f8d94bba58.png</image>\n</album>\n<album
+        rank=\"32\"><name>Popular [The Idol Vol. 1 (Music from the HBO Original Series)]</name>\n<playcount>1811716</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Popular+%5BThe+Idol+Vol.+1+(Music+from+the+HBO+Original+Series)%5D</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/a07635ddd5abf45916b133abae52adf1.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/a07635ddd5abf45916b133abae52adf1.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/a07635ddd5abf45916b133abae52adf1.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/a07635ddd5abf45916b133abae52adf1.png</image>\n</album>\n<album
+        rank=\"33\"><name>Kiss Land (Deluxe)</name>\n<playcount>6415643</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Kiss+Land+(Deluxe)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/effcb5470433a6b807cb99706fdff8db.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/effcb5470433a6b807cb99706fdff8db.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/effcb5470433a6b807cb99706fdff8db.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/effcb5470433a6b807cb99706fdff8db.png</image>\n</album>\n<album
+        rank=\"34\"><name>Pray For Me (with Kendrick Lamar)</name>\n<playcount>1203172</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Pray+For+Me+(with+Kendrick+Lamar)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/9a1143dd7c034e22b5ab5c56fd739a68.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/9a1143dd7c034e22b5ab5c56fd739a68.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/9a1143dd7c034e22b5ab5c56fd739a68.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/9a1143dd7c034e22b5ab5c56fd739a68.png</image>\n</album>\n<album
+        rank=\"35\"><name>House of Balloons</name>\n<playcount>8259043</playcount>\n<url>https://www.last.fm/music/The+Weeknd/House+of+Balloons</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/0a4a56348b554fbcbdf81193bfc455ad.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/0a4a56348b554fbcbdf81193bfc455ad.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/0a4a56348b554fbcbdf81193bfc455ad.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/0a4a56348b554fbcbdf81193bfc455ad.png</image>\n</album>\n<album
+        rank=\"36\"><name>Thursday (Original)</name>\n<playcount>5419088</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Thursday+(Original)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/dc5fec6138392ef86c950ee5858e708f.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/dc5fec6138392ef86c950ee5858e708f.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/dc5fec6138392ef86c950ee5858e708f.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/dc5fec6138392ef86c950ee5858e708f.png</image>\n</album>\n<album
+        rank=\"37\"><name>Timeless (Remix)</name>\n<playcount>565807</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Timeless+(Remix)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/f6de2df09d18a5d0a6af0f85e72ca293.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/f6de2df09d18a5d0a6af0f85e72ca293.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/f6de2df09d18a5d0a6af0f85e72ca293.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/f6de2df09d18a5d0a6af0f85e72ca293.png</image>\n</album>\n<album
+        rank=\"38\"><name>Often (Kygo Remix)</name>\n<playcount>1135210</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Often+(Kygo+Remix)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/c6095cfce33b548bdc78ff75f0ef56fe.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/c6095cfce33b548bdc78ff75f0ef56fe.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/c6095cfce33b548bdc78ff75f0ef56fe.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/c6095cfce33b548bdc78ff75f0ef56fe.png</image>\n</album>\n<album
+        rank=\"39\"><name>The Idol Episode 1 (Music from the HBO Original Series)</name>\n<playcount>2167332</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Idol+Episode+1+(Music+from+the+HBO+Original+Series)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a44928f026870ffc1071c515bbe7493.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a44928f026870ffc1071c515bbe7493.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a44928f026870ffc1071c515bbe7493.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a44928f026870ffc1071c515bbe7493.png</image>\n</album>\n<album
+        rank=\"40\"><name>One of the Girls</name>\n<playcount>1310774</playcount>\n<url>https://www.last.fm/music/The+Weeknd/One+of+the+Girls</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/936a1fe7d1aeca290ba3a0a967a16878.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/936a1fe7d1aeca290ba3a0a967a16878.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/936a1fe7d1aeca290ba3a0a967a16878.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/936a1fe7d1aeca290ba3a0a967a16878.png</image>\n</album>\n<album
+        rank=\"41\"><name>Echoes Of Silence (Original)</name>\n<playcount>5255285</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Echoes+Of+Silence+(Original)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/bd24b36b2a22135b30ca37abd1adc162.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/bd24b36b2a22135b30ca37abd1adc162.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/bd24b36b2a22135b30ca37abd1adc162.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/bd24b36b2a22135b30ca37abd1adc162.png</image>\n</album>\n<album
+        rank=\"42\"><name>Popular [From The Idol Vol. 1 (Music from the HBO Original
+        Series)]</name>\n<playcount>871409</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Popular+%5BFrom+The+Idol+Vol.+1+(Music+from+the+HBO+Original+Series)%5D</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/58e6dff4caf33cf353ad405b3e5c4709.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/58e6dff4caf33cf353ad405b3e5c4709.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/58e6dff4caf33cf353ad405b3e5c4709.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/58e6dff4caf33cf353ad405b3e5c4709.png</image>\n</album>\n<album
+        rank=\"43\"><name>King of the Fall</name>\n<playcount>2200138</playcount>\n<url>https://www.last.fm/music/The+Weeknd/King+of+the+Fall</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/1d95a92b54b7aedd7299704874464cee.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/1d95a92b54b7aedd7299704874464cee.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/1d95a92b54b7aedd7299704874464cee.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/1d95a92b54b7aedd7299704874464cee.png</image>\n</album>\n<album
+        rank=\"44\"><name>The Idol Episode 5 Part 1 (Music from the HBO Original Series)</name>\n<playcount>1538702</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Idol+Episode+5+Part+1+(Music+from+the+HBO+Original+Series)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/dedbf60cb676c7786f7947f34252d42e.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/dedbf60cb676c7786f7947f34252d42e.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/dedbf60cb676c7786f7947f34252d42e.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/dedbf60cb676c7786f7947f34252d42e.png</image>\n</album>\n<album
+        rank=\"45\"><name>The Hills</name>\n<playcount>817982</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Hills</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/c173e8abe14bf58a8f44022996c7563a.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/c173e8abe14bf58a8f44022996c7563a.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/c173e8abe14bf58a8f44022996c7563a.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/c173e8abe14bf58a8f44022996c7563a.png</image>\n</album>\n<album
+        rank=\"46\"><name>Live at SoFi Stadium</name>\n<playcount>7653576</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Live+at+SoFi+Stadium</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3e9546d0994b6f6c2565476976f1c9d6.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3e9546d0994b6f6c2565476976f1c9d6.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3e9546d0994b6f6c2565476976f1c9d6.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3e9546d0994b6f6c2565476976f1c9d6.png</image>\n</album>\n<album
+        rank=\"47\"><name>The Idol Episode 5 Part 2 (Music from the HBO Original Series)</name>\n<playcount>1339617</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Idol+Episode+5+Part+2+(Music+from+the+HBO+Original+Series)</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/76c24279325c107e78916921e4338236.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/76c24279325c107e78916921e4338236.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/76c24279325c107e78916921e4338236.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/76c24279325c107e78916921e4338236.png</image>\n</album>\n<album
+        rank=\"48\"><name>The Hills Remixes</name>\n<playcount>872271</playcount>\n<url>https://www.last.fm/music/The+Weeknd/The+Hills+Remixes</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/a1f2f923726b6cdb9edad5f0ac5efa50.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/a1f2f923726b6cdb9edad5f0ac5efa50.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/a1f2f923726b6cdb9edad5f0ac5efa50.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/a1f2f923726b6cdb9edad5f0ac5efa50.png</image>\n</album>\n<album
+        rank=\"49\"><name>Wicked Games</name>\n<playcount>657659</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Wicked+Games</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/5eb03b95fffa44969f82c61a13d442e2.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/5eb03b95fffa44969f82c61a13d442e2.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/5eb03b95fffa44969f82c61a13d442e2.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/5eb03b95fffa44969f82c61a13d442e2.png</image>\n</album>\n<album
+        rank=\"50\"><name>Popular</name>\n<playcount>551073</playcount>\n<url>https://www.last.fm/music/The+Weeknd/Popular</url>\n<artist><name>The
+        Weeknd</name>\n<mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>\n<url>https://www.last.fm/music/The+Weeknd</url>\n</artist>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/89fcb969b1df1f26804d37f8629191d3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/89fcb969b1df1f26804d37f8629191d3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/89fcb969b1df1f26804d37f8629191d3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/89fcb969b1df1f26804d37f8629191d3.png</image>\n</album>\n</topalbums>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '37599'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:21 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,69 @@
+interactions:
+- request:
+    body: period=overall&limit=2&page=1&method=user.getTopTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '180'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <toptracks
+        user=\"RJ\" page=\"1\" perPage=\"2\" totalPages=\"28409\" total=\"56817\">\n
+        \   <track rank=\"1\">\n      <name>Sultans of Swing</name>\n      <duration>798</duration>\n
+        \     <playcount>106</playcount>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Dire+Straits/_/Sultans+of+Swing</url>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n      <artist>\n        <name>Dire
+        Straits</name>\n        <mbid>614e3804-7d34-41ba-857f-811bad7c2b7a</mbid>\n
+        \       <url>https://www.last.fm/music/Dire+Straits</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \   </track>\n    <track rank=\"2\">\n      <name>Blah Blah Blah</name>\n
+        \     <duration>376</duration>\n      <playcount>75</playcount>\n      <mbid></mbid>\n
+        \     <url>https://www.last.fm/music/Armin+van+Buuren/_/Blah+Blah+Blah</url>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n      <artist>\n        <name>Armin
+        van Buuren</name>\n        <mbid>477b8c0c-c5fc-4ad2-b5b2-191f0bf2a9df</mbid>\n
+        \       <url>https://www.last.fm/music/Armin+van+Buuren</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \   </track>\n  </toptracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '2004'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:42 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

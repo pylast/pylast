@@ -1,0 +1,1036 @@
+interactions:
+- request:
+    body: limit=20&page=1&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '175'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <lovedtracks
+        user=\"test-user\" page=\"1\" perPage=\"20\" totalPages=\"2\" total=\"23\">\n
+        \   <track>\n      <name>Original Prankster</name>\n      <mbid>3efef57e-6e47-41bc-8832-54d11eed8105</mbid>\n
+        \     <url>https://www.last.fm/music/The+Offspring/_/Original+Prankster</url>\n
+        \     <date uts=\"1155722612\">16 Aug 2006, 10:03</date>\n      <artist>\n
+        \       <name>The Offspring</name>\n        <mbid>23a03e33-a603-404e-bcbf-2c00159d7067</mbid>\n
+        \       <url>https://www.last.fm/music/The+Offspring</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The One Song</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Donots/_/The+One+Song</url>\n
+        \     <date uts=\"1154510338\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>Donots</name>\n        <mbid>06a4a555-1b69-4175-83df-2528a8e5af05</mbid>\n
+        \       <url>https://www.last.fm/music/Donots</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Du Willst Immer Nur Ficken</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/J.B.O./_/Du+Willst+Immer+Nur+Ficken</url>\n
+        \     <date uts=\"1154510327\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>J.B.O.</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/J.B.O.</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Chaos</name>\n      <mbid>00b5b1fc-5132-30cd-b386-1772d7fac0b9</mbid>\n
+        \     <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer/_/Chaos</url>\n
+        \     <date uts=\"1154509934\">02 Aug 2006, 09:12</date>\n      <artist>\n
+        \       <name>Herbert Gr\xF6nemeyer</name>\n        <mbid>456eabce-d1dd-4481-a206-36ab4f2eaeb8</mbid>\n
+        \       <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fast wie von selbst</name>\n      <mbid>52581081-49bc-4aec-8f54-2c3ce1c28831</mbid>\n
+        \     <url>https://www.last.fm/music/Sportfreunde+Stiller/_/Fast+wie+von+selbst</url>\n
+        \     <date uts=\"1154509400\">02 Aug 2006, 09:03</date>\n      <artist>\n
+        \       <name>Sportfreunde Stiller</name>\n        <mbid>35581de7-591f-424f-9c64-7b22fd45605e</mbid>\n
+        \       <url>https://www.last.fm/music/Sportfreunde+Stiller</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Killing Joke</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Die+%C3%84rzte/_/Killing+Joke</url>\n
+        \     <date uts=\"1154509046\">02 Aug 2006, 08:57</date>\n      <artist>\n
+        \       <name>Die \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Umtausch ausgeschlossen!</name>\n      <mbid>69fa0b20-226a-3688-96d7-49c20e8b37f2</mbid>\n
+        \     <url>https://www.last.fm/music/Die+Toten+Hosen/_/Umtausch+ausgeschlossen!</url>\n
+        \     <date uts=\"1154508894\">02 Aug 2006, 08:54</date>\n      <artist>\n
+        \       <name>Die Toten Hosen</name>\n        <mbid>c3bc80a6-1f4a-4e17-8cf0-6b1efe8302f1</mbid>\n
+        \       <url>https://www.last.fm/music/Die+Toten+Hosen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>New Year&apos;s Day</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/U2/_/New+Year%27s+Day</url>\n
+        \     <date uts=\"1152282396\">07 Jul 2006, 14:26</date>\n      <artist>\n
+        \       <name>U2</name>\n        <mbid>a3cb23fc-acd3-4ce0-8f36-1e5aa6a18432</mbid>\n
+        \       <url>https://www.last.fm/music/U2</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Next To You</name>\n      <mbid>62ab2918-976b-3ac3-b1d2-848627c4c2e4</mbid>\n
+        \     <url>https://www.last.fm/music/The+Police/_/Next+To+You</url>\n      <date
+        uts=\"1152282129\">07 Jul 2006, 14:22</date>\n      <artist>\n        <name>The
+        Police</name>\n        <mbid>9e0e2b01-41db-4008-bd8b-988977d6019a</mbid>\n
+        \       <url>https://www.last.fm/music/The+Police</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Denkmal</name>\n      <mbid>47fbb210-c91e-4777-92c6-62a3c34ea569</mbid>\n
+        \     <url>https://www.last.fm/music/Wir+sind+Helden/_/Denkmal</url>\n      <date
+        uts=\"1150440403\">16 Jun 2006, 06:46</date>\n      <artist>\n        <name>Wir
+        sind Helden</name>\n        <mbid>908fedf4-548a-430f-b806-38fca9507dc4</mbid>\n
+        \       <url>https://www.last.fm/music/Wir+sind+Helden</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Go Your Own Way</name>\n      <mbid>031e1896-9724-42f1-86d8-4b7ad155b595</mbid>\n
+        \     <url>https://www.last.fm/music/The+Cranberries/_/Go+Your+Own+Way</url>\n
+        \     <date uts=\"1150271808\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>The Cranberries</name>\n        <mbid>c98d40fd-f6cf-4b26-883e-eaa515ee2851</mbid>\n
+        \       <url>https://www.last.fm/music/The+Cranberries</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Souls Of The Departed</name>\n      <mbid>4fe2cc8f-7faf-43ff-8c67-b332f151d54f</mbid>\n
+        \     <url>https://www.last.fm/music/Bruce+Springsteen/_/Souls+Of+The+Departed</url>\n
+        \     <date uts=\"1150271761\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>Bruce Springsteen</name>\n        <mbid>70248960-cb53-4ea4-943a-edb18f7d336f</mbid>\n
+        \       <url>https://www.last.fm/music/Bruce+Springsteen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Don&apos;t Stand So Close To Me</name>\n      <mbid>05331c03-8711-4e9c-8320-dfdc699f545e</mbid>\n
+        \     <url>https://www.last.fm/music/Sting/_/Don%27t+Stand+So+Close+To+Me</url>\n
+        \     <date uts=\"1150271406\">14 Jun 2006, 07:50</date>\n      <artist>\n
+        \       <name>Sting</name>\n        <mbid>7944ed53-2a58-4035-9b93-140a71e41c34</mbid>\n
+        \       <url>https://www.last.fm/music/Sting</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Bring My Family &amp;</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Faithless/_/Bring+My+Family+&amp;</url>\n
+        \     <date uts=\"1150270827\">14 Jun 2006, 07:40</date>\n      <artist>\n
+        \       <name>Faithless</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Faithless</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fire Fly</name>\n      <mbid>4544cf03-86cd-49a7-928f-162ce59e0d12</mbid>\n
+        \     <url>https://www.last.fm/music/Mike+Oldfield/_/Fire+Fly</url>\n      <date
+        uts=\"1150269883\">14 Jun 2006, 07:24</date>\n      <artist>\n        <name>Mike
+        Oldfield</name>\n        <mbid>a1684a49-feaa-4150-b758-d9412fc59f12</mbid>\n
+        \       <url>https://www.last.fm/music/Mike+Oldfield</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Penitent</name>\n      <mbid>80981f6c-2d1f-439e-bd75-81c51258a877</mbid>\n
+        \     <url>https://www.last.fm/music/Suzanne+Vega/_/Penitent</url>\n      <date
+        uts=\"1150269765\">14 Jun 2006, 07:22</date>\n      <artist>\n        <name>Suzanne
+        Vega</name>\n        <mbid>cf119120-7df5-47d7-9dec-49f8837a4e40</mbid>\n        <url>https://www.last.fm/music/Suzanne+Vega</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>04 - Steve Reich - Tranquil</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Steve+Reich/_/04+-+Steve+Reich+-+Tranquil</url>\n
+        \     <date uts=\"1149259190\">02 Jun 2006, 14:39</date>\n      <artist>\n
+        \       <name>Steve Reich</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Steve+Reich</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Lady</name>\n      <mbid>08323e21-655e-31d1-a81f-cbce462b914f</mbid>\n
+        \     <url>https://www.last.fm/music/Die+%C3%84rzte/_/Lady</url>\n      <date
+        uts=\"1149258371\">02 Jun 2006, 14:26</date>\n      <artist>\n        <name>Die
+        \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>I&apos;m Not Worried At All</name>\n      <mbid>0a487889-5e1f-48c4-befd-49b0b8c34724</mbid>\n
+        \     <url>https://www.last.fm/music/Moby/_/I%27m+Not+Worried+At+All</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Moby</name>\n
+        \       <mbid>8970d868-0723-483b-a75b-51088913d3d4</mbid>\n        <url>https://www.last.fm/music/Moby</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The Runaway</name>\n      <mbid>122f54df-86d2-3865-910c-48a4ff34a7e3</mbid>\n
+        \     <url>https://www.last.fm/music/Something+Corporate/_/The+Runaway</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Something
+        Corporate</name>\n        <mbid>8dacf242-9bf7-44f5-b2eb-18305b904551</mbid>\n
+        \       <url>https://www.last.fm/music/Something+Corporate</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '18580'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:37 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: limit=100&page=1&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '176'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <lovedtracks
+        user=\"test-user\" page=\"1\" perPage=\"100\" totalPages=\"1\" total=\"23\">\n
+        \   <track>\n      <name>Original Prankster</name>\n      <mbid>3efef57e-6e47-41bc-8832-54d11eed8105</mbid>\n
+        \     <url>https://www.last.fm/music/The+Offspring/_/Original+Prankster</url>\n
+        \     <date uts=\"1155722612\">16 Aug 2006, 10:03</date>\n      <artist>\n
+        \       <name>The Offspring</name>\n        <mbid>23a03e33-a603-404e-bcbf-2c00159d7067</mbid>\n
+        \       <url>https://www.last.fm/music/The+Offspring</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The One Song</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Donots/_/The+One+Song</url>\n
+        \     <date uts=\"1154510338\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>Donots</name>\n        <mbid>06a4a555-1b69-4175-83df-2528a8e5af05</mbid>\n
+        \       <url>https://www.last.fm/music/Donots</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Du Willst Immer Nur Ficken</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/J.B.O./_/Du+Willst+Immer+Nur+Ficken</url>\n
+        \     <date uts=\"1154510327\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>J.B.O.</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/J.B.O.</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Chaos</name>\n      <mbid>00b5b1fc-5132-30cd-b386-1772d7fac0b9</mbid>\n
+        \     <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer/_/Chaos</url>\n
+        \     <date uts=\"1154509934\">02 Aug 2006, 09:12</date>\n      <artist>\n
+        \       <name>Herbert Gr\xF6nemeyer</name>\n        <mbid>456eabce-d1dd-4481-a206-36ab4f2eaeb8</mbid>\n
+        \       <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fast wie von selbst</name>\n      <mbid>52581081-49bc-4aec-8f54-2c3ce1c28831</mbid>\n
+        \     <url>https://www.last.fm/music/Sportfreunde+Stiller/_/Fast+wie+von+selbst</url>\n
+        \     <date uts=\"1154509400\">02 Aug 2006, 09:03</date>\n      <artist>\n
+        \       <name>Sportfreunde Stiller</name>\n        <mbid>35581de7-591f-424f-9c64-7b22fd45605e</mbid>\n
+        \       <url>https://www.last.fm/music/Sportfreunde+Stiller</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Killing Joke</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Die+%C3%84rzte/_/Killing+Joke</url>\n
+        \     <date uts=\"1154509046\">02 Aug 2006, 08:57</date>\n      <artist>\n
+        \       <name>Die \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Umtausch ausgeschlossen!</name>\n      <mbid>69fa0b20-226a-3688-96d7-49c20e8b37f2</mbid>\n
+        \     <url>https://www.last.fm/music/Die+Toten+Hosen/_/Umtausch+ausgeschlossen!</url>\n
+        \     <date uts=\"1154508894\">02 Aug 2006, 08:54</date>\n      <artist>\n
+        \       <name>Die Toten Hosen</name>\n        <mbid>c3bc80a6-1f4a-4e17-8cf0-6b1efe8302f1</mbid>\n
+        \       <url>https://www.last.fm/music/Die+Toten+Hosen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>New Year&apos;s Day</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/U2/_/New+Year%27s+Day</url>\n
+        \     <date uts=\"1152282396\">07 Jul 2006, 14:26</date>\n      <artist>\n
+        \       <name>U2</name>\n        <mbid>a3cb23fc-acd3-4ce0-8f36-1e5aa6a18432</mbid>\n
+        \       <url>https://www.last.fm/music/U2</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Next To You</name>\n      <mbid>62ab2918-976b-3ac3-b1d2-848627c4c2e4</mbid>\n
+        \     <url>https://www.last.fm/music/The+Police/_/Next+To+You</url>\n      <date
+        uts=\"1152282129\">07 Jul 2006, 14:22</date>\n      <artist>\n        <name>The
+        Police</name>\n        <mbid>9e0e2b01-41db-4008-bd8b-988977d6019a</mbid>\n
+        \       <url>https://www.last.fm/music/The+Police</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Denkmal</name>\n      <mbid>47fbb210-c91e-4777-92c6-62a3c34ea569</mbid>\n
+        \     <url>https://www.last.fm/music/Wir+sind+Helden/_/Denkmal</url>\n      <date
+        uts=\"1150440403\">16 Jun 2006, 06:46</date>\n      <artist>\n        <name>Wir
+        sind Helden</name>\n        <mbid>908fedf4-548a-430f-b806-38fca9507dc4</mbid>\n
+        \       <url>https://www.last.fm/music/Wir+sind+Helden</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Go Your Own Way</name>\n      <mbid>031e1896-9724-42f1-86d8-4b7ad155b595</mbid>\n
+        \     <url>https://www.last.fm/music/The+Cranberries/_/Go+Your+Own+Way</url>\n
+        \     <date uts=\"1150271808\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>The Cranberries</name>\n        <mbid>c98d40fd-f6cf-4b26-883e-eaa515ee2851</mbid>\n
+        \       <url>https://www.last.fm/music/The+Cranberries</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Souls Of The Departed</name>\n      <mbid>4fe2cc8f-7faf-43ff-8c67-b332f151d54f</mbid>\n
+        \     <url>https://www.last.fm/music/Bruce+Springsteen/_/Souls+Of+The+Departed</url>\n
+        \     <date uts=\"1150271761\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>Bruce Springsteen</name>\n        <mbid>70248960-cb53-4ea4-943a-edb18f7d336f</mbid>\n
+        \       <url>https://www.last.fm/music/Bruce+Springsteen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Don&apos;t Stand So Close To Me</name>\n      <mbid>05331c03-8711-4e9c-8320-dfdc699f545e</mbid>\n
+        \     <url>https://www.last.fm/music/Sting/_/Don%27t+Stand+So+Close+To+Me</url>\n
+        \     <date uts=\"1150271406\">14 Jun 2006, 07:50</date>\n      <artist>\n
+        \       <name>Sting</name>\n        <mbid>7944ed53-2a58-4035-9b93-140a71e41c34</mbid>\n
+        \       <url>https://www.last.fm/music/Sting</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Bring My Family &amp;</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Faithless/_/Bring+My+Family+&amp;</url>\n
+        \     <date uts=\"1150270827\">14 Jun 2006, 07:40</date>\n      <artist>\n
+        \       <name>Faithless</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Faithless</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fire Fly</name>\n      <mbid>4544cf03-86cd-49a7-928f-162ce59e0d12</mbid>\n
+        \     <url>https://www.last.fm/music/Mike+Oldfield/_/Fire+Fly</url>\n      <date
+        uts=\"1150269883\">14 Jun 2006, 07:24</date>\n      <artist>\n        <name>Mike
+        Oldfield</name>\n        <mbid>a1684a49-feaa-4150-b758-d9412fc59f12</mbid>\n
+        \       <url>https://www.last.fm/music/Mike+Oldfield</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Penitent</name>\n      <mbid>80981f6c-2d1f-439e-bd75-81c51258a877</mbid>\n
+        \     <url>https://www.last.fm/music/Suzanne+Vega/_/Penitent</url>\n      <date
+        uts=\"1150269765\">14 Jun 2006, 07:22</date>\n      <artist>\n        <name>Suzanne
+        Vega</name>\n        <mbid>cf119120-7df5-47d7-9dec-49f8837a4e40</mbid>\n        <url>https://www.last.fm/music/Suzanne+Vega</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>04 - Steve Reich - Tranquil</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Steve+Reich/_/04+-+Steve+Reich+-+Tranquil</url>\n
+        \     <date uts=\"1149259190\">02 Jun 2006, 14:39</date>\n      <artist>\n
+        \       <name>Steve Reich</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Steve+Reich</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Lady</name>\n      <mbid>08323e21-655e-31d1-a81f-cbce462b914f</mbid>\n
+        \     <url>https://www.last.fm/music/Die+%C3%84rzte/_/Lady</url>\n      <date
+        uts=\"1149258371\">02 Jun 2006, 14:26</date>\n      <artist>\n        <name>Die
+        \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>I&apos;m Not Worried At All</name>\n      <mbid>0a487889-5e1f-48c4-befd-49b0b8c34724</mbid>\n
+        \     <url>https://www.last.fm/music/Moby/_/I%27m+Not+Worried+At+All</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Moby</name>\n
+        \       <mbid>8970d868-0723-483b-a75b-51088913d3d4</mbid>\n        <url>https://www.last.fm/music/Moby</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The Runaway</name>\n      <mbid>122f54df-86d2-3865-910c-48a4ff34a7e3</mbid>\n
+        \     <url>https://www.last.fm/music/Something+Corporate/_/The+Runaway</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Something
+        Corporate</name>\n        <mbid>8dacf242-9bf7-44f5-b2eb-18305b904551</mbid>\n
+        \       <url>https://www.last.fm/music/Something+Corporate</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Burnin Up</name>\n      <mbid>6f9f9986-f5e1-3967-b0fb-b1f4a63c8db0</mbid>\n
+        \     <url>https://www.last.fm/music/Ashlee+Simpson/_/Burnin+Up</url>\n      <date
+        uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Ashlee
+        Simpson</name>\n        <mbid>463c514e-c30d-4a2a-a87b-762535253a80</mbid>\n
+        \       <url>https://www.last.fm/music/Ashlee+Simpson</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Not All Me</name>\n      <mbid>07cb46d4-30fe-477a-b664-290d3fb45985</mbid>\n
+        \     <url>https://www.last.fm/music/Alanis+Morissette/_/Not+All+Me</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Alanis
+        Morissette</name>\n        <mbid>4bdcee62-4902-4773-8cd1-e252e2e31225</mbid>\n
+        \       <url>https://www.last.fm/music/Alanis+Morissette</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Rock&apos;n&apos;Roll Horrorshow</name>\n      <mbid>2e2ca02c-f84f-36fb-9931-1c75ed80c675</mbid>\n
+        \     <url>https://www.last.fm/music/Trashcan+Darlings/_/Rock%27n%27Roll+Horrorshow</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Trashcan
+        Darlings</name>\n        <mbid>617baca5-bd32-4ee7-be08-83742d1cf4bc</mbid>\n
+        \       <url>https://www.last.fm/music/Trashcan+Darlings</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '21404'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:38 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: page=1&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '166'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <lovedtracks
+        user=\"test-user\" page=\"1\" perPage=\"50\" totalPages=\"1\" total=\"23\">\n
+        \   <track>\n      <name>Original Prankster</name>\n      <mbid>3efef57e-6e47-41bc-8832-54d11eed8105</mbid>\n
+        \     <url>https://www.last.fm/music/The+Offspring/_/Original+Prankster</url>\n
+        \     <date uts=\"1155722612\">16 Aug 2006, 10:03</date>\n      <artist>\n
+        \       <name>The Offspring</name>\n        <mbid>23a03e33-a603-404e-bcbf-2c00159d7067</mbid>\n
+        \       <url>https://www.last.fm/music/The+Offspring</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The One Song</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Donots/_/The+One+Song</url>\n
+        \     <date uts=\"1154510338\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>Donots</name>\n        <mbid>06a4a555-1b69-4175-83df-2528a8e5af05</mbid>\n
+        \       <url>https://www.last.fm/music/Donots</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Du Willst Immer Nur Ficken</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/J.B.O./_/Du+Willst+Immer+Nur+Ficken</url>\n
+        \     <date uts=\"1154510327\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>J.B.O.</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/J.B.O.</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Chaos</name>\n      <mbid>00b5b1fc-5132-30cd-b386-1772d7fac0b9</mbid>\n
+        \     <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer/_/Chaos</url>\n
+        \     <date uts=\"1154509934\">02 Aug 2006, 09:12</date>\n      <artist>\n
+        \       <name>Herbert Gr\xF6nemeyer</name>\n        <mbid>456eabce-d1dd-4481-a206-36ab4f2eaeb8</mbid>\n
+        \       <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fast wie von selbst</name>\n      <mbid>52581081-49bc-4aec-8f54-2c3ce1c28831</mbid>\n
+        \     <url>https://www.last.fm/music/Sportfreunde+Stiller/_/Fast+wie+von+selbst</url>\n
+        \     <date uts=\"1154509400\">02 Aug 2006, 09:03</date>\n      <artist>\n
+        \       <name>Sportfreunde Stiller</name>\n        <mbid>35581de7-591f-424f-9c64-7b22fd45605e</mbid>\n
+        \       <url>https://www.last.fm/music/Sportfreunde+Stiller</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Killing Joke</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Die+%C3%84rzte/_/Killing+Joke</url>\n
+        \     <date uts=\"1154509046\">02 Aug 2006, 08:57</date>\n      <artist>\n
+        \       <name>Die \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Umtausch ausgeschlossen!</name>\n      <mbid>69fa0b20-226a-3688-96d7-49c20e8b37f2</mbid>\n
+        \     <url>https://www.last.fm/music/Die+Toten+Hosen/_/Umtausch+ausgeschlossen!</url>\n
+        \     <date uts=\"1154508894\">02 Aug 2006, 08:54</date>\n      <artist>\n
+        \       <name>Die Toten Hosen</name>\n        <mbid>c3bc80a6-1f4a-4e17-8cf0-6b1efe8302f1</mbid>\n
+        \       <url>https://www.last.fm/music/Die+Toten+Hosen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>New Year&apos;s Day</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/U2/_/New+Year%27s+Day</url>\n
+        \     <date uts=\"1152282396\">07 Jul 2006, 14:26</date>\n      <artist>\n
+        \       <name>U2</name>\n        <mbid>a3cb23fc-acd3-4ce0-8f36-1e5aa6a18432</mbid>\n
+        \       <url>https://www.last.fm/music/U2</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Next To You</name>\n      <mbid>62ab2918-976b-3ac3-b1d2-848627c4c2e4</mbid>\n
+        \     <url>https://www.last.fm/music/The+Police/_/Next+To+You</url>\n      <date
+        uts=\"1152282129\">07 Jul 2006, 14:22</date>\n      <artist>\n        <name>The
+        Police</name>\n        <mbid>9e0e2b01-41db-4008-bd8b-988977d6019a</mbid>\n
+        \       <url>https://www.last.fm/music/The+Police</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Denkmal</name>\n      <mbid>47fbb210-c91e-4777-92c6-62a3c34ea569</mbid>\n
+        \     <url>https://www.last.fm/music/Wir+sind+Helden/_/Denkmal</url>\n      <date
+        uts=\"1150440403\">16 Jun 2006, 06:46</date>\n      <artist>\n        <name>Wir
+        sind Helden</name>\n        <mbid>908fedf4-548a-430f-b806-38fca9507dc4</mbid>\n
+        \       <url>https://www.last.fm/music/Wir+sind+Helden</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Go Your Own Way</name>\n      <mbid>031e1896-9724-42f1-86d8-4b7ad155b595</mbid>\n
+        \     <url>https://www.last.fm/music/The+Cranberries/_/Go+Your+Own+Way</url>\n
+        \     <date uts=\"1150271808\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>The Cranberries</name>\n        <mbid>c98d40fd-f6cf-4b26-883e-eaa515ee2851</mbid>\n
+        \       <url>https://www.last.fm/music/The+Cranberries</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Souls Of The Departed</name>\n      <mbid>4fe2cc8f-7faf-43ff-8c67-b332f151d54f</mbid>\n
+        \     <url>https://www.last.fm/music/Bruce+Springsteen/_/Souls+Of+The+Departed</url>\n
+        \     <date uts=\"1150271761\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>Bruce Springsteen</name>\n        <mbid>70248960-cb53-4ea4-943a-edb18f7d336f</mbid>\n
+        \       <url>https://www.last.fm/music/Bruce+Springsteen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Don&apos;t Stand So Close To Me</name>\n      <mbid>05331c03-8711-4e9c-8320-dfdc699f545e</mbid>\n
+        \     <url>https://www.last.fm/music/Sting/_/Don%27t+Stand+So+Close+To+Me</url>\n
+        \     <date uts=\"1150271406\">14 Jun 2006, 07:50</date>\n      <artist>\n
+        \       <name>Sting</name>\n        <mbid>7944ed53-2a58-4035-9b93-140a71e41c34</mbid>\n
+        \       <url>https://www.last.fm/music/Sting</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Bring My Family &amp;</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Faithless/_/Bring+My+Family+&amp;</url>\n
+        \     <date uts=\"1150270827\">14 Jun 2006, 07:40</date>\n      <artist>\n
+        \       <name>Faithless</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Faithless</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fire Fly</name>\n      <mbid>4544cf03-86cd-49a7-928f-162ce59e0d12</mbid>\n
+        \     <url>https://www.last.fm/music/Mike+Oldfield/_/Fire+Fly</url>\n      <date
+        uts=\"1150269883\">14 Jun 2006, 07:24</date>\n      <artist>\n        <name>Mike
+        Oldfield</name>\n        <mbid>a1684a49-feaa-4150-b758-d9412fc59f12</mbid>\n
+        \       <url>https://www.last.fm/music/Mike+Oldfield</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Penitent</name>\n      <mbid>80981f6c-2d1f-439e-bd75-81c51258a877</mbid>\n
+        \     <url>https://www.last.fm/music/Suzanne+Vega/_/Penitent</url>\n      <date
+        uts=\"1150269765\">14 Jun 2006, 07:22</date>\n      <artist>\n        <name>Suzanne
+        Vega</name>\n        <mbid>cf119120-7df5-47d7-9dec-49f8837a4e40</mbid>\n        <url>https://www.last.fm/music/Suzanne+Vega</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>04 - Steve Reich - Tranquil</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Steve+Reich/_/04+-+Steve+Reich+-+Tranquil</url>\n
+        \     <date uts=\"1149259190\">02 Jun 2006, 14:39</date>\n      <artist>\n
+        \       <name>Steve Reich</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Steve+Reich</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Lady</name>\n      <mbid>08323e21-655e-31d1-a81f-cbce462b914f</mbid>\n
+        \     <url>https://www.last.fm/music/Die+%C3%84rzte/_/Lady</url>\n      <date
+        uts=\"1149258371\">02 Jun 2006, 14:26</date>\n      <artist>\n        <name>Die
+        \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>I&apos;m Not Worried At All</name>\n      <mbid>0a487889-5e1f-48c4-befd-49b0b8c34724</mbid>\n
+        \     <url>https://www.last.fm/music/Moby/_/I%27m+Not+Worried+At+All</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Moby</name>\n
+        \       <mbid>8970d868-0723-483b-a75b-51088913d3d4</mbid>\n        <url>https://www.last.fm/music/Moby</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The Runaway</name>\n      <mbid>122f54df-86d2-3865-910c-48a4ff34a7e3</mbid>\n
+        \     <url>https://www.last.fm/music/Something+Corporate/_/The+Runaway</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Something
+        Corporate</name>\n        <mbid>8dacf242-9bf7-44f5-b2eb-18305b904551</mbid>\n
+        \       <url>https://www.last.fm/music/Something+Corporate</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Burnin Up</name>\n      <mbid>6f9f9986-f5e1-3967-b0fb-b1f4a63c8db0</mbid>\n
+        \     <url>https://www.last.fm/music/Ashlee+Simpson/_/Burnin+Up</url>\n      <date
+        uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Ashlee
+        Simpson</name>\n        <mbid>463c514e-c30d-4a2a-a87b-762535253a80</mbid>\n
+        \       <url>https://www.last.fm/music/Ashlee+Simpson</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Not All Me</name>\n      <mbid>07cb46d4-30fe-477a-b664-290d3fb45985</mbid>\n
+        \     <url>https://www.last.fm/music/Alanis+Morissette/_/Not+All+Me</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Alanis
+        Morissette</name>\n        <mbid>4bdcee62-4902-4773-8cd1-e252e2e31225</mbid>\n
+        \       <url>https://www.last.fm/music/Alanis+Morissette</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Rock&apos;n&apos;Roll Horrorshow</name>\n      <mbid>2e2ca02c-f84f-36fb-9931-1c75ed80c675</mbid>\n
+        \     <url>https://www.last.fm/music/Trashcan+Darlings/_/Rock%27n%27Roll+Horrorshow</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Trashcan
+        Darlings</name>\n        <mbid>617baca5-bd32-4ee7-be08-83742d1cf4bc</mbid>\n
+        \       <url>https://www.last.fm/music/Trashcan+Darlings</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '21403'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:38 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: page=1&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '166'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <lovedtracks
+        user=\"test-user\" page=\"1\" perPage=\"50\" totalPages=\"1\" total=\"23\">\n
+        \   <track>\n      <name>Original Prankster</name>\n      <mbid>3efef57e-6e47-41bc-8832-54d11eed8105</mbid>\n
+        \     <url>https://www.last.fm/music/The+Offspring/_/Original+Prankster</url>\n
+        \     <date uts=\"1155722612\">16 Aug 2006, 10:03</date>\n      <artist>\n
+        \       <name>The Offspring</name>\n        <mbid>23a03e33-a603-404e-bcbf-2c00159d7067</mbid>\n
+        \       <url>https://www.last.fm/music/The+Offspring</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The One Song</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Donots/_/The+One+Song</url>\n
+        \     <date uts=\"1154510338\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>Donots</name>\n        <mbid>06a4a555-1b69-4175-83df-2528a8e5af05</mbid>\n
+        \       <url>https://www.last.fm/music/Donots</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Du Willst Immer Nur Ficken</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/J.B.O./_/Du+Willst+Immer+Nur+Ficken</url>\n
+        \     <date uts=\"1154510327\">02 Aug 2006, 09:18</date>\n      <artist>\n
+        \       <name>J.B.O.</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/J.B.O.</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Chaos</name>\n      <mbid>00b5b1fc-5132-30cd-b386-1772d7fac0b9</mbid>\n
+        \     <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer/_/Chaos</url>\n
+        \     <date uts=\"1154509934\">02 Aug 2006, 09:12</date>\n      <artist>\n
+        \       <name>Herbert Gr\xF6nemeyer</name>\n        <mbid>456eabce-d1dd-4481-a206-36ab4f2eaeb8</mbid>\n
+        \       <url>https://www.last.fm/music/Herbert+Gr%C3%B6nemeyer</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fast wie von selbst</name>\n      <mbid>52581081-49bc-4aec-8f54-2c3ce1c28831</mbid>\n
+        \     <url>https://www.last.fm/music/Sportfreunde+Stiller/_/Fast+wie+von+selbst</url>\n
+        \     <date uts=\"1154509400\">02 Aug 2006, 09:03</date>\n      <artist>\n
+        \       <name>Sportfreunde Stiller</name>\n        <mbid>35581de7-591f-424f-9c64-7b22fd45605e</mbid>\n
+        \       <url>https://www.last.fm/music/Sportfreunde+Stiller</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Killing Joke</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Die+%C3%84rzte/_/Killing+Joke</url>\n
+        \     <date uts=\"1154509046\">02 Aug 2006, 08:57</date>\n      <artist>\n
+        \       <name>Die \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Umtausch ausgeschlossen!</name>\n      <mbid>69fa0b20-226a-3688-96d7-49c20e8b37f2</mbid>\n
+        \     <url>https://www.last.fm/music/Die+Toten+Hosen/_/Umtausch+ausgeschlossen!</url>\n
+        \     <date uts=\"1154508894\">02 Aug 2006, 08:54</date>\n      <artist>\n
+        \       <name>Die Toten Hosen</name>\n        <mbid>c3bc80a6-1f4a-4e17-8cf0-6b1efe8302f1</mbid>\n
+        \       <url>https://www.last.fm/music/Die+Toten+Hosen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>New Year&apos;s Day</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/U2/_/New+Year%27s+Day</url>\n
+        \     <date uts=\"1152282396\">07 Jul 2006, 14:26</date>\n      <artist>\n
+        \       <name>U2</name>\n        <mbid>a3cb23fc-acd3-4ce0-8f36-1e5aa6a18432</mbid>\n
+        \       <url>https://www.last.fm/music/U2</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Next To You</name>\n      <mbid>62ab2918-976b-3ac3-b1d2-848627c4c2e4</mbid>\n
+        \     <url>https://www.last.fm/music/The+Police/_/Next+To+You</url>\n      <date
+        uts=\"1152282129\">07 Jul 2006, 14:22</date>\n      <artist>\n        <name>The
+        Police</name>\n        <mbid>9e0e2b01-41db-4008-bd8b-988977d6019a</mbid>\n
+        \       <url>https://www.last.fm/music/The+Police</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Denkmal</name>\n      <mbid>47fbb210-c91e-4777-92c6-62a3c34ea569</mbid>\n
+        \     <url>https://www.last.fm/music/Wir+sind+Helden/_/Denkmal</url>\n      <date
+        uts=\"1150440403\">16 Jun 2006, 06:46</date>\n      <artist>\n        <name>Wir
+        sind Helden</name>\n        <mbid>908fedf4-548a-430f-b806-38fca9507dc4</mbid>\n
+        \       <url>https://www.last.fm/music/Wir+sind+Helden</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Go Your Own Way</name>\n      <mbid>031e1896-9724-42f1-86d8-4b7ad155b595</mbid>\n
+        \     <url>https://www.last.fm/music/The+Cranberries/_/Go+Your+Own+Way</url>\n
+        \     <date uts=\"1150271808\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>The Cranberries</name>\n        <mbid>c98d40fd-f6cf-4b26-883e-eaa515ee2851</mbid>\n
+        \       <url>https://www.last.fm/music/The+Cranberries</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Souls Of The Departed</name>\n      <mbid>4fe2cc8f-7faf-43ff-8c67-b332f151d54f</mbid>\n
+        \     <url>https://www.last.fm/music/Bruce+Springsteen/_/Souls+Of+The+Departed</url>\n
+        \     <date uts=\"1150271761\">14 Jun 2006, 07:56</date>\n      <artist>\n
+        \       <name>Bruce Springsteen</name>\n        <mbid>70248960-cb53-4ea4-943a-edb18f7d336f</mbid>\n
+        \       <url>https://www.last.fm/music/Bruce+Springsteen</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Don&apos;t Stand So Close To Me</name>\n      <mbid>05331c03-8711-4e9c-8320-dfdc699f545e</mbid>\n
+        \     <url>https://www.last.fm/music/Sting/_/Don%27t+Stand+So+Close+To+Me</url>\n
+        \     <date uts=\"1150271406\">14 Jun 2006, 07:50</date>\n      <artist>\n
+        \       <name>Sting</name>\n        <mbid>7944ed53-2a58-4035-9b93-140a71e41c34</mbid>\n
+        \       <url>https://www.last.fm/music/Sting</url>\n      </artist>\n      <image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Bring My Family &amp;</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Faithless/_/Bring+My+Family+&amp;</url>\n
+        \     <date uts=\"1150270827\">14 Jun 2006, 07:40</date>\n      <artist>\n
+        \       <name>Faithless</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Faithless</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Fire Fly</name>\n      <mbid>4544cf03-86cd-49a7-928f-162ce59e0d12</mbid>\n
+        \     <url>https://www.last.fm/music/Mike+Oldfield/_/Fire+Fly</url>\n      <date
+        uts=\"1150269883\">14 Jun 2006, 07:24</date>\n      <artist>\n        <name>Mike
+        Oldfield</name>\n        <mbid>a1684a49-feaa-4150-b758-d9412fc59f12</mbid>\n
+        \       <url>https://www.last.fm/music/Mike+Oldfield</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Penitent</name>\n      <mbid>80981f6c-2d1f-439e-bd75-81c51258a877</mbid>\n
+        \     <url>https://www.last.fm/music/Suzanne+Vega/_/Penitent</url>\n      <date
+        uts=\"1150269765\">14 Jun 2006, 07:22</date>\n      <artist>\n        <name>Suzanne
+        Vega</name>\n        <mbid>cf119120-7df5-47d7-9dec-49f8837a4e40</mbid>\n        <url>https://www.last.fm/music/Suzanne+Vega</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>04 - Steve Reich - Tranquil</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Steve+Reich/_/04+-+Steve+Reich+-+Tranquil</url>\n
+        \     <date uts=\"1149259190\">02 Jun 2006, 14:39</date>\n      <artist>\n
+        \       <name>Steve Reich</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Steve+Reich</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Lady</name>\n      <mbid>08323e21-655e-31d1-a81f-cbce462b914f</mbid>\n
+        \     <url>https://www.last.fm/music/Die+%C3%84rzte/_/Lady</url>\n      <date
+        uts=\"1149258371\">02 Jun 2006, 14:26</date>\n      <artist>\n        <name>Die
+        \xC4rzte</name>\n        <mbid>f2fb0ff0-5679-42ec-a55c-15109ce6e320</mbid>\n
+        \       <url>https://www.last.fm/music/Die+%C3%84rzte</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>I&apos;m Not Worried At All</name>\n      <mbid>0a487889-5e1f-48c4-befd-49b0b8c34724</mbid>\n
+        \     <url>https://www.last.fm/music/Moby/_/I%27m+Not+Worried+At+All</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Moby</name>\n
+        \       <mbid>8970d868-0723-483b-a75b-51088913d3d4</mbid>\n        <url>https://www.last.fm/music/Moby</url>\n
+        \     </artist>\n      <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>The Runaway</name>\n      <mbid>122f54df-86d2-3865-910c-48a4ff34a7e3</mbid>\n
+        \     <url>https://www.last.fm/music/Something+Corporate/_/The+Runaway</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Something
+        Corporate</name>\n        <mbid>8dacf242-9bf7-44f5-b2eb-18305b904551</mbid>\n
+        \       <url>https://www.last.fm/music/Something+Corporate</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Burnin Up</name>\n      <mbid>6f9f9986-f5e1-3967-b0fb-b1f4a63c8db0</mbid>\n
+        \     <url>https://www.last.fm/music/Ashlee+Simpson/_/Burnin+Up</url>\n      <date
+        uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Ashlee
+        Simpson</name>\n        <mbid>463c514e-c30d-4a2a-a87b-762535253a80</mbid>\n
+        \       <url>https://www.last.fm/music/Ashlee+Simpson</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Not All Me</name>\n      <mbid>07cb46d4-30fe-477a-b664-290d3fb45985</mbid>\n
+        \     <url>https://www.last.fm/music/Alanis+Morissette/_/Not+All+Me</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Alanis
+        Morissette</name>\n        <mbid>4bdcee62-4902-4773-8cd1-e252e2e31225</mbid>\n
+        \       <url>https://www.last.fm/music/Alanis+Morissette</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n
+        \     <name>Rock&apos;n&apos;Roll Horrorshow</name>\n      <mbid>2e2ca02c-f84f-36fb-9931-1c75ed80c675</mbid>\n
+        \     <url>https://www.last.fm/music/Trashcan+Darlings/_/Rock%27n%27Roll+Horrorshow</url>\n
+        \     <date uts=\"0\">01 Jan 1970, 00:00</date>\n      <artist>\n        <name>Trashcan
+        Darlings</name>\n        <mbid>617baca5-bd32-4ee7-be08-83742d1cf4bc</mbid>\n
+        \       <url>https://www.last.fm/music/Trashcan+Darlings</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n
+        \     <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '21403'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:38 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

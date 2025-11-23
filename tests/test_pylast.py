@@ -24,13 +24,15 @@ def load_secrets():  # pragma: no cover
             doc = yaml.load(f)
     else:
         doc = {}
-        try:
-            doc["username"] = os.environ["PYLAST_USERNAME"].strip()
-            doc["password_hash"] = os.environ["PYLAST_PASSWORD_HASH"].strip()
-            doc["api_key"] = os.environ["PYLAST_API_KEY"].strip()
-            doc["api_secret"] = os.environ["PYLAST_API_SECRET"].strip()
-        except KeyError:
-            pytest.skip("Missing environment variables: PYLAST_USERNAME etc.")
+
+        def get_env(var_name: str) -> str:
+            return os.environ.get(var_name, "").strip()
+
+        doc["username"] = get_env("PYLAST_USERNAME")
+        doc["password_hash"] = get_env("PYLAST_PASSWORD_HASH")
+        doc["api_key"] = get_env("PYLAST_API_KEY")
+        doc["api_secret"] = get_env("PYLAST_API_SECRET")
+
     return doc
 
 
@@ -39,6 +41,7 @@ def _no_xfail_rerun_filter(err, name, test, plugin) -> bool:
         return False
 
 
+@pytest.mark.vcr
 @flaky(max_runs=3, min_passes=1, rerun_filter=_no_xfail_rerun_filter)
 class TestPyLastWithLastFm:
     secrets = None

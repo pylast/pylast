@@ -1,0 +1,67 @@
+interactions:
+- request:
+    body: artist=Test+Artist&album=Test&method=album.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '168'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <album>\n
+        \   <name>Test</name>\n    <artist>Test Artist</artist>\n    <mbid></mbid>\n
+        \   <url>https://www.last.fm/music/Test+Artist/Test</url>\n    <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <image size=\"mega\">https://lastfm.freetls.fastly.net/i/u/300x300/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <image size=\"\">https://lastfm.freetls.fastly.net/i/u/300x300/f682377691de4b12981ae85570fadcca.jpg</image>\n
+        \   <listeners>13</listeners>\n    <playcount>38</playcount>\n    <tracks>\n
+        \     <track rank=\"1\">\n        <name>TEST</name>\n        <url>https://www.last.fm/music/Test+Artist/Test/TEST</url>\n
+        \       <duration>210</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Test Artist</name>\n          <mbid></mbid>\n
+        \         <url>https://www.last.fm/music/Test+Artist</url>\n        </artist>\n
+        \     </track>\n    </tracks>\n    <tags>\n      <tag>\n        <name>testing</name>\n
+        \       <url>https://www.last.fm/tag/testing</url>\n      </tag>\n      <tag>\n
+        \       <name>artisttagola</name>\n        <url>https://www.last.fm/tag/artisttagola</url>\n
+        \     </tag>\n      <tag>\n        <name>1</name>\n        <url>https://www.last.fm/tag/1</url>\n
+        \     </tag>\n      <tag>\n        <name>m</name>\n        <url>https://www.last.fm/tag/m</url>\n
+        \     </tag>\n      <tag>\n        <name>o</name>\n        <url>https://www.last.fm/tag/o</url>\n
+        \     </tag>\n    </tags>\n  </album>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '1870'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:31 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -4,6 +4,7 @@ Integration (not unit) tests for pylast.py
 """
 from __future__ import annotations
 
+import pytest
 from flaky import flaky
 
 import pylast
@@ -11,6 +12,7 @@ import pylast
 from .test_pylast import load_secrets
 
 
+@pytest.mark.vcr
 @flaky(max_runs=3, min_passes=1)
 class TestPyLastWithLibreFm:
     """Own class for Libre.fm because we don't need the Last.fm setUp"""

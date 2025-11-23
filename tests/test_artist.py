@@ -269,10 +269,10 @@ class TestPyLastArtist(TestPyLastWithLastFm):
 
     def test_get_userplaycount(self) -> None:
         # Arrange
-        artist = pylast.Artist("John Lennon", self.network, username=self.username)
+        artist = pylast.Artist("John Lennon", self.network, username="RJ")
 
         # Act
         playcount = artist.get_userplaycount()
 
         # Assert
-        assert playcount >= 0
+        assert playcount >= 10

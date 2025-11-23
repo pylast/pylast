@@ -1,0 +1,67 @@
+interactions:
+- request:
+    body: limit=3&page=1&method=user.getRecentTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '178'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <recenttracks
+        user=\"REDACTED_USER\" page=\"1\" perPage=\"3\" totalPages=\"2230\" total=\"6688\">\n
+        \   <track>\n      <artist mbid=\"\">Test Artist</artist>\n      <name>Test
+        Title</name>\n      <streamable>0</streamable>\n      <mbid></mbid>\n      <album
+        mbid=\"\"></album>\n      <url>https://www.last.fm/music/Test+Artist/_/Test+Title</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1637517772\">21 Nov 2021, 18:02</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"\">Test Artist</artist>\n      <name>test title 2</name>\n
+        \     <streamable>0</streamable>\n      <mbid></mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/Test+Artist/_/test+title+2</url>\n      <image
+        size=\"small\"></image>\n      <image size=\"medium\"></image>\n      <image
+        size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n      <date
+        uts=\"1637517772\">21 Nov 2021, 18:02</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"\">Test Artist</artist>\n      <name>Test Title</name>\n
+        \     <streamable>0</streamable>\n      <mbid></mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/Test+Artist/_/Test+Title</url>\n      <image
+        size=\"small\"></image>\n      <image size=\"medium\"></image>\n      <image
+        size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n      <date
+        uts=\"1637517418\">21 Nov 2021, 17:56</date>\n    </track>\n  </recenttracks>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '1525'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:11 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

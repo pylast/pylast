@@ -1,0 +1,286 @@
+interactions:
+- request:
+    body: mbid=03c91c40-49a6-44a7-90e7-a700edf97a62&method=album.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '180'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <album>\n
+        \   <name>Believe</name>\n    <artist>Cher</artist>\n    <url>https://www.last.fm/music/Cher/Believe</url>\n
+        \   <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"mega\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <listeners>989728</listeners>\n    <playcount>8379061</playcount>\n    <tracks>\n
+        \     <track rank=\"1\">\n        <name>Believe</name>\n        <url>https://www.last.fm/music/Cher/Believe/Believe</url>\n
+        \       <duration>238</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"2\">\n        <name>The Power</name>\n        <url>https://www.last.fm/music/Cher/Believe/The+Power</url>\n
+        \       <duration>236</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"3\">\n        <name>Runaway</name>\n        <url>https://www.last.fm/music/Cher/Believe/Runaway</url>\n
+        \       <duration>286</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"4\">\n        <name>All or Nothing</name>\n        <url>https://www.last.fm/music/Cher/Believe/All+or+Nothing</url>\n
+        \       <duration>238</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"5\">\n        <name>Strong Enough</name>\n        <url>https://www.last.fm/music/Cher/Believe/Strong+Enough</url>\n
+        \       <duration>223</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"6\">\n        <name>Dov&apos;e L&apos;amore</name>\n        <url>https://www.last.fm/music/Cher/Believe/Dov%27e+L%27amore</url>\n
+        \       <duration>224</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"7\">\n        <name>Takin&apos; Back My Heart</name>\n
+        \       <url>https://www.last.fm/music/Cher/Believe/Takin%27+Back+My+Heart</url>\n
+        \       <duration>272</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"8\">\n        <name>Taxi Taxi</name>\n        <url>https://www.last.fm/music/Cher/Believe/Taxi+Taxi</url>\n
+        \       <duration>304</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"9\">\n        <name>Love Is the Groove</name>\n        <url>https://www.last.fm/music/Cher/Believe/Love+Is+the+Groove</url>\n
+        \       <duration>269</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"10\">\n        <name>We All Sleep Alone</name>\n        <url>https://www.last.fm/music/Cher/Believe/We+All+Sleep+Alone</url>\n
+        \       <duration>233</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \   </tracks>\n    <tags>\n      <tag>\n        <name>pop</name>\n        <url>https://www.last.fm/tag/pop</url>\n
+        \     </tag>\n      <tag>\n        <name>dance</name>\n        <url>https://www.last.fm/tag/dance</url>\n
+        \     </tag>\n      <tag>\n        <name>90s</name>\n        <url>https://www.last.fm/tag/90s</url>\n
+        \     </tag>\n      <tag>\n        <name>female vocalists</name>\n        <url>https://www.last.fm/tag/female+vocalists</url>\n
+        \     </tag>\n      <tag>\n        <name>cher</name>\n        <url>https://www.last.fm/tag/cher</url>\n
+        \     </tag>\n    </tags>\n    <wiki>\n      <published>06 Jun 2023, 00:31</published>\n
+        \     <summary>Believe is the twenty-third studio album by American singer-actress
+        Cher, released on November 10, 1998 by Warner Bros. Records. The RIAA certified
+        it Quadruple Platinum on December 23, 1999, recognizing four million shipments
+        in the United States; Worldwide, the album has sold more than 20 million copies,
+        making it the biggest-selling album of her career. In 1999 the album received
+        three Grammy Awards nominations including &quot;Record of the Year&quot;,
+        &quot;Best Pop Album&quot; and winning &quot;Best Dance Recording&quot; for
+        the single &quot;Believe&quot;. It was released by Warner Bros. Records at
+        the end of 1998. The album was executive produced by Rob &lt;a href=&quot;https://www.last.fm/music/Cher/Believe&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>\n      <content>Believe is the twenty-third
+        studio album by American  singer-actress Cher, released on November 10, 1998
+        by Warner Bros. Records. The RIAA certified it Quadruple Platinum on December
+        23, 1999, recognizing four million shipments in the United States; Worldwide,
+        the album has sold more than 20 million copies, making it the biggest-selling
+        album of her career. In 1999 the album received three Grammy Awards nominations
+        including &quot;Record of the Year&quot;, &quot;Best Pop Album&quot; and winning
+        &quot;Best Dance Recording&quot; for the single &quot;Believe&quot;.\n\nIt
+        was released by Warner Bros. Records at the end of 1998. The album was executive
+        produced by Rob Dickens. Upon its debut, critical reception was generally
+        positive. Believe became Cher&apos;s most commercially-successful release,
+        reached number one and Top 10 all over the world. In the United States, the
+        album was released on November 10, 1998, and reached number four on the Billboard
+        200 chart, where it was certified four times platinum.\n\nThe album featured
+        a change in Cher&apos;s music; in addition, Believe presented a vocally stronger
+        Cher and a massive use of vocoder and Auto-Tune. In 1999, the album received
+        3 Grammy Awards nominations for &quot;Record of the Year&quot;, &quot;Best
+        Pop Album&quot; and winning &quot;Best Dance Recording&quot;. Throughout 1999
+        and into 2000 Cher was nominated and winning many awards for the album including
+        a Billboard Music Award for &quot;Female Vocalist of the Year&quot;, Lifelong
+        Contribution Awards and a Star on the Walk of Fame shared with former Sonny
+        Bono. The boost in Cher&apos;s popularity led to a very successful Do You
+        Believe? Tour.\n\nThe album was dedicated to Sonny Bono, Cher&apos;s former
+        husband who died earlier that year from a skiing accident.\n\nCher also recorded
+        a cover version of &quot;Love Is in the Air&quot; during early sessions for
+        this album. Although never officially released, the song has leaked on file
+        sharing networks.\n\nSingles\n\n\n&quot;Believe&quot;\n&quot;Strong Enough&quot;\n&quot;All
+        or Nothing&quot;\n&quot;Dov&apos;\xE8 L&apos;Amore&quot;\n\nCher Official
+        Website: https://www.cherfanclub.com &lt;a href=&quot;https://www.last.fm/music/Cher/Believe&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>\n    </wiki>\n
+        \ </album>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '8783'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:25 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=Cher&album=Believe&method=album.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '164'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <album>\n
+        \   <name>Believe</name>\n    <artist>Cher</artist>\n    <mbid>03c91c40-49a6-44a7-90e7-a700edf97a62</mbid>\n
+        \   <url>https://www.last.fm/music/Cher/Believe</url>\n    <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"mega\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <image size=\"\">https://lastfm.freetls.fastly.net/i/u/300x300/3b54885952161aaea4ce2965b2db1638.png</image>\n
+        \   <listeners>989728</listeners>\n    <playcount>8379061</playcount>\n    <tracks>\n
+        \     <track rank=\"1\">\n        <name>Believe</name>\n        <url>https://www.last.fm/music/Cher/Believe/Believe</url>\n
+        \       <duration>238</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"2\">\n        <name>The Power</name>\n        <url>https://www.last.fm/music/Cher/Believe/The+Power</url>\n
+        \       <duration>236</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"3\">\n        <name>Runaway</name>\n        <url>https://www.last.fm/music/Cher/Believe/Runaway</url>\n
+        \       <duration>286</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"4\">\n        <name>All or Nothing</name>\n        <url>https://www.last.fm/music/Cher/Believe/All+or+Nothing</url>\n
+        \       <duration>238</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"5\">\n        <name>Strong Enough</name>\n        <url>https://www.last.fm/music/Cher/Believe/Strong+Enough</url>\n
+        \       <duration>223</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"6\">\n        <name>Dov&apos;e L&apos;amore</name>\n        <url>https://www.last.fm/music/Cher/Believe/Dov%27e+L%27amore</url>\n
+        \       <duration>224</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"7\">\n        <name>Takin&apos; Back My Heart</name>\n
+        \       <url>https://www.last.fm/music/Cher/Believe/Takin%27+Back+My+Heart</url>\n
+        \       <duration>272</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"8\">\n        <name>Taxi Taxi</name>\n        <url>https://www.last.fm/music/Cher/Believe/Taxi+Taxi</url>\n
+        \       <duration>304</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"9\">\n        <name>Love Is the Groove</name>\n        <url>https://www.last.fm/music/Cher/Believe/Love+Is+the+Groove</url>\n
+        \       <duration>269</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \     <track rank=\"10\">\n        <name>We All Sleep Alone</name>\n        <url>https://www.last.fm/music/Cher/Believe/We+All+Sleep+Alone</url>\n
+        \       <duration>233</duration>\n        <streamable fulltrack=\"0\">0</streamable>\n
+        \       <artist>\n          <name>Cher</name>\n          <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>\n
+        \         <url>https://www.last.fm/music/Cher</url>\n        </artist>\n      </track>\n
+        \   </tracks>\n    <tags>\n      <tag>\n        <name>pop</name>\n        <url>https://www.last.fm/tag/pop</url>\n
+        \     </tag>\n      <tag>\n        <name>dance</name>\n        <url>https://www.last.fm/tag/dance</url>\n
+        \     </tag>\n      <tag>\n        <name>90s</name>\n        <url>https://www.last.fm/tag/90s</url>\n
+        \     </tag>\n      <tag>\n        <name>female vocalists</name>\n        <url>https://www.last.fm/tag/female+vocalists</url>\n
+        \     </tag>\n      <tag>\n        <name>cher</name>\n        <url>https://www.last.fm/tag/cher</url>\n
+        \     </tag>\n    </tags>\n    <wiki>\n      <published>06 Jun 2023, 00:31</published>\n
+        \     <summary>Believe is the twenty-third studio album by American singer-actress
+        Cher, released on November 10, 1998 by Warner Bros. Records. The RIAA certified
+        it Quadruple Platinum on December 23, 1999, recognizing four million shipments
+        in the United States; Worldwide, the album has sold more than 20 million copies,
+        making it the biggest-selling album of her career. In 1999 the album received
+        three Grammy Awards nominations including &quot;Record of the Year&quot;,
+        &quot;Best Pop Album&quot; and winning &quot;Best Dance Recording&quot; for
+        the single &quot;Believe&quot;. It was released by Warner Bros. Records at
+        the end of 1998. The album was executive produced by Rob &lt;a href=&quot;https://www.last.fm/music/Cher/Believe&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>\n      <content>Believe is the twenty-third
+        studio album by American  singer-actress Cher, released on November 10, 1998
+        by Warner Bros. Records. The RIAA certified it Quadruple Platinum on December
+        23, 1999, recognizing four million shipments in the United States; Worldwide,
+        the album has sold more than 20 million copies, making it the biggest-selling
+        album of her career. In 1999 the album received three Grammy Awards nominations
+        including &quot;Record of the Year&quot;, &quot;Best Pop Album&quot; and winning
+        &quot;Best Dance Recording&quot; for the single &quot;Believe&quot;.\n\nIt
+        was released by Warner Bros. Records at the end of 1998. The album was executive
+        produced by Rob Dickens. Upon its debut, critical reception was generally
+        positive. Believe became Cher&apos;s most commercially-successful release,
+        reached number one and Top 10 all over the world. In the United States, the
+        album was released on November 10, 1998, and reached number four on the Billboard
+        200 chart, where it was certified four times platinum.\n\nThe album featured
+        a change in Cher&apos;s music; in addition, Believe presented a vocally stronger
+        Cher and a massive use of vocoder and Auto-Tune. In 1999, the album received
+        3 Grammy Awards nominations for &quot;Record of the Year&quot;, &quot;Best
+        Pop Album&quot; and winning &quot;Best Dance Recording&quot;. Throughout 1999
+        and into 2000 Cher was nominated and winning many awards for the album including
+        a Billboard Music Award for &quot;Female Vocalist of the Year&quot;, Lifelong
+        Contribution Awards and a Star on the Walk of Fame shared with former Sonny
+        Bono. The boost in Cher&apos;s popularity led to a very successful Do You
+        Believe? Tour.\n\nThe album was dedicated to Sonny Bono, Cher&apos;s former
+        husband who died earlier that year from a skiing accident.\n\nCher also recorded
+        a cover version of &quot;Love Is in the Air&quot; during early sessions for
+        this album. Although never officially released, the song has leaked on file
+        sharing networks.\n\nSingles\n\n\n&quot;Believe&quot;\n&quot;Strong Enough&quot;\n&quot;All
+        or Nothing&quot;\n&quot;Dov&apos;\xE8 L&apos;Amore&quot;\n\nCher Official
+        Website: https://www.cherfanclub.com &lt;a href=&quot;https://www.last.fm/music/Cher/Believe&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>\n    </wiki>\n
+        \ </album>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '8837'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:25 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

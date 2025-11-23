@@ -1,0 +1,78 @@
+interactions:
+- request:
+    body: artist=Test+Artist&track=test+title&method=track.getInfo
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '174'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<lfm status=\"ok\"><track><name>Test
+        Title</name>\n<url>https://www.last.fm/music/Test+Artist/_/Test+Title</url>\n<duration>25000</duration>\n<streamable
+        fulltrack=\"0\">0</streamable>\n<listeners>93</listeners>\n<playcount>6012</playcount>\n<artist><name>Test
+        Artist</name>\n<url>https://www.last.fm/music/Test+Artist</url>\n</artist>\n<album><artist>Test
+        Artist</artist>\n<title>Test Album</title>\n<url>https://www.last.fm/music/Test+Artist/Test+Album</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/17345cfed52c79b0e11042c364effd19.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/17345cfed52c79b0e11042c364effd19.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/17345cfed52c79b0e11042c364effd19.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/17345cfed52c79b0e11042c364effd19.png</image>\n</album>\n<userplaycount>4699</userplaycount><userloved>0</userloved><toptags></toptags>\n<wiki><published>04
+        Mar 2014, 06:27</published>\n<summary>The landmark debut Christmas number
+        one single of all time marked a new testing of the waters.&#10;&#10;Astley
+        was born on 6 February 1966 in Newton-le-Willows in Lancashire, the fourth
+        child of his family. His parents divorced when he was five, and Astley was
+        brought up by his father.[9] His musical career started when he was 10, singing
+        in the local church choir.[10] During his schooldays, Astley formed and played
+        the drums in a number of local bands, where he met guitarist David Morris.
+        &lt;a href=&quot;http://www.last.fm/music/Test+Artist/_/Test+Title&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;.</summary>\n<content>The landmark debut Christmas
+        number one single of all time marked a new testing of the waters.&#10;&#10;Astley
+        was born on 6 February 1966 in Newton-le-Willows in Lancashire, the fourth
+        child of his family. His parents divorced when he was five, and Astley was
+        brought up by his father.[9] His musical career started when he was 10, singing
+        in the local church choir.[10] During his schooldays, Astley formed and played
+        the drums in a number of local bands, where he met guitarist David Morris.[2][11]
+        After leaving school at sixteen, Astley was employed during the day as a driver
+        in his father&apos;s market-gardening business and played drums on the Northern
+        club circuit at night in bands such as Give Way \u2013 specialising in covering
+        Beatles and Shadows songs \u2013 and FBI, which won several local talent competitions.
+        &lt;a href=&quot;http://www.last.fm/music/Test+Artist/_/Test+Title&quot;&gt;Read
+        more on Last.fm&lt;/a&gt;. User-contributed text is available under the Creative
+        Commons By-SA License; additional terms may apply.</content>\n</wiki>\n</track>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '2762'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:28 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

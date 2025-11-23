@@ -1,0 +1,157 @@
+interactions:
+- request:
+    body: limit=1&method=chart.getTopArtists
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '152'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><artists page="1" perPage="1" totalPages="108588996" total="108588996"><artist><name>The
+        Weeknd</name>
+
+        <playcount>1038749116</playcount>
+
+        <listeners>5071143</listeners>
+
+        <mbid>c8b03190-306c-4120-bb0b-6f2ebfc06ea9</mbid>
+
+        <url>https://www.last.fm/music/The+Weeknd</url>
+
+        <streamable>0</streamable>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        <image size="mega">https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>
+
+        </artist>
+
+        </artists>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '927'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:19 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=The+Weeknd&limit=1&page=1&method=artist.getTopAlbums
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '177'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8" ?>
+
+        <lfm status="ok"><topalbums artist="The Weeknd" page="1" perPage="1" totalPages="44537"
+        total="44537"><album rank="1"><name>Starboy</name>
+
+        <playcount>190239184</playcount>
+
+        <url>https://www.last.fm/music/The+Weeknd/Starboy</url>
+
+        <artist><name>The Weeknd</name>
+
+        <url>https://www.last.fm/music/The+Weeknd</url>
+
+        </artist>
+
+        <image size="small">https://lastfm.freetls.fastly.net/i/u/34s/08e3f15aca0423b084fb49f342756f3b.png</image>
+
+        <image size="medium">https://lastfm.freetls.fastly.net/i/u/64s/08e3f15aca0423b084fb49f342756f3b.png</image>
+
+        <image size="large">https://lastfm.freetls.fastly.net/i/u/174s/08e3f15aca0423b084fb49f342756f3b.png</image>
+
+        <image size="extralarge">https://lastfm.freetls.fastly.net/i/u/300x300/08e3f15aca0423b084fb49f342756f3b.png</image>
+
+        </album>
+
+        </topalbums>
+
+        </lfm>
+
+        '
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '826'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:19 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

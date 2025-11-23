@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: period=overall&limit=1&method=user.getTopAlbums
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '173'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <topalbums
+        user=\"RJ\" page=\"1\" perPage=\"1\" totalPages=\"26565\" total=\"26565\">\n
+        \   <album rank=\"1\">\n      <name>Doggystyle</name>\n      <playcount>417</playcount>\n
+        \     <mbid>092bebff-dcf6-4fc4-8c34-837651703155</mbid>\n      <url>https://www.last.fm/music/Snoop+Dogg/Doggystyle</url>\n
+        \     <artist>\n        <name>Snoop Dogg</name>\n        <mbid>f90e8b26-9e52-4669-a5c9-e28529c47894</mbid>\n
+        \       <url>https://www.last.fm/music/Snoop+Dogg</url>\n      </artist>\n
+        \     <image size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/1f56d238345e49e8c9906e892984c187.png</image>\n
+        \     <image size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/1f56d238345e49e8c9906e892984c187.png</image>\n
+        \     <image size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/1f56d238345e49e8c9906e892984c187.png</image>\n
+        \     <image size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/1f56d238345e49e8c9906e892984c187.png</image>\n
+        \   </album>\n  </topalbums>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '1015'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:51 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

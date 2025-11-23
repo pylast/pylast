@@ -1,0 +1,1296 @@
+interactions:
+- request:
+    body: artist=France+Gall&track=Laisse+Tomber+Les+Filles&page=1&method=user.getTrackScrobbles
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '219'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <trackscrobbles
+        user=\"bbc6music\" page=\"1\" perPage=\"50\" totalPages=\"4\" total=\"158\">\n
+        \   <track>\n      <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France
+        Gall</artist>\n      <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1763349558\">17 Nov 2025, 03:19</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1763007558\">13 Nov 2025, 04:19</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1760594492\">16 Oct 2025, 06:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1758168524\">18 Sep 2025, 04:08</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1756726399\">01 Sep 2025, 11:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1754384281\">05 Aug 2025, 08:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1753450080\">25 Jul 2025, 13:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1752554727\">15 Jul 2025, 04:45</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1752486349\">14 Jul 2025, 09:45</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1748870648\">02 Jun 2025, 13:24</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1746518509\">06 May 2025, 08:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1744825805\">16 Apr 2025, 17:50</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1743919203\">06 Apr 2025, 06:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1739452176\">13 Feb 2025, 13:09</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1736581159\">11 Jan 2025, 07:39</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1735233460\">26 Dec 2024, 17:17</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1724140990\">20 Aug 2024, 08:03</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1722193287\">28 Jul 2024, 19:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1721831629\">24 Jul 2024, 14:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1720934033\">14 Jul 2024, 05:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1718698847\">18 Jun 2024, 08:20</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1718087270\">11 Jun 2024, 06:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1717073104\">30 May 2024, 12:45</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1716012096\">18 May 2024, 06:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1715063282\">07 May 2024, 06:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1713498084\">19 Apr 2024, 03:41</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1710167598\">11 Mar 2024, 14:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1707913647\">14 Feb 2024, 12:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1706952458\">03 Feb 2024, 09:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1704976392\">11 Jan 2024, 12:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1703662397\">27 Dec 2023, 07:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1700726738\">23 Nov 2023, 08:05</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1699369359\">07 Nov 2023, 15:02</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1698931990\">02 Nov 2023, 13:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1697603364\">18 Oct 2023, 04:29</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1694930870\">17 Sep 2023, 06:07</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1692786801\">23 Aug 2023, 10:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1692435353\">19 Aug 2023, 08:55</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1689168445\">12 Jul 2023, 13:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1686984001\">17 Jun 2023, 06:40</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1686055650\">06 Jun 2023, 12:47</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1681704521\">17 Apr 2023, 04:08</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1679927678\">27 Mar 2023, 14:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1678703274\">13 Mar 2023, 10:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1677650794\">01 Mar 2023, 06:06</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1675686783\">06 Feb 2023, 12:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1672473483\">31 Dec 2022, 07:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1669806791\">30 Nov 2022, 11:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1666675129\">25 Oct 2022, 05:18</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1664893488\">04 Oct 2022, 14:24</date>\n    </track>\n  </trackscrobbles>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '27669'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:12:59 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=France+Gall&track=Laisse+Tomber+Les+Filles&page=2&method=user.getTrackScrobbles
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '219'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <trackscrobbles
+        user=\"bbc6music\" page=\"2\" perPage=\"50\" totalPages=\"4\" total=\"158\">\n
+        \   <track>\n      <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France
+        Gall</artist>\n      <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1659593825\">04 Aug 2022, 06:17</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1655621537\">19 Jun 2022, 06:52</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1650576108\">21 Apr 2022, 21:21</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1646828576\">09 Mar 2022, 12:22</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1643864958\">03 Feb 2022, 05:09</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1638445602\">02 Dec 2021, 11:46</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1637222748\">18 Nov 2021, 08:05</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1634711288\">20 Oct 2021, 06:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1633672129\">08 Oct 2021, 05:48</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1631667546\">15 Sep 2021, 00:59</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1622614807\">02 Jun 2021, 06:20</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1616218203\">20 Mar 2021, 05:30</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1612872827\">09 Feb 2021, 12:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1608465636\">20 Dec 2020, 12:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1607231265\">06 Dec 2020, 05:07</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1600687056\">21 Sep 2020, 11:17</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1599209637\">04 Sep 2020, 08:53</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1598155686\">23 Aug 2020, 04:08</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1595594752\">24 Jul 2020, 12:45</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1594289454\">09 Jul 2020, 10:10</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1590318067\">24 May 2020, 11:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1585035163\">24 Mar 2020, 07:32</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1582801276\">27 Feb 2020, 11:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1581953334\">17 Feb 2020, 15:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1578909028\">13 Jan 2020, 09:50</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1577338041\">26 Dec 2019, 05:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1573049751\">06 Nov 2019, 14:15</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1571371075\">18 Oct 2019, 03:57</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1569594486\">27 Sep 2019, 14:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1567070127\">29 Aug 2019, 09:15</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1565863089\">15 Aug 2019, 09:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1563199105\">15 Jul 2019, 13:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1559805795\">06 Jun 2019, 07:23</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1557916350\">15 May 2019, 10:32</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1555579170\">18 Apr 2019, 09:19</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1551252495\">27 Feb 2019, 07:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1548941560\">31 Jan 2019, 13:32</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1548750212\">29 Jan 2019, 08:23</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1543293764\">27 Nov 2018, 04:42</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1542884056\">22 Nov 2018, 10:54</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1539601236\">15 Oct 2018, 11:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1538720868\">05 Oct 2018, 06:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1537323874\">19 Sep 2018, 02:24</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1537232294\">18 Sep 2018, 00:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1527075943\">23 May 2018, 11:45</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1525766350\">08 May 2018, 07:59</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1523877319\">16 Apr 2018, 11:15</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1521707298\">22 Mar 2018, 08:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1519457312\">24 Feb 2018, 07:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1518543898\">13 Feb 2018, 17:44</date>\n    </track>\n  </trackscrobbles>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '27669'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:13:01 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=France+Gall&track=Laisse+Tomber+Les+Filles&page=3&method=user.getTrackScrobbles
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '219'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <trackscrobbles
+        user=\"bbc6music\" page=\"3\" perPage=\"50\" totalPages=\"4\" total=\"158\">\n
+        \   <track>\n      <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France
+        Gall</artist>\n      <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1517209108\">29 Jan 2018, 06:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1514991466\">03 Jan 2018, 14:57</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1512359495\">04 Dec 2017, 03:51</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1508644822\">22 Oct 2017, 04:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1505537878\">16 Sep 2017, 04:57</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1503305579\">21 Aug 2017, 08:52</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1502101394\">07 Aug 2017, 10:23</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1500445968\">19 Jul 2017, 06:32</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1499347330\">06 Jul 2017, 13:22</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1495252822\">20 May 2017, 04:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1492421641\">17 Apr 2017, 09:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1488972861\">08 Mar 2017, 11:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1487397608\">18 Feb 2017, 06:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1484920820\">20 Jan 2017, 14:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1484041882\">10 Jan 2017, 09:51</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1480422811\">29 Nov 2016, 12:33</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1479391186\">17 Nov 2016, 13:59</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1478060221\">02 Nov 2016, 04:17</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1471595326\">19 Aug 2016, 08:28</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1469332825\">24 Jul 2016, 04:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1468324732\">12 Jul 2016, 11:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1464181045\">25 May 2016, 12:57</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1463284815\">15 May 2016, 04:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1462351865\">04 May 2016, 08:51</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1461240934\">21 Apr 2016, 12:15</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1460368973\">11 Apr 2016, 10:02</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1459301279\">30 Mar 2016, 01:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1458363615\">19 Mar 2016, 05:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1455622453\">16 Feb 2016, 11:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1453381993\">21 Jan 2016, 13:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1452315615\">09 Jan 2016, 05:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1450776844\">22 Dec 2015, 09:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1449816856\">11 Dec 2015, 06:54</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1447385925\">13 Nov 2015, 03:38</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1446470031\">02 Nov 2015, 13:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1437286769\">19 Jul 2015, 06:19</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1436495862\">10 Jul 2015, 02:37</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1435563250\">29 Jun 2015, 07:34</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1431658807\">15 May 2015, 03:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1429776050\">23 Apr 2015, 08:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1428813459\">12 Apr 2015, 04:37</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1424783479\">24 Feb 2015, 13:11</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1420965765\">11 Jan 2015, 08:42</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1419920781\">30 Dec 2014, 06:26</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1417706865\">04 Dec 2014, 15:27</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1416560493\">21 Nov 2014, 09:01</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1414067548\">23 Oct 2014, 12:32</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1412053387\">30 Sep 2014, 05:03</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1410873202\">16 Sep 2014, 13:13</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1409914664\">05 Sep 2014, 10:57</date>\n    </track>\n  </trackscrobbles>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '27669'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:13:01 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: artist=France+Gall&track=Laisse+Tomber+Les+Filles&page=4&method=user.getTrackScrobbles
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '219'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n  <trackscrobbles
+        user=\"bbc6music\" page=\"4\" perPage=\"50\" totalPages=\"4\" total=\"158\">\n
+        \   <track>\n      <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France
+        Gall</artist>\n      <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1408861916\">24 Aug 2014, 06:31</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1407855619\">12 Aug 2014, 15:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1406871606\">01 Aug 2014, 05:40</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1405598323\">17 Jul 2014, 11:58</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1404540017\">05 Jul 2014, 06:00</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1402553552\">12 Jun 2014, 06:12</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1400872005\">23 May 2014, 19:06</date>\n    </track>\n    <track>\n
+        \     <artist mbid=\"385966f0-b912-4755-bad6-4780ebf3f4cd\">France Gall</artist>\n
+        \     <name>Laisse Tomber Les Filles</name>\n      <streamable>0</streamable>\n
+        \     <mbid>87d4798e-93c6-4a10-b2cd-0ffc0581dcd1</mbid>\n      <album mbid=\"\"></album>\n
+        \     <url>https://www.last.fm/music/France+Gall/_/Laisse+Tomber+Les+Filles</url>\n
+        \     <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n
+        \     <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n
+        \     <date uts=\"1290955746\">28 Nov 2010, 14:49</date>\n    </track>\n  </trackscrobbles>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '4569'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:13:02 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,248 @@
+interactions:
+- request:
+    body: album=Nevermind&page=1&method=album.search
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, br, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '160'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/6.0.1.dev12
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<lfm status=\"ok\"><results
+        for=\"Nevermind\"><opensearch:Query role=\"request\" searchTerms=\"Nevermind\"
+        startPage=\"1\"></opensearch:Query>\n<opensearch:totalResults>7892</opensearch:totalResults>\n<opensearch:startIndex>0</opensearch:startIndex>\n<opensearch:itemsPerPage>50</opensearch:itemsPerPage>\n<albummatches><album><name>Nevermind</name>\n<artist>Nirvana</artist>\n<url>https://www.last.fm/music/Nirvana/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e8693de0a153e609b3eaebb42d62e8be.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e8693de0a153e609b3eaebb42d62e8be.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e8693de0a153e609b3eaebb42d62e8be.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e8693de0a153e609b3eaebb42d62e8be.png</image>\n<streamable>0</streamable>\n<mbid>0173cdb7-d43c-4497-8a2e-f0b0d27ac474</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Dennis
+        Lloyd</artist>\n<url>https://www.last.fm/music/Dennis+Lloyd/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/79ffd686c664c37e68cb8a5a8b7cd1d3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/79ffd686c664c37e68cb8a5a8b7cd1d3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/79ffd686c664c37e68cb8a5a8b7cd1d3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/79ffd686c664c37e68cb8a5a8b7cd1d3.png</image>\n<streamable>0</streamable>\n<mbid>2dc16a5c-56c5-411c-af1f-9710dacc90d7</mbid>\n</album>\n<album><name>NEVERMIND</name>\n<artist>Sahxl</artist>\n<url>https://www.last.fm/music/Sahxl/NEVERMIND</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/b00c367de7a1c7be927e55e9958794a5.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/b00c367de7a1c7be927e55e9958794a5.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/b00c367de7a1c7be927e55e9958794a5.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/b00c367de7a1c7be927e55e9958794a5.png</image>\n<streamable>0</streamable>\n<mbid>b7740853-7ca3-4ae5-96ff-d32598729ff9</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Elwood
+        Stray</artist>\n<url>https://www.last.fm/music/Elwood+Stray/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3a2ef6e4fd9d7fb3d421b6a5955b2dd0.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3a2ef6e4fd9d7fb3d421b6a5955b2dd0.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3a2ef6e4fd9d7fb3d421b6a5955b2dd0.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3a2ef6e4fd9d7fb3d421b6a5955b2dd0.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Presley
+        Regier</artist>\n<url>https://www.last.fm/music/Presley+Regier/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/a43ae5ffaebf758236bb2b7951223351.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/a43ae5ffaebf758236bb2b7951223351.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/a43ae5ffaebf758236bb2b7951223351.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/a43ae5ffaebf758236bb2b7951223351.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Westerman</artist>\n<url>https://www.last.fm/music/Westerman/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3d64e893d6846021cddc683eb8e5ebc2.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3d64e893d6846021cddc683eb8e5ebc2.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3d64e893d6846021cddc683eb8e5ebc2.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3d64e893d6846021cddc683eb8e5ebc2.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Between
+        You &amp; Me</artist>\n<url>https://www.last.fm/music/Between+You+&amp;+Me/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/bb478eb735c872d4b549cbda03aca6a1.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/bb478eb735c872d4b549cbda03aca6a1.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/bb478eb735c872d4b549cbda03aca6a1.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/bb478eb735c872d4b549cbda03aca6a1.png</image>\n<streamable>0</streamable>\n<mbid>b0661dcb-baee-4303-b676-8aeb04ede5d0</mbid>\n</album>\n<album><name>nevermind</name>\n<artist>Valley</artist>\n<url>https://www.last.fm/music/Valley/nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/c6be9f4e481050e91b7c25e2ca96565e.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/c6be9f4e481050e91b7c25e2ca96565e.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/c6be9f4e481050e91b7c25e2ca96565e.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/c6be9f4e481050e91b7c25e2ca96565e.png</image>\n<streamable>0</streamable>\n<mbid>43f1bf8c-5260-4eae-b796-2f513bd50d72</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Coffee
+        Cub</artist>\n<url>https://www.last.fm/music/Coffee+Cub/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>prettyheartbreak</artist>\n<url>https://www.last.fm/music/prettyheartbreak/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/41448bc3a7aad1b66e3f7818c391f0ee.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/41448bc3a7aad1b66e3f7818c391f0ee.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/41448bc3a7aad1b66e3f7818c391f0ee.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/41448bc3a7aad1b66e3f7818c391f0ee.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Julianna
+        Joy</artist>\n<url>https://www.last.fm/music/Julianna+Joy/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid>09ca29a5-51ef-4400-8fbb-3197a4f19c24</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>GIO
+        DARA</artist>\n<url>https://www.last.fm/music/GIO+DARA/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Simone</artist>\n<url>https://www.last.fm/music/Simone/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/0d3d30783f9a6e114d26a6d79fa44c7d.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/0d3d30783f9a6e114d26a6d79fa44c7d.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/0d3d30783f9a6e114d26a6d79fa44c7d.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/0d3d30783f9a6e114d26a6d79fa44c7d.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Foster
+        the People</artist>\n<url>https://www.last.fm/music/Foster+the+People/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/7a450ef2241342bd357a653969abaaa3.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/7a450ef2241342bd357a653969abaaa3.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/7a450ef2241342bd357a653969abaaa3.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/7a450ef2241342bd357a653969abaaa3.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Babygirl</artist>\n<url>https://www.last.fm/music/Babygirl/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/8eb1dd0f63c865c4fd937fce191db48a.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/8eb1dd0f63c865c4fd937fce191db48a.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/8eb1dd0f63c865c4fd937fce191db48a.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/8eb1dd0f63c865c4fd937fce191db48a.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Phoneboy</artist>\n<url>https://www.last.fm/music/Phoneboy/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/eaa04b1215aa0c505a3e79e38854f606.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/eaa04b1215aa0c505a3e79e38854f606.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/eaa04b1215aa0c505a3e79e38854f606.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/eaa04b1215aa0c505a3e79e38854f606.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>UNAVERAGE
+        GANG</artist>\n<url>https://www.last.fm/music/UNAVERAGE+GANG/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>nevermind</name>\n<artist>Muque</artist>\n<url>https://www.last.fm/music/Muque/nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e699328b933be220bbfd4a063a73d52b.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e699328b933be220bbfd4a063a73d52b.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e699328b933be220bbfd4a063a73d52b.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e699328b933be220bbfd4a063a73d52b.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>NEVERMIND</name>\n<artist>HRVY</artist>\n<url>https://www.last.fm/music/HRVY/NEVERMIND</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2adb344289aa1973117aeed66d87ace1.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2adb344289aa1973117aeed66d87ace1.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2adb344289aa1973117aeed66d87ace1.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2adb344289aa1973117aeed66d87ace1.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Onlap</artist>\n<url>https://www.last.fm/music/Onlap/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/b8c68348c5864dad6f875bbfd247b5db.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/b8c68348c5864dad6f875bbfd247b5db.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/b8c68348c5864dad6f875bbfd247b5db.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/b8c68348c5864dad6f875bbfd247b5db.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>umair</artist>\n<url>https://www.last.fm/music/umair/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/f67236f93d03435f9b4be43189674582.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/f67236f93d03435f9b4be43189674582.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/f67236f93d03435f9b4be43189674582.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/f67236f93d03435f9b4be43189674582.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Victor
+        Ruiz</artist>\n<url>https://www.last.fm/music/Victor+Ruiz/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/17897d230eb61aa0f6d7d1891f264e30.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/17897d230eb61aa0f6d7d1891f264e30.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/17897d230eb61aa0f6d7d1891f264e30.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/17897d230eb61aa0f6d7d1891f264e30.png</image>\n<streamable>0</streamable>\n<mbid>168661ab-c373-4bfc-a962-6acf2ae63cc7</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Protolizard</artist>\n<url>https://www.last.fm/music/Protolizard/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>World
+        Champion</artist>\n<url>https://www.last.fm/music/World+Champion/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/e7a788dd4133275e4cb002eccce7af57.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/e7a788dd4133275e4cb002eccce7af57.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/e7a788dd4133275e4cb002eccce7af57.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/e7a788dd4133275e4cb002eccce7af57.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Brendan
+        Mills</artist>\n<url>https://www.last.fm/music/Brendan+Mills/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Lena
+        Katina</artist>\n<url>https://www.last.fm/music/Lena+Katina/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2caf413937c96f6c24cb4443220d80df.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2caf413937c96f6c24cb4443220d80df.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2caf413937c96f6c24cb4443220d80df.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2caf413937c96f6c24cb4443220d80df.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Deaf
+        Havana</artist>\n<url>https://www.last.fm/music/Deaf+Havana/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/323dbf71d4002fddb8c227c95c05b429.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/323dbf71d4002fddb8c227c95c05b429.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/323dbf71d4002fddb8c227c95c05b429.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/323dbf71d4002fddb8c227c95c05b429.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Skate
+        Avenue PH</artist>\n<url>https://www.last.fm/music/Skate+Avenue+PH/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>ASTA
+        NORR</artist>\n<url>https://www.last.fm/music/ASTA+NORR/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>nevermind</name>\n<artist>die
+        together in venus</artist>\n<url>https://www.last.fm/music/die+together+in+venus/nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>NEVERMIND</name>\n<artist>Outerworld</artist>\n<url>https://www.last.fm/music/Outerworld/NEVERMIND</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/d5ba5030379243a3cc7dcd4d6665a0f1.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/d5ba5030379243a3cc7dcd4d6665a0f1.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/d5ba5030379243a3cc7dcd4d6665a0f1.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/d5ba5030379243a3cc7dcd4d6665a0f1.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>KVPV</artist>\n<url>https://www.last.fm/music/KVPV/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Definitely
+        Maybe</artist>\n<url>https://www.last.fm/music/Definitely+Maybe/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/37fd3f1bb7a52f488251d037f7436364.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/37fd3f1bb7a52f488251d037f7436364.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/37fd3f1bb7a52f488251d037f7436364.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/37fd3f1bb7a52f488251d037f7436364.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Kevin
+        Devine</artist>\n<url>https://www.last.fm/music/Kevin+Devine/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/2509bc1612244166bf1c7f8d35001551.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/2509bc1612244166bf1c7f8d35001551.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/2509bc1612244166bf1c7f8d35001551.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/2509bc1612244166bf1c7f8d35001551.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>poppy
+        tears</artist>\n<url>https://www.last.fm/music/poppy+tears/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/913ca4a7f301e7d67d430a0b2b190957.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/913ca4a7f301e7d67d430a0b2b190957.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/913ca4a7f301e7d67d430a0b2b190957.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/913ca4a7f301e7d67d430a0b2b190957.png</image>\n<streamable>0</streamable>\n<mbid>60b24cab-e4b8-4399-bff5-ced49726af2d</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>The
+        Mistrals</artist>\n<url>https://www.last.fm/music/The+Mistrals/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Will
+        Sparks</artist>\n<url>https://www.last.fm/music/Will+Sparks/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Nawas</artist>\n<url>https://www.last.fm/music/Nawas/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/3b6a1b38698705b0ce19362defc5d10d.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/3b6a1b38698705b0ce19362defc5d10d.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/3b6a1b38698705b0ce19362defc5d10d.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/3b6a1b38698705b0ce19362defc5d10d.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>mvca</artist>\n<url>https://www.last.fm/music/mvca/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Spencer
+        Arjang</artist>\n<url>https://www.last.fm/music/Spencer+Arjang/Nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Ben
+        Barnes</artist>\n<url>https://www.last.fm/music/Ben+Barnes/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/56113fcf23d4568560f978062cf73c60.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/56113fcf23d4568560f978062cf73c60.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/56113fcf23d4568560f978062cf73c60.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/56113fcf23d4568560f978062cf73c60.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>NEVERMIND</name>\n<artist>YaoChen</artist>\n<url>https://www.last.fm/music/YaoChen/NEVERMIND</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/cd453fc16a438b076b7cadd9d00b5d15.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/cd453fc16a438b076b7cadd9d00b5d15.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/cd453fc16a438b076b7cadd9d00b5d15.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/cd453fc16a438b076b7cadd9d00b5d15.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Clockcleaner</artist>\n<url>https://www.last.fm/music/Clockcleaner/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/8f142816e66d37798a7b7c608e3d54c5.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/8f142816e66d37798a7b7c608e3d54c5.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/8f142816e66d37798a7b7c608e3d54c5.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/8f142816e66d37798a7b7c608e3d54c5.png</image>\n<streamable>0</streamable>\n<mbid>f94b19bf-e724-4d26-9235-e13de5fba1bd</mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Jacob
+        Lee</artist>\n<url>https://www.last.fm/music/Jacob+Lee/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/14b02cb0348f87da46801be5ad830a0a.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/14b02cb0348f87da46801be5ad830a0a.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/14b02cb0348f87da46801be5ad830a0a.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/14b02cb0348f87da46801be5ad830a0a.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>nevermind</name>\n<artist>Updog</artist>\n<url>https://www.last.fm/music/Updog/nevermind</url>\n<image
+        size=\"small\"></image>\n<image size=\"medium\"></image>\n<image size=\"large\"></image>\n<image
+        size=\"extralarge\"></image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>\u30CB\u30EB\u30F4\u30A1\u30FC\u30CA</artist>\n<url>https://www.last.fm/music/%E3%83%8B%E3%83%AB%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%8A/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/0156fdf667eac50cb2b94409acb1e0f0.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/0156fdf667eac50cb2b94409acb1e0f0.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/0156fdf667eac50cb2b94409acb1e0f0.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/0156fdf667eac50cb2b94409acb1e0f0.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>nevermind</name>\n<artist>Jayde</artist>\n<url>https://www.last.fm/music/Jayde/nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/08460f9ee6a2a396e3b94268f702df15.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/08460f9ee6a2a396e3b94268f702df15.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/08460f9ee6a2a396e3b94268f702df15.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/08460f9ee6a2a396e3b94268f702df15.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>HLOW</artist>\n<url>https://www.last.fm/music/HLOW/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/825367d3c7e5737947682f1e045ebfe9.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/825367d3c7e5737947682f1e045ebfe9.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/825367d3c7e5737947682f1e045ebfe9.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/825367d3c7e5737947682f1e045ebfe9.png</image>\n<streamable>0</streamable>\n<mbid>7c6ca4dd-7f88-4cb7-b435-b1e9e28fab90</mbid>\n</album>\n<album><name>NEVERMIND</name>\n<artist>Payton</artist>\n<url>https://www.last.fm/music/Payton/NEVERMIND</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/02275f063e8f03bfbaac6309504b8a38.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/02275f063e8f03bfbaac6309504b8a38.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/02275f063e8f03bfbaac6309504b8a38.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/02275f063e8f03bfbaac6309504b8a38.png</image>\n<streamable>0</streamable>\n<mbid></mbid>\n</album>\n<album><name>Nevermind</name>\n<artist>Leoniden</artist>\n<url>https://www.last.fm/music/Leoniden/Nevermind</url>\n<image
+        size=\"small\">https://lastfm.freetls.fastly.net/i/u/34s/83a57443bf188f8aeab63291ed131239.png</image>\n<image
+        size=\"medium\">https://lastfm.freetls.fastly.net/i/u/64s/83a57443bf188f8aeab63291ed131239.png</image>\n<image
+        size=\"large\">https://lastfm.freetls.fastly.net/i/u/174s/83a57443bf188f8aeab63291ed131239.png</image>\n<image
+        size=\"extralarge\">https://lastfm.freetls.fastly.net/i/u/300x300/83a57443bf188f8aeab63291ed131239.png</image>\n<streamable>0</streamable>\n<mbid>9ff01a2c-50e7-4864-a9a1-159962213ac8</mbid>\n</album>\n</albummatches>\n</results>\n</lfm>\n"
+    headers:
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Content-Length:
+      - '26311'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sun, 23 Nov 2025 14:07:27 GMT
+      Server:
+      - openresty/1.13.6.2
+      Via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1
