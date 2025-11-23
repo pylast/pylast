@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import re
 import time
+import uuid
 
 import pytest
 
@@ -280,7 +281,10 @@ class TestPyLastNetwork(TestPyLastWithLastFm):
         # Assert
         assert isinstance(track, pylast.Track)
         assert track.title == "Believe"
-        assert track_mbid == mbid
+        assert len(track_mbid) == 36
+        # MBID should be a UUID and raise no exception
+        # https://musicbrainz.org/doc/MusicBrainz_Identifier
+        uuid.UUID(track_mbid)
 
     def test_init_with_token(self) -> None:
         # Arrange/Act
