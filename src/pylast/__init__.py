@@ -2029,7 +2029,7 @@ class Library(_BaseObject):
         return self.user
 
     def get_artists(
-        self, limit: int = 50, cacheable: bool = True, stream: bool = False
+        self, limit: int | None = 50, cacheable: bool = True, stream: bool = False
     ):
         """
         Returns a sequence of Album objects
@@ -2317,7 +2317,7 @@ class User(_Chartable):
         return _get_friends() if stream else list(_get_friends())
 
     def get_loved_tracks(
-        self, limit: int = 50, cacheable: bool = True, stream: bool = False
+        self, limit: int | None = 50, cacheable: bool = True, stream: bool = False
     ):
         """
         Returns this user's loved track as a sequence of LovedTrack objects in
