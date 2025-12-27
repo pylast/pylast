@@ -1753,7 +1753,7 @@ class Artist(_Taggable):
         super().__init__(network=network, ws_prefix="artist")
 
         self.name = name
-        self.username = username
+        self.username = username or network.username
         self.info = info
 
     def __repr__(self) -> str:
