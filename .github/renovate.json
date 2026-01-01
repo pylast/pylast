@@ -1,12 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":semanticCommitsDisabled"],
+  "extends": ["config:recommended", ":semanticCommitsDisabled"],
   "labels": ["changelog: skip", "dependencies"],
+  "minimumReleaseAge": "7 days",
   "packageRules": [
     {
       "groupName": "github-actions",
       "matchManagers": ["github-actions"],
-      "separateMajorMinor": "false"
+      "separateMajorMinor": false
     }
   ],
   "schedule": ["on the first day of the month"]
