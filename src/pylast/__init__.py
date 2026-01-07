@@ -1965,7 +1965,7 @@ class Country(_BaseObject):
 
         doc = self._request("geo.getTopArtists", cacheable, params)
 
-        return _extract_top_artists(doc, self)
+        return _extract_top_artists(doc, self.network)
 
     def get_top_tracks(self, limit=None, cacheable: bool = True, stream: bool = False):
         """Returns a sequence of the most played tracks"""
