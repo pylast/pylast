@@ -1562,9 +1562,7 @@ class _Opus(_Taggable):
             self.artist = Artist(artist, self.network)
 
         self.title = title
-        self.username = (
-            username if username else network.username
-        )  # Default to current user
+        self.username = username or network.username  # Default to current user
         self.info = info
 
     def __repr__(self) -> str:
@@ -1753,7 +1751,7 @@ class Artist(_Taggable):
         super().__init__(network=network, ws_prefix="artist")
 
         self.name = name
-        self.username = username or network.username
+        self.username = username or network.username  # Default to current user
         self.info = info
 
     def __repr__(self) -> str:
