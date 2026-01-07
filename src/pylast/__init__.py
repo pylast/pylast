@@ -949,32 +949,29 @@ class _Request:
         (host_name, host_subdir) = self.network.ws_server
         timeout = httpx.Timeout(5, read=20)
 
-        client = httpx.Client(
+        with httpx.Client(
             verify=SSL_CONTEXT,
             base_url=f"https://{host_name}",
             headers=HEADERS,
             mounts=self.network.proxy,
             timeout=timeout,
-        )
+        ) as client:
+            try:
+                response = client.post(f"{host_subdir}{username}", data=self.params)
+            except Exception as e:
+                raise NetworkError(self.network, e) from e
 
-        try:
-            response = client.post(f"{host_subdir}{username}", data=self.params)
-        except Exception as e:
-            raise NetworkError(self.network, e) from e
+            if response.status_code in (500, 502, 503, 504):
+                raise WSError(
+                    self.network,
+                    response.status_code,
+                    "Connection to the API failed with "
+                    f"HTTP code {response.status_code}",
+                )
+            response_text = str(response.read(), "utf-8")
 
-        if response.status_code in (500, 502, 503, 504):
-            raise WSError(
-                self.network,
-                response.status_code,
-                f"Connection to the API failed with HTTP code {response.status_code}",
-            )
-        response_text = str(response.read(), "utf-8")
-
-        try:
             self._check_response_for_errors(response_text)
-        finally:
-            client.close()
-        return response_text
+            return response_text
 
     def execute(self, cacheable: bool = False) -> xml.dom.minidom.Document:
         """Returns the XML DOM response of the POST Request from the server"""
