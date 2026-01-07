@@ -34,3 +34,16 @@ class TestPyLastCountry(TestPyLastWithLastFm):
         assert country1 == country1
         assert country1 != country2
         assert url == "https://www.last.fm/place/italy"
+
+    def test_country_top_artists_have_correct_network(self) -> None:
+        # Arrange
+        country = self.network.get_country("Germany")
+
+        # Act
+        artists = country.get_top_artists(limit=1)
+
+        # Assert
+        assert len(artists) > 0
+        artist = artists[0].item
+        assert isinstance(artist.network, pylast.LastFMNetwork)
+        assert hasattr(artist.network, "username")
