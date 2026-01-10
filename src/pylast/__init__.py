@@ -30,7 +30,6 @@ import ssl
 import tempfile
 import time
 import typing
-import xml.dom
 import xml.parsers
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
@@ -973,7 +972,7 @@ class _Request:
             self._check_response_for_errors(response_text)
             return response_text
 
-    def execute(self, cacheable: bool = False) -> xml.dom.minidom.Document:
+    def execute(self, cacheable: bool = False) -> minidom.Document:
         """Returns the XML DOM response of the POST Request from the server"""
 
         if self.network.is_caching_enabled() and cacheable:
@@ -2703,7 +2702,7 @@ class _Search(_BaseObject):
 
         return _extract(doc, "totalResults")
 
-    def _retrieve_page(self, page_index: int) -> xml.dom.minidom.Element:
+    def _retrieve_page(self, page_index: int) -> minidom.Element:
         """Returns the node of matches to be processed"""
 
         params = self._get_params()
@@ -2712,7 +2711,7 @@ class _Search(_BaseObject):
 
         return doc.getElementsByTagName(self._ws_prefix + "matches")[0]
 
-    def _retrieve_next_page(self) -> xml.dom.minidom.Element:
+    def _retrieve_next_page(self) -> minidom.Element:
         self._last_page_index += 1
         return self._retrieve_page(self._last_page_index)
 
@@ -2865,7 +2864,7 @@ def _collect_nodes(
                 raise PyLastError(msg)
 
             for node in main.childNodes:
-                if not node.nodeType == xml.dom.Node.TEXT_NODE and (
+                if not node.nodeType == Node.TEXT_NODE and (
                     not limit or (node_count < limit)
                 ):
                     node_count += 1
@@ -2904,7 +2903,7 @@ def _extract_all(node, name, limit_count=None):
     return seq
 
 
-def _extract_top_artists(doc: xml.dom.minidom.Document, network) -> list[TopItem]:
+def _extract_top_artists(doc: minidom.Document, network) -> list[TopItem]:
     # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("artist"):
@@ -2916,7 +2915,7 @@ def _extract_top_artists(doc: xml.dom.minidom.Document, network) -> list[TopItem
     return seq
 
 
-def _extract_top_albums(doc: xml.dom.minidom.Document, network) -> list[TopItem]:
+def _extract_top_albums(doc: minidom.Document, network) -> list[TopItem]:
     # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("album"):
@@ -2930,14 +2929,14 @@ def _extract_top_albums(doc: xml.dom.minidom.Document, network) -> list[TopItem]
     return seq
 
 
-def _extract_artists(doc: xml.dom.minidom.Document, network) -> list[Artist]:
+def _extract_artists(doc: minidom.Document, network) -> list[Artist]:
     seq = []
     for node in doc.getElementsByTagName("artist"):
         seq.append(Artist(_extract(node, "name"), network))
     return seq
 
 
-def _extract_albums(doc: xml.dom.minidom.Document, network) -> list[Album]:
+def _extract_albums(doc: minidom.Document, network) -> list[Album]:
     seq = []
     for node in doc.getElementsByTagName("album"):
         name = _extract(node, "name")
@@ -2946,7 +2945,7 @@ def _extract_albums(doc: xml.dom.minidom.Document, network) -> list[Album]:
     return seq
 
 
-def _extract_tracks(doc: xml.dom.minidom.Document, network) -> list[Track]:
+def _extract_tracks(doc: minidom.Document, network) -> list[Track]:
     seq = []
     for node in doc.getElementsByTagName("track"):
         name = _extract(node, "name")
@@ -2984,7 +2983,7 @@ def _unescape_htmlentity(string: str) -> str:
     return string
 
 
-def _parse_response(response: str) -> xml.dom.minidom.Document:
+def _parse_response(response: str) -> minidom.Document:
     response = str(response).replace("opensearch:", "")
     try:
         doc = minidom.parseString(response)
