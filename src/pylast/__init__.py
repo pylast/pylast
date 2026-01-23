@@ -2377,7 +2377,7 @@ class User(_Chartable):
 
     def get_recent_tracks(
         self,
-        limit: int = 10,
+        limit: int | None = 10,
         cacheable: bool = True,
         time_from: int | None = None,
         time_to: int | None = None,
@@ -2390,10 +2390,10 @@ class User(_Chartable):
 
         Parameters:
         limit : If None, it will try to pull all the available data.
-        from (Optional) : Beginning timestamp of a range - only display
+        time_from (Optional) : Beginning timestamp of a range - only display
         scrobbles after this time, in Unix timestamp format (integer
         number of seconds since 00:00:00, January 1st 1970 UTC).
-        to (Optional) : End timestamp of a range - only display scrobbles
+        time_to (Optional) : End timestamp of a range - only display scrobbles
         before this time, in Unix timestamp format (integer number of
         seconds since 00:00:00, January 1st 1970 UTC).
         stream: If True, it will yield tracks as soon as a page has been retrieved.
