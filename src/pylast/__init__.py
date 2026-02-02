@@ -1974,6 +1974,12 @@ class Artist(_Taggable):
 
         return self.network._get_url(domain_name, "artist") % {"artist": artist}
 
+    def get_image_urls(self) -> set[str | None]:
+        params = self._get_params()
+        doc = self._request(self.ws_prefix + ".getInfo", True, params)
+
+        images = _extract_all(doc, "image")
+        return {x for x in images}
 
 class Country(_BaseObject):
     """A country at Last.fm."""
