@@ -51,7 +51,7 @@ jobs:
           uvx --python ${{ matrix.python-version }} --with tox-uv tox -e py
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
