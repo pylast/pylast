@@ -21,7 +21,7 @@
 from __future__ import annotations
 
 import hashlib
-import html.entities
+import html
 import logging
 import os
 import re
@@ -2867,7 +2867,7 @@ def _extract(node, name, index: int = 0):
 
     if len(nodes):
         if nodes[index].firstChild:
-            return _unescape_htmlentity(nodes[index].firstChild.data.strip())
+            return html.unescape(nodes[index].firstChild.data.strip())
     else:
         return None
 
@@ -2956,14 +2956,6 @@ def _number(string: str) -> float:
             return int(string)
         except ValueError:
             return float(string)
-
-
-def _unescape_htmlentity(string: str) -> str:
-    mapping = html.entities.name2codepoint
-    for key in mapping:
-        string = string.replace(f"&{key};", chr(mapping[key]))
-
-    return string
 
 
 def _parse_response(response: str) -> minidom.Document:
