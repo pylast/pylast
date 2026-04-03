@@ -21,7 +21,7 @@
 from __future__ import annotations
 
 import hashlib
-import html.entities
+import html
 import logging
 import os
 import re
@@ -1144,13 +1144,6 @@ class LovedTrack(typing.NamedTuple):
     timestamp: str
 
 
-def _string_output(func):
-    def r(*args):
-        return str(func(*args))
-
-    return r
-
-
 class _BaseObject:
     """An abstract webservices object."""
 
@@ -1466,7 +1459,6 @@ class WSError(PyLastError):
         self.details = details
         self.network = network
 
-    @_string_output
     def __str__(self) -> str:
         return self.details
 
@@ -1570,7 +1562,6 @@ class _Opus(_Taggable):
             f"({repr(self.artist.name)}, {repr(self.title)}, {repr(self.network)})"
         )
 
-    @_string_output
     def __str__(self) -> str:
         artist = self.get_artist()
         if TYPE_CHECKING:
@@ -1753,12 +1744,8 @@ class Artist(_Taggable):
     def __repr__(self) -> str:
         return f"pylast.Artist({repr(self.get_name())}, {repr(self.network)})"
 
-    def __unicode__(self):
-        return str(self.get_name())
-
-    @_string_output
     def __str__(self) -> str:
-        return self.__unicode__()
+        return self.get_name()
 
     def __eq__(self, other):
         if type(self) is type(other):
@@ -1933,7 +1920,6 @@ class Country(_BaseObject):
     def __repr__(self) -> str:
         return f"pylast.Country({repr(self.name)}, {repr(self.network)})"
 
-    @_string_output
     def __str__(self) -> str:
         return self.get_name()
 
@@ -2011,7 +1997,6 @@ class Library(_BaseObject):
     def __repr__(self) -> str:
         return f"pylast.Library({repr(self.user)}, {repr(self.network)})"
 
-    @_string_output
     def __str__(self) -> str:
         return repr(self.get_user()) + "'s Library"
 
@@ -2059,7 +2044,6 @@ class Tag(_Chartable):
     def __repr__(self) -> str:
         return f"pylast.Tag({repr(self.name)}, {repr(self.network)})"
 
-    @_string_output
     def __str__(self) -> str:
         return self.get_name()
 
@@ -2257,7 +2241,6 @@ class User(_Chartable):
     def __repr__(self) -> str:
         return f"pylast.User({repr(self.name)}, {repr(self.network)})"
 
-    @_string_output
     def __str__(self) -> str:
         return self.get_name()
 
@@ -2884,7 +2867,7 @@ def _extract(node, name, index: int = 0):
 
     if len(nodes):
         if nodes[index].firstChild:
-            return _unescape_htmlentity(nodes[index].firstChild.data.strip())
+            return html.unescape(nodes[index].firstChild.data.strip())
     else:
         return None
 
@@ -2973,14 +2956,6 @@ def _number(string: str) -> float:
             return int(string)
         except ValueError:
             return float(string)
-
-
-def _unescape_htmlentity(string: str) -> str:
-    mapping = html.entities.name2codepoint
-    for key in mapping:
-        string = string.replace(f"&{key};", chr(mapping[key]))
-
-    return string
 
 
 def _parse_response(response: str) -> minidom.Document:
