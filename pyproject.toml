@@ -54,16 +54,11 @@ urls.Source = "https://github.com/pylast/pylast"
 
 [tool.hatch]
 version.source = "vcs"
-
-[tool.hatch.build.hooks.vcs]
-version-file = "src/pylast/_version.py"
-
-[tool.hatch.version.raw-options]
-local_scheme = "no-local-version"
+version.raw-options.local_scheme = "no-local-version"
+build.hooks.vcs.version-file = "src/pylast/_version.py"
 
 [tool.ruff]
 fix = true
-
 lint.select = [
   "C4",     # flake8-comprehensions
   "E",      # pycodestyle errors
@@ -99,6 +94,10 @@ lint.isort.required-imports = [ "from __future__ import annotations" ]
 [tool.pyproject-fmt]
 max_supported_python = "3.15"
 
+[tool.mypy]
+pretty = true
+show_error_codes = true
+
 [tool.pytest]
 minversion = "9.0"
 filterwarnings = [
@@ -107,7 +106,3 @@ filterwarnings = [
 ]
 testpaths = [ "tests" ]
 xfail_strict = true
-
-[tool.mypy]
-pretty = true
-show_error_codes = true

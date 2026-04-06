@@ -2,6 +2,7 @@
 """
 Integration (not unit) tests for pylast.py
 """
+
 from __future__ import annotations
 
 import calendar
@@ -233,7 +234,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def helper_get_assert_charts(self, thing, date) -> None:
         # Arrange
         album_chart, track_chart = None, None
-        (from_date, to_date) = date
+        from_date, to_date = date
 
         # Act
         artist_chart = thing.get_weekly_artist_charts(from_date, to_date)
@@ -251,7 +252,7 @@ class TestPyLastUser(TestPyLastWithLastFm):
         # Assert
         assert len(dates) >= 1
         assert isinstance(dates[0], tuple)
-        (start, end) = dates[0]
+        start, end = dates[0]
         assert start < end
 
     def test_user_charts(self) -> None:
