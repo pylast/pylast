@@ -858,7 +858,7 @@ class _Request:
         for key, value in params.items():
             self.params[key] = self._convert_param(value)
 
-        (self.api_key, self.api_secret, self.session_key) = network._get_ws_auth()
+        self.api_key, self.api_secret, self.session_key = network._get_ws_auth()
 
         self.params["api_key"] = self.api_key
         self.params["method"] = method_name
@@ -945,7 +945,7 @@ class _Request:
         username = self.params.pop("username", None)
         username = "" if username is None else f"?username={username}"
 
-        (host_name, host_subdir) = self.network.ws_server
+        host_name, host_subdir = self.network.ws_server
         timeout = httpx.Timeout(5, read=20)
 
         with httpx.Client(
