@@ -34,7 +34,7 @@ import xml.parsers
 from urllib.parse import quote_plus
 from xml.dom import Node, minidom
 
-import httpx
+import httpxyz as httpx
 
 from ._version import __version__
 
