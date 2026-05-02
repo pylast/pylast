@@ -38,7 +38,7 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "httpx>=0.26",
+  "httpxyz",
 ]
 optional-dependencies.tests = [
   "flaky",
