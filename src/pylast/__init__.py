@@ -2692,10 +2692,10 @@ class _Search(_BaseObject):
         params["page"] = str(page_index)
         doc = self._request(self._ws_prefix + ".search", True, params)
 
-        matches = doc.getElementsByTagName(self._ws_prefix + "matches")
-        if not matches:
-            return doc.createElement(self._ws_prefix + "matches")
-        return matches[0]
+        if matches := doc.getElementsByTagName(self._ws_prefix + "matches"):
+            return matches[0]
+
+        return doc.createElement(self._ws_prefix + "matches")
 
     def _retrieve_next_page(self) -> minidom.Element:
         self._last_page_index += 1
