@@ -2656,7 +2656,15 @@ class AuthenticatedUser(User):
 
     def get_name(self, properly_capitalized: bool = False):
         """Returns the name of the authenticated user."""
-        return super().get_name(properly_capitalized=properly_capitalized)
+        if not self.name or properly_capitalized:
+            # user.getInfo returns the authenticated user when called with a
+            # session key and no `user` param, so we can resolve our own name
+            # even when the network was constructed without a username.
+            doc = _Request(self.network, self.ws_prefix + ".getInfo").execute(
+                cacheable=True
+            )
+            self.name = _extract(doc, "name")
+        return self.name
 
 
 class _Search(_BaseObject):
