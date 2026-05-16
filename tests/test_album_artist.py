@@ -84,3 +84,29 @@ def test_find_compilation_variant_returns_none_for_stub_variant() -> None:
     doc = _album_info_doc([])
     with patch.object(pylast._Request, "execute", return_value=doc):
         assert album.find_compilation_variant() is None
+
+
+def test_find_compilation_variant_returns_self_when_already_various_artists() -> None:
+    album = _make_album(artist="Various Artists", title="UKF10")
+    with patch.object(pylast._Request, "execute") as execute:
+        variant = album.find_compilation_variant()
+    assert variant is album
+    execute.assert_not_called()
+
+
+def test_find_compilation_variant_returns_none_when_variant_lookup_fails() -> None:
+    album = _make_album()
+    error = pylast.WSError(album.network, "6", "Album not found")
+    with patch.object(pylast._Request, "execute", side_effect=error):
+        assert album.find_compilation_variant() is None
+
+
+def test_get_album_artist_from_tracks_skips_tracks_with_no_artist() -> None:
+    album = _make_album()
+    good_track = pylast.Track("Houkago Tea Time", "Cagayake! GIRLS", album.network)
+    orphan_track = pylast.Track("Houkago Tea Time", "Fuwa Fuwa Time", album.network)
+    orphan_track.artist = None
+    with patch.object(
+        pylast.Album, "get_tracks", return_value=[good_track, orphan_track]
+    ):
+        assert album.get_album_artist_from_tracks() == "Houkago Tea Time"
