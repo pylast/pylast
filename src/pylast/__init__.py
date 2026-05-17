@@ -942,7 +942,7 @@ class _Request:
         if self.network.limit_rate:
             self.network._delay_call()
 
-        params = dict(self.params)
+        params = self.params.copy()
         username = params.pop("username", None)
         username = "" if username is None else f"?username={username}"
 
