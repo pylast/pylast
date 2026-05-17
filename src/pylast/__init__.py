@@ -942,7 +942,8 @@ class _Request:
         if self.network.limit_rate:
             self.network._delay_call()
 
-        username = self.params.pop("username", None)
+        params = dict(self.params)
+        username = params.pop("username", None)
         username = "" if username is None else f"?username={username}"
 
         host_name, host_subdir = self.network.ws_server
@@ -956,7 +957,7 @@ class _Request:
             timeout=timeout,
         ) as client:
             try:
-                response = client.post(f"{host_subdir}{username}", data=self.params)
+                response = client.post(f"{host_subdir}{username}", data=params)
             except Exception as e:
                 raise NetworkError(self.network, e) from e
 
