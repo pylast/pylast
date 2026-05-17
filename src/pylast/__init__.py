@@ -1924,7 +1924,10 @@ class Country(_BaseObject):
         return self.get_name()
 
     def __eq__(self, other):
-        return self.get_name().lower() == other.get_name().lower()
+        if type(self) is type(other):
+            return self.get_name().lower() == other.get_name().lower()
+        else:
+            return False
 
     def __ne__(self, other) -> bool:
         return not self == other
@@ -2048,7 +2051,10 @@ class Tag(_Chartable):
         return self.get_name()
 
     def __eq__(self, other):
-        return self.get_name().lower() == other.get_name().lower()
+        if type(self) is type(other):
+            return self.get_name().lower() == other.get_name().lower()
+        else:
+            return False
 
     def __ne__(self, other) -> bool:
         return not self == other
