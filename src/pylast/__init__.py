@@ -1688,6 +1688,49 @@ class Album(_Opus):
             self._request(self.ws_prefix + ".getInfo", cacheable=True), self.network
         )
 
+    def find_compilation_variant(self) -> Album | None:
+        """Returns the 'Various Artists' variant of this album if one exists.
+
+        Last.fm sometimes has the same compilation indexed under multiple
+        artist names. Returns self if already constructed with 'Various
+        Artists', a new Album for the canonical entry if it has real track
+        data, else None. Stub entries with no tracks are rejected because
+        Last.fm has many of them from stray mis-scrobbles.
+        """
+        artist = self.get_artist()
+        if TYPE_CHECKING:
+            assert artist is not None
+        if artist.get_name() == "Various Artists":
+            return self
+        variant = Album("Various Artists", self.title, self.network)
+        try:
+            doc = variant._request("album.getInfo", cacheable=True)
+        except WSError:
+            return None
+        if not doc.getElementsByTagName("track"):
+            return None
+        return variant
+
+    def get_album_artist_from_tracks(self) -> str | None:
+        """Returns the album artist inferred from the track listing.
+
+        Returns the single artist if all tracks share one, "Various Artists"
+        if tracks have multiple, or None if no track data is available.
+        """
+        tracks = self.get_tracks()
+        artist_names: set[str] = set()
+        for track in tracks:
+            if track.artist is None:
+                continue
+            name = track.artist.get_name()
+            if name:
+                artist_names.add(name)
+        if not artist_names:
+            return None
+        if len(artist_names) == 1:
+            return next(iter(artist_names))
+        return "Various Artists"
+
     def get_url(self, domain_name: int = DOMAIN_ENGLISH):
         """Returns the URL of the album or track page on the network.
         # Parameters:
