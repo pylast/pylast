@@ -32,7 +32,7 @@ def test_download_response_does_not_mutate_params() -> None:
     )
     original = dict(request.params)
 
-    with patch("httpx.Client.post", return_value=_fake_response()):
+    with patch("httpx2.Client.post", return_value=_fake_response()):
         request._download_response()
 
     assert request.params == original
@@ -44,7 +44,7 @@ def test_cacheable_request_with_username_param_hits_cache_on_second_call() -> No
     network.enable_caching()
     album = pylast.Album("Beatles", "Abbey Road", network, username="alice")
 
-    with patch("httpx.Client.post", return_value=_fake_response()) as post:
+    with patch("httpx2.Client.post", return_value=_fake_response()) as post:
         album.get_userplaycount()
         album.get_userplaycount()
         album.get_userplaycount()
