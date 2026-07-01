@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-slim
     steps:
       # Drafts your next release notes as pull requests are merged into "main"
-      - uses: release-drafter/release-drafter@693d20e7c1ce1a81d3a41962f85914253b518449 # v7.3.1
+      - uses: release-drafter/release-drafter@ed4bc48ec97379be2258e7b7ac2624a3e26ab809 # v7.4.0
 
   autolabeler:
     if: |
@@ -36,4 +36,4 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-slim
     steps:
-      - uses: release-drafter/release-drafter/autolabeler@693d20e7c1ce1a81d3a41962f85914253b518449 # v7.3.1
+      - uses: release-drafter/release-drafter/autolabeler@ed4bc48ec97379be2258e7b7ac2624a3e26ab809 # v7.4.0
