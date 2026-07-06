@@ -99,10 +99,10 @@ pretty = true
 show_error_codes = true
 
 [tool.pytest]
-minversion = "9.0"
 filterwarnings = [
   "once::DeprecationWarning",
   "once::PendingDeprecationWarning",
 ]
+minversion = "9.0"
 testpaths = [ "tests" ]
 xfail_strict = true
