@@ -1,14 +1,23 @@
+priorities:
+  fix: 0
+  fix-py: 10
+  fix-eol: 20
+  fix-whitespace: 30
+  check: 40
+
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.20
+    rev: v0.16.5
     hooks:
       - id: ruff-check
         args: [--exit-non-zero-on-fix]
+        priority: fix
 
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 26.5.1
     hooks:
       - id: black
+        priority: fix-py
 
   - repo: https://github.com/adamchainz/blacken-docs
     rev: 1.20.0
@@ -16,73 +25,96 @@ repos:
       - id: blacken-docs
         args: [--target-version=py310]
         additional_dependencies: [black]
+        priority: fix-py
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
         exclude: tests/cassettes/test_user/
+        priority: check
       - id: check-case-conflict
+        priority: check
       - id: check-merge-conflict
+        priority: check
       - id: check-json
+        priority: check
       - id: check-toml
+        priority: check
       - id: check-yaml
+        priority: check
       - id: debug-statements
+        priority: check
       - id: end-of-file-fixer
+        priority: fix-eol
       - id: forbid-submodules
+        priority: check
       - id: requirements-txt-fixer
+        priority: fix
       - id: trailing-whitespace
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
+        priority: fix-whitespace
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.37.4
+    rev: 0.38.0
     hooks:
       - id: check-github-workflows
+        priority: check
       - id: check-renovate
+        priority: check
 
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.12
     hooks:
       - id: actionlint
+        priority: check
 
-  - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.26.1
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.29.0
     hooks:
       - id: zizmor
+        priority: check
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.25.1
+    rev: v2.28.2
     hooks:
       - id: pyproject-fmt
+        priority: fix
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.25
+    rev: "0.26"
     hooks:
       - id: validate-pyproject
+        priority: check
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: 1.7.1
+    rev: 1.9.0
     hooks:
       - id: tox-ini-fmt
+        priority: fix
 
   - repo: https://github.com/google/yamlfmt
     rev: v0.21.0
     hooks:
       - id: yamlfmt
         exclude: tests/cassettes/
+        priority: fix
 
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.9.4
+    rev: v3.9.6
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]
         exclude: .github/(ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE).md
         exclude_types: [yaml]
+        priority: fix
 
   - repo: meta
     hooks:
       - id: check-hooks-apply
+        priority: check
       - id: check-useless-excludes
+        priority: check
 
 ci:
   autoupdate_schedule: quarterly
