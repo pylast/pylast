@@ -362,8 +362,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def test_get_recent_tracks_from_to(self) -> None:
         # Arrange
         lastfm_user = self.network.get_user("RJ")
-        start = dt.datetime(2011, 7, 21, 15, 10, tzinfo=dt.timezone.utc)
-        end = dt.datetime(2011, 7, 21, 15, 15, tzinfo=dt.timezone.utc)
+        start = dt.datetime(2011, 7, 21, 15, 10, tzinfo=dt.UTC)
+        end = dt.datetime(2011, 7, 21, 15, 15, tzinfo=dt.UTC)
 
         utc_start = calendar.timegm(start.utctimetuple())
         utc_end = calendar.timegm(end.utctimetuple())
@@ -379,8 +379,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def test_get_recent_tracks_limit_none(self) -> None:
         # Arrange
         lastfm_user = self.network.get_user("bbc6music")
-        start = dt.datetime(2020, 2, 15, 15, 00, tzinfo=dt.timezone.utc)
-        end = dt.datetime(2020, 2, 15, 15, 40, tzinfo=dt.timezone.utc)
+        start = dt.datetime(2020, 2, 15, 15, 00, tzinfo=dt.UTC)
+        end = dt.datetime(2020, 2, 15, 15, 40, tzinfo=dt.UTC)
 
         utc_start = calendar.timegm(start.utctimetuple())
         utc_end = calendar.timegm(end.utctimetuple())
@@ -398,8 +398,8 @@ class TestPyLastUser(TestPyLastWithLastFm):
     def test_get_recent_tracks_is_streamable(self) -> None:
         # Arrange
         lastfm_user = self.network.get_user("bbc6music")
-        start = dt.datetime(2020, 2, 15, 15, 00, tzinfo=dt.timezone.utc)
-        end = dt.datetime(2020, 2, 15, 15, 40, tzinfo=dt.timezone.utc)
+        start = dt.datetime(2020, 2, 15, 15, 00, tzinfo=dt.UTC)
+        end = dt.datetime(2020, 2, 15, 15, 40, tzinfo=dt.UTC)
 
         utc_start = calendar.timegm(start.utctimetuple())
         utc_end = calendar.timegm(end.utctimetuple())
