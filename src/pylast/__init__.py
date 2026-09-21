@@ -79,6 +79,22 @@ STATUS_DEPRECATED = 27
 # 28 : This error is not documented
 STATUS_RATE_LIMIT_EXCEEDED = 29
 
+# WSError statuses that a retry might resolve: transient service problems,
+# plus the HTTP 5xx codes _download_response turns into WSErrors.
+_RETRYABLE_STATUSES = frozenset(
+    str(status)
+    for status in (
+        STATUS_OPERATION_FAILED,
+        STATUS_OFFLINE,
+        STATUS_TEMPORARILY_UNAVAILABLE,
+        STATUS_RATE_LIMIT_EXCEEDED,
+        500,
+        502,
+        503,
+        504,
+    )
+)
+
 PERIOD_OVERALL = "overall"
 PERIOD_7DAYS = "7day"
 PERIOD_1MONTH = "1month"
@@ -2800,6 +2816,17 @@ def cleanup_nodes(doc):
     return doc
 
 
+def _can_retry(exception: Exception) -> bool:
+    """
+    Returns True if a failed request may succeed if tried again:
+    network hiccups and transient service errors are worth retrying,
+    deterministic API errors (such as login required, invalid API key) are not.
+    """
+    if isinstance(exception, WSError):
+        return str(exception.status) in _RETRYABLE_STATUSES
+    return True
+
+
 def _collect_nodes(
     limit, sender, method_name, cacheable, params=None, stream: bool = False
 ):
@@ -2823,7 +2850,11 @@ def _collect_nodes(
                     doc = sender._request(method_name, cacheable, params)
                     break  # success
                 except Exception as e:
+                    if not _can_retry(e):
+                        raise
                     if tries >= 3:
+                        if isinstance(e, PyLastError):
+                            raise
                         raise PyLastError() from e
                     # Wait and try again
                     time.sleep(1)
