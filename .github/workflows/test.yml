@@ -23,7 +23,6 @@ jobs:
           - "3.13"
           - "3.12"
           - "3.11"
-          - "3.10"
         os: [macos-latest, ubuntu-latest]
 
     steps:

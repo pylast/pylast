@@ -41,6 +41,7 @@ from ._version import __version__
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from collections.abc import Generator, Iterator
+    from typing import Self
 
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
@@ -128,7 +129,6 @@ IMAGES_ORDER_DATE = "dateadded"
 # Delay time in seconds from section 4.4 of https://www.last.fm/api/tos
 DELAY_TIME = 0.2
 
-# Python >3.4 has sane defaults
 SSL_CONTEXT = ssl.create_default_context()
 
 HEADERS = {
@@ -851,7 +851,7 @@ class _ShelfCacheBackend:
         self.shelf[key] = xml_string
 
     @classmethod
-    def create_shelf(cls) -> _ShelfCacheBackend:
+    def create_shelf(cls) -> Self:
         file_descriptor, file_path = tempfile.mkstemp(prefix="pylast_tmp_")
         os.close(file_descriptor)
         return cls(file_path=file_path, flag="n")
@@ -907,32 +907,20 @@ class _Request:
         """
         Returns a 32-character hexadecimal md5 hash of the signature string.
         """
-        keys = list(self.params.keys())
-        keys.sort()
+        string = "".join(f"{name}{self.params[name]}" for name in sorted(self.params))
 
-        string = ""
-
-        for name in keys:
-            string += name
-            string += self.params[name]
-
-        string += self.api_secret
-
-        return md5(string)
+        return md5(string + self.api_secret)
 
     def _get_cache_key(self) -> str:
         """
         The cache key is a string of concatenated sorted names and values.
         """
 
-        keys = list(self.params.keys())
-        keys.sort()
-
-        cache_key = ""
-
-        for key in keys:
-            if key != "api_sig" and key != "api_key" and key != "sk":
-                cache_key += key + self.params[key]
+        cache_key = "".join(
+            f"{key}{self.params[key]}"
+            for key in sorted(self.params)
+            if key not in ("api_sig", "api_key", "sk")
+        )
 
         return hashlib.sha1(cache_key.encode("utf-8")).hexdigest()
 
@@ -1024,8 +1012,8 @@ class SessionKeyGenerator:
         e. session_key = sg.get_web_auth_session_key(url)
     2) Username and Password Authentication:
         a. network = get_*_network(API_KEY, API_SECRET)
-        b. username = raw_input("Please enter your username: ")
-        c. password_hash = pylast.md5(raw_input("Please enter your password: ")
+        b. username = input("Please enter your username: ")
+        c. password_hash = pylast.md5(input("Please enter your password: "))
         d. session_key = SessionKeyGenerator(network).get_session_key(username,
             password_hash)
 
@@ -1584,9 +1572,6 @@ class _Opus(_Taggable):
         d = other.get_artist().get_name().lower()
         return (a == b) and (c == d)
 
-    def __ne__(self, other) -> bool:
-        return not self == other
-
     def _get_params(self):
         return {
             "artist": self.get_artist().get_name(),
@@ -1759,9 +1744,6 @@ class Artist(_Taggable):
         else:
             return False
 
-    def __ne__(self, other) -> bool:
-        return not self == other
-
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
@@ -1932,10 +1914,7 @@ class Country(_BaseObject):
         else:
             return False
 
-    def __ne__(self, other) -> bool:
-        return not self == other
-
-    def _get_params(self):  # TODO can move to _BaseObject
+    def _get_params(self):
         return {"country": self.get_name()}
 
     def get_name(self):
@@ -2058,9 +2037,6 @@ class Tag(_Chartable):
             return self.get_name().lower() == other.get_name().lower()
         else:
             return False
-
-    def __ne__(self, other) -> bool:
-        return not self == other
 
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
@@ -2259,9 +2235,6 @@ class User(_Chartable):
         else:
             return False
 
-    def __ne__(self, other) -> bool:
-        return not self == other
-
     def _get_params(self):
         return {self.ws_prefix: self.get_name()}
 
@@ -2394,7 +2367,7 @@ class User(_Chartable):
         large amount of data.
         """
 
-        def _get_recent_tracks() -> Generator[PlayedTrack, None, None]:
+        def _get_recent_tracks() -> Generator[PlayedTrack]:
             params = self._get_params()
             if limit:
                 params["limit"] = limit + 1  # in case we remove the now playing track
@@ -2683,12 +2656,7 @@ class _Search(_BaseObject):
         self._last_page_index = 0
 
     def _get_params(self) -> dict:
-        params = {}
-
-        for key in self.search_terms:
-            params[key] = self.search_terms[key]
-
-        return params
+        return dict(self.search_terms)
 
     def get_total_result_count(self):
         """Returns the total count of all the results."""
@@ -2841,7 +2809,7 @@ def _collect_nodes(
         page = 1
         end_of_pages = False
 
-        while not end_of_pages and (not limit or (limit and node_count < limit)):
+        while not end_of_pages and (not limit or node_count < limit):
             params["page"] = str(page)
 
             tries = 1
@@ -2916,7 +2884,6 @@ def _extract_all(node, name, limit_count=None):
 
 
 def _extract_top_artists(doc: minidom.Document, network) -> list[TopItem]:
-    # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("artist"):
         name = _extract(node, "name")
@@ -2928,7 +2895,6 @@ def _extract_top_artists(doc: minidom.Document, network) -> list[TopItem]:
 
 
 def _extract_top_albums(doc: minidom.Document, network) -> list[TopItem]:
-    # TODO Maybe include the _request here too?
     seq = []
     for node in doc.getElementsByTagName("album"):
         name = _extract(node, "name")
