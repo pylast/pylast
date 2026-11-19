@@ -15,7 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
+          - "pypy3.12"
           - "pypy3.11"
+          - "3.16t"
+          - "3.16"
           - "3.15t"
           - "3.15"
           - "3.14t"
@@ -55,9 +58,12 @@ jobs:
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
   success:
+    if: always()
     needs: test
     runs-on: ubuntu-latest
     name: Test successful
     steps:
       - name: Success
-        run: echo Test successful
+        env:
+          TEST_RESULT: ${{ needs.test.result }}
+        run: test "$TEST_RESULT" = "success"
