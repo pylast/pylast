@@ -1,0 +1,483 @@
+interactions:
+- request:
+    body: limit=20&page=1&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '91'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/7.2.1.dev5
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n \
+        \ <lovedtracks user=\"RJ\" page=\"1\" perPage=\"20\" totalPages=\"35\" total=\"\
+        700\">\n    <track>\n      <name>Fire</name>\n      <mbid>6db5b17c-634a-4271-94ee-1bfbe8b49d7f</mbid>\n\
+        \      <url>https://www.last.fm/music/The+Black+Seeds/_/Fire</url>\n     \
+        \ <date uts=\"1459767227\">04 Apr 2016, 10:53</date>\n      <artist>\n   \
+        \     <name>The Black Seeds</name>\n        <mbid>dc76f538-7a10-461e-84ba-aa44888f9f2d</mbid>\n\
+        \        <url>https://www.last.fm/music/The+Black+Seeds</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Just Jammin&apos;</name>\n      <mbid>a77b3cdf-3524-478e-b91a-d810f51739fe</mbid>\n\
+        \      <url>https://www.last.fm/music/Gramatik/_/Just+Jammin%27</url>\n  \
+        \    <date uts=\"1457357120\">07 Mar 2016, 13:25</date>\n      <artist>\n\
+        \        <name>Gramatik</name>\n        <mbid>9b62a8a3-fcd5-4b51-a970-0f08a440ed6d</mbid>\n\
+        \        <url>https://www.last.fm/music/Gramatik</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Giddy Up</name>\n      <mbid>969bbc05-fc94-3c9b-bc13-7eaa3b96774a</mbid>\n\
+        \      <url>https://www.last.fm/music/Tahuna+Breaks/_/Giddy+Up</url>\n   \
+        \   <date uts=\"1443718648\">01 Oct 2015, 16:57</date>\n      <artist>\n \
+        \       <name>Tahuna Breaks</name>\n        <mbid>a9754572-2c0c-421f-8640-2ab094c867ee</mbid>\n\
+        \        <url>https://www.last.fm/music/Tahuna+Breaks</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>The Nod</name>\n      <mbid>1fe1bb90-fb99-313e-abea-0994467e4e42</mbid>\n\
+        \      <url>https://www.last.fm/music/Fat+Freddy%27s+Drop/_/The+Nod</url>\n\
+        \      <date uts=\"1441635789\">07 Sep 2015, 14:23</date>\n      <artist>\n\
+        \        <name>Fat Freddy&apos;s Drop</name>\n        <mbid>d451395a-f768-432e-bb70-d38c32baf4cb</mbid>\n\
+        \        <url>https://www.last.fm/music/Fat+Freddy%27s+Drop</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Lady Day and John Coltrane</name>\n      <mbid></mbid>\n    \
+        \  <url>https://www.last.fm/music/Gil+Scott-Heron/_/Lady+Day+and+John+Coltrane</url>\n\
+        \      <date uts=\"1441634911\">07 Sep 2015, 14:08</date>\n      <artist>\n\
+        \        <name>Gil Scott-Heron</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Gil+Scott-Heron</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Ain&apos;t Got Time To Waste</name>\n      <mbid>3550329a-7aba-44fc-9456-5cd3bcb953ff</mbid>\n\
+        \      <url>https://www.last.fm/music/Aim/_/Ain%27t+Got+Time+To+Waste</url>\n\
+        \      <date uts=\"1441632958\">07 Sep 2015, 13:35</date>\n      <artist>\n\
+        \        <name>Aim</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Aim</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Hold This Down (feat. Dean Curtis)</name>\n      <mbid></mbid>\n\
+        \      <url>https://www.last.fm/music/Roman+Scott/_/Hold+This+Down+(feat.+Dean+Curtis)</url>\n\
+        \      <date uts=\"1438428646\">01 Aug 2015, 11:30</date>\n      <artist>\n\
+        \        <name>Roman Scott</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Roman+Scott</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Dancing on My Own</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Robyn/_/Dancing+on+My+Own</url>\n\
+        \      <date uts=\"1438338847\">31 Jul 2015, 10:34</date>\n      <artist>\n\
+        \        <name>Robyn</name>\n        <mbid>5a8e07d5-d932-4484-a7f7-e700793a9c94</mbid>\n\
+        \        <url>https://www.last.fm/music/Robyn</url>\n      </artist>\n   \
+        \   <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>The Boston Rag</name>\n      <mbid>b21e9eab-644c-4a22-825e-798b214a0cbb</mbid>\n\
+        \      <url>https://www.last.fm/music/Steely+Dan/_/The+Boston+Rag</url>\n\
+        \      <date uts=\"1431384798\">11 May 2015, 22:53</date>\n      <artist>\n\
+        \        <name>Steely Dan</name>\n        <mbid>e01c3376-15fa-40d7-b747-5f219bdefdd7</mbid>\n\
+        \        <url>https://www.last.fm/music/Steely+Dan</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>You Need Love</name>\n      <mbid>7da4104d-2321-37b7-adb1-b3423d9a1fb2</mbid>\n\
+        \      <url>https://www.last.fm/music/Candye+Kane/_/You+Need+Love</url>\n\
+        \      <date uts=\"1431384115\">11 May 2015, 22:41</date>\n      <artist>\n\
+        \        <name>Candye Kane</name>\n        <mbid>2910d857-d7fe-4132-8555-d2aef1b2a4fc</mbid>\n\
+        \        <url>https://www.last.fm/music/Candye+Kane</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Don&apos;t You Know</name>\n      <mbid>83d15ff1-d31b-4ba1-9cad-3c077aa7d884</mbid>\n\
+        \      <url>https://www.last.fm/music/Gramatik/_/Don%27t+You+Know</url>\n\
+        \      <date uts=\"1429885760\">24 Apr 2015, 14:29</date>\n      <artist>\n\
+        \        <name>Gramatik</name>\n        <mbid>9b62a8a3-fcd5-4b51-a970-0f08a440ed6d</mbid>\n\
+        \        <url>https://www.last.fm/music/Gramatik</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Hey Laura</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Gregory+Porter/_/Hey+Laura</url>\n\
+        \      <date uts=\"1429113655\">15 Apr 2015, 16:00</date>\n      <artist>\n\
+        \        <name>Gregory Porter</name>\n        <mbid>7ac1e33f-0cdf-4e81-b914-41830700d746</mbid>\n\
+        \        <url>https://www.last.fm/music/Gregory+Porter</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Mexico</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Cruzados/_/Mexico</url>\n\
+        \      <date uts=\"1425743665\">07 Mar 2015, 15:54</date>\n      <artist>\n\
+        \        <name>Cruzados</name>\n        <mbid>b73d248d-c65c-459e-a16a-b11ce2026e21</mbid>\n\
+        \        <url>https://www.last.fm/music/Cruzados</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Pretty Wasted</name>\n      <mbid>0f7a6d0c-bbed-3555-ab73-3f42a1a8c38e</mbid>\n\
+        \      <url>https://www.last.fm/music/Tito+&amp;+Tarantula/_/Pretty+Wasted</url>\n\
+        \      <date uts=\"1425738160\">07 Mar 2015, 14:22</date>\n      <artist>\n\
+        \        <name>Tito &amp; Tarantula</name>\n        <mbid>18662acd-0f22-4608-b3eb-60f12b0766c4</mbid>\n\
+        \        <url>https://www.last.fm/music/Tito+&amp;+Tarantula</url>\n     \
+        \ </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Axel F</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Harold+Faltermeyer/_/Axel+F</url>\n\
+        \      <date uts=\"1421345797\">15 Jan 2015, 18:16</date>\n      <artist>\n\
+        \        <name>Harold Faltermeyer</name>\n        <mbid>3bd08e76-bf53-4b16-82ee-63f95ca5cdae</mbid>\n\
+        \        <url>https://www.last.fm/music/Harold+Faltermeyer</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>The Future Soon</name>\n      <mbid>03f224ff-7a51-3ea9-969e-cb630e68c9e2</mbid>\n\
+        \      <url>https://www.last.fm/music/Jonathan+Coulton/_/The+Future+Soon</url>\n\
+        \      <date uts=\"1413064820\">11 Oct 2014, 22:00</date>\n      <artist>\n\
+        \        <name>Jonathan Coulton</name>\n        <mbid>d8df7087-06d5-4545-9024-831bb8558ad1</mbid>\n\
+        \        <url>https://www.last.fm/music/Jonathan+Coulton</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Jack Sparrow</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/The+Lonely+Island/_/Jack+Sparrow</url>\n\
+        \      <date uts=\"1413064693\">11 Oct 2014, 21:58</date>\n      <artist>\n\
+        \        <name>The Lonely Island</name>\n        <mbid>028e1863-cab4-4a3d-9dd9-91c682c91005</mbid>\n\
+        \        <url>https://www.last.fm/music/The+Lonely+Island</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>I&apos;m On A Boat</name>\n      <mbid>2f7f4443-0ace-4fe8-b611-a1a456da598c</mbid>\n\
+        \      <url>https://www.last.fm/music/The+Lonely+Island/_/I%27m+On+A+Boat</url>\n\
+        \      <date uts=\"1413064690\">11 Oct 2014, 21:58</date>\n      <artist>\n\
+        \        <name>The Lonely Island</name>\n        <mbid>028e1863-cab4-4a3d-9dd9-91c682c91005</mbid>\n\
+        \        <url>https://www.last.fm/music/The+Lonely+Island</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Dick In A Box</name>\n      <mbid>a8072b51-4ac5-4433-a780-98fe57ffcb88</mbid>\n\
+        \      <url>https://www.last.fm/music/The+Lonely+Island/_/Dick+In+A+Box</url>\n\
+        \      <date uts=\"1413064686\">11 Oct 2014, 21:58</date>\n      <artist>\n\
+        \        <name>The Lonely Island</name>\n        <mbid>028e1863-cab4-4a3d-9dd9-91c682c91005</mbid>\n\
+        \        <url>https://www.last.fm/music/The+Lonely+Island</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Jungle - Feat. Maverick Sabre</name>\n      <mbid></mbid>\n \
+        \     <url>https://www.last.fm/music/Professor+Green/_/Jungle+-+Feat.+Maverick+Sabre</url>\n\
+        \      <date uts=\"1413064683\">11 Oct 2014, 21:58</date>\n      <artist>\n\
+        \        <name>Professor Green</name>\n        <mbid>7684f1ee-2154-475f-b05d-608c91a0e3e9</mbid>\n\
+        \        <url>https://www.last.fm/music/Professor+Green</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n\
+        </lfm>\n"
+    headers:
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '86400'
+      alt-svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      content-length:
+      - '18868'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Thu, 19 Nov 2026 07:45:43 GMT
+      server:
+      - openresty
+      via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: limit=20&page=2&method=user.getLovedTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '91'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/7.2.1.dev5
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n \
+        \ <lovedtracks user=\"RJ\" page=\"2\" perPage=\"20\" totalPages=\"35\" total=\"\
+        700\">\n    <track>\n      <name>Baby Got Back</name>\n      <mbid>1975f14c-4c16-3fda-b1f6-2f1895711329</mbid>\n\
+        \      <url>https://www.last.fm/music/Jonathan+Coulton/_/Baby+Got+Back</url>\n\
+        \      <date uts=\"1413064675\">11 Oct 2014, 21:57</date>\n      <artist>\n\
+        \        <name>Jonathan Coulton</name>\n        <mbid>d8df7087-06d5-4545-9024-831bb8558ad1</mbid>\n\
+        \        <url>https://www.last.fm/music/Jonathan+Coulton</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Stroker Ace</name>\n      <mbid>883b2296-29f7-476e-8c0c-224c774c77c6</mbid>\n\
+        \      <url>https://www.last.fm/music/Lovage/_/Stroker+Ace</url>\n      <date\
+        \ uts=\"1412604686\">06 Oct 2014, 14:11</date>\n      <artist>\n        <name>Lovage</name>\n\
+        \        <mbid>43e2b545-3e4a-4fd7-a773-8daafa610570</mbid>\n        <url>https://www.last.fm/music/Lovage</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>East Side Soldier (feat. Yukmouth, Dru Down &amp; Pooh Man)</name>\n\
+        \      <mbid></mbid>\n      <url>https://www.last.fm/music/Seagram/_/East+Side+Soldier+(feat.+Yukmouth,+Dru+Down+&amp;+Pooh+Man)</url>\n\
+        \      <date uts=\"1412297575\">03 Oct 2014, 00:52</date>\n      <artist>\n\
+        \        <name>Seagram</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Seagram</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Ain&apos;t No Love</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/Pooh-Man/_/Ain%27t+No+Love</url>\n\
+        \      <date uts=\"1412296612\">03 Oct 2014, 00:36</date>\n      <artist>\n\
+        \        <name>Pooh-Man</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Pooh-Man</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Hypnotize</name>\n      <mbid>2c1d093a-ad4e-4f96-b27c-15a63210ec6f</mbid>\n\
+        \      <url>https://www.last.fm/music/The+Notorious+B.I.G./_/Hypnotize</url>\n\
+        \      <date uts=\"1412295881\">03 Oct 2014, 00:24</date>\n      <artist>\n\
+        \        <name>The Notorious B.I.G.</name>\n        <mbid>d5d97b2b-b83b-4976-814a-056d9076c8c3</mbid>\n\
+        \        <url>https://www.last.fm/music/The+Notorious+B.I.G.</url>\n     \
+        \ </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Aint Coming Home Tonight</name>\n      <mbid></mbid>\n      <url>https://www.last.fm/music/The+B+Foundation/_/Aint+Coming+Home+Tonight</url>\n\
+        \      <date uts=\"1409953370\">05 Sep 2014, 21:42</date>\n      <artist>\n\
+        \        <name>The B Foundation</name>\n        <mbid>98b15087-d12a-46ac-ba80-e23583841372</mbid>\n\
+        \        <url>https://www.last.fm/music/The+B+Foundation</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Tequila Makes Her Clothes Fall Off</name>\n      <mbid>3bb1c999-b5ce-4033-b886-7e728cec5e07</mbid>\n\
+        \      <url>https://www.last.fm/music/Joe+Nichols/_/Tequila+Makes+Her+Clothes+Fall+Off</url>\n\
+        \      <date uts=\"1409608816\">01 Sep 2014, 22:00</date>\n      <artist>\n\
+        \        <name>Joe Nichols</name>\n        <mbid>e45692e4-69f6-4493-888b-7ab89d21d0a4</mbid>\n\
+        \        <url>https://www.last.fm/music/Joe+Nichols</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Pickup Man</name>\n      <mbid>7599199b-cf18-314f-9f47-301e273e03e8</mbid>\n\
+        \      <url>https://www.last.fm/music/Joe+Diffie/_/Pickup+Man</url>\n    \
+        \  <date uts=\"1409608514\">01 Sep 2014, 21:55</date>\n      <artist>\n  \
+        \      <name>Joe Diffie</name>\n        <mbid>98b31574-fa4c-4cf1-bf32-681f7df45fe3</mbid>\n\
+        \        <url>https://www.last.fm/music/Joe+Diffie</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Beer or Gasoline</name>\n      <mbid>78748144-7d09-3119-b66f-2ab79b59ddc6</mbid>\n\
+        \      <url>https://www.last.fm/music/Chris+Young/_/Beer+or+Gasoline</url>\n\
+        \      <date uts=\"1409608506\">01 Sep 2014, 21:55</date>\n      <artist>\n\
+        \        <name>Chris Young</name>\n        <mbid>86de027e-097d-41b1-9b97-c0a69379ff4b</mbid>\n\
+        \        <url>https://www.last.fm/music/Chris+Young</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Rain Is a Good Thing</name>\n      <mbid>2338f63b-c6b9-4971-a184-8aa5a99871de</mbid>\n\
+        \      <url>https://www.last.fm/music/Luke+Bryan/_/Rain+Is+a+Good+Thing</url>\n\
+        \      <date uts=\"1409608504\">01 Sep 2014, 21:55</date>\n      <artist>\n\
+        \        <name>Luke Bryan</name>\n        <mbid>aab35942-f176-4f77-bbf9-1d6aa98ccf3f</mbid>\n\
+        \        <url>https://www.last.fm/music/Luke+Bryan</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Somethin&apos; &apos;Bout a Truck</name>\n      <mbid>e6e44b23-236c-4af2-9968-50562c107880</mbid>\n\
+        \      <url>https://www.last.fm/music/Kip+Moore/_/Somethin%27+%27Bout+a+Truck</url>\n\
+        \      <date uts=\"1409608502\">01 Sep 2014, 21:55</date>\n      <artist>\n\
+        \        <name>Kip Moore</name>\n        <mbid>3afa378a-4a7f-46f5-b686-f41ee2287c0c</mbid>\n\
+        \        <url>https://www.last.fm/music/Kip+Moore</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>All Over the Road</name>\n      <mbid>0203103a-b54f-4b3f-ab28-81c375ec18b1</mbid>\n\
+        \      <url>https://www.last.fm/music/Easton+Corbin/_/All+Over+the+Road</url>\n\
+        \      <date uts=\"1409603460\">01 Sep 2014, 20:31</date>\n      <artist>\n\
+        \        <name>Easton Corbin</name>\n        <mbid>c6ada25c-8590-4b75-8013-883a8df55882</mbid>\n\
+        \        <url>https://www.last.fm/music/Easton+Corbin</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Almost Like the Blues</name>\n      <mbid>04a1f0db-3471-4535-a711-cca95cf63562</mbid>\n\
+        \      <url>https://www.last.fm/music/Leonard+Cohen/_/Almost+Like+the+Blues</url>\n\
+        \      <date uts=\"1408842114\">24 Aug 2014, 01:01</date>\n      <artist>\n\
+        \        <name>Leonard Cohen</name>\n        <mbid>65314b12-0e08-43fa-ba33-baaa7b874c15</mbid>\n\
+        \        <url>https://www.last.fm/music/Leonard+Cohen</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Northern Lights</name>\n      <mbid>66f5f2a5-92b6-4865-bb7e-216c57db4876</mbid>\n\
+        \      <url>https://www.last.fm/music/Renaissance/_/Northern+Lights</url>\n\
+        \      <date uts=\"1407167830\">04 Aug 2014, 15:57</date>\n      <artist>\n\
+        \        <name>Renaissance</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/Renaissance</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Hit The Road Jack</name>\n      <mbid>ea701459-930b-33dc-8f4c-610470d33aa2</mbid>\n\
+        \      <url>https://www.last.fm/music/Peter+White/_/Hit+The+Road+Jack</url>\n\
+        \      <date uts=\"1407067144\">03 Aug 2014, 11:59</date>\n      <artist>\n\
+        \        <name>Peter White</name>\n        <mbid>2833d222-f057-43a5-a90b-e44f0df63acb</mbid>\n\
+        \        <url>https://www.last.fm/music/Peter+White</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>That Lady - Pts. 1 &amp; 2</name>\n      <mbid></mbid>\n    \
+        \  <url>https://www.last.fm/music/The+Isley+Brothers/_/That+Lady+-+Pts.+1+&amp;+2</url>\n\
+        \      <date uts=\"1403625541\">24 Jun 2014, 15:59</date>\n      <artist>\n\
+        \        <name>The Isley Brothers</name>\n        <mbid></mbid>\n        <url>https://www.last.fm/music/The+Isley+Brothers</url>\n\
+        \      </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Wandering Eye - Radio Edit</name>\n      <mbid>626120a1-2260-469c-98c1-eb87719a03bf</mbid>\n\
+        \      <url>https://www.last.fm/music/Fat+Freddy%27s+Drop/_/Wandering+Eye+-+Radio+Edit</url>\n\
+        \      <date uts=\"1402575515\">12 Jun 2014, 12:18</date>\n      <artist>\n\
+        \        <name>Fat Freddy&apos;s Drop</name>\n        <mbid>d451395a-f768-432e-bb70-d38c32baf4cb</mbid>\n\
+        \        <url>https://www.last.fm/music/Fat+Freddy%27s+Drop</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Silver Rain (feat. Joe Kibble)</name>\n      <mbid></mbid>\n\
+        \      <url>https://www.last.fm/music/Marcus+Miller,+Joe+Kibble/_/Silver+Rain+(feat.+Joe+Kibble)</url>\n\
+        \      <date uts=\"1401236954\">28 May 2014, 00:29</date>\n      <artist>\n\
+        \        <name>Marcus Miller, Joe Kibble</name>\n        <mbid></mbid>\n \
+        \       <url>https://www.last.fm/music/Marcus+Miller,+Joe+Kibble</url>\n \
+        \     </artist>\n      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>Silver Rain</name>\n      <mbid>95a44548-730c-39d5-9137-260eb29740d8</mbid>\n\
+        \      <url>https://www.last.fm/music/Marcus+Miller/_/Silver+Rain</url>\n\
+        \      <date uts=\"1401236941\">28 May 2014, 00:29</date>\n      <artist>\n\
+        \        <name>Marcus Miller</name>\n        <mbid>8fbabd07-4b2b-4f4c-add5-680429a8c44a</mbid>\n\
+        \        <url>https://www.last.fm/music/Marcus+Miller</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n    <track>\n\
+        \      <name>The Boogie Back</name>\n      <mbid>16432b45-bd4e-4f2d-b6db-4f4a933c5998</mbid>\n\
+        \      <url>https://www.last.fm/music/Roy+Ayers/_/The+Boogie+Back</url>\n\
+        \      <date uts=\"1400493300\">19 May 2014, 09:55</date>\n      <artist>\n\
+        \        <name>Roy Ayers</name>\n        <mbid>06e199c1-6f33-477b-a74d-bc8a283bd8f0</mbid>\n\
+        \        <url>https://www.last.fm/music/Roy+Ayers</url>\n      </artist>\n\
+        \      <image size=\"small\">https://lastfm-img.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"medium\">https://lastfm-img.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"large\">https://lastfm-img.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <image size=\"extralarge\">https://lastfm-img.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png</image>\n\
+        \      <streamable fulltrack=\"0\">0</streamable>\n    </track>\n  </lovedtracks>\n\
+        </lfm>\n"
+    headers:
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '86400'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '19129'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Thu, 19 Nov 2026 07:45:44 GMT
+      server:
+      - openresty
+      via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1

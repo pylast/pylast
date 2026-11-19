@@ -20,6 +20,9 @@
 # https://github.com/pylast/pylast
 from __future__ import annotations
 
+import collections
+import dataclasses
+import datetime as dt
 import hashlib
 import html
 import logging
@@ -40,8 +43,8 @@ from ._version import __version__
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from collections.abc import Generator, Iterator
-    from typing import Self
+    from collections.abc import Callable, Generator, Iterator
+    from typing import Any, Self
 
 
 __author__ = "Amr Hassan, hugovk, Mice Pápai"
@@ -1145,6 +1148,61 @@ class LovedTrack(typing.NamedTuple):
     track: Track
     date: str | None
     timestamp: str
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class _ExportRecord:
+    """Plain data yielded for export: strings, ints and None, no network calls."""
+
+    timestamp: int
+    """Unix timestamp (UTC seconds)."""
+
+    @property
+    def datetime(self) -> dt.datetime:
+        """The timestamp as a timezone-aware UTC datetime."""
+        return dt.datetime.fromtimestamp(self.timestamp, tz=dt.UTC)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Returns the fields as a dict; cls(**d) round-trips."""
+        return {f.name: getattr(self, f.name) for f in dataclasses.fields(self)}
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class Scrobble(_ExportRecord):
+    """
+    One scrobble from a user's listening history, as yielded by
+    User.get_scrobbles(); timestamp is when the track was played.
+
+    Unlike PlayedTrack (from User.get_recent_tracks()), which wraps a Track
+    object, this holds only strings and ints, and includes the MusicBrainz
+    IDs and URL. Empty MusicBrainz IDs are None.
+    """
+
+    artist: str
+    title: str
+    album: str | None = None
+    artist_mbid: str | None = None
+    track_mbid: str | None = None
+    album_mbid: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class Love(_ExportRecord):
+    """
+    A track a user has loved, as yielded by User.get_loves(); timestamp is
+    when the track was loved.
+
+    Unlike LovedTrack (from User.get_loved_tracks()), which wraps a Track
+    object, this holds only strings and ints, and includes the MusicBrainz
+    IDs and URL. Empty MusicBrainz IDs are None.
+    """
+
+    artist: str
+    title: str
+    artist_mbid: str | None = None
+    track_mbid: str | None = None
+    url: str | None = None
 
 
 class _BaseObject:
@@ -2395,6 +2453,103 @@ class User(_Chartable):
 
         return _get_recent_tracks() if stream else list(_get_recent_tracks())
 
+    def get_scrobbles(
+        self,
+        time_from: int | None = None,
+        time_to: int | None = None,
+        *,
+        page_size: int = 200,
+        progress: Callable[[int, int, int, int], None] | None = None,
+    ) -> Iterator[Scrobble]:
+        """
+        Yields every scrobble of this user, newest first, as Scrobble records
+        with MusicBrainz IDs. Intended for exporting a complete listening
+        history; see also pylast.export.export_scrobbles().
+
+        Unlike most pylast methods this always streams: it is a generator and
+        each page is fetched as you iterate, so 200,000 scrobbles do not have
+        to fit in memory.
+
+        time_from and time_to are Unix timestamps (UTC seconds). When time_to
+        is None it is set to the time iteration starts, so scrobbles arriving
+        during a long export cannot shift pages and cause duplicates.
+
+        page_size is the number of scrobbles per request (Last.fm allows up to
+        200). progress, if given, is called after every page with
+        (page, total_pages, scrobbles_yielded_so_far, total_scrobbles).
+
+        Transient errors are retried with exponential backoff. Responses are
+        never cached. Consider calling network.enable_rate_limit() first.
+        """
+        if time_to is None:
+            time_to = int(time.time())
+        params = self._get_params()
+        params["limit"] = page_size
+        if time_from is not None:
+            params["from"] = time_from
+        params["to"] = time_to
+
+        count = 0
+        deduper = _PageDeduper()
+        for main, page, total_pages, total in _iter_pages(
+            self, self.ws_prefix + ".getRecentTracks", params
+        ):
+            deduper.new_page()
+            for track_node in main.getElementsByTagName("track"):
+                if track_node.hasAttribute(
+                    "nowplaying"
+                ) or not track_node.getElementsByTagName("date"):
+                    continue
+                scrobble = _extract_scrobble(track_node)
+                if deduper.seen(
+                    (
+                        scrobble.timestamp,
+                        scrobble.artist,
+                        scrobble.title,
+                        scrobble.album,
+                    )
+                ):
+                    continue
+                count += 1
+                yield scrobble
+            if progress is not None:
+                progress(page, total_pages, count, total)
+
+    def get_loves(
+        self,
+        *,
+        page_size: int = 200,
+        progress: Callable[[int, int, int, int], None] | None = None,
+    ) -> Iterator[Love]:
+        """
+        Yields every track this user has loved, most recently loved first, as
+        Love records with MusicBrainz IDs. Intended for export; see also
+        pylast.export.export_loved().
+
+        Always streams, like get_scrobbles(). page_size is the number of
+        tracks per request (Last.fm allows up to 200). progress, if given, is
+        called after every page with (page, total_pages, yielded_so_far, total).
+        """
+        params = self._get_params()
+        params["limit"] = page_size
+
+        count = 0
+        deduper = _PageDeduper()
+        for main, page, total_pages, total in _iter_pages(
+            self, self.ws_prefix + ".getLovedTracks", params
+        ):
+            deduper.new_page()
+            for track_node in main.getElementsByTagName("track"):
+                if not track_node.getElementsByTagName("date"):
+                    continue
+                love = _extract_love(track_node)
+                if deduper.seen((love.timestamp, love.artist, love.title)):
+                    continue
+                count += 1
+                yield love
+            if progress is not None:
+                progress(page, total_pages, count, total)
+
     def get_country(self) -> Country | None:
         """Returns the name of the country of the user."""
 
@@ -2795,6 +2950,103 @@ def _can_retry(exception: Exception) -> bool:
     return True
 
 
+_EXPORT_MAX_TRIES = 8
+_EXPORT_MAX_DELAY = 60
+
+
+def _request_with_backoff(
+    sender, method_name: str, params: dict, max_tries: int = _EXPORT_MAX_TRIES
+) -> minidom.Document:
+    """
+    Performs an uncached request, retrying transient failures (see _can_retry)
+    with exponential backoff: 1, 2, 4, ... seconds, capped at _EXPORT_MAX_DELAY.
+    """
+    delay = 1
+    tries = 1
+    while True:
+        try:
+            return sender._request(method_name, False, params)
+        except Exception as e:
+            if not _can_retry(e) or tries >= max_tries:
+                if isinstance(e, PyLastError):
+                    raise
+                raise PyLastError() from e
+            logger.warning(
+                "%s page %s failed (%s), retrying in %d s (attempt %d of %d)",
+                method_name,
+                params.get("page"),
+                e,
+                delay,
+                tries,
+                max_tries,
+            )
+            time.sleep(delay)
+            delay = min(delay * 2, _EXPORT_MAX_DELAY)
+            tries += 1
+
+
+def _iter_pages(
+    sender, method_name: str, params: dict
+) -> Iterator[tuple[minidom.Element, int, int, int]]:
+    """
+    Fetches every page of a paginated method, yielding
+    (container_element, page, total_pages, total) per page.
+    """
+    page = 1
+    while True:
+        params["page"] = str(page)
+        doc = cleanup_nodes(_request_with_backoff(sender, method_name, params))
+        if not doc.documentElement.childNodes:
+            return
+        main = doc.documentElement.childNodes[0]
+
+        if main.hasAttribute("totalPages") or main.hasAttribute("totalpages"):
+            total_pages = int(
+                _number(
+                    main.getAttribute("totalPages") or main.getAttribute("totalpages")
+                )
+            )
+        else:
+            msg = "No total pages attribute"
+            raise PyLastError(msg)
+        total = int(_number(main.getAttribute("total")))
+
+        yield main, page, total_pages, total
+
+        if page >= total_pages:
+            return
+        page += 1
+
+
+class _PageDeduper:
+    """
+    Drops repeats from a paginated listing whose pages may overlap.
+
+    Last.fm occasionally repeats an item across a page boundary, and (if the
+    listing shifts under us) may re-serve items from the previous page. An
+    item is a repeat if its key was seen on the previous page; anything else
+    is kept. Keys are counted, not just remembered, because Last.fm can store
+    identical items (two clients scrobbling the same play): each copy on the
+    previous page cancels one re-served copy, and further copies are kept.
+    """
+
+    def __init__(self) -> None:
+        self.previous_page: collections.Counter[tuple] = collections.Counter()
+        self.current_page: collections.Counter[tuple] = collections.Counter()
+
+    def new_page(self) -> None:
+        self.previous_page = self.current_page
+        self.current_page = collections.Counter()
+
+    def seen(self, key: tuple) -> bool:
+        """Records the item and returns True if it is a repeat."""
+        if self.previous_page[key] > 0:
+            self.previous_page[key] -= 1
+            return True
+        self.current_page[key] += 1
+        return False
+
+
 def _collect_nodes(
     limit, sender, method_name, cacheable, params=None, stream: bool = False
 ):
@@ -2881,6 +3133,55 @@ def _extract_all(node, name, limit_count=None):
         seq.append(_extract(node, name, i))
 
     return seq
+
+
+def _child_text(node: minidom.Element, name: str) -> str | None:
+    """Like _extract, but only looks at direct children of node."""
+    for child in node.childNodes:
+        if child.nodeType == Node.ELEMENT_NODE and child.tagName == name:
+            if isinstance(child.firstChild, minidom.Text):
+                return html.unescape(child.firstChild.data.strip())
+            return None
+    return None
+
+
+def _mbid(value: str | None) -> str | None:
+    """Normalises an empty MusicBrainz ID to None."""
+    return value or None
+
+
+def _extract_scrobble(track_node: minidom.Element) -> Scrobble:
+    """
+    Builds a Scrobble from a <track> element of user.getRecentTracks.
+    The caller must skip now-playing tracks, which have no <date>.
+    """
+    artists = track_node.getElementsByTagName("artist")
+    albums = track_node.getElementsByTagName("album")
+    date = track_node.getElementsByTagName("date")[0]
+    return Scrobble(
+        timestamp=int(date.getAttribute("uts")),
+        artist=_extract(track_node, "artist") or "",
+        title=_extract(track_node, "name") or "",
+        album=_extract(track_node, "album") or None,
+        artist_mbid=_mbid(artists[0].getAttribute("mbid")) if artists else None,
+        track_mbid=_mbid(_child_text(track_node, "mbid")),
+        album_mbid=_mbid(albums[0].getAttribute("mbid")) if albums else None,
+        url=_child_text(track_node, "url") or None,
+    )
+
+
+def _extract_love(track_node: minidom.Element) -> Love:
+    """Builds a Love from a <track> element of user.getLovedTracks."""
+    artist_node = track_node.getElementsByTagName("artist")[0]
+    date = track_node.getElementsByTagName("date")[0]
+    return Love(
+        timestamp=int(date.getAttribute("uts")),
+        artist=_child_text(artist_node, "name") or "",
+        title=_child_text(track_node, "name") or "",
+        artist_mbid=_mbid(_child_text(artist_node, "mbid")),
+        track_mbid=_mbid(_child_text(track_node, "mbid")),
+        url=_child_text(track_node, "url") or None,
+    )
 
 
 def _extract_top_artists(doc: minidom.Document, network) -> list[TopItem]:
