@@ -43,6 +43,7 @@ Or from requirements.txt:
 - Proxy support.
 - Internal caching support for some web services calls (disabled by default).
 - Support for other API-compatible networks like Libre.fm.
+- Export your scrobbles and loved tracks to JSON Lines, from Python or the command line.
 
 ## Getting started
 
@@ -118,6 +119,47 @@ track.add_tags(("awesome", "favorite"))
 More examples in
 <a href="https://github.com/hugovk/lastfm-tools">hugovk/lastfm-tools</a> and
 [tests/](https://github.com/pylast/pylast/tree/main/tests).
+
+## Exporting your scrobbles
+
+pyLast can export a user's complete listening history, with MusicBrainz IDs, to a
+[JSON Lines](https://jsonlines.org/) file: one JSON object per line, easy to convert to
+anything else. You only need an API key, not a password, for public profiles.
+
+From the command line:
+
+```sh
+export PYLAST_API_KEY=your_api_key
+python -m pylast export your_username   # your_username.jsonl + your_username-loved.jsonl
+python -m pylast export your_username --from 2024-01-01 --to 2025
+```
+
+Scrobbles are written newest first, a page at a time, so an interrupted export can be
+resumed by running the same command again: it continues from the oldest scrobble already
+in the file. Dates are Unix timestamps or ISO 8601, and dates without a timezone are
+UTC. See `python -m pylast export --help` for everything.
+
+From Python:
+
+```python
+import pylast
+from pylast.export import export_scrobbles
+
+network = pylast.LastFMNetwork(api_key=API_KEY)
+network.enable_rate_limit()
+user = network.get_user("your_username")
+
+# Write everything to a file, resuming if the file already exists:
+export_scrobbles(user, "your_username.jsonl")
+
+# Or work with the records yourself; this streams one page at a time:
+for scrobble in user.get_scrobbles():
+    print(scrobble.datetime, scrobble.artist, scrobble.title, scrobble.track_mbid)
+```
+
+Each record has `timestamp`, `artist`, `title`, `album`, `artist_mbid`, `track_mbid`,
+`album_mbid` and `url`. `user.get_loves()` and `export_loved()` do the same for loved
+tracks. Transient API errors are retried with exponential backoff.
 
 ## Testing
 

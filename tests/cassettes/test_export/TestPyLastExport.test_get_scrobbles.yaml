@@ -1,0 +1,235 @@
+interactions:
+- request:
+    body: limit=5&from=1581778800&to=1581781200&page=1&method=user.getRecentTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '128'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/7.2.1.dev5
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n \
+        \ <recenttracks user=\"bbc6music\" page=\"1\" perPage=\"5\" totalPages=\"\
+        3\" total=\"11\">\n    <track nowplaying=\"true\">\n      <artist mbid=\"\
+        ce3bc975-a76f-415b-a6cd-1e568c5714dd\">Jungle Brothers</artist>\n      <name>I&apos;ll\
+        \ House You</name>\n      <streamable>0</streamable>\n      <mbid>7f91f355-8953-4873-902b-41f55743aee7</mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Jungle+Brothers/_/I%27ll+House+You</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \    </track>\n    <track>\n      <artist mbid=\"\">Seun Kuti &amp; Egypt\
+        \ 80</artist>\n      <name>Struggles Sounds</name>\n      <streamable>0</streamable>\n\
+        \      <mbid></mbid>\n      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Seun+Kuti+&amp;+Egypt+80/_/Struggles+Sounds</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581780986\">15 Feb 2020, 15:36</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"2379937f-6e0d-46a2-b8ff-633fafd72002\"\
+        >Wayne Shorter</artist>\n      <name>Night Dreamer</name>\n      <streamable>0</streamable>\n\
+        \      <mbid>09d5dd70-80f3-4598-bf71-dd1f627d4c50</mbid>\n      <album mbid=\"\
+        \"></album>\n      <url>https://www.last.fm/music/Wayne+Shorter/_/Night+Dreamer</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581780725\">15 Feb 2020, 15:32</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"9e6731f6-822e-4735-a2bb-1b32098547a2\"\
+        >Xiomara Alfaro</artist>\n      <name>Nana Buruku</name>\n      <streamable>0</streamable>\n\
+        \      <mbid></mbid>\n      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Xiomara+Alfaro/_/Nana+Buruku</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581780385\">15 Feb 2020, 15:26</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"fa65be95-4c98-44ae-979a-581893fa9d2b\"\
+        >Los Caballeros de Col\xF3n</artist>\n      <name>Con los caballeros</name>\n\
+        \      <streamable>0</streamable>\n      <mbid></mbid>\n      <album mbid=\"\
+        \"></album>\n      <url>https://www.last.fm/music/Los+Caballeros+de+Col%C3%B3n/_/Con+los+caballeros</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581780187\">15 Feb 2020, 15:23</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"\">Penya na familia ya Zawose</artist>\n\
+        \      <name>Heyyeh</name>\n      <streamable>0</streamable>\n      <mbid></mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Penya+na+familia+ya+Zawose/_/Heyyeh</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581779946\">15 Feb 2020, 15:19</date>\n    </track>\n\
+        \  </recenttracks>\n</lfm>\n"
+    headers:
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '86400'
+      alt-svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      content-length:
+      - '3189'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Thu, 19 Nov 2026 07:45:41 GMT
+      server:
+      - openresty
+      via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: limit=5&from=1581778800&to=1581781200&page=2&method=user.getRecentTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '128'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/7.2.1.dev5
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n \
+        \ <recenttracks user=\"bbc6music\" page=\"2\" perPage=\"5\" totalPages=\"\
+        3\" total=\"11\">\n    <track nowplaying=\"true\">\n      <artist mbid=\"\
+        ce3bc975-a76f-415b-a6cd-1e568c5714dd\">Jungle Brothers</artist>\n      <name>I&apos;ll\
+        \ House You</name>\n      <streamable>0</streamable>\n      <mbid>7f91f355-8953-4873-902b-41f55743aee7</mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Jungle+Brothers/_/I%27ll+House+You</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \    </track>\n    <track>\n      <artist mbid=\"\">FOREST LAW</artist>\n\
+        \      <name>New Thoughts</name>\n      <streamable>0</streamable>\n     \
+        \ <mbid></mbid>\n      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/FOREST+LAW/_/New+Thoughts</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581779710\">15 Feb 2020, 15:15</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"1bb606ff-c1b9-49cb-bf73-a574229fe94c\"\
+        >Jonny Faith</artist>\n      <name>Ascending</name>\n      <streamable>0</streamable>\n\
+        \      <mbid>b3c7e892-6e1b-480d-85a1-ba6ce22056c9</mbid>\n      <album mbid=\"\
+        \"></album>\n      <url>https://www.last.fm/music/Jonny+Faith/_/Ascending</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581779517\">15 Feb 2020, 15:11</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"fe4a653a-dc81-4422-b3f0-60ecb9107eeb\"\
+        >Ultra\xEDsta</artist>\n      <name>Tin King</name>\n      <streamable>0</streamable>\n\
+        \      <mbid>c74df46d-5bf8-4bbe-8629-38c8dab5cc42</mbid>\n      <album mbid=\"\
+        \"></album>\n      <url>https://www.last.fm/music/Ultra%C3%ADsta/_/Tin+King</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581779368\">15 Feb 2020, 15:09</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"f221328f-bc6b-40f1-a750-ce11a1321489\"\
+        >The Heliocentrics</artist>\n      <name>Elephant Walk</name>\n      <streamable>0</streamable>\n\
+        \      <mbid>3d9186d5-fa9a-4ff7-8a70-a470e1f10df0</mbid>\n      <album mbid=\"\
+        \"></album>\n      <url>https://www.last.fm/music/The+Heliocentrics/_/Elephant+Walk</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581779230\">15 Feb 2020, 15:07</date>\n    </track>\n\
+        \    <track>\n      <artist mbid=\"\">Taner \xD6ng\xFCr &amp; 43.75</artist>\n\
+        \      <name>Kedi</name>\n      <streamable>0</streamable>\n      <mbid></mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Taner+%C3%96ng%C3%BCr+&amp;+43.75/_/Kedi</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581778920\">15 Feb 2020, 15:02</date>\n    </track>\n\
+        \  </recenttracks>\n</lfm>\n"
+    headers:
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '86400'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '3177'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Thu, 19 Nov 2026 07:45:42 GMT
+      server:
+      - openresty
+      via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+- request:
+    body: limit=5&from=1581778800&to=1581781200&page=3&method=user.getRecentTracks
+    headers:
+      accept:
+      - '*/*'
+      accept-charset:
+      - utf-8
+      accept-encoding:
+      - gzip, deflate, zstd
+      connection:
+      - keep-alive
+      content-length:
+      - '128'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - ws.audioscrobbler.com
+      user-agent:
+      - pylast/7.2.1.dev5
+    method: POST
+    uri: https://ws.audioscrobbler.com/2.0/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<lfm status=\"ok\">\n \
+        \ <recenttracks user=\"bbc6music\" page=\"3\" perPage=\"5\" totalPages=\"\
+        3\" total=\"11\">\n    <track nowplaying=\"true\">\n      <artist mbid=\"\
+        ce3bc975-a76f-415b-a6cd-1e568c5714dd\">Jungle Brothers</artist>\n      <name>I&apos;ll\
+        \ House You</name>\n      <streamable>0</streamable>\n      <mbid>7f91f355-8953-4873-902b-41f55743aee7</mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Jungle+Brothers/_/I%27ll+House+You</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \    </track>\n    <track>\n      <artist mbid=\"\">Moondog</artist>\n   \
+        \   <name>Untitled Chant</name>\n      <streamable>0</streamable>\n      <mbid></mbid>\n\
+        \      <album mbid=\"\"></album>\n      <url>https://www.last.fm/music/Moondog/_/Untitled+Chant</url>\n\
+        \      <image size=\"small\"></image>\n      <image size=\"medium\"></image>\n\
+        \      <image size=\"large\"></image>\n      <image size=\"extralarge\"></image>\n\
+        \      <date uts=\"1581778881\">15 Feb 2020, 15:01</date>\n    </track>\n\
+        \  </recenttracks>\n</lfm>\n"
+    headers:
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '86400'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '1121'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Thu, 19 Nov 2026 07:45:42 GMT
+      server:
+      - openresty
+      via:
+      - 1.1 google
+    status:
+      code: 200
+      message: OK
+version: 1
